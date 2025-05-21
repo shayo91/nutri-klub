@@ -37,13 +37,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* About */}
           <div>
-            <Link href="/">
-              <a className="flex items-center mb-6">
-                <span className="text-primary text-2xl font-bold font-poppins">
-                  Jelena <span className="text-dark">Matijaš</span>
-                </span>
-              </a>
-            </Link>
+            <Link href="/" className="flex items-center mb-6">
+            <span className="text-primary text-2xl font-bold font-poppins">
+              Jelena <span className="text-dark">Matijaš</span>
+            </span>
+          </Link>
             <p className="text-gray-600 mb-6">
               Professional nutritionist committed to helping you achieve optimal health through personalized nutrition plans.
             </p>
