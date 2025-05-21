@@ -54,40 +54,129 @@ export default function HeroSection() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="lg:w-1/2 mt-12 lg:mt-0 relative"
           >
-            <div className="relative">
+            <div className="relative overflow-hidden">
               {/* Green background rectangle */}
               <div className="absolute inset-0 bg-primary rounded-xl" style={{ transform: 'scale(0.95)' }}></div>
               
-              {/* Woman with salad image */}
+              {/* Fitness woman image */}
               <img 
-                src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-4.0.3&auto=format&fit=crop&w=600" 
-                alt="Woman enjoying healthy salad" 
-                className="relative z-10 rounded-xl" 
+                src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600" 
+                alt="Fitness woman with healthy lifestyle" 
+                className="relative z-10 rounded-xl w-full" 
               />
               
-              {/* Decorative elements */}
+              {/* Animated fruit elements */}
+              <div className="absolute w-full h-full z-20">
+                {/* Apple - rotating and floating */}
+                <motion.div 
+                  className="absolute w-12 h-12 top-8 right-8"
+                  animate={{ 
+                    y: [0, -10, 0],
+                    rotate: [0, 10, 0]
+                  }}
+                  transition={{ 
+                    duration: 3, 
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <img 
+                    src="https://images.unsplash.com/photo-1570913149827-d2ac84ab3f9a?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100" 
+                    alt="Apple" 
+                    className="w-full h-auto rounded-full" 
+                  />
+                </motion.div>
+                
+                {/* Broccoli - scaling and floating */}
+                <motion.div 
+                  className="absolute w-14 h-14 bottom-24 left-4"
+                  animate={{ 
+                    y: [0, 15, 0],
+                    scale: [1, 1.05, 1]
+                  }}
+                  transition={{ 
+                    duration: 4, 
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 0.5
+                  }}
+                >
+                  <img 
+                    src="https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100" 
+                    alt="Broccoli" 
+                    className="w-full h-auto rounded-full" 
+                  />
+                </motion.div>
+                
+                {/* Avocado - moving side to side */}
+                <motion.div 
+                  className="absolute w-12 h-12 top-1/3 -left-6"
+                  animate={{ 
+                    x: [0, 10, 0],
+                    rotate: [0, -10, 0]
+                  }}
+                  transition={{ 
+                    duration: 3.5, 
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 1
+                  }}
+                >
+                  <img 
+                    src="https://images.unsplash.com/photo-1519162808019-7de1683fa2ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100" 
+                    alt="Avocado" 
+                    className="w-full h-auto" 
+                  />
+                </motion.div>
+                
+                {/* Orange - spinning slowly */}
+                <motion.div 
+                  className="absolute w-10 h-10 bottom-12 right-10"
+                  animate={{ 
+                    rotate: [0, 360],
+                    y: [0, -5, 0]
+                  }}
+                  transition={{ 
+                    duration: 10, 
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                >
+                  <img 
+                    src="https://images.unsplash.com/photo-1557800636-894a64c1696f?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100" 
+                    alt="Orange" 
+                    className="w-full h-auto rounded-full" 
+                  />
+                </motion.div>
+                
+                {/* Banana - moving in arc */}
+                <motion.div 
+                  className="absolute w-14 h-14 -bottom-4 right-1/4"
+                  animate={{ 
+                    y: [0, 10, 0],
+                    x: [0, 15, 0],
+                    rotate: [0, 15, 0]
+                  }}
+                  transition={{ 
+                    duration: 5, 
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 2
+                  }}
+                >
+                  <img 
+                    src="https://images.unsplash.com/photo-1603833665858-e61d17a86224?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100" 
+                    alt="Banana" 
+                    className="w-full h-auto rounded-full" 
+                  />
+                </motion.div>
+              </div>
+              
+              {/* Decorative element */}
               <div className="absolute -top-4 -right-4 bg-white rounded-full p-2 z-20 shadow-md">
                 <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center">
                   <div className="w-8 h-8 border-2 border-white rounded-full" style={{ background: 'linear-gradient(135deg, orange, yellow)' }}></div>
                 </div>
-              </div>
-              
-              {/* Avocado decoration */}
-              <div className="absolute -left-6 top-1/4 w-16 h-16 z-20">
-                <img 
-                  src="https://images.unsplash.com/photo-1519162808019-7de1683fa2ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100" 
-                  alt="Avocado" 
-                  className="w-full h-auto" 
-                />
-              </div>
-              
-              {/* Small food element at bottom */}
-              <div className="absolute -bottom-4 -right-2 w-20 h-20 z-20">
-                <img 
-                  src="https://images.unsplash.com/photo-1557800636-894a64c1696f?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100" 
-                  alt="Healthy food" 
-                  className="w-full h-auto rounded-md" 
-                />
               </div>
             </div>
           </motion.div>
