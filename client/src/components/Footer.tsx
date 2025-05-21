@@ -39,7 +39,7 @@ export default function Footer() {
           <div>
             <Link href="/" className="flex items-center mb-6">
             <span className="text-primary text-2xl font-bold font-poppins">
-              Jelena <span className="text-dark">Matijaš</span>
+              NutriHub
             </span>
           </Link>
             <p className="text-gray-600 mb-6">
