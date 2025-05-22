@@ -9,6 +9,7 @@ import SocialMediaSection from "@/components/SocialMediaSection";
 import ContactSection from "@/components/ContactSection";
 import PodcastSection from "@/components/PodcastSection";
 import VideoSection from "@/components/VideoSection";
+import NutritionQuiz from "@/components/NutritionQuiz";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Testimonial, BlogPost } from "@/lib/types";
@@ -42,6 +43,7 @@ export default function Home() {
       <AboutSection />
       {/* Pricing section is directly in HeroSection component now */}
       <ServicesSection />
+      <NutritionQuiz />
       <BMICalculator />
       <VideoSection />
       <PodcastSection />
