@@ -35,10 +35,10 @@ export default function Home() {
   return (
     <>
       <HeroSection />
+      <ProcessSection />
       <AboutSection />
       <ServicesSection />
       <BMICalculator />
-      <ProcessSection />
       <TestimonialsSection testimonials={testimonials} />
       <BlogSection posts={blogPosts} />
       <SocialMediaSection />
