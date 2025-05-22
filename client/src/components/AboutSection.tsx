@@ -19,8 +19,8 @@ export default function AboutSection() {
           >
             <div className="relative">
               <img 
-                src="https://images.unsplash.com/photo-1551076805-e1869033e561?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=700" 
-                alt="Jelena Matijaš, Professional Nutritionist" 
+                src="https://images.unsplash.com/photo-1607453998774-d533f65dac99?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=700" 
+                alt="Professional Nutritionist creating healthy meal plans" 
                 className="rounded-lg shadow-xl w-full h-auto object-cover" 
               />
               <div className="absolute -bottom-6 -right-6 bg-secondary rounded-lg p-4 shadow-lg">
