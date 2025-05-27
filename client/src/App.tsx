@@ -1,6 +1,7 @@
 import { Switch, Route } from "wouter";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toaster";
+import { LanguageProvider } from "./hooks/useLanguage";
 import Layout from "@/components/Layout";
 import Home from "@/pages/Home";
 import NotFound from "@/pages/not-found";
@@ -16,12 +17,14 @@ function Router() {
 
 function App() {
   return (
-    <TooltipProvider>
-      <Layout>
-        <Router />
-      </Layout>
-      <Toaster />
-    </TooltipProvider>
+    <LanguageProvider>
+      <TooltipProvider>
+        <Layout>
+          <Router />
+        </Layout>
+        <Toaster />
+      </TooltipProvider>
+    </LanguageProvider>
   );
 }
 

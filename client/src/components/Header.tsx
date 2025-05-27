@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
+import { useLanguage } from "@/hooks/useLanguage";
+import LanguageSelector from "./LanguageSelector";
 
 export default function Header() {
+  const { t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
