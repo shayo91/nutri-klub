@@ -1,12 +1,5 @@
-import { createContext, useContext, ReactNode } from 'react';
+import { createContext, useContext, ReactNode } from "react";
 
-interface LanguageContextType {
-  t: (key: string) => string;
-}
-
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
-
-// Svi tekstovi su sada na srpskom - samo jedan jezik
 const translations = {
   // Navigacija
   'nav.home': 'Početna',
@@ -14,41 +7,32 @@ const translations = {
   'nav.services': 'Usluge',
   'nav.blog': 'Blog',
   'nav.contact': 'Kontakt',
-  
+
   // Hero sekcija
-  'hero.brand': 'NutriHub',
-  'hero.title': 'Transformišite Svoje Zdravlje Uz Stručnu Nutricionistu',
-  'hero.subtitle': 'Sertifikovani nutricionista sa preko 15 godina iskustva. Kreiram personalizovane planove ishrane koji se uklapaju u vaš život i pomažu vam da postignete trajne rezultate kroz naučno zasnovane pristupe.',
-  'hero.cta': 'Zakažite Konsultaciju',
-  'hero.cta2': 'Saznajte Više',
-  
+  'hero.brand': 'Jelena Matijaš',
+  'hero.title': 'Vaš Put ka Zdravijoj Ishrani Počinje Ovde',
+  'hero.subtitle': 'Sertifikovani nutricionista sa 5+ godina iskustva u kreiranju personalizovanih planova ishrane koji donose trajne rezultate.',
+  'hero.cta': 'Zakaži Besplatnu Konsultaciju',
+  'hero.cta2': 'Izračunaj BMI',
+
   // O meni sekcija
   'about.subtitle': 'O MENI',
   'about.title': 'Jelena Matijaš - Vaš Partner u Zdravlju',
-  'about.cta': 'Zakažite Konsultaciju',
-  
-  // Proces sekcija
-  'process.subtitle': 'NAŠ PROCES',
-  'process.title': 'Kako Kreiramo Vaš Plan Ishrane',
-  'process.description': 'Moj personalizovani pristup osigurava da vaš plan ishrane bude jedinstven kao što ste vi, dizajniran da odgovara vašem načinu života i pomogne vam da postignete svoje ciljeve kroz održive promene.',
-  
+  'about.description': 'Sa magistarskim diplomom iz nutritivnih nauka i 5+ godina iskustva, pomažem ljudima da pronađu ravnotežu između ukusne hrane i zdravog načina života.',
+
   // Usluge sekcija
-  'services.subtitle': 'NAŠE USLUGE',
-  'services.title': 'Kompletan Spektar Usluga Ishrane',
-  'services.description': 'Od personalizovanih planova ishrane do grupnih radionica - otkrijte kako mogu da vam pomognem da postignete optimalno zdravlje kroz pravilnu ishranu.',
-  
-  // Kviz sekcija
-  'quiz.subtitle': 'PERSONALIZOVANA ISHRANA',
-  'quiz.title': 'Otkrijte Svoj Idealan Plan Ishrane',
-  'quiz.description': 'Uradite naš detaljni kviz da biste dobili personalizovane preporuke zasnovane na vašim zdravstvenim ciljevima, životnim navikama i preferencijama u ishrani.',
-  'quiz.ready.title': 'Spremni da pronađete plan ishrane koji vam odgovara?',
-  'quiz.ready.description': 'Kroz nekoliko jednostavnih pitanja ću analizirati vaše potrebe i kreirati preporuke koje će vam pomoći da ostvarite željene rezultate na zdrav i održiv način.',
-  'quiz.start': 'Započni Kviz',
-  
+  'services.subtitle': 'USLUGE',
+  'services.title': 'Personalizovane Usluge za Vaše Potrebe',
+  'services.description': 'Nudim sveobuhvatan pristup ishrani kroz različite usluge prilagođene vašim životnim potrebama i ciljevima.',
+
+  // Proces sekcija
+  'process.subtitle': 'PROCES',
+  'process.title': 'Kako Funkcioniše Moj Pristup',
+  'process.description': 'Moj proces rada je sistematičan i individualizovan, osmišljen da vam pruži najbolje rezultate kroz jasno definisane korake.',
+
   // BMI sekcija
-  'bmi.subtitle': 'ANALIZA ZDRAVLJA',
   'bmi.title': 'BMI Kalkulator & Analiza Zdravstvenog Statusa',
-  'bmi.description': 'Izračunajte svoj Indeks Telesne Mase (BMI) kao početnu tačku za razumevanje vašeg zdravstvenog statusa. Važno je napomenuti da BMI treba posmatrati uz druge faktore za kompletnu sliku.',
+  'bmi.description': 'Izračunajte svoj Indeks Telesne Mase (BMI) kao početnu tačku za razumevanje vašeg zdravstvenog statusa.',
   'bmi.calculator.title': 'Izračunajte Svoj BMI',
   'bmi.categories': 'BMI Kategorije',
   'bmi.calculate': 'Izračunaj BMI',
@@ -58,54 +42,114 @@ const translations = {
   'bmi.gender': 'Pol',
   'bmi.male': 'Muški',
   'bmi.female': 'Ženski',
-  
+
+  // Kviz sekcija
+  'quiz.subtitle': 'KVIZ O ISHRANI',
+  'quiz.title': 'Testirajte Svoje Znanje o Ishrani',
+  'quiz.description': 'Pройдите naš interaktivni kviz i saznajte koliko znate o zdravoj ishrani. Dobićete personalizovane preporuke na osnovu odgovora.',
+  'quiz.start': 'Započni Kviz',
+
   // Video sekcija
   'videos.subtitle': 'EDUKATIVNI SADRŽAJ',
   'videos.title': 'Naučite Kroz Video Materijale',
-  'videos.description': 'Pristupite mojoj kolekciji edukativnih video materijala koji pokrivaju sve aspekte zdrave ishrane - od osnovnih principa do naprednih tehnika pripreme obroka.',
-  
+  'videos.description': 'Pristupite mojoj kolekciji edukativnih video materijala koji pokrivaju sve aspekte zdrave ishrane.',
+
   // Podcast sekcija
   'podcasts.subtitle': 'AUDIO SADRŽAJ',
   'podcasts.title': 'Slušajte Ekspertske Savete o Ishrani',
-  'podcasts.description': 'Poslušajte moje podkaste gde delim najnovija saznanja iz oblasti ishrane, intervjue sa kolegama i praktične savete koje možete primeniti već danas.',
-  
+  'podcasts.description': 'Poslušajte moje podkaste gde delim najnovija saznanja iz oblasti ishrane.',
+
   // Iskustva sekcija
   'testimonials.subtitle': 'USPEŠNE PRIČE',
   'testimonials.title': 'Šta Kažu Moji Klijenti',
-  'testimonials.description': 'Pročitajte iskustva ljudi koji su uz moju pomoć transformisali svoj način ishrane i kvalitet života. Njihove priče su najbolji dokaz efikasnosti našeg pristupa.',
-  
+  'testimonials.description': 'Pročitajte iskustva ljudi koji su uz moju pomoć transformisali svoj način ishrane.',
+
   // Blog sekcija
   'blog.subtitle': 'BLOG O ISHRANI',
   'blog.title': 'Recepti, Saveti i Najnovosti',
-  'blog.description': 'Pratite moj blog za najnovije članke o zdravoj ishrani, ukusne i nutritivne recepte, kao i savete koji će vam pomoći da održite zdravu lifestyle.',
-  
+  'blog.description': 'Pratite moj blog za najnovije članke o zdravoj ishrani, ukusne i nutritivne recepte.',
+
   // Društvene mreže sekcija
   'social.subtitle': 'DRUŠTVENE MREŽE',
   'social.title': 'Pratite Me za Dnevnu Motivaciju',
-  'social.description': 'Budite deo naše zajednice na Instagramu i TikToku gde svakodnevno delim kratke savete, recepte, motivaciju i odgovore na česta pitanja o ishrani.',
+  'social.description': 'Budite deo naše zajednice na Instagramu i TikToku.',
   'social.instagram': 'Instagram Sadržaj',
   'social.tiktok': 'TikTok Videi',
   'social.follow': 'Pratite na Instagramu',
-  
+
   // Kontakt sekcija
   'contact.subtitle': 'KONTAKT',
   'contact.title': 'Spremni za Promenu?',
-  'contact.description': 'Kontaktirajte me danas i započnimo zajedno putovanje ka vašem boljem zdravlju. Dostupna sam za konsultacije, pitanja i zakazivanje termina.',
+  'contact.description': 'Kontaktirajte me danas i započnimo zajedno putovanje ka vašem boljem zdravlju.',
   'contact.form.title': 'Pošaljite Poruku',
   'contact.info.title': 'Kontakt Informacije',
-  
+
   // Footer
-  'footer.tagline': 'Sertifikovani nutricionista posvećen vašem zdravlju. Kroz individualni pristup i naučno zasnovane metode pomažem vam da postignete trajne rezultate.',
+  'footer.tagline': 'Sertifikovani nutricionista posvećen vašem zdravlju.',
   'footer.quicklinks': 'Brze Veze',
   'footer.services': 'Usluge',
   'footer.newsletter': 'Newsletter',
-  'footer.newsletter.description': 'Prijavite se za mesečni newsletter sa savetima o ishrani, sezonskim receptima i ekskluzivnim ponudama.',
+  'footer.newsletter.description': 'Prijavite se za mesečni newsletter sa savetima o ishrani.',
   'footer.subscribe': 'Prijavite se',
+
+  // Pricing sekcija
+  'pricing.subtitle': 'CENOVNIK',
+  'pricing.title': 'Izaberite Plan Koji Vam Odgovara',
+  'pricing.description': 'Nudim fleksibilne pakete prilagođene različitim potrebama i budžetima.',
+  'pricing.basic': 'Osnovni',
+  'pricing.premium': 'Premium',
+  'pricing.vip': 'VIP',
+  'pricing.popular': 'Najpopularniji',
+  'pricing.contact': 'Kontaktiraj',
+  'pricing.choose': 'Izaberi Plan',
+
+  // Dugmad i linkovi
+  'button.learn_more': 'Saznaj Više',
+  'button.read_more': 'Čitaj Više',
+  'button.view_all': 'Prikaži Sve',
+  'button.contact_us': 'Kontaktiraj Nas',
+  'button.get_started': 'Počni Odmah',
+  'button.book_consultation': 'Zakaži Konsultaciju',
+  'button.download': 'Preuzmi',
+  'button.play': 'Reprodukuj',
+  'button.pause': 'Pauza',
+  'button.next': 'Sledeće',
+  'button.previous': 'Prethodno',
+  'button.close': 'Zatvori',
+  'button.submit': 'Pošalji',
+  'button.subscribe': 'Pretplati se',
+
+  // Forma labeli
+  'form.name': 'Ime',
+  'form.email': 'Email',
+  'form.subject': 'Naslov',
+  'form.message': 'Poruka',
+  'form.phone': 'Telefon',
+  'form.required': 'Obavezno polje',
+  'form.sending': 'Šalje se...',
+  'form.sent': 'Poslato!',
+  'form.error': 'Greška prilikom slanja',
+
+  // Ostalo
+  'loading': 'Učitava...',
+  'error': 'Greška',
+  'success': 'Uspešno',
+  'welcome': 'Dobrodošli',
+  'thank_you': 'Hvala vam',
+  'read_more': 'Čitaj više',
+  'view_all': 'Pogledaj sve',
+  'coming_soon': 'Uskoro',
 };
+
+interface LanguageContextType {
+  t: (key: string) => string;
+}
+
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const t = (key: string): string => {
-    return translations[key as keyof typeof translations] || key;
+    return (translations as any)[key] || key;
   };
 
   return (
