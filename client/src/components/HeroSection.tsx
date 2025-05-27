@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
+import { useLanguage } from "@/hooks/useLanguage";
+import doctorImage from "@assets/Screenshot 2025-05-27 at 15.18.08.png";
 
 export default function HeroSection() {
+  const { t } = useLanguage();
   const { ref: contentRef, inView: contentInView } = useAnimateOnScroll();
   const { ref: pricingRef, inView: pricingInView } = useAnimateOnScroll(0.2);
   
@@ -122,269 +125,129 @@ export default function HeroSection() {
         </div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <motion.div 
-            ref={contentRef}
-            initial={{ opacity: 0, y: 30 }}
-            animate={contentInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-screen-lg mx-auto text-center"
-          >
-            {/* Brand name */}
-            <div className="mb-4">
-              <h1 
-                className="text-4xl md:text-5xl font-light" 
-                style={{ fontFamily: 'serif', color: '#5CAA48' }}
-              >
-                NutriHub
-              </h1>
-            </div>
-            
-            {/* Main headline */}
-            <h2 className="text-4xl md:text-6xl font-light mb-6" style={{ color: '#333', fontFamily: 'serif' }}>
-              Transform Your Health With <span className="text-primary font-normal">Expert Nutrition</span>
-            </h2>
-            
-            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-10 leading-relaxed">
-              Personalized nutrition plans designed to help you achieve optimal health, increased energy, and lasting wellness through science-backed dietary strategies.
-            </p>
-            
-            {/* Hero image */}
+          <div className="flex flex-col lg:flex-row items-center gap-12">
+            {/* Left side - Content */}
             <motion.div 
-              className="mb-10 relative"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              ref={contentRef}
+              initial={{ opacity: 0, x: -50 }}
+              animate={contentInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+              transition={{ duration: 0.8 }}
+              className="lg:w-1/2"
             >
-              <div className="relative mx-auto max-w-4xl overflow-hidden rounded-2xl shadow-2xl">
-                <img 
-                  src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600&q=80" 
-                  alt="Professional nutritionist designing custom meal plans" 
-                  className="w-full h-auto object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-transparent mix-blend-overlay"></div>
+              {/* Brand name */}
+              <div className="mb-6">
+                <h1 
+                  className="text-3xl md:text-4xl font-light mb-2" 
+                  style={{ fontFamily: 'serif', color: '#5CAA48' }}
+                >
+                  {t('hero.brand')}
+                </h1>
               </div>
               
-              {/* Floating nutrition elements */}
-              <motion.div 
-                className="absolute -top-5 -right-5 md:top-5 md:right-5 bg-white p-3 rounded-full shadow-lg z-10"
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              {/* Main headline */}
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight" style={{ color: '#333' }}>
+                Vaše Zdravlje Je <span className="text-primary">Naša Misija</span>
+              </h2>
+              
+              <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
+                Stručni nutricionista sa preko 10 godina iskustva u kreiranju personalizovanih planova ishrane za optimalno zdravlje i dugotrajan wellness.
+              </p>
+              
+              {/* CTA Button */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="flex flex-col sm:flex-row gap-4"
               >
-                <div className="w-16 h-16 md:w-20 md:h-20 bg-green-100 rounded-full flex items-center justify-center text-green-600">
-                  <svg className="w-8 h-8 md:w-10 md:h-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 6V12M12 12V18M12 12H18M12 12H6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <a 
+                  href="#contact" 
+                  className="inline-flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary-dark text-white text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg"
+                >
+                  Zakažite Konsultaciju
+                  <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                   </svg>
-                </div>
+                </a>
+                <a 
+                  href="#process" 
+                  className="inline-flex items-center justify-center px-8 py-4 border-2 border-primary text-primary hover:bg-primary hover:text-white text-lg font-semibold rounded-full transition-all duration-300"
+                >
+                  Saznajte Više
+                </a>
               </motion.div>
               
+              {/* Trust indicators */}
               <motion.div 
-                className="absolute top-1/2 -left-5 md:left-5 bg-white p-3 rounded-full shadow-lg z-10"
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                className="mt-8 flex flex-wrap items-center gap-6 text-sm text-gray-600"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
               >
-                <div className="w-16 h-16 md:w-20 md:h-20 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600">
-                  <svg className="w-8 h-8 md:w-10 md:h-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <div className="flex items-center">
+                  <svg className="w-5 h-5 text-primary mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
+                  500+ Zadovoljnih Klijenata
+                </div>
+                <div className="flex items-center">
+                  <svg className="w-5 h-5 text-primary mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  10+ Godina Iskustva
+                </div>
+                <div className="flex items-center">
+                  <svg className="w-5 h-5 text-primary mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  Sertifikovani Stručnjak
                 </div>
               </motion.div>
             </motion.div>
-            
-            {/* CTA Button */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-            >
-              <a 
-                href="#pricing" 
-                className="inline-flex items-center px-8 py-4 bg-primary hover:bg-primary-dark text-white text-lg font-medium rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg"
-              >
-                Explore Nutrition Plans
-                <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                </svg>
-              </a>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
 
-      {/* Pricing Section */}
-      <section id="pricing" className="py-16 md:py-24 bg-white">
-        <div className="container mx-auto px-4">
-          <motion.div 
-            ref={pricingRef}
-            initial={{ opacity: 0, y: 30 }}
-            animate={pricingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.6 }}
-            className="text-center max-w-3xl mx-auto mb-16"
-          >
-            <p className="text-primary font-medium tracking-wide uppercase mb-2">NUTRITION PLANS</p>
-            <h2 className="text-3xl md:text-4xl font-bold font-poppins mb-6">
-              Choose Your Path to Better Health
-            </h2>
-            <p className="text-gray-600">
-              We offer personalized nutrition plans designed to meet your specific health goals, dietary preferences, and lifestyle needs.
-            </p>
-          </motion.div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {/* Basic Plan */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={pricingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="bg-gray-50 rounded-xl shadow-lg overflow-hidden"
+            {/* Right side - Doctor Image */}
+            <motion.div 
+              className="lg:w-1/2"
+              initial={{ opacity: 0, x: 50 }}
+              animate={contentInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <div className="p-8">
-                <h3 className="text-xl font-bold mb-4">Essential Plan</h3>
-                <div className="mb-6">
-                  <span className="text-4xl font-bold">$49</span>
-                  <span className="text-gray-500">/month</span>
-                </div>
-                <p className="text-gray-600 mb-6">Perfect for individuals starting their nutrition journey.</p>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span>Basic nutritional assessment</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span>Personalized meal plan</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span>Monthly check-in</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span>Email support</span>
-                  </li>
-                </ul>
-                <a href="#contact" className="block w-full py-3 text-center bg-white border border-primary text-primary hover:bg-gray-50 rounded-lg font-medium transition duration-300">
-                  Get Started
-                </a>
-              </div>
-            </motion.div>
-            
-            {/* Premium Plan - Highlighted */}
-            <motion.div
-              initial={{ opacity: 0, y: 30, scale: 1 }}
-              animate={pricingInView ? { opacity: 1, y: 0, scale: 1.05 } : { opacity: 0, y: 30, scale: 1 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="bg-white rounded-xl shadow-2xl overflow-hidden border-2 border-primary relative z-10 transform hover:scale-105 transition-transform duration-300"
-            >
-              <div className="absolute top-0 inset-x-0 bg-primary text-white text-center py-1 text-sm font-medium">
-                MOST POPULAR
-              </div>
-              <div className="p-8 pt-10">
-                <h3 className="text-xl font-bold mb-4">Premium Plan</h3>
-                <div className="mb-6">
-                  <span className="text-4xl font-bold">$89</span>
-                  <span className="text-gray-500">/month</span>
-                </div>
-                <p className="text-gray-600 mb-6">Comprehensive support for optimal nutrition and wellness.</p>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span>Comprehensive nutrition assessment</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span>Customized meal & recipe plans</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span>Bi-weekly check-ins</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span>Priority email & text support</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span>Nutrition tracking app access</span>
-                  </li>
-                </ul>
-                <a href="#contact" className="block w-full py-3 text-center bg-primary hover:bg-primary-dark text-white rounded-lg font-medium transition duration-300">
-                  Get Started
-                </a>
-              </div>
-            </motion.div>
-            
-            {/* Ultimate Plan */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={pricingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="bg-gray-50 rounded-xl shadow-lg overflow-hidden"
-            >
-              <div className="p-8">
-                <h3 className="text-xl font-bold mb-4">Ultimate Plan</h3>
-                <div className="mb-6">
-                  <span className="text-4xl font-bold">$149</span>
-                  <span className="text-gray-500">/month</span>
-                </div>
-                <p className="text-gray-600 mb-6">The gold standard for those seeking transformative results.</p>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span>Advanced nutrition & health analysis</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span>Fully customized nutrition program</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span>Weekly 1:1 coaching sessions</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span>24/7 direct access to your nutritionist</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span>Premium nutrition app & resources</span>
-                  </li>
-                </ul>
-                <a href="#contact" className="block w-full py-3 text-center bg-white border border-primary text-primary hover:bg-gray-50 rounded-lg font-medium transition duration-300">
-                  Get Started
-                </a>
+              <div className="relative">
+                <img 
+                  src={doctorImage}
+                  alt="Profesionalni nutricionista sa stethoskopom i svežim povrćem - stručnjak za ishranu i zdravlje" 
+                  className="w-full h-auto rounded-2xl shadow-2xl" 
+                />
+                
+                {/* Floating elements */}
+                <motion.div 
+                  className="absolute -top-6 -left-6 bg-white p-4 rounded-xl shadow-lg"
+                  animate={{ y: [0, -10, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-primary">10+</div>
+                    <div className="text-sm text-gray-600">Godina</div>
+                  </div>
+                </motion.div>
+                
+                <motion.div 
+                  className="absolute -bottom-6 -right-6 bg-primary text-white p-4 rounded-xl shadow-lg"
+                  animate={{ y: [0, 10, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                >
+                  <div className="text-center">
+                    <div className="text-2xl font-bold">500+</div>
+                    <div className="text-sm">Klijenata</div>
+                  </div>
+                </motion.div>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
+
+
     </>
   );
 }

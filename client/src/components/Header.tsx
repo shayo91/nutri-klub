@@ -35,23 +35,26 @@ export default function Header() {
         
         {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-8">
-          <a href="#home" className="font-medium text-primary hover:text-primary-dark transition">Home</a>
-          <a href="#about" className="font-medium text-dark hover:text-primary transition">About</a>
-          <a href="#services" className="font-medium text-dark hover:text-primary transition">Services</a>
+          <a href="#home" className="font-medium text-primary hover:text-primary-dark transition">{t('nav.home')}</a>
+          <a href="#about" className="font-medium text-dark hover:text-primary transition">{t('nav.about')}</a>
+          <a href="#services" className="font-medium text-dark hover:text-primary transition">{t('nav.services')}</a>
           <a href="#process" className="font-medium text-dark hover:text-primary transition">Process</a>
           <a href="#testimonials" className="font-medium text-dark hover:text-primary transition">Testimonials</a>
-          <a href="#blog" className="font-medium text-dark hover:text-primary transition">Blog</a>
-          <a href="#contact" className="font-medium text-dark hover:text-primary transition">Contact</a>
+          <a href="#blog" className="font-medium text-dark hover:text-primary transition">{t('nav.blog')}</a>
+          <a href="#contact" className="font-medium text-dark hover:text-primary transition">{t('nav.contact')}</a>
         </nav>
         
-        {/* Contact Info */}
-        <div className="hidden lg:flex items-center space-x-2">
-          <div className="rounded-full bg-secondary p-2">
-            <i className="fas fa-phone text-primary"></i>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">Free Consultation</p>
-            <p className="font-medium">+123 456 7890</p>
+        {/* Language Selector & Contact Info */}
+        <div className="hidden lg:flex items-center space-x-6">
+          <LanguageSelector />
+          <div className="flex items-center space-x-2">
+            <div className="rounded-full bg-secondary p-2">
+              <i className="fas fa-phone text-primary"></i>
+            </div>
+            <div>
+              <p className="text-sm text-gray-500">Free Consultation</p>
+              <p className="font-medium">+123 456 7890</p>
+            </div>
           </div>
         </div>
         

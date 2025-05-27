@@ -3,6 +3,7 @@ import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
 import BMICalculator from "@/components/BMICalculator";
 import ProcessSection from "@/components/ProcessSection";
+import PricingSection from "@/components/PricingSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import BlogSection from "@/components/BlogSection";
 import SocialMediaSection from "@/components/SocialMediaSection";
@@ -39,9 +40,9 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <ProcessSection />
       <AboutSection />
-      {/* Pricing section is directly in HeroSection component now */}
+      <ProcessSection />
+      <PricingSection />
       <ServicesSection />
       <NutritionQuiz />
       <BMICalculator />
