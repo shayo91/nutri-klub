@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { useLanguage } from "@/hooks/useLanguage";
-import LanguageSelector from "./LanguageSelector";
 
 export default function Header() {
   const { t } = useLanguage();
@@ -46,7 +45,7 @@ export default function Header() {
         
         {/* Language Selector & Contact Info */}
         <div className="hidden lg:flex items-center space-x-6">
-          <LanguageSelector />
+
           <div className="flex items-center space-x-2">
             <div className="rounded-full bg-secondary p-2">
               <i className="fas fa-phone text-primary"></i>
