@@ -105,7 +105,7 @@ const translations = {
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const t = (key: string): string => {
-    return translations[key] || key;
+    return translations[key as keyof typeof translations] || key;
   };
 
   return (
