@@ -38,6 +38,20 @@ const translations = {
     'process.subtitle': 'OUR PROCESS',
     'process.title': 'How We Create Your Nutrition Plan',
     'process.description': 'My personalized approach ensures that your nutrition plan is as unique as you are, designed to fit your lifestyle and help you achieve your goals.',
+    
+    // Services Section
+    'services.subtitle': 'OUR SERVICES',
+    'services.title': 'Nutrition Services Tailored to Your Needs',
+    'services.description': 'Discover our comprehensive range of nutrition services designed to help you achieve your health and wellness goals.',
+    
+    // Quiz Section
+    'quiz.subtitle': 'PERSONALIZED NUTRITION',
+    'quiz.title': 'Discover Your Optimal Nutrition Plan',
+    'quiz.description': 'Take our quick quiz to receive personalized nutrition recommendations based on your goals, preferences, and lifestyle.',
+    'quiz.ready.title': 'Ready to Find Your Perfect Nutrition Plan?',
+    'quiz.ready.description': 'Answer 5 quick questions about your goals and preferences, and we\'ll provide personalized nutrition recommendations designed specifically for you.',
+    'quiz.start': 'Start Quiz',
+    
     'process.step1.title': 'Comprehensive Assessment',
     'process.step1.description': 'We begin with a thorough evaluation of your current health status, medical history, lifestyle habits, food preferences, and specific goals.',
     'process.step2.title': 'Personalized Plan Creation',
@@ -92,10 +106,20 @@ const translations = {
     'bmi.female': 'Female',
     'bmi.calculate': 'Calculate BMI',
     
-    // Services
-    'services.subtitle': 'OUR SERVICES',
-    'services.title': 'Professional Nutrition Services',
-    'services.description': 'Comprehensive nutrition solutions tailored to your individual needs and health goals.',
+    // Contact Section
+    'contact.subtitle': 'GET IN TOUCH',
+    'contact.title': 'Contact Me',
+    'contact.description': 'Have questions or ready to start your nutrition journey? Reach out to me for a consultation or to book an appointment.',
+    'contact.form.title': 'Send a Message',
+    'contact.info.title': 'Contact Information',
+    
+    // Footer
+    'footer.tagline': 'Professional nutritionist committed to helping you achieve optimal health through personalized nutrition plans.',
+    'footer.quicklinks': 'Quick Links',
+    'footer.services': 'Services',
+    'footer.newsletter': 'Subscribe to Newsletter',
+    'footer.newsletter.description': 'Stay updated with the latest nutrition tips, recipes, and wellness advice.',
+    'footer.subscribe': 'Subscribe',
     
     // Videos & Podcasts
     'videos.subtitle': 'NUTRITION VIDEOS',
