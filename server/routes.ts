@@ -1,28 +1,46 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { getBlogPosts, getTestimonials, getAnnouncements } from "./notion";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // API Routes
   
-  // Get blog posts
+  // Get blog posts from Notion
   app.get("/api/blog-posts", async (req, res) => {
     try {
-      const posts = await storage.getBlogPosts();
+      const posts = await getBlogPosts();
       res.json(posts);
     } catch (error) {
-      res.status(500).json({ message: "Error fetching blog posts" });
+      console.error("Error fetching blog posts from Notion:", error);
+      // Fallback to storage if Notion fails
+      const posts = await storage.getBlogPosts();
+      res.json(posts);
     }
   });
 
-  // Get testimonials
+  // Get testimonials from Notion
   app.get("/api/testimonials", async (req, res) => {
     try {
-      const testimonials = await storage.getTestimonials();
+      const testimonials = await getTestimonials();
       res.json(testimonials);
     } catch (error) {
-      res.status(500).json({ message: "Error fetching testimonials" });
+      console.error("Error fetching testimonials from Notion:", error);
+      // Fallback to storage if Notion fails
+      const testimonials = await storage.getTestimonials();
+      res.json(testimonials);
+    }
+  });
+
+  // Get announcements from Notion
+  app.get("/api/announcements", async (req, res) => {
+    try {
+      const announcements = await getAnnouncements();
+      res.json(announcements);
+    } catch (error) {
+      console.error("Error fetching announcements from Notion:", error);
+      res.status(500).json({ message: "Error fetching announcements" });
     }
   });
 
