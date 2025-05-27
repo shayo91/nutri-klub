@@ -164,7 +164,7 @@ export default function HeroSection() {
                   href="#contact" 
                   className="inline-flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary-dark text-white text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg"
                 >
-                  Zakažite Konsultaciju
+                  {t('hero.cta')}
                   <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                   </svg>
@@ -173,7 +173,7 @@ export default function HeroSection() {
                   href="#process" 
                   className="inline-flex items-center justify-center px-8 py-4 border-2 border-primary text-primary hover:bg-primary hover:text-white text-lg font-semibold rounded-full transition-all duration-300"
                 >
-                  Saznajte Više
+                  {t('hero.cta2')}
                 </a>
               </motion.div>
               

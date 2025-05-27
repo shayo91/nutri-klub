@@ -22,6 +22,10 @@ const translations = {
     'hero.title': 'Transform Your Health With Expert Nutrition',
     'hero.subtitle': 'Personalized nutrition plans designed to help you achieve optimal health, increased energy, and lasting wellness through science-backed dietary strategies.',
     'hero.cta': 'Start Your Journey',
+    'hero.cta2': 'Learn More',
+    'hero.trust1': '500+ Satisfied Clients',
+    'hero.trust2': '10+ Years Experience', 
+    'hero.trust3': 'Certified Expert',
     
     // About Section
     'about.subtitle': 'ABOUT ME',
@@ -129,9 +133,13 @@ const translations = {
     
     // Hero Section
     'hero.brand': 'NutriHub',
-    'hero.title': 'Transformišite Svoje Zdravlje Uz Stručnu Ishranu',
-    'hero.subtitle': 'Personalizovani planovi ishrane dizajnirani da vam pomognu da postignete optimalno zdravlje, povećanu energiju i trajno blagostanje kroz naučno zasnovane dijetetske strategije.',
-    'hero.cta': 'Počnite Svoj Put',
+    'hero.title': 'Vaše Zdravlje Je Naša Misija',
+    'hero.subtitle': 'Stručni nutricionista sa preko 10 godina iskustva u kreiranju personalizovanih planova ishrane za optimalno zdravlje i dugotrajan wellness.',
+    'hero.cta': 'Zakažite Konsultaciju',
+    'hero.cta2': 'Saznajte Više',
+    'hero.trust1': '500+ Zadovoljnih Klijenata',
+    'hero.trust2': '10+ Godina Iskustva',
+    'hero.trust3': 'Sertifikovani Stručnjak',
     
     // About Section
     'about.subtitle': 'O MENI',
