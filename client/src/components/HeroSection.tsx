@@ -146,11 +146,11 @@ export default function HeroSection() {
               
               {/* Main headline */}
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight" style={{ color: '#333' }}>
-                Vaše Zdravlje Je <span className="text-primary">Naša Misija</span>
+                {t('hero.title')}
               </h2>
               
               <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
-                Stručni nutricionista sa preko 10 godina iskustva u kreiranju personalizovanih planova ishrane za optimalno zdravlje i dugotrajan wellness.
+                {t('hero.subtitle')}
               </p>
               
               {/* CTA Button */}

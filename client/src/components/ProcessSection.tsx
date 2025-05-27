@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
+import { useLanguage } from "@/hooks/useLanguage";
 
 type ProcessStep = {
   id: number;
@@ -49,6 +50,7 @@ const steps: ProcessStep[] = [
 ];
 
 export default function ProcessSection() {
+  const { t } = useLanguage();
   const { ref: headerRef, inView: headerInView } = useAnimateOnScroll();
   const { ref: ctaRef, inView: ctaInView } = useAnimateOnScroll(0.6);
 
@@ -62,12 +64,12 @@ export default function ProcessSection() {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <p className="text-primary font-medium tracking-wide uppercase mb-2">OUR PROCESS</p>
+          <p className="text-primary font-medium tracking-wide uppercase mb-2">{t('process.subtitle')}</p>
           <h2 className="text-3xl md:text-4xl font-bold font-poppins mb-6">
-            How We Create Your Nutrition Plan
+            {t('process.title')}
           </h2>
           <p className="text-gray-600">
-            My personalized approach ensures that your nutrition plan is as unique as you are, designed to fit your lifestyle and help you achieve your goals.
+            {t('process.description')}
           </p>
         </motion.div>
         

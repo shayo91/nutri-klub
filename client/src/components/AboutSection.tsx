@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export default function AboutSection() {
+  const { t } = useLanguage();
   const { ref: imageRef, inView: imageInView } = useAnimateOnScroll();
   const { ref: contentRef, inView: contentInView } = useAnimateOnScroll(0.3);
 
@@ -38,15 +40,15 @@ export default function AboutSection() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="lg:w-7/12"
           >
-            <p className="text-primary font-medium tracking-wide uppercase mb-2">ABOUT ME</p>
+            <p className="text-primary font-medium tracking-wide uppercase mb-2">{t('about.subtitle')}</p>
             <h2 className="text-3xl md:text-4xl font-bold font-poppins mb-6">
-              Professional Nutritionist With a Passion for Healthy Living
+              {t('about.title')}
             </h2>
             <p className="text-gray-600 mb-6">
-              I'm Jelena Matijaš, a certified nutritionist with a Master's degree in Nutrition Science and over 10 years of experience helping clients transform their health through personalized nutrition plans.
+              {t('about.description1')}
             </p>
             <p className="text-gray-600 mb-6">
-              My approach combines scientific knowledge with practical, sustainable solutions that fit your lifestyle. I believe that nutrition should be enjoyable, not restrictive, and that small, consistent changes lead to remarkable results.
+              {t('about.description2')}
             </p>
             
             {/* Qualifications */}
