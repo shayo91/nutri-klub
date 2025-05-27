@@ -8,6 +8,8 @@ interface LanguageContextType {
   t: (key: string) => string;
 }
 
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
 const translations = {
   en: {
     // Navigation
@@ -23,15 +25,10 @@ const translations = {
     'hero.subtitle': 'Personalized nutrition plans designed to help you achieve optimal health, increased energy, and lasting wellness through science-backed dietary strategies.',
     'hero.cta': 'Start Your Journey',
     'hero.cta2': 'Learn More',
-    'hero.trust1': '500+ Satisfied Clients',
-    'hero.trust2': '10+ Years Experience', 
-    'hero.trust3': 'Certified Expert',
     
     // About Section
     'about.subtitle': 'ABOUT ME',
     'about.title': 'Professional Nutritionist With a Passion for Healthy Living',
-    'about.description1': "I'm a certified nutritionist with a Master's degree in Nutrition Science and over 10 years of experience helping clients transform their health through personalized nutrition plans.",
-    'about.description2': 'My approach combines scientific knowledge with practical, sustainable solutions that fit your lifestyle. I believe that nutrition should be enjoyable, not restrictive, and that small, consistent changes lead to remarkable results.',
     'about.cta': 'Book a Consultation',
     
     // Process Section
@@ -52,59 +49,47 @@ const translations = {
     'quiz.ready.description': 'Answer 5 quick questions about your goals and preferences, and we\'ll provide personalized nutrition recommendations designed specifically for you.',
     'quiz.start': 'Start Quiz',
     
-    'process.step1.title': 'Comprehensive Assessment',
-    'process.step1.description': 'We begin with a thorough evaluation of your current health status, medical history, lifestyle habits, food preferences, and specific goals.',
-    'process.step2.title': 'Personalized Plan Creation',
-    'process.step2.description': 'Using the information gathered, I develop a customized nutrition plan that aligns with your objectives while considering your preferences and lifestyle.',
-    'process.step3.title': 'Implementation & Support',
-    'process.step3.description': 'I provide ongoing guidance and support to ensure successful implementation of your nutrition plan with regular adjustments as needed.',
-    'process.cta': 'Start Your Nutrition Journey',
-    
-    // Pricing Section
-    'pricing.subtitle': 'NUTRITION PLANS',
-    'pricing.title': 'Choose Your Path to Better Health',
-    'pricing.description': 'We offer personalized nutrition plans designed to meet your specific health goals, dietary preferences, and lifestyle needs.',
-    'pricing.plan1.title': 'Essential Plan',
-    'pricing.plan1.description': 'Perfect for individuals starting their nutrition journey.',
-    'pricing.plan2.title': 'Premium Plan',
-    'pricing.plan2.description': 'Comprehensive support for optimal nutrition and wellness.',
-    'pricing.plan3.title': 'Ultimate Plan',
-    'pricing.plan3.description': 'The gold standard for those seeking transformative results.',
-    'pricing.cta': 'Get Started',
-    'pricing.popular': 'MOST POPULAR',
-    
-    // Quiz Section
-    'quiz.subtitle': 'PERSONALIZED NUTRITION',
-    'quiz.title': 'Discover Your Optimal Nutrition Plan',
-    'quiz.description': 'Take our quick quiz to receive personalized nutrition recommendations based on your goals, preferences, and lifestyle.',
-    'quiz.start': 'Start Quiz',
-    'quiz.next': 'Next',
-    'quiz.previous': 'Previous',
-    'quiz.results': 'See Results',
-    'quiz.retake': 'Retake Quiz',
-    
-    // Contact Section
-    'contact.subtitle': 'GET IN TOUCH',
-    'contact.title': 'Ready to Transform Your Health?',
-    'contact.description': "Let's discuss your nutrition goals and create a personalized plan that works for your lifestyle.",
-    'contact.form.name': 'Your Name',
-    'contact.form.email': 'Your Email',
-    'contact.form.subject': 'Subject',
-    'contact.form.message': 'Your Message',
-    'contact.form.privacy': 'I agree to the privacy policy',
-    'contact.form.submit': 'Send Message',
-    
-    // BMI Calculator
+    // BMI Section
     'bmi.subtitle': 'HEALTH ASSESSMENT',
-    'bmi.title': 'Calculate Your BMI',
-    'bmi.description': 'Get a quick assessment of your body mass index and understand what it means for your health.',
+    'bmi.title': 'BMI Calculator & Health Chart',
+    'bmi.description': 'Calculate your Body Mass Index (BMI) to get a quick assessment of your weight status. Remember, BMI is just one indicator of health and should be considered alongside other factors.',
+    'bmi.calculator.title': 'Calculate Your BMI',
+    'bmi.categories': 'BMI Categories',
+    'bmi.calculate': 'Calculate BMI',
     'bmi.weight': 'Weight',
     'bmi.height': 'Height',
     'bmi.age': 'Age',
     'bmi.gender': 'Gender',
     'bmi.male': 'Male',
     'bmi.female': 'Female',
-    'bmi.calculate': 'Calculate BMI',
+    
+    // Videos Section
+    'videos.subtitle': 'NUTRITION VIDEOS',
+    'videos.title': 'Watch Valuable Nutrition Content',
+    'videos.description': 'Explore our video library filled with practical advice, cooking demonstrations, and nutritional insights to help you on your health journey.',
+    
+    // Podcasts Section
+    'podcasts.subtitle': 'NUTRITION PODCASTS',
+    'podcasts.title': 'Listen to Expert Nutrition Advice',
+    'podcasts.description': 'Tune into our podcasts for the latest nutrition insights, expert interviews, and practical tips to enhance your health journey.',
+    
+    // Testimonials Section
+    'testimonials.subtitle': 'TESTIMONIALS',
+    'testimonials.title': 'What My Clients Say',
+    'testimonials.description': 'Read about the experiences and results from people who have transformed their health and lives through our nutrition programs.',
+    
+    // Blog Section
+    'blog.subtitle': 'NUTRITION BLOG',
+    'blog.title': 'Recipes & Nutrition Tips',
+    'blog.description': 'Explore our collection of healthy recipes, nutrition advice, and wellness tips to help you on your journey to better health.',
+    
+    // Social Media Section
+    'social.subtitle': 'SOCIAL MEDIA',
+    'social.title': 'Follow Me For Daily Inspiration',
+    'social.description': 'Join our community on Instagram and TikTok for daily nutrition tips, recipe ideas, and wellness motivation.',
+    'social.instagram': 'Instagram Feed',
+    'social.tiktok': 'TikTok Videos',
+    'social.follow': 'Follow on Instagram',
     
     // Contact Section
     'contact.subtitle': 'GET IN TOUCH',
@@ -120,37 +105,12 @@ const translations = {
     'footer.newsletter': 'Subscribe to Newsletter',
     'footer.newsletter.description': 'Stay updated with the latest nutrition tips, recipes, and wellness advice.',
     'footer.subscribe': 'Subscribe',
-    
-    // Videos & Podcasts
-    'videos.subtitle': 'NUTRITION VIDEOS',
-    'videos.title': 'Watch Valuable Nutrition Content',
-    'videos.description': 'Explore our video library filled with practical advice, cooking demonstrations, and nutritional insights.',
-    'podcasts.subtitle': 'NUTRITION PODCASTS',
-    'podcasts.title': 'Listen to Expert Nutrition Advice',
-    'podcasts.description': 'Tune into our podcasts for the latest nutrition insights and expert interviews.',
-    
-    // Testimonials
-    'testimonials.subtitle': 'TESTIMONIALS',
-    'testimonials.title': 'What Our Clients Say',
-    'testimonials.description': 'Real stories from people who transformed their health with our nutrition programs.',
-    
-    // Blog
-    'blog.subtitle': 'NUTRITION BLOG',
-    'blog.title': 'Latest Nutrition Insights',
-    'blog.description': 'Stay updated with the latest nutrition science, healthy recipes, and wellness tips.',
-    'blog.readMore': 'Read More',
-    'blog.allPosts': 'All Posts',
-    
-    // Common
-    'common.learnMore': 'Learn More',
-    'common.getStarted': 'Get Started',
-    'common.loading': 'Loading...',
-    'common.error': 'An error occurred',
   },
+  
   sr: {
     // Navigation
     'nav.home': 'Početna',
-    'nav.about': 'O meni',
+    'nav.about': 'O Meni',
     'nav.services': 'Usluge',
     'nav.blog': 'Blog',
     'nav.contact': 'Kontakt',
@@ -161,115 +121,94 @@ const translations = {
     'hero.subtitle': 'Stručni nutricionista sa preko 10 godina iskustva u kreiranju personalizovanih planova ishrane za optimalno zdravlje i dugotrajan wellness.',
     'hero.cta': 'Zakažite Konsultaciju',
     'hero.cta2': 'Saznajte Više',
-    'hero.trust1': '500+ Zadovoljnih Klijenata',
-    'hero.trust2': '10+ Godina Iskustva',
-    'hero.trust3': 'Sertifikovani Stručnjak',
     
     // About Section
     'about.subtitle': 'O MENI',
     'about.title': 'Profesionalni Nutricionista Sa Strašću Za Zdrav Život',
-    'about.description1': 'Ja sam sertifikovani nutricionista sa magistarskim stepenom iz nauke o ishrani i preko 10 godina iskustva u pomaganju klijentima da transformišu svoje zdravlje kroz personalizovane planove ishrane.',
-    'about.description2': 'Moj pristup kombinuje naučno znanje sa praktičnim, održivim rešenjima koja odgovaraju vašem životnom stilu. Verujem da ishrana treba da bude prijatna, a ne ograničavajuća, i da male, dosledne promene vode do izuzetnih rezultata.',
     'about.cta': 'Zakažite Konsultaciju',
     
     // Process Section
     'process.subtitle': 'NAŠ PROCES',
     'process.title': 'Kako Kreiramo Vaš Plan Ishrane',
-    'process.description': 'Moj personalizovani pristup osigurava da vaš plan ishrane bude jedinstven kao što ste vi, dizajniran da odgovara vašem životnom stilu i pomogne vam da postignete svoje ciljeve.',
-    'process.step1.title': 'Sveobuhvatna Procena',
-    'process.step1.description': 'Počinjemo temeljnim evaluiranjem vašeg trenutnog zdravstvenog stanja, medicinske istorije, životnih navika, prehrambenih preferencija i specifičnih ciljeva.',
-    'process.step2.title': 'Kreiranje Personalizovanog Plana',
-    'process.step2.description': 'Koristeći prikupljene informacije, razvijam prilagođeni plan ishrane koji se usklađuje sa vašim ciljevima, uzimajući u obzir vaše preferencije i životni stil.',
-    'process.step3.title': 'Implementacija i Podrška',
-    'process.step3.description': 'Pružam kontinuirano vođenje i podršku kako bih osigurao uspešnu implementaciju vašeg plana ishrane sa redovnim prilagođavanjima prema potrebi.',
-    'process.cta': 'Počnite Svoje Nutritivno Putovanje',
+    'process.description': 'Moj personalizovani pristup osigurava da vaš plan ishrane bude jedinstven kao što ste vi, dizajniran da odgovara vašem načinu života i pomogne vam da postignete svoje ciljeve.',
     
-    // Pricing Section
-    'pricing.subtitle': 'PLANOVI ISHRANE',
-    'pricing.title': 'Odaberite Svoj Put Ka Boljem Zdravlju',
-    'pricing.description': 'Nudimo personalizovane planove ishrane dizajnirane da zadovolje vaše specifične zdravstvene ciljeve, dijetetske preferencije i potrebe životnog stila.',
-    'pricing.plan1.title': 'Osnovni Plan',
-    'pricing.plan1.description': 'Savršen za pojedince koji počinju svoje putovanje sa ishranom.',
-    'pricing.plan2.title': 'Premium Plan',
-    'pricing.plan2.description': 'Sveobuhvatna podrška za optimalnu ishranu i blagostanje.',
-    'pricing.plan3.title': 'Ultimativni Plan',
-    'pricing.plan3.description': 'Zlatni standard za one koji traže transformativne rezultate.',
-    'pricing.cta': 'Počnite',
-    'pricing.popular': 'NAJPOPULARNIJI',
+    // Services Section
+    'services.subtitle': 'NAŠE USLUGE',
+    'services.title': 'Usluge Ishrane Prilagođene Vašim Potrebama',
+    'services.description': 'Otkrijte naš sveobuhvatan spektar usluga ishrane dizajniran da vam pomogne da postignete svoje zdravstvene i wellness ciljeve.',
     
     // Quiz Section
     'quiz.subtitle': 'PERSONALIZOVANA ISHRANA',
-    'quiz.title': 'Otkrijte Svoj Optimalan Plan Ishrane',
-    'quiz.description': 'Uradite naš brzi kviz da biste dobili personalizovane preporuke za ishranu na osnovu vaših ciljeva, preferencija i životnog stila.',
-    'quiz.start': 'Počnite Kviz',
-    'quiz.next': 'Sledeće',
-    'quiz.previous': 'Prethodno',
-    'quiz.results': 'Pogledajte Rezultate',
-    'quiz.retake': 'Ponovite Kviz',
+    'quiz.title': 'Otkrijte Svoj Optimalni Plan Ishrane',
+    'quiz.description': 'Uradite naš brzi kviz da biste dobili personalizovane preporuke za ishranu na osnovu vaših ciljeva, preferencija i načina života.',
+    'quiz.ready.title': 'Spremni ste da pronađete savršen plan ishrane?',
+    'quiz.ready.description': 'Odgovorite na 5 brzih pitanja o vašim ciljevima i preferencijama, a mi ćemo vam pružiti personalizovane preporuke za ishranu dizajnirane specijalno za vas.',
+    'quiz.start': 'Započni Kviz',
     
-    // Contact Section
-    'contact.subtitle': 'STUPITE U KONTAKT',
-    'contact.title': 'Spremni da Transformišete Svoje Zdravlje?',
-    'contact.description': 'Hajde da razgovaramo o vašim ciljevima ishrane i kreiramo personalizovan plan koji funkcioniše za vaš životni stil.',
-    'contact.form.name': 'Vaše Ime',
-    'contact.form.email': 'Vaš Email',
-    'contact.form.subject': 'Tema',
-    'contact.form.message': 'Vaša Poruka',
-    'contact.form.privacy': 'Slažem se sa pravilima privatnosti',
-    'contact.form.submit': 'Pošaljite Poruku',
-    
-    // BMI Calculator
+    // BMI Section
     'bmi.subtitle': 'PROCENA ZDRAVLJA',
-    'bmi.title': 'Izračunajte Svoj BMI',
-    'bmi.description': 'Dobijte brzu procenu vašeg indeksa telesne mase i razumejte šta to znači za vaše zdravlje.',
+    'bmi.title': 'BMI Kalkulator i Zdravstvena Tabela',
+    'bmi.description': 'Izračunajte svoj Indeks Telesne Mase (BMI) da biste dobili brzu procenu svog statusa težine. Zapamtite, BMI je samo jedan pokazatelj zdravlja i treba ga razmotriti uz druge faktore.',
+    'bmi.calculator.title': 'Izračunajte Svoj BMI',
+    'bmi.categories': 'BMI Kategorije',
+    'bmi.calculate': 'Izračunaj BMI',
     'bmi.weight': 'Težina',
     'bmi.height': 'Visina',
     'bmi.age': 'Godine',
     'bmi.gender': 'Pol',
     'bmi.male': 'Muški',
     'bmi.female': 'Ženski',
-    'bmi.calculate': 'Izračunaj BMI',
     
-    // Services
-    'services.subtitle': 'NAŠE USLUGE',
-    'services.title': 'Profesionalne Usluge Ishrane',
-    'services.description': 'Sveobuhvatna rešenja ishrane prilagođena vašim individualnim potrebama i zdravstvenim ciljevima.',
+    // Videos Section
+    'videos.subtitle': 'NUTRITIVNI VIDEI',
+    'videos.title': 'Pogledajte Vredan Sadržaj o Ishrani',
+    'videos.description': 'Istražite našu video biblioteku punu praktičnih saveta, demonstracija kuvanja i uvida u ishranu da vam pomognemo na vašem zdravstvenom putovanju.',
     
-    // Videos & Podcasts
-    'videos.subtitle': 'VIDEO SADRŽAJI',
-    'videos.title': 'Gledajte Vredne Sadržaje o Ishrani',
-    'videos.description': 'Istražite našu video biblioteku punu praktičnih saveta, demonstracija kuvanja i nutritivnih uvida.',
-    'podcasts.subtitle': 'PODKASTI O ISHRANI',
+    // Podcasts Section
+    'podcasts.subtitle': 'NUTRITIVNI PODKASTI',
     'podcasts.title': 'Slušajte Stručne Savete o Ishrani',
-    'podcasts.description': 'Uključite se u naše podkaste za najnovije uvide o ishrani i intervjue sa stručnjacima.',
+    'podcasts.description': 'Uključite se u naše podkaste za najnovije uvide u ishranu, intervjue sa stručnjacima i praktične savete za poboljšanje vašeg zdravstvenog putovanja.',
     
-    // Testimonials
-    'testimonials.subtitle': 'UTISCI KLIJENATA',
-    'testimonials.title': 'Šta Naši Klijenti Kažu',
-    'testimonials.description': 'Istinite priče ljudi koji su transformisali svoje zdravlje uz naše programe ishrane.',
+    // Testimonials Section
+    'testimonials.subtitle': 'ISKUSTVA',
+    'testimonials.title': 'Šta Kažu Moji Klijenti',
+    'testimonials.description': 'Pročitajte o iskustvima i rezultatima ljudi koji su transformisali svoje zdravlje i život kroz naše programe ishrane.',
     
-    // Blog
+    // Blog Section
     'blog.subtitle': 'BLOG O ISHRANI',
-    'blog.title': 'Najnoviji Uvidi o Ishrani',
-    'blog.description': 'Budite u toku sa najnovijom naukom o ishrani, zdravim receptima i savetima za wellness.',
-    'blog.readMore': 'Pročitajte Više',
-    'blog.allPosts': 'Svi Članci',
+    'blog.title': 'Recepti i Saveti o Ishrani',
+    'blog.description': 'Istražite našu kolekciju zdravih recepata, saveta o ishrani i wellness saveta da vam pomognemo na vašem putovanju ka boljem zdravlju.',
     
-    // Common
-    'common.learnMore': 'Saznajte Više',
-    'common.getStarted': 'Počnite',
-    'common.loading': 'Učitavanje...',
-    'common.error': 'Došlo je do greške',
+    // Social Media Section
+    'social.subtitle': 'DRUŠTVENE MREŽE',
+    'social.title': 'Pratite Me za Dnevnu Inspiraciju',
+    'social.description': 'Pridružite se našoj zajednici na Instagramu i TikToku za dnevne savete o ishrani, ideje za recepte i wellness motivaciju.',
+    'social.instagram': 'Instagram Objave',
+    'social.tiktok': 'TikTok Videi',
+    'social.follow': 'Pratite na Instagram',
+    
+    // Contact Section
+    'contact.subtitle': 'STUPITE U KONTAKT',
+    'contact.title': 'Kontaktirajte Me',
+    'contact.description': 'Imate pitanja ili ste spremni da počnete svoje putovanje u ishrani? Obratite mi se za konsultaciju ili da zakažete termin.',
+    'contact.form.title': 'Pošaljite Poruku',
+    'contact.info.title': 'Informacije za Kontakt',
+    
+    // Footer
+    'footer.tagline': 'Profesionalni nutricionista posvećen tome da vam pomogne da postignete optimalno zdravlje kroz personalizovane planove ishrane.',
+    'footer.quicklinks': 'Brze Veze',
+    'footer.services': 'Usluge',
+    'footer.newsletter': 'Pretplatite se na Newsletter',
+    'footer.newsletter.description': 'Ostanite u toku sa najnovijim savetima o ishrani, receptima i wellness savetima.',
+    'footer.subscribe': 'Pretplati se',
   }
 };
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
-
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [language, setLanguage] = useState<Language>('en');
-
+  
   const t = (key: string): string => {
-    return translations[language][key as keyof typeof translations[typeof language]] || key;
+    return translations[language][key] || key;
   };
 
   return (

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
+import { useLanguage } from "@/hooks/useLanguage";
 
 type Service = {
   id: number;
@@ -55,6 +56,7 @@ const services: Service[] = [
 ];
 
 export default function ServicesSection() {
+  const { t } = useLanguage();
   const { ref: headerRef, inView: headerInView } = useAnimateOnScroll();
 
   return (
@@ -67,12 +69,12 @@ export default function ServicesSection() {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <p className="text-primary font-medium tracking-wide uppercase mb-2">OUR SERVICES</p>
+          <p className="text-primary font-medium tracking-wide uppercase mb-2">{t('services.subtitle')}</p>
           <h2 className="text-3xl md:text-4xl font-bold font-poppins mb-6">
-            Nutrition Services Tailored to Your Needs
+            {t('services.title')}
           </h2>
           <p className="text-gray-600">
-            Discover our comprehensive range of nutrition services designed to help you achieve your health and wellness goals.
+            {t('services.description')}
           </p>
         </motion.div>
         
