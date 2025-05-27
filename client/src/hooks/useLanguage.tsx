@@ -76,6 +76,43 @@ const translations = {
     'contact.form.privacy': 'I agree to the privacy policy',
     'contact.form.submit': 'Send Message',
     
+    // BMI Calculator
+    'bmi.subtitle': 'HEALTH ASSESSMENT',
+    'bmi.title': 'Calculate Your BMI',
+    'bmi.description': 'Get a quick assessment of your body mass index and understand what it means for your health.',
+    'bmi.weight': 'Weight',
+    'bmi.height': 'Height',
+    'bmi.age': 'Age',
+    'bmi.gender': 'Gender',
+    'bmi.male': 'Male',
+    'bmi.female': 'Female',
+    'bmi.calculate': 'Calculate BMI',
+    
+    // Services
+    'services.subtitle': 'OUR SERVICES',
+    'services.title': 'Professional Nutrition Services',
+    'services.description': 'Comprehensive nutrition solutions tailored to your individual needs and health goals.',
+    
+    // Videos & Podcasts
+    'videos.subtitle': 'NUTRITION VIDEOS',
+    'videos.title': 'Watch Valuable Nutrition Content',
+    'videos.description': 'Explore our video library filled with practical advice, cooking demonstrations, and nutritional insights.',
+    'podcasts.subtitle': 'NUTRITION PODCASTS',
+    'podcasts.title': 'Listen to Expert Nutrition Advice',
+    'podcasts.description': 'Tune into our podcasts for the latest nutrition insights and expert interviews.',
+    
+    // Testimonials
+    'testimonials.subtitle': 'TESTIMONIALS',
+    'testimonials.title': 'What Our Clients Say',
+    'testimonials.description': 'Real stories from people who transformed their health with our nutrition programs.',
+    
+    // Blog
+    'blog.subtitle': 'NUTRITION BLOG',
+    'blog.title': 'Latest Nutrition Insights',
+    'blog.description': 'Stay updated with the latest nutrition science, healthy recipes, and wellness tips.',
+    'blog.readMore': 'Read More',
+    'blog.allPosts': 'All Posts',
+    
     // Common
     'common.learnMore': 'Learn More',
     'common.getStarted': 'Get Started',
@@ -148,6 +185,43 @@ const translations = {
     'contact.form.message': 'Vaša Poruka',
     'contact.form.privacy': 'Slažem se sa pravilima privatnosti',
     'contact.form.submit': 'Pošaljite Poruku',
+    
+    // BMI Calculator
+    'bmi.subtitle': 'PROCENA ZDRAVLJA',
+    'bmi.title': 'Izračunajte Svoj BMI',
+    'bmi.description': 'Dobijte brzu procenu vašeg indeksa telesne mase i razumejte šta to znači za vaše zdravlje.',
+    'bmi.weight': 'Težina',
+    'bmi.height': 'Visina',
+    'bmi.age': 'Godine',
+    'bmi.gender': 'Pol',
+    'bmi.male': 'Muški',
+    'bmi.female': 'Ženski',
+    'bmi.calculate': 'Izračunaj BMI',
+    
+    // Services
+    'services.subtitle': 'NAŠE USLUGE',
+    'services.title': 'Profesionalne Usluge Ishrane',
+    'services.description': 'Sveobuhvatna rešenja ishrane prilagođena vašim individualnim potrebama i zdravstvenim ciljevima.',
+    
+    // Videos & Podcasts
+    'videos.subtitle': 'VIDEO SADRŽAJI',
+    'videos.title': 'Gledajte Vredne Sadržaje o Ishrani',
+    'videos.description': 'Istražite našu video biblioteku punu praktičnih saveta, demonstracija kuvanja i nutritivnih uvida.',
+    'podcasts.subtitle': 'PODKASTI O ISHRANI',
+    'podcasts.title': 'Slušajte Stručne Savete o Ishrani',
+    'podcasts.description': 'Uključite se u naše podkaste za najnovije uvide o ishrani i intervjue sa stručnjacima.',
+    
+    // Testimonials
+    'testimonials.subtitle': 'UTISCI KLIJENATA',
+    'testimonials.title': 'Šta Naši Klijenti Kažu',
+    'testimonials.description': 'Istinite priče ljudi koji su transformisali svoje zdravlje uz naše programe ishrane.',
+    
+    // Blog
+    'blog.subtitle': 'BLOG O ISHRANI',
+    'blog.title': 'Najnoviji Uvidi o Ishrani',
+    'blog.description': 'Budite u toku sa najnovijom naukom o ishrani, zdravim receptima i savetima za wellness.',
+    'blog.readMore': 'Pročitajte Više',
+    'blog.allPosts': 'Svi Članci',
     
     // Common
     'common.learnMore': 'Saznajte Više',
