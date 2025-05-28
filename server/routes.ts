@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { getBlogPosts, getTestimonials, getAnnouncements } from "./notion";
+import { getBlogPosts, getTestimonials, getAnnouncements, getVideos, getPodcasts, getSocialMedia } from "./notion";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -43,6 +43,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: "Error fetching announcements" });
     }
   });
+
+
 
   // Contact form submission
   const contactSchema = z.object({

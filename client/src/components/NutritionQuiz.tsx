@@ -324,75 +324,47 @@ export default function NutritionQuiz() {
 
               {currentStep > questions.length && quizResult && (
                 <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="text-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  className="text-center bg-white rounded-2xl shadow-lg p-8"
                 >
-                  <div
-                    className="mb-8 inline-block rounded-full p-3"
-                    style={{ backgroundColor: `${quizResult.color}10` }}
-                  >
-                    <div
-                      className={`w-16 h-16 rounded-full flex items-center justify-center`}
-                      style={{ backgroundColor: `${quizResult.color}20` }}
-                    >
+                  <div className="mb-8 inline-block rounded-full p-4 bg-primary/10">
+                    <div className="w-16 h-16 rounded-full flex items-center justify-center bg-primary/20">
                       <svg
-                        className={`w-8 h-8 text-${quizResult.color}-600`}
+                        className="w-8 h-8 text-primary"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           strokeWidth="2"
                           d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        ></path>
+                        />
                       </svg>
                     </div>
                   </div>
 
-                  <h3 className="text-2xl md:text-3xl font-bold mb-4">
-                    Vaš {quizResult.title}
+                  <h3 className="text-3xl font-bold mb-4 text-gray-800">
+                    {quizResult.title}
                   </h3>
 
-                  <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+                  <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
                     {quizResult.description}
                   </p>
 
-                  <div className="flex flex-col md:flex-row gap-8 mb-10">
-                    <div className="md:w-1/3">
-                      <img
-                        src={quizResult.image}
-                        alt={quizResult.title}
-                        className="w-full h-auto rounded-lg"
-                      />
-                    </div>
-                    <div className="md:w-2/3 text-left">
-                      <h4 className="font-bold text-lg mb-4">Preporuke:</h4>
-                      <ul className="space-y-3">
-                        {quizResult.recommendations.map((rec, index) => (
-                          <li key={index} className="flex items-start">
-                            <svg
-                              className="w-5 h-5 text-primary mt-1 mr-2 flex-shrink-0"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M5 13l4 4L19 7"
-                              ></path>
-                            </svg>
-                            <span>{rec}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                  <div className="text-left bg-gray-50 rounded-lg p-6 mb-8">
+                    <h4 className="font-bold text-xl mb-4 text-gray-800">Personalizovane Preporuke:</h4>
+                    <ul className="space-y-3">
+                      {quizResult.recommendations.map((rec, index) => (
+                        <li key={index} className="flex items-start">
+                          <span className="text-primary text-xl mr-3 mt-1">✓</span>
+                          <span className="text-gray-700 leading-relaxed">{rec}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
 
                   <div className="bg-gray-50 p-6 rounded-lg mb-8">

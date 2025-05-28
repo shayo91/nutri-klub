@@ -178,6 +178,107 @@ export async function getAnnouncements() {
 }
 
 // Get testimonials from Notion
+export async function getVideos() {
+  try {
+    const videosDb = await findDatabaseByTitle("Videos");
+    if (!videosDb) return [];
+
+    const response = await notion.databases.query({
+      database_id: videosDb.id,
+      filter: {
+        property: "Active",
+        checkbox: {
+          equals: true
+        }
+      }
+    });
+
+    return response.results.map((page: any) => {
+      const properties = page.properties;
+      return {
+        id: page.id,
+        title: properties.Title?.title?.[0]?.plain_text || "",
+        description: properties.Description?.rich_text?.[0]?.plain_text || "",
+        duration: properties.Duration?.rich_text?.[0]?.plain_text || "",
+        thumbnail: properties.Thumbnail?.url || "",
+        videoUrl: properties.VideoURL?.url || "",
+        category: properties.Category?.select?.name || ""
+      };
+    });
+  } catch (error) {
+    console.error("Error fetching videos:", error);
+    return [];
+  }
+}
+
+export async function getPodcasts() {
+  try {
+    const podcastsDb = await findDatabaseByTitle("Podcasts");
+    if (!podcastsDb) return [];
+
+    const response = await notion.databases.query({
+      database_id: podcastsDb.id,
+      filter: {
+        property: "Active",
+        checkbox: {
+          equals: true
+        }
+      }
+    });
+
+    return response.results.map((page: any) => {
+      const properties = page.properties;
+      return {
+        id: page.id,
+        title: properties.Title?.title?.[0]?.plain_text || "",
+        description: properties.Description?.rich_text?.[0]?.plain_text || "",
+        duration: properties.Duration?.rich_text?.[0]?.plain_text || "",
+        image: properties.Image?.url || "",
+        audioUrl: properties.AudioURL?.url || "",
+        guest: properties.Guest?.rich_text?.[0]?.plain_text || "",
+        category: properties.Category?.select?.name || ""
+      };
+    });
+  } catch (error) {
+    console.error("Error fetching podcasts:", error);
+    return [];
+  }
+}
+
+export async function getSocialMedia() {
+  try {
+    const socialDb = await findDatabaseByTitle("SocialMedia");
+    if (!socialDb) return [];
+
+    const response = await notion.databases.query({
+      database_id: socialDb.id,
+      filter: {
+        property: "Active",
+        checkbox: {
+          equals: true
+        }
+      }
+    });
+
+    return response.results.map((page: any) => {
+      const properties = page.properties;
+      return {
+        id: page.id,
+        title: properties.Title?.title?.[0]?.plain_text || "",
+        content: properties.Content?.rich_text?.[0]?.plain_text || "",
+        platform: properties.Platform?.select?.name || "",
+        image: properties.Image?.url || "",
+        videoUrl: properties.VideoURL?.url || "",
+        likes: properties.Likes?.number || 0,
+        views: properties.Views?.number || 0
+      };
+    });
+  } catch (error) {
+    console.error("Error fetching social media:", error);
+    return [];
+  }
+}
+
 export async function getTestimonials() {
     try {
         const testimonialsDb = await findDatabaseByTitle("Testimonials");
