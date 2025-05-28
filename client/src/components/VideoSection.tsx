@@ -1,162 +1,161 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
+import { useLanguage } from "@/hooks/useLanguage";
 
 type VideoContent = {
-  id: number;
+  id: string;
   title: string;
   description: string;
   duration: string;
   thumbnail: string;
   videoUrl: string;
-  category: "diet" | "cooking" | "nutrition";
+  category: string;
 };
 
-const videoContent: VideoContent[] = [
-  {
-    id: 1,
-    title: "5 Jednostavnih Saveta za Pripremu Obroka za Zaposlene",
-    description:
-      "Saznajte kako pripremiti zdrave obroke za celu nedelju u roku od nekoliko sati uz ove efikasne strategije za pripremu obroka.",
-    duration: "8:24",
-    thumbnail:
-      "https://images.unsplash.com/photo-1543362906-acfc16c67564?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
-    videoUrl: "#video-sample-1",
-    category: "cooking",
-  },
-  {
-    id: 2,
-    title: "Razumevanje Makronutrijenata za Optimalno Zdravlje",
-    description:
-      "Sveobuhvatan vodič za proteine, ugljene hidrate i masti - kako utiču na vaše telo i kako ih pravilno balansirati.",
-    duration: "12:37",
-    thumbnail:
-      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
-    videoUrl: "#video-sample-2",
-    category: "nutrition",
-  },
-  {
-    id: 3,
-    title: "Praktike Svrsne Ishrane za Upravljanje Težinom",
-    description:
-      "Otkrijte kako tehnike svrsne ishrane mogu transformisati vaš odnos sa hranom i podržati ciljeve upravljanja težinom.",
-    duration: "15:50",
-    thumbnail:
-      "https://images.unsplash.com/photo-1607532941433-304659e8198a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
-    videoUrl: "#video-sample-3",
-    category: "diet",
-  },
-  {
-    id: 4,
-    title: "Zdrave Tehnike Kuvanja za Očuvanje Nutrijenata",
-    description:
-      "Saznajte razne tehnike kuvanja koje održavaju nutritivnu vrednost vaše hrane dok poboljšavaju ukus.",
-    duration: "10:15",
-    thumbnail:
-      "https://images.unsplash.com/photo-1501342433635-bc065ab7b543?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
-    videoUrl: "#video-sample-4",
-    category: "nutrition",
-  },
-];
-
 export default function VideoSection() {
-  const { ref, inView } = useAnimateOnScroll();
-  const [activeVideo, setActiveVideo] = useState<VideoContent | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const { t } = useLanguage();
+  const { ref: headerRef, inView: headerInView } = useAnimateOnScroll();
+  const [videos, setVideos] = useState<VideoContent[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedVideo, setSelectedVideo] = useState<VideoContent | null>(null);
 
-  const filteredVideos =
-    selectedCategory === "all"
-      ? videoContent
-      : videoContent.filter((video) => video.category === selectedCategory);
+  useEffect(() => {
+    fetchVideos();
+  }, []);
+
+  const fetchVideos = async () => {
+    try {
+      const response = await fetch('/api/videos');
+      if (response.ok) {
+        const data = await response.json();
+        setVideos(data);
+      }
+    } catch (error) {
+      console.error('Error fetching videos:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const playVideo = (video: VideoContent) => {
+    setSelectedVideo(video);
+  };
+
+  if (loading) {
+    return (
+      <section className="py-16 md:py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+            <p className="text-gray-600">Učitavam videe...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
-    <section id="videos" className="py-16 md:py-24 bg-white">
+    <section className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-4">
         <motion.div
-          ref={ref}
+          ref={headerRef}
           initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-12"
+          className="text-center max-w-3xl mx-auto mb-16"
         >
           <p className="text-primary font-medium tracking-wide uppercase mb-2">
-            NUTRITIVNI VIDEI
+            {t("videos.subtitle")}
           </p>
           <h2 className="text-3xl md:text-4xl font-bold font-poppins mb-6">
-            Gledajte Vredne Nutricionističke Sadržaje
+            {t("videos.title")}
           </h2>
-          <p className="text-gray-600 mb-8">
-            Istražite našu biblioteku videa koja je puna praktičnih saveta,
-            demonstracija kuvanja i nutricionističkih uvida koji će vam pomoći
-            na vašem putu do zdravlja.
+          <p className="text-gray-600 text-lg leading-relaxed">
+            {t("videos.description")}
           </p>
-
-          {/* Category Filter */}
-          <div className="flex flex-wrap justify-center gap-2 mb-10">
-            <button
-              onClick={() => setSelectedCategory("all")}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                selectedCategory === "all"
-                  ? "bg-primary text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              Svi Videi
-            </button>
-            <button
-              onClick={() => setSelectedCategory("cooking")}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                selectedCategory === "cooking"
-                  ? "bg-primary text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              Kuvanje
-            </button>
-            <button
-              onClick={() => setSelectedCategory("nutrition")}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                selectedCategory === "nutrition"
-                  ? "bg-primary text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              Ishrana
-            </button>
-            <button
-              onClick={() => setSelectedCategory("diet")}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                selectedCategory === "diet"
-                  ? "bg-primary text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              Dijeta
-            </button>
-          </div>
         </motion.div>
 
-        {/* Video Previews */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredVideos.map((video) => (
+        <div className="grid md:grid-cols-3 gap-8">
+          {videos.slice(0, 3).map((video, index) => (
             <motion.div
               key={video.id}
-              className="bg-white rounded-lg shadow-lg overflow-hidden"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow cursor-pointer"
+              onClick={() => playVideo(video)}
             >
-              <img
-                src={video.thumbnail}
-                alt={video.title}
-                className="w-full h-40 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="font-bold line-clamp-2 mb-2">{video.title}</h3>
-                <p className="text-gray-600 text-sm line-clamp-2">
-                  {video.description}
-                </p>
+              <div className="relative">
+                <img
+                  src={video.thumbnail}
+                  alt={video.title}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                  <div className="bg-white bg-opacity-90 rounded-full p-3">
+                    <svg className="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                </div>
+                <div className="absolute bottom-2 right-2 bg-black bg-opacity-75 text-white px-2 py-1 rounded text-sm">
+                  {video.duration}
+                </div>
+              </div>
+              <div className="p-6">
+                <div className="text-primary text-sm font-medium mb-2">{video.category}</div>
+                <h3 className="font-bold text-lg mb-2 line-clamp-2">{video.title}</h3>
+                <p className="text-gray-600 text-sm line-clamp-2">{video.description}</p>
               </div>
             </motion.div>
           ))}
         </div>
+
+        {videos.length > 3 && (
+          <div className="mt-8 text-center">
+            <div className="text-gray-600 mb-4">Pogledajte još videa:</div>
+            <div className="max-h-60 overflow-y-auto space-y-2">
+              {videos.slice(3).map((video) => (
+                <div
+                  key={video.id}
+                  className="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors"
+                  onClick={() => playVideo(video)}
+                >
+                  <img src={video.thumbnail} alt={video.title} className="w-16 h-12 object-cover rounded mr-3" />
+                  <div className="flex-1 text-left">
+                    <h4 className="font-medium text-sm">{video.title}</h4>
+                    <p className="text-gray-500 text-xs">{video.duration}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {selectedVideo && (
+          <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg max-w-4xl w-full max-h-full overflow-y-auto">
+              <div className="p-6">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-xl font-bold">{selectedVideo.title}</h3>
+                  <button
+                    onClick={() => setSelectedVideo(null)}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+                <div className="aspect-video bg-gray-200 rounded-lg mb-4 flex items-center justify-center">
+                  <p className="text-gray-600">Video player - {selectedVideo.videoUrl}</p>
+                </div>
+                <p className="text-gray-600">{selectedVideo.description}</p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
