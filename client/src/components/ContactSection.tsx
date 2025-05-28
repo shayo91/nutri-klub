@@ -49,11 +49,37 @@ export default function ContactSection() {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      // Replace this comment with your actual form submission logic
-      // await submitContactForm(formData);
-      toast.success("Poruka je uspešno poslana!");
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
+
+      toast({
+        title: "Uspešno!",
+        description: "Poruka je uspešno poslana!",
+      });
+      
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+        privacyAgreed: false,
+      });
     } catch (error) {
-      toast.error("Došlo je do greške prilikom slanja poruke.");
+      console.error('Error sending message:', error);
+      toast({
+        title: "Greška",
+        description: "Došlo je do greške prilikom slanja poruke.",
+        variant: "destructive",
+      });
     } finally {
       setIsSubmitting(false);
     }
