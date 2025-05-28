@@ -44,7 +44,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get videos from Notion
+  app.get("/api/videos", async (req, res) => {
+    try {
+      const videos = await getVideos();
+      res.json(videos);
+    } catch (error) {
+      console.error("Error fetching videos from Notion:", error);
+      res.status(500).json({ message: "Error fetching videos" });
+    }
+  });
 
+  // Get podcasts from Notion
+  app.get("/api/podcasts", async (req, res) => {
+    try {
+      const podcasts = await getPodcasts();
+      res.json(podcasts);
+    } catch (error) {
+      console.error("Error fetching podcasts from Notion:", error);
+      res.status(500).json({ message: "Error fetching podcasts" });
+    }
+  });
+
+  // Get social media from Notion
+  app.get("/api/social-media", async (req, res) => {
+    try {
+      const socialPosts = await getSocialMedia();
+      res.json(socialPosts);
+    } catch (error) {
+      console.error("Error fetching social media from Notion:", error);
+      res.status(500).json({ message: "Error fetching social media" });
+    }
+  });
 
   // Contact form submission
   const contactSchema = z.object({

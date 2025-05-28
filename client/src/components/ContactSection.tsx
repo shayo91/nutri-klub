@@ -209,7 +209,7 @@ export default function ContactSection() {
                 />
                 <label htmlFor="privacy" className="text-gray-600 text-sm">
                   Slažem se sa{" "}
-                  <a href="#" className="text-primary hover:underline">
+                  <a href="/privacy-policy" className="text-primary hover:underline">
                     Politikom Privatnosti
                   </a>{" "}
                   i pristajem na kontaktiranje.
