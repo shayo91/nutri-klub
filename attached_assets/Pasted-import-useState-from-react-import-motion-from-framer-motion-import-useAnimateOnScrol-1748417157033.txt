@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
-import { useToast } from "@/hooks/use-toast"; // Ensure to import the toast hook
+import { useToast } from "@/hooks/useToast"; // Ensure to import the toast hook
 
 interface ContactFormData {
   name: string;
@@ -19,29 +19,27 @@ export default function ContactSection() {
     message: "",
     privacyAgreed: false,
   });
-
+  
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
   const { ref: headerRef, inView: headerInView } = useAnimateOnScroll();
   const { ref: contentRef, inView: contentInView } = useAnimateOnScroll(0.3);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
 
-    if (type === "checkbox") {
+    if (type === 'checkbox') {
       const checkbox = e.target as HTMLInputElement;
-      setFormData((prevData) => ({
-        ...prevData,
+      setFormData({
+        ...formData,
         [name]: checkbox.checked,
-      }));
+      });
     } else {
-      setFormData((prevData) => ({
-        ...prevData,
+      setFormData({
+        ...formData,
         [name]: value,
-      }));
+      });
     }
   };
 
@@ -49,7 +47,7 @@ export default function ContactSection() {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      // Replace this comment with your actual form submission logic
+      // Add your form submission logic here
       // await submitContactForm(formData);
       toast.success("Poruka je uspešno poslana!");
     } catch (error) {
@@ -62,26 +60,23 @@ export default function ContactSection() {
   return (
     <section id="contact" className="py-16 md:py-24 bg-secondary">
       <div className="container mx-auto px-4">
-        <motion.div
+        <motion.div 
           ref={headerRef}
           initial={{ opacity: 0, y: 20 }}
           animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <p className="text-primary font-medium tracking-wide uppercase mb-2">
-            KONTAKTIRAJTE ME
-          </p>
+          <p className="text-primary font-medium tracking-wide uppercase mb-2">KONTAKTIRAJTE ME</p>
           <h2 className="text-3xl md:text-4xl font-bold font-poppins mb-6">
             Pošaljite Poruku
           </h2>
           <p className="text-gray-600">
-            Imate pitanja ili ste spremni da započnete svoj put ka zdravlju?
-            Obratite mi se za konsultaciju ili zakazivanje termina.
+            Imate pitanja ili ste spremni da započnete svoj put ka zdravlju? Obratite mi se za konsultaciju ili zakazivanje termina.
           </p>
         </motion.div>
 
-        <motion.div
+        <motion.div 
           ref={contentRef}
           initial={{ opacity: 0, y: 20 }}
           animate={contentInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -89,108 +84,78 @@ export default function ContactSection() {
           className="flex flex-col lg:flex-row gap-10"
         >
           <div className="w-full lg:w-7/12 bg-white rounded-xl p-8 shadow-lg">
-            <h3 className="text-2xl font-bold font-poppins mb-6">
-              Pošaljite Svoj Upit
-            </h3>
-            <form
-              id="contact-form"
-              className="space-y-6"
-              onSubmit={handleSubmit}
-            >
+            <h3 className="text-2xl font-bold font-poppins mb-6">Pošaljite Svoj Upit</h3>
+            <form id="contact-form" className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-gray-700 font-medium mb-2"
-                  >
-                    Ime
-                  </label>
+                  <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Ime</label>
                   <input
                     type="text"
                     id="name"
                     name="name"
-                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                    placeholder="Unesite svoje ime"
+                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" 
+                    placeholder="Unesite svoje ime" 
                     value={formData.name}
                     onChange={handleChange}
-                    required
+                    required 
                   />
                 </div>
                 <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-gray-700 font-medium mb-2"
-                  >
-                    Email
-                  </label>
+                  <label htmlFor="email" className="block text-gray-700 font-medium mb-2">Email</label>
                   <input
                     type="email"
                     id="email"
                     name="email"
-                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                    placeholder="Unesite svoj email"
+                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" 
+                    placeholder="Unesite svoj email" 
                     value={formData.email}
                     onChange={handleChange}
-                    required
+                    required 
                   />
                 </div>
               </div>
               <div>
-                <label
-                  htmlFor="subject"
-                  className="block text-gray-700 font-medium mb-2"
-                >
-                  Tema
-                </label>
+                <label htmlFor="subject" className="block text-gray-700 font-medium mb-2">Tema</label>
                 <input
                   type="text"
                   id="subject"
                   name="subject"
-                  className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                  placeholder="Tema poruke"
+                  className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" 
+                  placeholder="Tema poruke" 
                   value={formData.subject}
                   onChange={handleChange}
-                  required
+                  required 
                 />
               </div>
               <div>
-                <label
-                  htmlFor="message"
-                  className="block text-gray-700 font-medium mb-2"
-                >
-                  Poruka
-                </label>
-                <textarea
-                  id="message"
+                <label htmlFor="message" className="block text-gray-700 font-medium mb-2">Poruka</label>
+                <textarea 
+                  id="message" 
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  rows={5}
-                  className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                  placeholder="Vaša poruka"
+                  rows={5} 
+                  className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" 
+                  placeholder="Vaša poruka" 
                   required
                 ></textarea>
               </div>
               <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  id="privacy"
+                <input 
+                  type="checkbox" 
+                  id="privacy" 
                   name="privacyAgreed"
                   checked={formData.privacyAgreed}
                   onChange={handleChange}
-                  className="mr-2 text-primary focus:ring-primary"
-                  required
+                  className="mr-2 text-primary focus:ring-primary" 
+                  required 
                 />
                 <label htmlFor="privacy" className="text-gray-600 text-sm">
-                  Slažem se sa{" "}
-                  <a href="#" className="text-primary hover:underline">
-                    Politikom Privatnosti
-                  </a>{" "}
-                  i pristajem na kontaktiranje.
+                  Slažem se sa <a href="#" className="text-primary hover:underline">Politikom Privatnosti</a> i pristajem na kontaktiranje.
                 </label>
               </div>
-              <button
-                type="submit"
+              <button 
+                type="submit" 
                 className="w-full py-3 bg-primary hover:bg-primary-dark text-white rounded-md font-medium transition duration-300 ease-in-out shadow-md hover:shadow-lg disabled:opacity-70"
                 disabled={isSubmitting}
               >

@@ -19,6 +19,8 @@ const translations = {
   'about.subtitle': 'O MENI',
   'about.title': 'Jelena Matijaš - Vaš Partner u Zdravlju',
   'about.description': 'Sa magistarskim diplomom iz nutritivnih nauka i 5+ godina iskustva, pomažem ljudima da pronađu ravnotežu između ukusne hrane i zdravog načina života.',
+  'about.description1': 'Magistar sam nutritivnih nauka sa preko 5 godina iskustva u radu sa klijentima različitih profila. Moja misija je da pomognem ljudima da transformišu svoj odnos prema hrani i stvore zdrave navike koje traju ceo život.',
+  'about.description2': 'Verujem u holistički pristup ishrani koji uzima u obzir ne samo ono što jedete, već i kako se osećate, kakav je vaš životni ritam i koji su vaši lični ciljevi. Zajedno ćemo kreirati plan koji je održiv, ukusan i prilagođen baš vama.',
 
   // Usluge sekcija
   'services.subtitle': 'USLUGE',
