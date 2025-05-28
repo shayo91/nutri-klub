@@ -84,13 +84,18 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-gray-600 hover:text-primary">
+                <Link href="/privacy-policy" className="text-gray-600 hover:text-primary">
                   Politika Privatnosti
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-gray-600 hover:text-primary">
+                <Link href="/terms-of-service" className="text-gray-600 hover:text-primary">
                   Uslovi Korišćenja
+                </Link>
+              </li>
+              <li>
+                <Link href="/cookie-policy" className="text-gray-600 hover:text-primary">
+                  Politika Kolačića
                 </Link>
               </li>
             </ul>
