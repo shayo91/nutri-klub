@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
 import { getBMICategory } from "@/lib/utils"; // Ensure to import the helper function
 
-type WeightUnit = "kg" | "lb";
+type WeightUnit = "kg";
 type HeightUnit = "cm";
 type Gender = "male" | "female";
 
@@ -70,18 +70,9 @@ export default function BMICalculator() {
   const calculateBMI = (e: FormEvent) => {
     e.preventDefault();
 
-    // Convert to metric if needed
+    // Use metric units directly
     let weightKg = formData.weight;
-    if (formData.weightUnit === "lb") {
-      weightKg = formData.weight * 0.453592;
-    }
-
-    let heightM = formData.height;
-    if (formData.heightUnit === "cm") {
-      heightM = formData.height / 100;
-    } else if (formData.heightUnit === "in") {
-      heightM = formData.height * 0.0254;
-    }
+    let heightM = formData.height / 100; // Convert cm to meters
 
     // Calculate BMI
     const bmi = weightKg / (heightM * heightM);
@@ -153,16 +144,9 @@ export default function BMICalculator() {
                       onChange={handleChange}
                       min="1"
                     />
-                    <select
-                      id="weight-unit"
-                      name="weightUnit"
-                      className="px-4 py-2 bg-gray-50 rounded-r-md border border-l-0 border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                      onChange={handleChange}
-                      value={formData.weightUnit}
-                    >
-                      <option value="kg">kg</option>
-                      <option value="lb">lb</option>
-                    </select>
+                    <div className="px-4 py-2 bg-gray-50 rounded-r-md border border-l-0 border-gray-300 text-gray-600">
+                      kg
+                    </div>
                   </div>
                 </div>
 
