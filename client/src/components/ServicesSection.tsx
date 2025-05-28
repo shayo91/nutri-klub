@@ -38,24 +38,6 @@ const services: Service[] = [
       "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=300",
     delay: 0.45,
   },
-  {
-    id: 4,
-    title: "Specijalizovani Ishrani Planovi",
-    description:
-      "Stručne smernice za specifične potrebe ishrane, uključujući vegetarijanske, veganske, bezglutenske i senzibilizacije hrane.",
-    image:
-      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=300",
-    delay: 0.6,
-  },
-  {
-    id: 5,
-    title: "Sportska Ishrana",
-    description:
-      "Optimizujte sportske performanse uz planove ishrane posebno dizajnirane za sportiste i aktivne pojedince.",
-    image:
-      "https://images.unsplash.com/photo-1509343032101-34b29f4b33d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=300",
-    delay: 0.75,
-  },
 ];
 
 export default function ServicesSection() {

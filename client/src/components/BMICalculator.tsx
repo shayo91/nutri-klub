@@ -4,7 +4,7 @@ import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
 import { getBMICategory } from "@/lib/utils"; // Ensure to import the helper function
 
 type WeightUnit = "kg" | "lb";
-type HeightUnit = "cm" | "in";
+type HeightUnit = "cm";
 type Gender = "male" | "female";
 
 interface BMIFormData {
@@ -184,16 +184,9 @@ export default function BMICalculator() {
                       onChange={handleChange}
                       min="1"
                     />
-                    <select
-                      id="height-unit"
-                      name="heightUnit"
-                      className="px-4 py-2 bg-gray-50 rounded-r-md border border-l-0 border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                      onChange={handleChange}
-                      value={formData.heightUnit}
-                    >
-                      <option value="cm">cm</option>
-                      <option value="in">in</option>
-                    </select>
+                    <div className="px-4 py-2 bg-gray-50 rounded-r-md border border-l-0 border-gray-300 text-gray-600">
+                      cm
+                    </div>
                   </div>
                 </div>
               </div>
