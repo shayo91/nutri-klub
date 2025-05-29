@@ -74,12 +74,12 @@ export default function Footer() {
             <h3 className="text-primary font-medium mb-4">Brze Veze</h3>
             <ul>
               <li>
-                <Link href="#" className="text-gray-600 hover:text-primary">
+                <Link href="#services" className="text-gray-600 hover:text-primary">
                   Usluge
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-gray-600 hover:text-primary">
+                <Link href="#about" className="text-gray-600 hover:text-primary">
                   O Nama
                 </Link>
               </li>

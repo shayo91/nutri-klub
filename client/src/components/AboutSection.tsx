@@ -21,7 +21,7 @@ export default function AboutSection() {
           >
             <div className="relative">
               <img
-                src="https://images.unsplash.com/photo-1607453998774-d533f65dac99?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=700"
+                src="/attached_assets/Screenshot 2025-05-29 at 11.27.01.png"
                 alt="Professional Nutritionist creating healthy meal plans"
                 className="rounded-lg shadow-xl w-full h-auto object-cover"
               />
