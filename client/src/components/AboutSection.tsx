@@ -21,7 +21,7 @@ export default function AboutSection() {
           >
             <div className="relative">
               <img
-                src="/attached_assets/Screenshot 2025-05-29 at 11.27.01.png"
+                src="/attached_assets/medica-nutricionista-em-seu-consultorio-demonstra-o-conceito-de-alimentacao-saudavel_441923-12693.avif"
                 alt="Professional Nutritionist creating healthy meal plans"
                 className="rounded-lg shadow-xl w-full h-auto object-cover"
               />

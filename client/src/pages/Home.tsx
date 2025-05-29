@@ -12,6 +12,7 @@ import PodcastSection from "@/components/PodcastSection";
 import VideoSection from "@/components/VideoSection";
 import NutritionQuiz from "@/components/NutritionQuiz";
 import ResultsSection from "@/components/ResultsSection";
+import EbookSection from "@/components/EbookSection";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Testimonial, BlogPost } from "@/lib/types";
@@ -51,6 +52,7 @@ export default function Home() {
       <PodcastSection />
       <TestimonialsSection testimonials={testimonials} />
       <ResultsSection />
+      <EbookSection />
       <BlogSection posts={blogPosts} />
       <SocialMediaSection />
       <ContactSection />
