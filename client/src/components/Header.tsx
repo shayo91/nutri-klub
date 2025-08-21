@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { useLanguage } from "@/hooks/useLanguage";
 
 export default function Header() {
   const { t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [location, setLocation] = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,12 +21,24 @@ export default function Header() {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  const handleNavigation = (target: string) => {
+    if (location !== "/") {
+      // If not on home page, navigate to home first, then scroll
+      setLocation("/");
+      setTimeout(() => {
+        const element = document.getElementById(target);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      // If on home page, just scroll
+      const element = document.getElementById(target);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
-    setMobileMenuOpen(false); // Close mobile menu after clicking a link
+    setMobileMenuOpen(false);
   };
 
   return (
@@ -35,7 +48,7 @@ export default function Header() {
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center">
-          <Link href="/" className="flex items-center" onClick={(e) => { e.preventDefault(); scrollToSection('home'); }}>
+          <Link href="/" className="flex items-center" onClick={() => handleNavigation('home')}>
             <span className="text-primary text-2xl font-bold font-poppins">
               NutriHub
             </span>
@@ -45,13 +58,13 @@ export default function Header() {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-8">
           <button
-            onClick={() => scrollToSection('home')}
+            onClick={() => handleNavigation('home')}
             className="font-medium text-primary hover:text-primary-dark transition"
           >
             {t("nav.home")}
           </button>
           <button
-            onClick={() => scrollToSection('services')}
+            onClick={() => handleNavigation('services')}
             className="font-medium text-dark hover:text-primary transition"
           >
             {t("nav.services")}
@@ -60,19 +73,19 @@ export default function Header() {
             Šta kažu ljudi?
           </Link>
           <button
-            onClick={() => scrollToSection('testimonials')}
+            onClick={() => handleNavigation('testimonials')}
             className="font-medium text-dark hover:text-primary transition"
           >
             Recenzije
           </button>
           <button
-            onClick={() => scrollToSection('blog')}
+            onClick={() => handleNavigation('blog')}
             className="font-medium text-dark hover:text-primary transition"
           >
             {t("nav.blog")}
           </button>
           <button
-            onClick={() => scrollToSection('contact')}
+            onClick={() => handleNavigation('contact')}
             className="font-medium text-dark hover:text-primary transition"
           >
             {t("nav.contact")}
@@ -100,22 +113,22 @@ export default function Header() {
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
           <nav className="md:hidden absolute top-full left-0 right-0 bg-white shadow-md py-4 px-4 space-y-3">
-            <button onClick={() => scrollToSection('home')} className="block w-full text-left py-2 text-gray-700 hover:text-primary transition font-medium">
+            <button onClick={() => handleNavigation('home')} className="block w-full text-left py-2 text-gray-700 hover:text-primary transition font-medium">
               {t("nav.home")}
             </button>
-            <button onClick={() => scrollToSection('services')} className="block w-full text-left py-2 text-gray-700 hover:text-primary transition font-medium">
+            <button onClick={() => handleNavigation('services')} className="block w-full text-left py-2 text-gray-700 hover:text-primary transition font-medium">
               {t("nav.services")}
             </button>
-            <Link href="/testimonials" className="block w-full text-left py-2 text-gray-700 hover:text-primary transition font-medium">
+            <Link href="/testimonials" className="block w-full text-left py-2 text-gray-700 hover:text-primary transition font-medium" onClick={() => setMobileMenuOpen(false)}>
               Šta kažu ljudi?
             </Link>
-            <button onClick={() => scrollToSection('testimonials')} className="block w-full text-left py-2 text-gray-700 hover:text-primary transition font-medium">
+            <button onClick={() => handleNavigation('testimonials')} className="block w-full text-left py-2 text-gray-700 hover:text-primary transition font-medium">
               Recenzije
             </button>
-            <button onClick={() => scrollToSection('blog')} className="block w-full text-left py-2 text-gray-700 hover:text-primary transition font-medium">
+            <button onClick={() => handleNavigation('blog')} className="block w-full text-left py-2 text-gray-700 hover:text-primary transition font-medium">
               {t("nav.blog")}
             </button>
-            <button onClick={() => scrollToSection('contact')} className="block w-full text-left py-2 text-gray-700 hover:text-primary transition font-medium">
+            <button onClick={() => handleNavigation('contact')} className="block w-full text-left py-2 text-gray-700 hover:text-primary transition font-medium">
               {t("nav.contact")}
             </button>
           </nav>
