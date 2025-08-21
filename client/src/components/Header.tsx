@@ -51,23 +51,14 @@ export default function Header() {
             {t("nav.home")}
           </button>
           <button
-            onClick={() => scrollToSection('about')}
-            className="font-medium text-dark hover:text-primary transition"
-          >
-            {t("nav.about")}
-          </button>
-          <button
             onClick={() => scrollToSection('services')}
             className="font-medium text-dark hover:text-primary transition"
           >
             {t("nav.services")}
           </button>
-          <button
-            onClick={() => scrollToSection('process')}
-            className="font-medium text-dark hover:text-primary transition"
-          >
-            Proces
-          </button>
+          <Link href="/testimonials" className="font-medium text-dark hover:text-primary transition">
+            Šta kažu ljudi?
+          </Link>
           <button
             onClick={() => scrollToSection('testimonials')}
             className="font-medium text-dark hover:text-primary transition"
@@ -112,15 +103,12 @@ export default function Header() {
             <button onClick={() => scrollToSection('home')} className="block w-full text-left py-2 text-gray-700 hover:text-primary transition font-medium">
               {t("nav.home")}
             </button>
-            <button onClick={() => scrollToSection('about')} className="block w-full text-left py-2 text-gray-700 hover:text-primary transition font-medium">
-              {t("nav.about")}
-            </button>
             <button onClick={() => scrollToSection('services')} className="block w-full text-left py-2 text-gray-700 hover:text-primary transition font-medium">
               {t("nav.services")}
             </button>
-            <button onClick={() => scrollToSection('process')} className="block w-full text-left py-2 text-gray-700 hover:text-primary transition font-medium">
-              Proces
-            </button>
+            <Link href="/testimonials" className="block w-full text-left py-2 text-gray-700 hover:text-primary transition font-medium">
+              Šta kažu ljudi?
+            </Link>
             <button onClick={() => scrollToSection('testimonials')} className="block w-full text-left py-2 text-gray-700 hover:text-primary transition font-medium">
               Recenzije
             </button>
