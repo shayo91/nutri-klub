@@ -9,6 +9,8 @@ import VideoSection from "@/components/VideoSection";
 import NutritionQuiz from "@/components/NutritionQuiz";
 import ResultsSection from "@/components/ResultsSection";
 import EbookSection from "@/components/EbookSection";
+import FAQSection from "@/components/FAQSection";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Testimonial, BlogPost } from "@/lib/types";
@@ -39,15 +41,17 @@ export default function Home() {
     <>
       <HeroSection />
       <ResultsSection />
-      <PricingSection />
       <ServicesSection />
+      <PricingSection />
+      <TestimonialsSection testimonials={testimonials} />
+      <FAQSection />
       <BMICalculator />
       <VideoSection />
-      <TestimonialsSection testimonials={testimonials} />
       <EbookSection />
       <BlogSection posts={blogPosts} />
       <NutritionQuiz />
       <ContactSection />
+      <WhatsAppButton />
     </>
   );
 }
