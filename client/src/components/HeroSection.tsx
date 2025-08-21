@@ -159,39 +159,15 @@ export default function HeroSection() {
                 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
                 style={{ color: "#333" }}
               >
-                Izgubite 10-20kg za 3-6 meseci
+                Personalizovani planovi ishrane
                 <br />
-                <span className="text-primary">Bez dijeta i gladovanja</span>
+                <span className="text-primary">za vaš uspešan životni stil</span>
               </h2>
 
-              <p className="text-lg md:text-xl text-gray-600 mb-6 leading-relaxed">
-                Personalizovani planovi ishrane koji funkcionišu za vaš životni stil. 
-                500+ zadovoljnih klijenata je već postiglo svoje ciljeve.
+              <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
+                Ostvarite svoje zdravstvene ciljeve uz stručnu podršku i individualno prilagođene planove 
+                ishrane koji odgovaraju vašem načinu života.
               </p>
-
-              {/* Social proof */}
-              <div className="flex items-center mb-8 p-4 bg-white/80 rounded-lg shadow-sm">
-                <div className="flex -space-x-2 mr-4">
-                  <img className="w-10 h-10 rounded-full border-2 border-white" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" alt="Klijent" />
-                  <img className="w-10 h-10 rounded-full border-2 border-white" src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face" alt="Klijent" />
-                  <img className="w-10 h-10 rounded-full border-2 border-white" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=40&h=40&fit=crop&crop=face" alt="Klijent" />
-                </div>
-                <div>
-                  <div className="text-yellow-500 text-sm">★★★★★</div>
-                  <div className="text-sm text-gray-600">500+ zadovoljnih klijenata</div>
-                </div>
-              </div>
-
-              {/* Urgency element */}
-              <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
-                <div className="flex">
-                  <div className="ml-3">
-                    <p className="text-sm text-yellow-700">
-                      <strong>Ograničena ponuda:</strong> Besplatna konsultacija ovog meseca - ostalo je još 5 termina
-                    </p>
-                  </div>
-                </div>
-              </div>
 
               {/* CTA Button */}
               <motion.div

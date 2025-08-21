@@ -1,6 +1,7 @@
-
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
+
+import Header from "@/components/Header"; // Assuming Header component is located here
 
 interface SuccessStory {
   id: number;
@@ -120,7 +121,9 @@ export default function TestimonialsPage() {
   const { ref: headerRef, inView: headerInView } = useAnimateOnScroll();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
+      <Header />
+      <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <section className="py-16 md:py-24 bg-gradient-to-br from-primary to-primary-dark text-white">
         <div className="container mx-auto px-4">
@@ -135,14 +138,8 @@ export default function TestimonialsPage() {
               Šta Kažu Naši Klijenti?
             </h1>
             <p className="text-xl md:text-2xl text-primary-light mb-8">
-              Pročitajte inspirativne priče o transformaciji kroz pravilnu ishranu
+              Fokusirajte se na lične planove ishrane za zdraviji život.
             </p>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 inline-block">
-              <p className="text-lg">
-                <span className="font-bold text-2xl">150+</span> zadovoljnih klijenata<br/>
-                <span className="font-bold text-2xl">95%</span> održava rezultate i posle godinu dana
-              </p>
-            </div>
           </motion.div>
         </div>
       </section>
@@ -184,7 +181,7 @@ export default function TestimonialsPage() {
                         {story.name}, {story.age}
                       </h3>
                       <p className="text-center text-gray-600 mb-6">{story.profession}</p>
-                      
+
                       {/* Image Comparison */}
                       <div className="grid grid-cols-2 gap-4 mb-6">
                         <div className="text-center">
@@ -241,7 +238,7 @@ export default function TestimonialsPage() {
                       <h4 className="text-xl font-bold mb-4">Moja priča:</h4>
                       <p className="text-gray-600 italic mb-6">"{story.story}"</p>
                     </div>
-                    
+
                     <div className="border-l-4 border-primary pl-6">
                       <h4 className="text-lg font-bold mb-3">Iskustvo sa nutritcionistom:</h4>
                       <p className="text-gray-700 leading-relaxed">
@@ -298,5 +295,6 @@ export default function TestimonialsPage() {
         </div>
       </section>
     </div>
+    </>
   );
 }
