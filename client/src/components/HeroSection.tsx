@@ -180,7 +180,7 @@ export default function HeroSection() {
                   <div className="text-yellow-500 text-sm">★★★★★</div>
                   <div className="text-sm text-gray-600">500+ zadovoljnih klijenata</div>
                 </div>
-              </div></p>
+              </div>
 
               {/* Urgency element */}
               <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
