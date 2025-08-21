@@ -1,14 +1,10 @@
 import HeroSection from "@/components/HeroSection";
-import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
 import BMICalculator from "@/components/BMICalculator";
-import ProcessSection from "@/components/ProcessSection";
 import PricingSection from "@/components/PricingSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import BlogSection from "@/components/BlogSection";
-import SocialMediaSection from "@/components/SocialMediaSection";
 import ContactSection from "@/components/ContactSection";
-import PodcastSection from "@/components/PodcastSection";
 import VideoSection from "@/components/VideoSection";
 import NutritionQuiz from "@/components/NutritionQuiz";
 import ResultsSection from "@/components/ResultsSection";
@@ -42,19 +38,15 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <AboutSection />
-      <ProcessSection />
+      <ResultsSection />
       <PricingSection />
       <ServicesSection />
-      <NutritionQuiz />
       <BMICalculator />
       <VideoSection />
-      <PodcastSection />
       <TestimonialsSection testimonials={testimonials} />
-      <ResultsSection />
       <EbookSection />
       <BlogSection posts={blogPosts} />
-      <SocialMediaSection />
+      <NutritionQuiz />
       <ContactSection />
     </>
   );

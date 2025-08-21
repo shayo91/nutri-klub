@@ -89,7 +89,7 @@ export default function ResultsSection() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
           {results.map((result, index) => (
             <motion.div
               key={result.id}
@@ -99,7 +99,7 @@ export default function ResultsSection() {
               className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
             >
               {/* Before/After Image Slider */}
-              <div className="relative h-64 overflow-hidden">
+              <div className="relative h-128 overflow-hidden">
                 <div className="absolute inset-0">
                   <img
                     src={result.beforeImage}
