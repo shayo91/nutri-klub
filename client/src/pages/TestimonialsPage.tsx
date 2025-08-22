@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
 
-import Header from "@/components/Header"; // Assuming Header component is located here
+// Header is handled by the main layout
 
 interface SuccessStory {
   id: number;
@@ -121,9 +121,7 @@ export default function TestimonialsPage() {
   const { ref: headerRef, inView: headerInView } = useAnimateOnScroll();
 
   return (
-    <>
-      <Header />
-      <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <section className="py-16 md:py-24 bg-gradient-to-br from-primary to-primary-dark text-white">
         <div className="container mx-auto px-4">
@@ -295,6 +293,5 @@ export default function TestimonialsPage() {
         </div>
       </section>
     </div>
-    </>
   );
 }
