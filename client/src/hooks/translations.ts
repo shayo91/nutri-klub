@@ -8,14 +8,14 @@ export const translations = {
     'nav.contact': 'Contact',
     
     // Hero Section
-    'hero.brand': 'NutriHub',
+    'hero.brand': 'NutriKlub',
     'hero.title': 'Transform Your Health With Expert Nutrition',
     'hero.subtitle': 'Personalized nutrition plans designed to help you achieve optimal health, increased energy, and lasting wellness through science-backed dietary strategies.',
-    'hero.cta': 'Start Your Journey',
+    'hero.cta': 'Start Here',
     'hero.cta2': 'Learn More',
-    'hero.trust1': '500+ Satisfied Clients',
+    'hero.trust1': '100+ Satisfied Clients',
     'hero.trust2': '10+ Years Experience', 
-    'hero.trust3': 'Certified Expert',
+    'hero.trust3': 'Master of Nutrition',
     
     // About Section
     'about.subtitle': 'ABOUT ME',
@@ -109,14 +109,14 @@ export const translations = {
     'nav.contact': 'Kontakt',
     
     // Hero Section
-    'hero.brand': 'NutriHub',
+    'hero.brand': 'NutriKlub',
     'hero.title': 'Vaše Zdravlje Je Naša Misija',
     'hero.subtitle': 'Stručni nutricionista sa preko 10 godina iskustva u kreiranju personalizovanih planova ishrane za optimalno zdravlje i dugotrajan wellness.',
-    'hero.cta': 'Zakažite Konsultaciju',
+    'hero.cta': 'Kreni ovdje.',
     'hero.cta2': 'Saznajte Više',
-    'hero.trust1': '500+ Zadovoljnih Klijenata',
+    'hero.trust1': '100+ Zadovoljnih Klijenata',
     'hero.trust2': '10+ Godina Iskustva',
-    'hero.trust3': 'Sertifikovani Stručnjak',
+    'hero.trust3': 'Magistar Nutricionizma',
     
     // About Section
     'about.subtitle': 'O MENI',

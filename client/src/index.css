@@ -21,9 +21,9 @@
   --card-foreground: 20 14.3% 4.1%;
   --border: 20 5.9% 90%;
   --input: 20 5.9% 90%;
-  --primary: 107 38% 48%;
-  --primary-light: 94 47% 54%;
-  --primary-dark: 105 41% 39%;
+  --primary: 80 19% 62%;
+  --primary-light: 80 24% 70%;
+  --primary-dark: 80 19% 50%;
   --primary-foreground: 211 100% 99%;
   --secondary: 120 34% 92%;
   --secondary-foreground: 24 9.8% 10%;
@@ -49,7 +49,7 @@
   --card-foreground: 0 0% 98%;
   --border: 240 3.7% 15.9%;
   --input: 240 3.7% 15.9%;
-  --primary: 107 38% 48%;
+  --primary: 80 19% 62%;
   --primary-foreground: 211 100% 99%;
   --secondary: 240 3.7% 15.9%;
   --secondary-foreground: 0 0% 98%;

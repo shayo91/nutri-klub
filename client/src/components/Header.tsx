@@ -50,7 +50,7 @@ export default function Header() {
         <div className="flex items-center">
           <Link href="/" className="flex items-center" onClick={() => handleNavigation('home')}>
             <span className="text-primary text-2xl font-bold font-poppins">
-              NutriHub
+              NutriKlub
             </span>
           </Link>
         </div>

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
 import { useLanguage } from "@/hooks/useLanguage";
-import doctorImage from "@assets/Screenshot 2025-05-27 at 15.18.08.png";
+import doctorImage from "@assets/viber_slika_2025-09-12_13-25-21-092_1762332973122.jpg";
 
 export default function HeroSection() {
   const { t } = useLanguage();
@@ -159,14 +159,11 @@ export default function HeroSection() {
                 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
                 style={{ color: "#333" }}
               >
-                Personalizovani planovi ishrane
-                <br />
-                <span className="text-primary">za vaš uspešan životni stil</span>
+                <span className="text-primary">Tvoja početna tačka za zdrave promjene u ishrani.</span>
               </h2>
 
               <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
-                Ostvarite svoje zdravstvene ciljeve uz stručnu podršku i individualno prilagođene planove 
-                ishrane koji odgovaraju vašem načinu života.
+                Uz male korake, jednostavne obroke i podršku nauči da jedeš s lakoćom i živiš s više energije.
               </p>
 
               {/* CTA Button */}
@@ -223,7 +220,7 @@ export default function HeroSection() {
                       clipRule="evenodd"
                     />
                   </svg>
-                  500+ Zadovoljnih Klijenata
+                  100+ Zadovoljnih Klijenata
                 </div>
                 <div className="flex items-center">
                   <svg
@@ -237,21 +234,7 @@ export default function HeroSection() {
                       clipRule="evenodd"
                     />
                   </svg>
-                  10+ Godina Iskustva
-                </div>
-                <div className="flex items-center">
-                  <svg
-                    className="w-5 h-5 text-primary mr-2"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  Sertifikovani Stručnjak
+                  Magistar Nutricionizma
                 </div>
               </motion.div>
             </motion.div>
@@ -274,21 +257,6 @@ export default function HeroSection() {
 
                 {/* Floating elements */}
                 <motion.div
-                  className="absolute -top-6 -left-6 bg-white p-4 rounded-xl shadow-lg"
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                >
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-primary">10+</div>
-                    <div className="text-sm text-gray-600">Godina</div>
-                  </div>
-                </motion.div>
-
-                <motion.div
                   className="absolute -bottom-6 -right-6 bg-primary text-white p-4 rounded-xl shadow-lg"
                   animate={{ y: [0, 10, 0] }}
                   transition={{
@@ -299,7 +267,7 @@ export default function HeroSection() {
                   }}
                 >
                   <div className="text-center">
-                    <div className="text-2xl font-bold">500+</div>
+                    <div className="text-2xl font-bold">100+</div>
                     <div className="text-sm">Klijenata</div>
                   </div>
                 </motion.div>
