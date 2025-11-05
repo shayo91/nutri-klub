@@ -144,22 +144,12 @@ export default function HeroSection() {
               transition={{ duration: 0.8 }}
               className="lg:w-1/2"
             >
-              {/* Brand name */}
-              <div className="mb-6">
-                <h1
-                  className="text-3xl md:text-4xl font-light mb-2"
-                  style={{ fontFamily: "serif", color: "#5CAA48" }}
-                >
-                  {t("hero.brand")}
-                </h1>
-              </div>
-
               {/* Main headline */}
               <h2
                 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
-                style={{ color: "#333" }}
+                style={{ color: "#000" }}
               >
-                <span className="text-primary">Tvoja početna tačka za zdrave promjene u ishrani.</span>
+                <span style={{ color: "#000" }}>Tvoja početna tačka za zdrave promjene u ishrani.</span>
               </h2>
 
               <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
@@ -241,7 +231,7 @@ export default function HeroSection() {
 
             {/* Right side - Doctor Image */}
             <motion.div
-              className="lg:w-1/2"
+              className="lg:w-2/5"
               initial={{ opacity: 0, x: 50 }}
               animate={
                 contentInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }
@@ -251,26 +241,9 @@ export default function HeroSection() {
               <div className="relative">
                 <img
                   src={doctorImage}
-                  alt="Profesionalni nutricionista sa stethoskopom i svežim povrćem - stručnjak za ishranu i zdravlje"
+                  alt="Profesionalni nutricionista"
                   className="w-full h-auto rounded-2xl shadow-2xl"
                 />
-
-                {/* Floating elements */}
-                <motion.div
-                  className="absolute -bottom-6 -right-6 bg-primary text-white p-4 rounded-xl shadow-lg"
-                  animate={{ y: [0, 10, 0] }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 1,
-                  }}
-                >
-                  <div className="text-center">
-                    <div className="text-2xl font-bold">100+</div>
-                    <div className="text-sm">Klijenata</div>
-                  </div>
-                </motion.div>
               </div>
             </motion.div>
           </div>
