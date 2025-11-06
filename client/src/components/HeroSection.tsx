@@ -13,7 +13,7 @@ export default function HeroSection() {
       <section
         id="home"
         className="relative min-h-screen py-16 flex items-center overflow-hidden"
-        style={{ backgroundColor: "#f5f8f0" }}
+        style={{ backgroundColor: "#9FE2BF" }}
       >
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -133,16 +133,16 @@ export default function HeroSection() {
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center gap-12">
-            {/* Left side - Content */}
+          <div className="flex flex-col items-center justify-center text-center">
+            {/* Content - Centered */}
             <motion.div
               ref={contentRef}
-              initial={{ opacity: 0, x: -50 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={
-                contentInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }
+                contentInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }
               }
               transition={{ duration: 0.8 }}
-              className="lg:w-1/2"
+              className="max-w-4xl mx-auto"
             >
               {/* Main headline */}
               <h2
@@ -156,96 +156,20 @@ export default function HeroSection() {
                 Uz male korake, jednostavne obroke i podršku nauči da jedeš s lakoćom i živiš s više energije.
               </p>
 
-              {/* CTA Button */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                className="flex flex-col sm:flex-row gap-4"
-              >
-                <a
-                  href="#contact"
-                  className="inline-flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary-dark text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg"
-                  style={{ color: "#000" }}
-                >
-                  {t("hero.cta")}
-                  <svg
-                    className="ml-2 w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    ></path>
-                  </svg>
-                </a>
-                <a
-                  href="#process"
-                  className="inline-flex items-center justify-center px-8 py-4 border-2 border-primary text-primary hover:bg-primary hover:text-white text-lg font-semibold rounded-full transition-all duration-300"
-                >
-                  {t("hero.cta2")}
-                </a>
-              </motion.div>
-
               {/* Trust indicators */}
               <motion.div
-                className="mt-8 flex flex-wrap items-center gap-6 text-sm text-gray-600"
+                className="mt-8 flex flex-wrap items-center justify-center gap-6"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
               >
-                <div className="flex items-center">
-                  <svg
-                    className="w-5 h-5 text-primary mr-2"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  100+ Zadovoljnih Klijenata
+                <div className="flex items-center bg-white px-6 py-3 rounded-lg shadow-md">
+                  <span className="text-gray-800 font-medium">Kreni ovdje.</span>
                 </div>
-                <div className="flex items-center">
-                  <svg
-                    className="w-5 h-5 text-primary mr-2"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  Magistar Nutricionizma
+                <div className="flex items-center bg-white px-6 py-3 rounded-lg shadow-md">
+                  <span className="text-gray-800 font-medium">Magistar Nutricionizma</span>
                 </div>
               </motion.div>
-            </motion.div>
-
-            {/* Right side - Doctor Image */}
-            <motion.div
-              className="lg:w-2/5"
-              initial={{ opacity: 0, x: 50 }}
-              animate={
-                contentInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }
-              }
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <div className="relative">
-                <img
-                  src={doctorImage}
-                  alt="Profesionalni nutricionista"
-                  className="w-full h-auto rounded-2xl shadow-2xl"
-                />
-              </div>
             </motion.div>
           </div>
         </div>
