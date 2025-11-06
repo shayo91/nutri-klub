@@ -30,34 +30,66 @@ export class MemStorage implements IStorage {
     this.testimonials = [
       {
         id: 1,
-        name: "Sarah Johnson",
-        role: "Weight Loss Client",
-        content: "Working with Jelena transformed not just my eating habits but my entire relationship with food. I've lost 15kg in 6 months and, most importantly, have kept it off. Her approach is sustainable and life-changing!",
-        avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
-        rating: 5
-      },
-      {
-        id: 2,
-        name: "Mark Thompson",
-        role: "Sports Performance",
-        content: "As an amateur triathlete, I needed a nutrition plan that would fuel my training. Jelena created a perfect balance of nutrients that improved my energy levels and recovery time. My performance has improved dramatically!",
+        name: "Igor",
+        role: "Klijent",
+        content: "Iznad svih ocekivanja. Par mjeseci sam saradjivao sa Jelenom i rezultati su impresivni. Profesionalna usluga, konstantna podrska i komunikacija na veoma visokom nivou. Sve preporuke za sve one koji su spremni da izgrade disciplinu, promjene nacin ishrane i budu u odlicnoj formi!",
         avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
         rating: 5
       },
       {
+        id: 2,
+        name: "Dusko",
+        role: "Klijent",
+        content: "Profesionalnost na najvišem nivou! Detaljno i razumljivim jezikom su mi objašnjeni svi akcioni koraci koje treba da poduzmem kako bi poboljšao svoje zdravlje. Profesionalnost i stručnost osoblja je uočljivo na prvi pogled. Sve preporuke!",
+        avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
+        rating: 5
+      },
+      {
         id: 3,
-        name: "Emily Chen",
-        role: "Digestive Health",
-        content: "After years of digestive issues, I finally found relief through Jelena's nutrition program. She identified my food sensitivities and created a plan that eliminated my symptoms while still being delicious and varied.",
-        avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
-        rating: 4
+        name: "David",
+        role: "Klijent",
+        content: "Izuzetno sam zadovoljan saradnjom! Pomogli su mi da bolje razumem ishranu i postignem značajne promene. Preporučujem svakome ko želi da poboljša svoje zdravlje i ishranu",
+        avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
+        rating: 5
       },
       {
         id: 4,
-        name: "David Rodriguez",
-        role: "Family Nutrition",
-        content: "Jelena helped our whole family adopt healthier eating habits. Her kid-friendly approach made the transition easy, and now our children are enthusiastic about eating vegetables! Our energy levels are up and we're all sleeping better.",
-        avatar: "https://images.unsplash.com/photo-1546456073-92b9f0a8d413?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
+        name: "Djole",
+        role: "Klijent",
+        content: "Sve preporuke za ovaj Nutri Centar. Uz strucno i profesionalno savetovanje mozete rijesiti vase probleme, izgraditi kvalitetnu ishranu i stvoriti dobre zivotne navike. Posveceni su klijentima, imaju dobar program rada i pristupacne cijene. Sve pohvale za Jelenu, uvek prijatna i ljubazna!",
+        avatar: "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
+        rating: 5
+      },
+      {
+        id: 5,
+        name: "Milena",
+        role: "Klijent",
+        content: "Jako su ljubazni i posveceni svom poslu. Ako zelite da smrsate javite se na pravo mjesto",
+        avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
+        rating: 5
+      },
+      {
+        id: 6,
+        name: "Snjezana",
+        role: "Klijent",
+        content: "Izuzetno zadovoljna novim jelovnikom i ukupnim radom i podrskom Jelene. Sve pohvale!",
+        avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
+        rating: 5
+      },
+      {
+        id: 7,
+        name: "Dragana",
+        role: "Klijent",
+        content: "Em sto znaju, em.sto imaju pristup osobi. Toplo ih preporucujem!!!",
+        avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
+        rating: 5
+      },
+      {
+        id: 8,
+        name: "Jovana",
+        role: "Klijent",
+        content: "Odlicno iskustvo❤️",
+        avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
         rating: 5
       }
     ];
