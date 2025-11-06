@@ -228,9 +228,10 @@ export default function BMICalculator() {
 
               <button
                 type="submit"
-                className="w-full py-3 bg-primary hover:bg-primary-dark text-white rounded-md font-medium transition duration-300 ease-in-out shadow-md hover:shadow-lg"
+                className="w-full py-3 bg-primary hover:bg-primary-dark rounded-md font-medium transition duration-300 ease-in-out shadow-md hover:shadow-lg"
+                style={{ color: "#000" }}
               >
-                Izračunajte BMI
+                Izračunaj BMI
               </button>
             </form>
 

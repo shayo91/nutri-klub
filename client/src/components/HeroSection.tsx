@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
 import { useLanguage } from "@/hooks/useLanguage";
-import doctorImage from "@assets/viber_slika_2025-09-12_13-25-21-092_1762332973122.jpg";
+import doctorImage from "@assets/Gemini_Generated_Image_fcx5ckfcx5ckfcx5sajt_1762432196165.png";
 
 export default function HeroSection() {
   const { t } = useLanguage();
@@ -105,7 +105,7 @@ export default function HeroSection() {
           >
             <img
               src="https://images.unsplash.com/photo-1546630392-1a5ed41714ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&h=120"
-              alt="Dekorativna narandža"
+              alt="Dekorativna naranča"
               className="w-full h-auto rounded-full opacity-30"
             />
           </motion.div>
@@ -165,7 +165,8 @@ export default function HeroSection() {
               >
                 <a
                   href="#contact"
-                  className="inline-flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary-dark text-white text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg"
+                  className="inline-flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary-dark text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg"
+                  style={{ color: "#000" }}
                 >
                   {t("hero.cta")}
                   <svg
