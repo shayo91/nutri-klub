@@ -14,14 +14,14 @@ export interface BlogPost {
 const fallbackPosts: BlogPost[] = [
   {
     id: 1,
-    title: "Doručak bogat proteinima",
+    title: "Supermoć: napraviti od ničega ručak",
     excerpt:
-      "Započnite dan sa nutritivno bogatim doručkom sa grčkim jogurtom, bobičastim voćem i domaćim granolom.",
+      "Kažu da nisu sve heroji u plaštovima. Neki nose kecelju, u jednoj ruci drže varjaču.",
     category: "recipes",
     image:
-      "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
-    date: "15. jun 2023.",
-    slug: "doručak-bogat-proteinima",
+      "https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+    date: "27. maj 2025.",
+    slug: "supermoc-napraviti-od-nicega-rucak",
   },
   {
     id: 2,
