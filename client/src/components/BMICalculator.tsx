@@ -99,15 +99,13 @@ export default function BMICalculator() {
           className="text-center max-w-3xl mx-auto mb-16"
         >
           <p className="text-primary font-medium tracking-wide uppercase mb-2">
-            PROCENA ZDRAVLjA
+            PROCJENA ZDRAVLJA
           </p>
           <h2 className="text-3xl md:text-4xl font-bold font-poppins mb-6">
-            BMI Kalkulator & Zdravstvena Tabela
+            BMI kalkulator
           </h2>
           <p className="text-gray-600">
-            Izračunajte svoj indeks telesne mase (BMI) kako biste brzo procenili
-            svoj status težine. Zapamtite, BMI je samo jedan indikator zdravlja
-            i treba ga razmotriti zajedno sa drugim faktorima.
+            Izračunaj svoj indeks tjelesne mase (BMI) i saznaj kojoj kategoriji trenutno pripadaš. BMI može biti koristan orijentir, ali imaj na umu da je to samo jedan indikator zdravlja i treba ga razmotriti zajedno sa drugim faktorima.
           </p>
         </motion.div>
 
@@ -354,11 +352,9 @@ export default function BMICalculator() {
 
             <div className="mt-6 bg-secondary p-4 rounded-lg">
               <p className="text-gray-600 text-sm">
-                <strong>Napomena:</strong> BMI je alat za procenu, ne
-                dijagnostički alat. Faktori poput mišićne mase, gustine kostiju
-                i ukupnog sastava tela nisu uzeti u obzir. Za sveobuhvatnu
-                procenu zdravlja, molimo vas da se konsultujete sa zdravstvenim
-                profesionalcem.
+                <strong>Napomena:</strong> BMI je alat za procjenu, a ne dijagnostički instrument.
+                Faktori poput mišićne mase, gustine kostiju i ukupnog sastava tijela nisu uzeti u obzir.
+                Za cjelovitu procjenu zdravstvenog stanja preporučuje se konsultacija sa zdravstvenim stručnjakom.
               </p>
             </div>
           </motion.div>
