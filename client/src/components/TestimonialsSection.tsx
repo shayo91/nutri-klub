@@ -181,13 +181,6 @@ function TestimonialCard({
       <div className="bg-secondary rounded-xl p-8 shadow-lg h-full">
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center">
-            <div className="w-14 h-14 rounded-full overflow-hidden mr-4">
-              <img
-                src={testimonial.avatar}
-                alt={`${testimonial.name} avatar`}
-                className="w-full h-full object-cover"
-              />
-            </div>
             <div>
               <h4 className="font-bold">{testimonial.name}</h4>
               <p className="text-gray-500 text-sm">{testimonial.role}</p>
