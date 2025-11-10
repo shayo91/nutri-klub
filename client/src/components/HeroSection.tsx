@@ -187,8 +187,8 @@ export default function HeroSection() {
               <div className="bg-white rounded-xl shadow-lg p-8 md:p-12">
                 <div className="flex flex-col md:flex-row items-start gap-8">
                   {/* Text content - left side */}
-                  <div className="flex-1 text-gray-700 space-y-4">
-                    <p className="text-lg leading-relaxed bg-pink-100 p-4 rounded-lg">
+                  <div className="flex-1 text-gray-700 space-y-4 bg-pink-100 p-6 rounded-lg">
+                    <p className="text-lg leading-relaxed">
                       <strong className="text-xl">Ja sam Jelena i drago mi je što si ovdje.</strong>
                     </p>
                     <p className="leading-relaxed">
