@@ -6,7 +6,6 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import BlogSection from "@/components/BlogSection";
 import ContactSection from "@/components/ContactSection";
 import VideoSection from "@/components/VideoSection";
-import NutritionQuiz from "@/components/NutritionQuiz";
 import ResultsSection from "@/components/ResultsSection";
 import EbookSection from "@/components/EbookSection";
 import FAQSection from "@/components/FAQSection";
@@ -49,7 +48,6 @@ export default function Home() {
       <VideoSection />
       <EbookSection />
       <BlogSection posts={blogPosts} />
-      <NutritionQuiz />
       <ContactSection />
       <WhatsAppButton />
     </>
