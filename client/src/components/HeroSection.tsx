@@ -152,13 +152,8 @@ export default function HeroSection() {
                 Tvoja početna tačka za zdrave promjene u ishrani.
               </h2>
 
-              <p className="text-lg md:text-xl text-gray-700 mb-6 leading-relaxed">
+              <p className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed">
                 Uz male korake, jednostavne obroke i pravu podršku, nauči kako da jedeš bez stresa, razumiješ svoje tijelo i osjetiš više energije svakog dana.
-              </p>
-
-              <p className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed italic">
-                Zdravlje ne počinje velikim odlukama, nego jednim iskrenim:<br />
-                da zaslušamo svoje tijelo.
               </p>
 
               {/* CTA Box */}
@@ -187,22 +182,29 @@ export default function HeroSection() {
               <div className="bg-white rounded-xl shadow-lg p-8 md:p-12">
                 <div className="flex flex-col md:flex-row items-start gap-8">
                   {/* Text content - left side */}
-                  <div className="flex-1 text-gray-700 space-y-4 bg-pink-100 p-6 rounded-lg">
+                  <div className="flex-1 text-gray-700 space-y-4">
                     <p className="text-lg leading-relaxed">
                       <strong className="text-xl">Ja sam Jelena i drago mi je što si ovdje.</strong>
                     </p>
                     <p className="leading-relaxed">
-                      Magistar sam nutricionizma, a iza mene je više od pet godina rada sa ljudima koji su odlučili da promijene svoj odnos prema hrani – ali i prema sebi.
+                      Znam da nije lako promijeniti navike – ali isto tako znam da je moguće, kad imaš podršku i razumijevanje.
                     </p>
                     <p className="leading-relaxed">
-                      Naizgled sam neko ko se "bavi ishranom", ali moj posao nije samo u tanjiru.
-                      On je u razumijevanju — tijela, navika, emocija i onog unutrašnjeg glasa koji često šapuće "opet sam pogriješio/la".
-                      Ja vjerujem da zdrava ishrana ne znači savršenost, nego svjesnost.
-                      Da pravo zdravlje počinje onog trenutka kad prestanemo sebe popravljati i počnemo sebe slušati.
+                      Kroz individualni rad i edukacije, pomoći ću ti da razumiješ svoje tijelo, da prepoznaš njegove signale i da napraviš promjene koje traju.
                     </p>
                     <p className="leading-relaxed">
-                      Kroz individualni rad, programe i edukaciju, pomažem ljudima da se vrate jednostavnosti, nauče šta im tijelo poručuje i izgrade navike koje traju.
+                      Ne moraš biti savršen/a – dovoljno je da budeš prisutan/na i da kreneš, korak po korak.
                     </p>
+                    <p className="leading-relaxed">
+                      Vjerujem da zdrava ishrana nije dijeta, nego odnos prema sebi.
+                    </p>
+                    
+                    {/* Learn more button */}
+                    <div className="mt-6">
+                      <a href="#about-me" className="inline-block bg-white px-6 py-3 rounded-lg shadow-lg text-gray-800 font-medium hover:shadow-xl transition-shadow">
+                        Malo više o meni
+                      </a>
+                    </div>
                   </div>
 
                   {/* Image - right side */}
