@@ -40,12 +40,12 @@ export default function Home() {
   return (
     <>
       <HeroSection />
+      <BMICalculator />
       <ResultsSection />
       <ServicesSection />
       <PricingSection />
       <TestimonialsSection testimonials={testimonials} />
       <FAQSection />
-      <BMICalculator />
       <VideoSection />
       <EbookSection />
       <BlogSection posts={blogPosts} />
