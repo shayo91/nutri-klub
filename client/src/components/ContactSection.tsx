@@ -96,14 +96,13 @@ export default function ContactSection() {
           className="text-center max-w-3xl mx-auto mb-16"
         >
           <p className="text-primary font-medium tracking-wide uppercase mb-2">
-            KONTAKTIRAJTE ME
+            KONTAKT
           </p>
           <h2 className="text-3xl md:text-4xl font-bold font-poppins mb-6">
-            Pošaljite Poruku
+            Pošalji poruku
           </h2>
           <p className="text-gray-600">
-            Imate pitanja ili ste spremni da započnete svoj put ka zdravlju?
-            Obratite mi se za konsultaciju ili zakazivanje termina.
+            Za sve informacije o proizvodima i uslugama ispuni kontakt formu ili mi se javi direktno putem e-maila.
           </p>
         </motion.div>
 
@@ -115,9 +114,6 @@ export default function ContactSection() {
           className="flex flex-col lg:flex-row gap-10"
         >
           <div className="w-full lg:w-7/12 bg-white rounded-xl p-8 shadow-lg">
-            <h3 className="text-2xl font-bold font-poppins mb-6">
-              Pošaljite Svoj Upit
-            </h3>
             <form
               id="contact-form"
               className="space-y-6"
@@ -242,52 +238,9 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <p className="font-medium text-gray-800">Email</p>
-                    <p className="text-gray-600">jelena@nutricionista.rs</p>
+                    <p className="text-gray-600">nutriklub@gmail.com</p>
                   </div>
                 </div>
-                <div className="flex items-center">
-                  <div className="bg-primary text-white p-2 rounded-lg mr-3">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-800">Telefon</p>
-                    <p className="text-gray-600">+387 65 123 456</p>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <div className="bg-primary text-white p-2 rounded-lg mr-3">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"></path>
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-800">Adresa</p>
-                    <p className="text-gray-600">Jovana Ducića 8<br />Banja Luka, BiH</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Google Map */}
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-              <div className="p-4 bg-primary/5">
-                <h3 className="text-lg font-bold font-poppins text-gray-800">
-                  Naša Lokacija
-                </h3>
-              </div>
-              <div className="h-64">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2875.4726946236873!2d17.185!3d44.776!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475e01c72c5b8965%3A0x4b82e8bfc0b3e0a5!2sJovana%20Du%C4%8Di%C4%87a%208%2C%20Banja%20Luka%2078000%2C%20Bosnia%20and%20Herzegovina!5e0!3m2!1sen!2srs!4v1700000000000!5m2!1sen!2srs"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Lokacija kancelarije - Jovana Ducića 8, Banja Luka"
-                ></iframe>
               </div>
             </div>
           </div>
