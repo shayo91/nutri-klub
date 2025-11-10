@@ -72,14 +72,13 @@ export default function PricingSection() {
           className="text-center max-w-3xl mx-auto mb-16"
         >
           <p className="text-primary font-medium tracking-wide uppercase mb-2">
-            CENOVNIK
+            PAKETI
           </p>
           <h2 className="text-3xl md:text-4xl font-bold font-poppins mb-6">
-            Izaberite Plan Koji Vam Odgovara
+            Na koji način možemo raditi zajedno?
           </h2>
           <p className="text-gray-600">
-            Nudim fleksibilne pakete prilagođene različitim potrebama i
-            budžetima. Pogledajte naše pakete i počnite vašu transformaciju danas!
+            Bilo da želiš lagani početak ili potpunu transformaciju — izaberi plan koji ti trenutno najviše odgovara.
           </p>
         </motion.div>
 

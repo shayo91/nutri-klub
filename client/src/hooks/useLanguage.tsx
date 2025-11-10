@@ -95,9 +95,9 @@ const translations = {
   'footer.subscribe': 'Prijavite se',
 
   // Pricing sekcija
-  'pricing.subtitle': 'CENOVNIK',
-  'pricing.title': 'Izaberite Plan Koji Vam Odgovara',
-  'pricing.description': 'Nudim fleksibilne pakete prilagođene različitim potrebama i budžetima.',
+  'pricing.subtitle': 'PAKETI',
+  'pricing.title': 'Na koji način možemo raditi zajedno?',
+  'pricing.description': 'Bilo da želiš lagani početak ili potpunu transformaciju — izaberi plan koji ti trenutno najviše odgovara.',
   'pricing.basic': 'Osnovni',
   'pricing.premium': 'Premium',
   'pricing.vip': 'VIP',
