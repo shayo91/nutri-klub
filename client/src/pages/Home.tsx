@@ -39,8 +39,8 @@ export default function Home() {
       <HeroSection />
       <BMICalculator />
       <ResultsSection />
-      <PricingSection />
       <TestimonialsSection testimonials={testimonials} />
+      <PricingSection />
       <VideoSection />
       <EbookSection />
       <BlogSection posts={blogPosts} />
