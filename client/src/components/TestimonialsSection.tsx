@@ -106,14 +106,13 @@ export default function TestimonialsSection({
           className="text-center max-w-3xl mx-auto mb-16"
         >
           <p className="text-primary font-medium tracking-wide uppercase mb-2">
-            SVEDOČENJA
+            RECENZIJE
           </p>
           <h2 className="text-3xl md:text-4xl font-bold font-poppins mb-6">
             Šta Moji Klijenti Kažu
           </h2>
           <p className="text-gray-600">
-            Pročitajte o iskustvima i rezultatima ljudi koji su transformisali
-            svoje zdravlje i živote kroz naše programe ishrane.
+            Najljepši dio mog posla su priče ljudi koji su odlučili da promijene svoj odnos prema hrani, i prema sebi. Ovdje možeš pročitati njihove iskrene utiske, male pobjede i velike promjene.
           </p>
         </motion.div>
 
@@ -178,8 +177,8 @@ function TestimonialCard({
       className={`w-full flex-shrink-0 px-4`}
       style={{ width: `${100 / slidesPerView}%` }}
     >
-      <div className="bg-secondary rounded-xl p-8 shadow-lg h-full">
-        <div className="flex justify-between items-center mb-6">
+      <div className="bg-secondary rounded-xl p-6 shadow-lg h-full">
+        <div className="flex justify-between items-center mb-4">
           <div className="flex items-center">
             <div>
               <h4 className="font-bold">{testimonial.name}</h4>
@@ -190,7 +189,7 @@ function TestimonialCard({
             <i className="fas fa-quote-right text-3xl opacity-50"></i>
           </div>
         </div>
-        <p className="text-gray-600 mb-6">{testimonial.content}</p>
+        <p className="text-gray-600 mb-4">{testimonial.content}</p>
         <div className="flex text-yellow-400">
           {Array.from({ length: 5 }).map((_, index) => {
             // For half stars
