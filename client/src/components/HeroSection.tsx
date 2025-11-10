@@ -172,11 +172,6 @@ export default function HeroSection() {
                   <span className="text-gray-800 font-medium text-lg">Kreni ovdje.</span>
                 </div>
               </motion.div>
-
-              {/* Magistar Nutricionizma - not in box */}
-              <p className="mt-6 text-gray-700 font-medium">
-                Magistar nutricionizma
-              </p>
             </motion.div>
 
             {/* About me section - bottom right */}
@@ -193,7 +188,7 @@ export default function HeroSection() {
                 <div className="flex flex-col md:flex-row items-start gap-8">
                   {/* Text content - left side */}
                   <div className="flex-1 text-gray-700 space-y-4">
-                    <p className="text-lg leading-relaxed">
+                    <p className="text-lg leading-relaxed bg-pink-100 p-4 rounded-lg">
                       <strong className="text-xl">Ja sam Jelena i drago mi je što si ovdje.</strong>
                     </p>
                     <p className="leading-relaxed">
@@ -211,7 +206,7 @@ export default function HeroSection() {
                   </div>
 
                   {/* Image - right side */}
-                  <div className="w-full md:w-80 flex-shrink-0">
+                  <div className="w-full md:w-48 flex-shrink-0">
                     <img
                       src={doctorImage}
                       alt="Jelena - Magistar nutricionizma"
