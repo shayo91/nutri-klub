@@ -2,10 +2,10 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
 export interface BlogPost {
-  id: number;
+  id: number | string;
   title: string;
   excerpt: string;
-  category: "recipes" | "nutrition" | "wellness";
+  category: "recipes" | "nutrition" | "wellness" | "weight loss" | "meal planning";
   image: string;
   date: string;
   slug: string;
@@ -46,7 +46,7 @@ const fallbackPosts: BlogPost[] = [
     slug: "stres-i-isharanu",
   },
 ];
-type Category = "all" | "recipes" | "nutrition" | "wellness";
+type Category = "all" | "recipes" | "nutrition" | "wellness" | "weight loss" | "meal planning";
 interface BlogSectionProps {
   posts?: BlogPost[];
 }
@@ -135,6 +135,28 @@ export default function BlogSection({ posts }: BlogSectionProps) {
           >
             Wellness
           </button>
+          <button
+            onClick={() => handleFilterChange("weight loss")}
+            className={`px-6 py-2 m-1 rounded-full font-medium transition ${
+              activeFilter === "weight loss"
+                ? "bg-primary text-white"
+                : "bg-white text-gray-600 hover:bg-gray-100"
+            }`}
+            data-testid="filter-weight-loss"
+          >
+            Mršavljenje
+          </button>
+          <button
+            onClick={() => handleFilterChange("meal planning")}
+            className={`px-6 py-2 m-1 rounded-full font-medium transition ${
+              activeFilter === "meal planning"
+                ? "bg-primary text-white"
+                : "bg-white text-gray-600 hover:bg-gray-100"
+            }`}
+            data-testid="filter-meal-planning"
+          >
+            Planiranje Obroka
+          </button>
         </motion.div>
 
         {/* Blog posts grid */}
@@ -172,6 +194,10 @@ function BlogPostCard({ post, index }: { post: BlogPost; index: number }) {
         return "Saveti o Ishrani";
       case "wellness":
         return "Wellness";
+      case "weight loss":
+        return "Mršavljenje";
+      case "meal planning":
+        return "Planiranje Obroka";
       default:
         return category;
     }
