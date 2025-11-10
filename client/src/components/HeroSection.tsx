@@ -182,21 +182,12 @@ export default function HeroSection() {
               <div className="bg-white rounded-xl shadow-lg p-8 md:p-12">
                 <div className="flex flex-col md:flex-row items-start gap-8">
                   {/* Text content - left side */}
-                  <div className="flex-1 text-gray-700 space-y-4">
-                    <p className="text-lg leading-relaxed">
+                  <div className="flex-1 text-gray-700">
+                    <p className="text-lg leading-relaxed mb-4">
                       <strong className="text-xl">Ja sam Jelena i drago mi je što si ovdje.</strong>
                     </p>
                     <p className="leading-relaxed">
-                      Znam da nije lako promijeniti navike ali isto tako znam da je moguće, kad imaš podršku i razumijevanje.
-                    </p>
-                    <p className="leading-relaxed">
-                      Kroz individualni rad i edukacije, pomoći ću ti da razumiješ svoje tijelo, da prepoznaš njegove signale i da napraviš promjene koje traju.
-                    </p>
-                    <p className="leading-relaxed">
-                      Ne moraš biti savršen/a – dovoljno je da budeš prisutan/na i da kreneš, korak po korak.
-                    </p>
-                    <p className="leading-relaxed">
-                      Vjerujem da zdrava ishrana nije dijeta, nego odnos prema sebi.
+                      Znam da nije lako promijeniti navike ali isto tako znam da je moguće, kad imaš podršku i razumijevanje. Kroz individualni rad i edukacije, pomoći ću ti da razumiješ svoje tijelo, da prepoznaš njegove signale i da napraviš promjene koje traju. Ne moraš biti savršen/a – dovoljno je da budeš prisutan/na i da kreneš, korak po korak. Vjerujem da zdrava ishrana nije dijeta, nego odnos prema sebi.
                     </p>
                     
                     {/* Learn more button */}
