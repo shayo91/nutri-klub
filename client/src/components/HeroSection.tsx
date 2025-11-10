@@ -6,7 +6,7 @@ import doctorImage from "@assets/sajttt_1762433430739.png";
 export default function HeroSection() {
   const { t } = useLanguage();
   const { ref: contentRef, inView: contentInView } = useAnimateOnScroll();
-  const { ref: pricingRef, inView: pricingInView } = useAnimateOnScroll(0.2);
+  const { ref: aboutRef, inView: aboutInView } = useAnimateOnScroll(0.2);
 
   return (
     <>
@@ -133,8 +133,8 @@ export default function HeroSection() {
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="flex flex-col items-center justify-center text-center">
-            {/* Content - Centered */}
+          <div className="flex flex-col">
+            {/* Top centered content */}
             <motion.div
               ref={contentRef}
               initial={{ opacity: 0, y: 30 }}
@@ -142,34 +142,84 @@ export default function HeroSection() {
                 contentInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }
               }
               transition={{ duration: 0.8 }}
-              className="max-w-4xl mx-auto"
+              className="max-w-4xl mx-auto text-center mb-16"
             >
               {/* Main headline */}
               <h2
                 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
                 style={{ color: "#000" }}
               >
-                <span style={{ color: "#000" }}>Tvoja početna tačka za zdrave promjene u ishrani.</span>
+                Tvoja početna tačka za zdrave promjene u ishrani.
               </h2>
 
-              <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
-                Uz male korake, jednostavne obroke i podršku nauči da jedeš s lakoćom i živiš s više energije.
+              <p className="text-lg md:text-xl text-gray-700 mb-6 leading-relaxed">
+                Uz male korake, jednostavne obroke i pravu podršku, nauči kako da jedeš bez stresa, razumiješ svoje tijelo i osjetiš više energije svakog dana.
               </p>
 
-              {/* Trust indicators */}
+              <p className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed italic">
+                Zdravlje ne počinje velikim odlukama, nego jednim iskrenim:<br />
+                da zaslušamo svoje tijelo.
+              </p>
+
+              {/* CTA Box */}
               <motion.div
-                className="mt-8 flex flex-wrap items-center justify-center gap-6"
+                className="inline-block"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
               >
-                <div className="flex items-center bg-white px-6 py-3 rounded-lg shadow-md">
-                  <span className="text-gray-800 font-medium">Kreni ovdje.</span>
-                </div>
-                <div className="flex items-center bg-white px-6 py-3 rounded-lg shadow-md">
-                  <span className="text-gray-800 font-medium">Magistar Nutricionizma</span>
+                <div className="bg-white px-8 py-4 rounded-lg shadow-lg inline-block">
+                  <span className="text-gray-800 font-medium text-lg">Kreni ovdje.</span>
                 </div>
               </motion.div>
+
+              {/* Magistar Nutricionizma - not in box */}
+              <p className="mt-6 text-gray-700 font-medium">
+                Magistar nutricionizma
+              </p>
+            </motion.div>
+
+            {/* About me section - bottom right */}
+            <motion.div
+              ref={aboutRef}
+              initial={{ opacity: 0, x: 30 }}
+              animate={
+                aboutInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }
+              }
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="max-w-6xl mx-auto w-full"
+            >
+              <div className="bg-white rounded-xl shadow-lg p-8 md:p-12">
+                <div className="flex flex-col md:flex-row items-start gap-8">
+                  {/* Text content - left side */}
+                  <div className="flex-1 text-gray-700 space-y-4">
+                    <p className="text-lg leading-relaxed">
+                      <strong className="text-xl">Ja sam Jelena i drago mi je što si ovdje.</strong>
+                    </p>
+                    <p className="leading-relaxed">
+                      Magistar sam nutricionizma, a iza mene je više od pet godina rada sa ljudima koji su odlučili da promijene svoj odnos prema hrani – ali i prema sebi.
+                    </p>
+                    <p className="leading-relaxed">
+                      Naizgled sam neko ko se "bavi ishranom", ali moj posao nije samo u tanjiru.
+                      On je u razumijevanju — tijela, navika, emocija i onog unutrašnjeg glasa koji često šapuće "opet sam pogriješio/la".
+                      Ja vjerujem da zdrava ishrana ne znači savršenost, nego svjesnost.
+                      Da pravo zdravlje počinje onog trenutka kad prestanemo sebe popravljati i počnemo sebe slušati.
+                    </p>
+                    <p className="leading-relaxed">
+                      Kroz individualni rad, programe i edukaciju, pomažem ljudima da se vrate jednostavnosti, nauče šta im tijelo poručuje i izgrade navike koje traju.
+                    </p>
+                  </div>
+
+                  {/* Image - right side */}
+                  <div className="w-full md:w-80 flex-shrink-0">
+                    <img
+                      src={doctorImage}
+                      alt="Jelena - Magistar nutricionizma"
+                      className="w-full h-auto rounded-lg shadow-md"
+                    />
+                  </div>
+                </div>
+              </div>
             </motion.div>
           </div>
         </div>
