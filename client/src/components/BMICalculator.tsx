@@ -254,9 +254,9 @@ export default function BMICalculator() {
                   ></div>
                 </div>
                 <div className="flex justify-between text-sm text-gray-600">
-                  <span>Premala težina</span>
-                  <span>Normalna težina</span>
-                  <span>Prekomerna težina</span>
+                  <span>Pothranjenost</span>
+                  <span>Normalna tjelesna masa</span>
+                  <span>Prekomjerna težina</span>
                   <span>Gojaznost</span>
                 </div>
                 <div className="mt-4">
@@ -290,16 +290,16 @@ export default function BMICalculator() {
                 <tbody className="bg-white">
                   <tr className="border-b border-gray-200">
                     <td className="py-4 px-6">Ispod 18.5</td>
-                    <td className="py-4 px-6 font-medium">Premala težina</td>
+                    <td className="py-4 px-6 font-medium">Pothranjenost</td>
                     <td className="py-4 px-6">
                       <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
-                        Nizak do Umeren
+                        Nizak do umjeren
                       </span>
                     </td>
                   </tr>
                   <tr className="border-b border-gray-200 bg-green-50">
                     <td className="py-4 px-6">18.5 - 24.9</td>
-                    <td className="py-4 px-6 font-medium">Normalna težina</td>
+                    <td className="py-4 px-6 font-medium">Normalna tjelesna masa</td>
                     <td className="py-4 px-6">
                       <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">
                         Minimalan
@@ -308,7 +308,7 @@ export default function BMICalculator() {
                   </tr>
                   <tr className="border-b border-gray-200">
                     <td className="py-4 px-6">25.0 - 29.9</td>
-                    <td className="py-4 px-6 font-medium">Prekomerna težina</td>
+                    <td className="py-4 px-6 font-medium">Prekomjerna težina</td>
                     <td className="py-4 px-6">
                       <span className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">
                         Povećan
@@ -317,17 +317,17 @@ export default function BMICalculator() {
                   </tr>
                   <tr className="border-b border-gray-200">
                     <td className="py-4 px-6">30.0 - 34.9</td>
-                    <td className="py-4 px-6 font-medium">Gojaznost Klasa I</td>
+                    <td className="py-4 px-6 font-medium">I stepen gojaznosti</td>
                     <td className="py-4 px-6">
                       <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm">
-                        Umeren
+                        Umjeren
                       </span>
                     </td>
                   </tr>
                   <tr className="border-b border-gray-200">
                     <td className="py-4 px-6">35.0 - 39.9</td>
                     <td className="py-4 px-6 font-medium">
-                      Gojaznost Klasa II
+                      II stepen gojaznosti
                     </td>
                     <td className="py-4 px-6">
                       <span className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">
@@ -338,11 +338,11 @@ export default function BMICalculator() {
                   <tr>
                     <td className="py-4 px-6">40.0 i više</td>
                     <td className="py-4 px-6 font-medium">
-                      Gojaznost Klasa III
+                      III stepen gojaznosti
                     </td>
                     <td className="py-4 px-6">
                       <span className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">
-                        Veoma Visok
+                        Veoma visok
                       </span>
                     </td>
                   </tr>
