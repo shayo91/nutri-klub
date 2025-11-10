@@ -8,56 +8,57 @@ export default function PricingSection() {
 
   const plans = [
     {
-      name: "Starter",
-      price: "50€",
-      period: "mesečno",
-      originalPrice: "70€",
+      name: "Start",
+      price: "35€",
+      period: "",
+      originalPrice: "50€",
       features: [
-        "Personalizovani plan ishrane za 4 nedelje",
+        "Nauči osnove pravilne ishrane",
         "Lista za kupovinu",
-        "20+ zdravih recepata",
-        "Email podrška",
-        "Jedan poziv za konsultaciju"
+        "Jednostavni recepti za svakodnevnu upotrebu",
+        "Kako pripremiti balansiran doručak/ručak/večeru",
+        "E-book i video materijali koji ti ostaju zauvijek"
       ],
-      results: "Izgubite 3-5kg za mesec dana",
+      results: "Za one koji žele razumjeti osnove bez pritiska",
       popular: false,
-      savings: "Uštedite 20€"
+      savings: "Uštedite 15€",
+      buttonText: "Izaberi Plan"
     },
     {
-      name: "Transformation",
+      name: "Balans",
       price: "100€",
-      period: "mesečno",
-      originalPrice: "130€",
+      period: "",
+      originalPrice: "120€",
       features: [
-        "Sve iz Starter paketa",
-        "Bi-nedeljne video konsultacije (45min)",
-        "24/7 WhatsApp podrška",
-        "Personalizovani trening plan",
-        "Nedeljno praćenje napretka",
-        "50+ recepata sa makro podacima",
-        "Plan za specijalne prilike"
+        "Sve iz Start paketa",
+        "Online uvodne konsultacije",
+        "Analiza dnevnika ishrane",
+        "2 individualna sedmična jelovnika",
+        "Kontrola (online)"
       ],
-      results: "Izgubite 8-15kg za 3 meseca",
+      results: "Za one koji žele ličnu podršku i jasnu strukturu.",
       popular: true,
-      savings: "Uštedite 30€"
+      savings: "Uštedite 20€",
+      continuationPrice: "Nastavak saradnje 75€/mjesec",
+      buttonText: "ZAKAŽI TERMIN"
     },
     {
-      name: "VIP Coaching",
-      price: "150€",
-      period: "mesečno",
-      originalPrice: "200€",
+      name: "Transformacija",
+      price: "200€",
+      period: "",
+      originalPrice: "250€",
       features: [
-        "Sve iz Transformation paketa",
-        "Nedeljne 1-na-1 video konsultacije (60min)",
-        "Personalizovani suplementi plan",
-        "Prioritetna podrška (odgovor u roku od 2h)",
-        "Mesečna analiza napretka sa preporukama",
-        "Pristup VIP Facebook grupi",
-        "Garancija rezultata ili povrat novca"
+        "Sve iz Start paketa",
+        "Online uvodne konsultacije",
+        "Mjesečne kontrole i analiza napretka (x3)",
+        "6 individualnih jelovnika",
+        "3 mjeseca kontinuirane podrške"
       ],
-      results: "Izgubite 15-25kg za 6 meseci",
+      results: "Za one koji žele dublju promjenu i trajne rezultate.",
+      description: "Tromjesečni program koji te vodi kroz proces razumijevanja, promjene i održavanja balansa. Kroz redovne razgovore, planove i podršku, učiš da se oslanjaš na sebe i svoje tijelo.",
       popular: false,
-      savings: "Uštedite 50€"
+      savings: "Uštedite 50€",
+      buttonText: "Izaberi Plan"
     }
   ];
 
@@ -108,6 +109,10 @@ export default function PricingSection() {
 
                 <h3 className="text-xl font-bold mb-2">{plan.name}</h3>
                 <p className="text-primary font-semibold text-sm mb-4">{plan.results}</p>
+                
+                {(plan as any).description && (
+                  <p className="text-gray-600 text-sm mb-4">{(plan as any).description}</p>
+                )}
 
                 <div className="mb-6">
                   <div className="flex items-center space-x-2 mb-2">
@@ -117,7 +122,7 @@ export default function PricingSection() {
                       <span className="text-sm text-green-600 font-semibold">{plan.savings}</span>
                     </div>
                   </div>
-                  <span className="text-gray-600">/{plan.period}</span>
+                  {plan.period && <span className="text-gray-600">/{plan.period}</span>}
                 </div>
 
                 <ul className="space-y-3 mb-8">
@@ -131,20 +136,22 @@ export default function PricingSection() {
                   ))}
                 </ul>
 
+                {(plan as any).continuationPrice && (
+                  <p className="text-sm text-gray-600 text-center mb-4 font-medium">
+                    {(plan as any).continuationPrice}
+                  </p>
+                )}
+
                 <a
                   href="#contact"
-                  className={`w-full py-4 px-6 rounded-md font-bold text-lg transition transform hover:scale-105 shadow-md ${
+                  className={`block w-full py-4 px-6 rounded-md font-bold text-lg transition transform hover:scale-105 shadow-md text-center ${
                     plan.popular
                       ? 'bg-primary text-white hover:bg-primary-dark'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
-                  {plan.popular ? 'POČNI TRANSFORMACIJU' : 'Izaberi Plan'}
+                  {(plan as any).buttonText || 'Izaberi Plan'}
                 </a>
-
-                <p className="text-xs text-gray-500 text-center mt-3">
-                  Bez ugovorne obaveze • Otkažite bilo kada
-                </p>
               </div>
             </motion.div>
           ))}
