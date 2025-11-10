@@ -81,15 +81,14 @@ export default function ResultsSection() {
             NAŠI REZULTATI
           </p>
           <h2 className="text-3xl md:text-4xl font-bold font-poppins mb-6">
-            Transformacije Koje Govore Sve
+            Tvoja priča može biti sledeća.
           </h2>
           <p className="text-gray-600 text-lg leading-relaxed">
-            Pogledajte neverojetne transformacije naših klijenata koji su postigli svoje ciljeve 
-            kroz personalizovane planove ishrane i stručnu podršku.
+            Svaka transformacija ovdje je priča o hrabrosti, strpljenju i povjerenju.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {results.map((result, index) => (
             <motion.div
               key={result.id}
@@ -99,7 +98,7 @@ export default function ResultsSection() {
               className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
             >
               {/* Before/After Image Slider */}
-              <div className="relative h-128 overflow-hidden">
+              <div className="relative h-80 overflow-hidden">
                 <div className="absolute inset-0">
                   <img
                     src={result.beforeImage}
