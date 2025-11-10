@@ -180,7 +180,7 @@ export default function HeroSection() {
               className="max-w-6xl mx-auto w-full"
             >
               <div className="bg-white rounded-xl shadow-lg p-8 md:p-12">
-                <div className="flex flex-col md:flex-row items-start gap-8">
+                <div className="flex flex-row items-start gap-8">
                   {/* Text content - left side */}
                   <div className="flex-1 text-gray-700">
                     <p className="text-lg leading-relaxed mb-4">
@@ -192,14 +192,14 @@ export default function HeroSection() {
                     
                     {/* Learn more button */}
                     <div className="mt-6">
-                      <a href="#about-me" className="inline-block bg-white px-6 py-3 rounded-lg shadow-lg text-gray-800 font-medium hover:shadow-xl transition-shadow">
+                      <a href="#about-me" className="inline-block px-6 py-3 rounded-lg shadow-lg text-gray-800 font-medium hover:shadow-xl transition-shadow" style={{ backgroundColor: "#9FE2BF" }}>
                         Malo više o meni
                       </a>
                     </div>
                   </div>
 
                   {/* Image - right side */}
-                  <div className="w-full md:w-48 flex-shrink-0">
+                  <div className="w-32 flex-shrink-0">
                     <img
                       src={doctorImage}
                       alt="Jelena - Magistar nutricionizma"
