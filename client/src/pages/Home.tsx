@@ -1,5 +1,4 @@
 import HeroSection from "@/components/HeroSection";
-import ServicesSection from "@/components/ServicesSection";
 import BMICalculator from "@/components/BMICalculator";
 import PricingSection from "@/components/PricingSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
@@ -41,7 +40,6 @@ export default function Home() {
       <HeroSection />
       <BMICalculator />
       <ResultsSection />
-      <ServicesSection />
       <PricingSection />
       <TestimonialsSection testimonials={testimonials} />
       <FAQSection />
