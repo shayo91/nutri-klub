@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
 import dobrilaBeforeImg from "@assets/image_1763294829938.png";
 import dobrilaAfterImg from "@assets/image_1763294848283.png";
+import milenaBeforeImg from "@assets/image_1763295037026.png";
+import milenaAfterImg from "@assets/image_1763295022857.png";
 
 type ResultCard = {
   id: number;
@@ -35,11 +37,11 @@ export default function ResultsSection() {
     },
     {
       id: 2,
-      name: "Stefan M.",
-      beforeImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&crop=face",
-      afterImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=500&fit=crop&crop=face",
-      weightLoss: "-22 kg",
-      timeframe: "8 meseci",
+      name: "Milena",
+      beforeImage: milenaBeforeImg,
+      afterImage: milenaAfterImg,
+      weightLoss: "-20 kg",
+      timeframe: "7 meseci",
       testimonial: "Transformacija koja je promenila moj život. Hvala Jeleni na stručnoj podršci!"
     },
     {
