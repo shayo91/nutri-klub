@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
+import dobrilaBeforeImg from "@assets/viber_slika_2025-11-16_13-01-31-095_1763294542006.jpg";
+import dobrilaAfterImg from "@assets/viber_slika_2025-11-16_13-01-31-120_1763294542007.jpg";
 
 type ResultCard = {
   id: number;
@@ -24,11 +26,11 @@ export default function ResultsSection() {
   const results: ResultCard[] = [
     {
       id: 1,
-      name: "Marija P.",
-      beforeImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=500&fit=crop&crop=face",
-      afterImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=500&fit=crop&crop=face",
-      weightLoss: "-15 kg",
-      timeframe: "6 meseci",
+      name: "Dobrila",
+      beforeImage: dobrilaBeforeImg,
+      afterImage: dobrilaAfterImg,
+      weightLoss: "-8 kg",
+      timeframe: "3 meseca",
       testimonial: "Nikad se nisam osećala bolje! Jelena mi je pomogla da pronađem balans u ishrani."
     },
     {
