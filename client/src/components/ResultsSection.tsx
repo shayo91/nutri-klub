@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
-import dobrilaBeforeImg from "@assets/viber_slika_2025-11-16_13-01-31-095_1763294542006.jpg";
-import dobrilaAfterImg from "@assets/viber_slika_2025-11-16_13-01-31-120_1763294542007.jpg";
+import dobrilaBeforeImg from "@assets/image_1763294829938.png";
+import dobrilaAfterImg from "@assets/image_1763294848283.png";
 
 type ResultCard = {
   id: number;
