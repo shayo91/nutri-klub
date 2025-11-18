@@ -6,7 +6,6 @@ import doctorImage from "@assets/jelena-hero.png";
 export default function HeroSection() {
   const { t } = useLanguage();
   const { ref: contentRef, inView: contentInView } = useAnimateOnScroll();
-  const { ref: aboutRef, inView: aboutInView } = useAnimateOnScroll(0.2);
 
   return (
     <>
@@ -167,62 +166,23 @@ export default function HeroSection() {
                   <span className="text-gray-800 font-medium text-lg">Kreni ovdje.</span>
                 </div>
               </motion.div>
+              
+              {/* Learn more button */}
+              <motion.div
+                className="mt-6"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.7 }}
+              >
+                <a href="#about-me" className="inline-block px-6 py-3 rounded-lg shadow-lg text-gray-800 font-medium hover:shadow-xl transition-shadow" style={{ backgroundColor: "#9FE2BF" }}>
+                  Malo više o meni
+                </a>
+              </motion.div>
             </motion.div>
 
-            {/* About me section - mobile version (centered, in flow) */}
-            <motion.div
-              ref={aboutRef}
-              initial={{ opacity: 0, y: 30 }}
-              animate={
-                aboutInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }
-              }
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="md:hidden max-w-md mx-auto w-full"
-            >
-              <div className="bg-white rounded-xl shadow-lg p-8">
-                <div className="text-gray-700">
-                  <p className="text-lg leading-relaxed mb-4">
-                    <strong className="text-xl">Ja sam Jelena i biću tvoja nutricionistkinja.</strong>
-                  </p>
-                  
-                  {/* Learn more button */}
-                  <div className="mt-6">
-                    <a href="#about-me" className="inline-block px-6 py-3 rounded-lg shadow-lg text-gray-800 font-medium hover:shadow-xl transition-shadow" style={{ backgroundColor: "#9FE2BF" }}>
-                      Malo više o meni
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
 
           </div>
         </div>
-
-        {/* About me section - desktop version (bottom left) */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="hidden md:block absolute bottom-8 left-8 z-10"
-        >
-          <div 
-            className="bg-white rounded-xl shadow-lg p-6"
-            data-testid="white-box-jelena"
-          >
-            <div className="text-gray-700">
-              <p className="text-base leading-snug mb-4">
-                <strong className="text-lg">Ja sam Jelena i biću tvoja nutricionistkinja.</strong>
-              </p>
-              
-              {/* Learn more button */}
-              <div>
-                <a href="#about-me" className="inline-block px-5 py-2 rounded-lg shadow-lg text-gray-800 font-medium text-sm hover:shadow-xl transition-shadow" style={{ backgroundColor: "#9FE2BF" }}>
-                  Malo više o meni
-                </a>
-              </div>
-            </div>
-          </div>
-        </motion.div>
 
         {/* Jelena's image - bottom right corner (hidden on mobile) */}
         <motion.div
