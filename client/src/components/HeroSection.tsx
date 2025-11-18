@@ -179,13 +179,13 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 0.7 }}
           className="hidden md:block absolute bottom-8 right-8 z-20"
         >
-          <div className="bg-white rounded-xl shadow-lg p-6 max-w-sm">
-            <p className="text-black text-base leading-relaxed mb-4">
+          <div className="bg-white rounded-xl shadow-lg p-6 max-w-sm relative">
+            <p className="text-black text-base leading-relaxed mb-4 pr-4">
               Zdravo! Ja sam Jelena i želim da ti pomognem da se osjećaš dobro u svom tijelu i da uživaš u hrani! :)
             </p>
             <a 
               href="#about-me" 
-              className="inline-block px-6 py-3 rounded-lg shadow-lg text-gray-800 font-medium hover:shadow-xl transition-shadow" 
+              className="absolute bottom-6 right-6 px-6 py-3 rounded-lg shadow-lg text-gray-800 font-medium hover:shadow-xl transition-shadow" 
               style={{ backgroundColor: "#9FE2BF" }}
               data-testid="button-learn-more"
             >
@@ -201,13 +201,13 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 0.7 }}
           className="md:hidden absolute bottom-8 left-1/2 -translate-x-1/2 z-20 px-4"
         >
-          <div className="bg-white rounded-xl shadow-lg p-6 max-w-sm">
-            <p className="text-black text-base leading-relaxed mb-4">
+          <div className="bg-white rounded-xl shadow-lg p-6 max-w-sm relative">
+            <p className="text-black text-base leading-relaxed mb-4 pr-4">
               Zdravo! Ja sam Jelena i želim da ti pomognem da se osjećaš dobro u svom tijelu i da uživaš u hrani! :)
             </p>
             <a 
               href="#about-me" 
-              className="inline-block px-6 py-3 rounded-lg shadow-lg text-gray-800 font-medium hover:shadow-xl transition-shadow" 
+              className="absolute bottom-6 right-6 px-6 py-3 rounded-lg shadow-lg text-gray-800 font-medium hover:shadow-xl transition-shadow" 
               style={{ backgroundColor: "#9FE2BF" }}
               data-testid="button-learn-more-mobile"
             >
