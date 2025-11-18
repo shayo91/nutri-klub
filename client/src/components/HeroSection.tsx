@@ -182,10 +182,7 @@ export default function HeroSection() {
               <div className="bg-white rounded-xl shadow-lg p-8">
                 <div className="text-gray-700">
                   <p className="text-lg leading-relaxed mb-4">
-                    <strong className="text-xl">Ja sam Jelena i drago mi je što si ovdje.</strong>
-                  </p>
-                  <p className="leading-relaxed">
-                    Znam da nije lako promijeniti navike ali isto tako znam da je moguće, kad imaš podršku i razumijevanje. Kroz individualni rad i edukacije, pomoći ću ti da razumiješ svoje tijelo, da prepoznaš njegove signale i da napraviš promjene koje traju.
+                    <strong className="text-xl">Ja sam Jelena i biću tvoja nutricionistkinja.</strong>
                   </p>
                   
                   {/* Learn more button */}
@@ -217,10 +214,7 @@ export default function HeroSection() {
             <div className="flex-1 flex flex-col" style={{ padding: '24px' }}>
               <div className="text-gray-700 flex-1 overflow-hidden">
                 <p className="text-base leading-snug mb-3">
-                  <strong className="text-lg">Ja sam Jelena i drago mi je što si ovdje.</strong>
-                </p>
-                <p className="text-sm leading-snug">
-                  Znam da nije lako promijeniti navike ali isto tako znam da je moguće, kad imaš podršku i razumijevanje. Kroz individualni rad i edukacije, pomoći ću ti da razumiješ svoje tijelo, da prepoznaš njegove signale i da napraviš promjene koje traju.
+                  <strong className="text-lg">Ja sam Jelena i biću tvoja nutricionistkinja.</strong>
                 </p>
                 
                 {/* Learn more button */}
