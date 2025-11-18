@@ -232,13 +232,13 @@ export default function HeroSection() {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="hidden md:block absolute bottom-0 right-0 pointer-events-none h-[50vh]"
+          className="hidden md:block absolute bottom-0 right-0 pointer-events-none"
           style={{ zIndex: 5 }}
         >
           <img
             src={doctorImage}
             alt="Jelena - Magistar nutricionizma"
-            className="h-full w-auto object-contain"
+            className="w-[474px] h-[589px] object-cover"
             data-testid="img-jelena-hero"
           />
         </motion.div>
