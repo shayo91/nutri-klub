@@ -187,7 +187,7 @@ export default function HeroSection() {
                       <strong className="text-xl">Ja sam Jelena i drago mi je što si ovdje.</strong>
                     </p>
                     <p className="leading-relaxed">
-                      Znam da nije lako promijeniti navike ali isto tako znam da je moguće, kad imaš podršku i razumijevanje. Kroz individualni rad i edukacije, pomoći ću ti da razumiješ svoje tijelo, da prepoznaš njegove signale i da napraviš promjene koje traju. Ne moraš biti savršen/a – dovoljno je da budeš prisutan/na i da kreneš, korak po korak. Vjerujem da zdrava ishrana nije dijeta, nego odnos prema sebi.
+                      Znam da nije lako promijeniti navike ali isto tako znam da je moguće, kad imaš podršku i razumijevanje. Kroz individualni rad i edukacije, pomoći ću ti da razumiješ svoje tijelo, da prepoznaš njegove signale i da napraviš promjene koje traju.
                     </p>
                     
                     {/* Learn more button */}
