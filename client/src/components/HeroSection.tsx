@@ -166,23 +166,28 @@ export default function HeroSection() {
                   <span className="text-gray-800 font-medium text-lg">Kreni ovdje.</span>
                 </div>
               </motion.div>
-              
-              {/* Learn more button */}
-              <motion.div
-                className="mt-6"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.7 }}
-              >
-                <a href="#about-me" className="inline-block px-6 py-3 rounded-lg shadow-lg text-gray-800 font-medium hover:shadow-xl transition-shadow" style={{ backgroundColor: "#9FE2BF" }}>
-                  Malo više o meni
-                </a>
-              </motion.div>
             </motion.div>
 
 
           </div>
         </div>
+
+        {/* Learn more button - bottom right corner */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.7 }}
+          className="absolute bottom-8 right-8 z-20"
+        >
+          <a 
+            href="#about-me" 
+            className="inline-block px-6 py-3 rounded-lg shadow-lg text-gray-800 font-medium hover:shadow-xl transition-shadow" 
+            style={{ backgroundColor: "#9FE2BF" }}
+            data-testid="button-learn-more"
+          >
+            Malo više o meni
+          </a>
+        </motion.div>
 
         {/* Jelena's image - bottom right corner (hidden on mobile) */}
         <motion.div
