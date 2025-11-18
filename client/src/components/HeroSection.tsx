@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
 import { useLanguage } from "@/hooks/useLanguage";
-import doctorImage from "@assets/sajttt_1762433430739.png";
+import doctorImage from "@assets/jelena-hero.png";
 
 export default function HeroSection() {
   const { t } = useLanguage();
