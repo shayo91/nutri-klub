@@ -198,31 +198,27 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* About me section - desktop version (centered bottom) */}
+        {/* About me section - desktop version (bottom left) */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="hidden md:block absolute bottom-8 z-10"
-          style={{ left: '50%', marginLeft: '-350px' }}
+          className="hidden md:block absolute bottom-8 left-8 z-10"
         >
           <div 
-            className="bg-white rounded-xl shadow-lg flex"
-            style={{ width: '700px', height: '232px' }}
+            className="bg-white rounded-xl shadow-lg p-6"
             data-testid="white-box-jelena"
           >
-            <div className="flex-1 flex flex-col" style={{ padding: '24px' }}>
-              <div className="text-gray-700 flex-1 overflow-hidden">
-                <p className="text-base leading-snug mb-3">
-                  <strong className="text-lg">Ja sam Jelena i biću tvoja nutricionistkinja.</strong>
-                </p>
-                
-                {/* Learn more button */}
-                <div className="mt-4">
-                  <a href="#about-me" className="inline-block px-5 py-2 rounded-lg shadow-lg text-gray-800 font-medium text-sm hover:shadow-xl transition-shadow" style={{ backgroundColor: "#9FE2BF" }}>
-                    Malo više o meni
-                  </a>
-                </div>
+            <div className="text-gray-700">
+              <p className="text-base leading-snug mb-4">
+                <strong className="text-lg">Ja sam Jelena i biću tvoja nutricionistkinja.</strong>
+              </p>
+              
+              {/* Learn more button */}
+              <div>
+                <a href="#about-me" className="inline-block px-5 py-2 rounded-lg shadow-lg text-gray-800 font-medium text-sm hover:shadow-xl transition-shadow" style={{ backgroundColor: "#9FE2BF" }}>
+                  Malo više o meni
+                </a>
               </div>
             </div>
           </div>
