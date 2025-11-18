@@ -169,7 +169,7 @@ export default function HeroSection() {
               </motion.div>
             </motion.div>
 
-            {/* About me section - centered text box */}
+            {/* About me section - mobile version (centered, in flow) */}
             <motion.div
               ref={aboutRef}
               initial={{ opacity: 0, y: 30 }}
@@ -177,9 +177,9 @@ export default function HeroSection() {
                 aboutInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }
               }
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="max-w-2xl mx-auto w-full"
+              className="md:hidden max-w-md mx-auto w-full"
             >
-              <div className="bg-white rounded-xl shadow-lg p-8 md:p-10">
+              <div className="bg-white rounded-xl shadow-lg p-8">
                 <div className="text-gray-700">
                   <p className="text-lg leading-relaxed mb-4">
                     <strong className="text-xl">Ja sam Jelena i drago mi je što si ovdje.</strong>
@@ -197,16 +197,43 @@ export default function HeroSection() {
                 </div>
               </div>
             </motion.div>
+
           </div>
         </div>
+
+        {/* About me section - desktop version (bottom left corner) */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="hidden md:block absolute bottom-8 left-8 z-10 max-w-md"
+        >
+          <div className="bg-white rounded-xl shadow-lg p-8 md:p-10">
+            <div className="text-gray-700">
+              <p className="text-lg leading-relaxed mb-4">
+                <strong className="text-xl">Ja sam Jelena i drago mi je što si ovdje.</strong>
+              </p>
+              <p className="leading-relaxed">
+                Znam da nije lako promijeniti navike ali isto tako znam da je moguće, kad imaš podršku i razumijevanje. Kroz individualni rad i edukacije, pomoći ću ti da razumiješ svoje tijelo, da prepoznaš njegove signale i da napraviš promjene koje traju.
+              </p>
+              
+              {/* Learn more button */}
+              <div className="mt-6">
+                <a href="#about-me" className="inline-block px-6 py-3 rounded-lg shadow-lg text-gray-800 font-medium hover:shadow-xl transition-shadow" style={{ backgroundColor: "#9FE2BF" }}>
+                  Malo više o meni
+                </a>
+              </div>
+            </div>
+          </div>
+        </motion.div>
 
         {/* Jelena's image - bottom right corner (hidden on mobile) */}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="hidden md:block absolute bottom-0 right-0 pointer-events-none"
-          style={{ height: '50vh', zIndex: 5 }}
+          className="hidden md:block absolute bottom-0 right-0 pointer-events-none h-[50vh]"
+          style={{ zIndex: 5 }}
         >
           <img
             src={doctorImage}
