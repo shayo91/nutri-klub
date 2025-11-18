@@ -7,7 +7,7 @@ import ContactSection from "@/components/ContactSection";
 import VideoSection from "@/components/VideoSection";
 import ResultsSection from "@/components/ResultsSection";
 import EbookSection from "@/components/EbookSection";
-import WhatsAppButton from "@/components/WhatsAppButton";
+import EmailButton from "@/components/WhatsAppButton";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Testimonial, BlogPost } from "@/lib/types";
@@ -45,7 +45,7 @@ export default function Home() {
       <EbookSection />
       <BlogSection posts={blogPosts} />
       <ContactSection />
-      <WhatsAppButton />
+      <EmailButton />
     </>
   );
 }
