@@ -7,6 +7,8 @@ import milenaBeforeImg from "@assets/image_1763295037026.png";
 import milenaAfterImg from "@assets/image_1763295022857.png";
 import danijelBeforeImg from "@assets/image_1763462202365.png";
 import danijelAfterImg from "@assets/image_1763462217900.png";
+import jovanaBeforeImg from "@assets/image_1763462390515.png";
+import jovanaAfterImg from "@assets/image_1763462405387.png";
 
 type ResultCard = {
   id: number;
@@ -57,11 +59,11 @@ export default function ResultsSection() {
     },
     {
       id: 4,
-      name: "Miloš D.",
-      beforeImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop&crop=face",
-      afterImage: "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=400&h=500&fit=crop&crop=face",
-      weightLoss: "-18 kg",
-      timeframe: "7 meseci",
+      name: "Jovana",
+      beforeImage: jovanaBeforeImg,
+      afterImage: jovanaAfterImg,
+      weightLoss: "-20 kg",
+      timeframe: "10 meseci",
       testimonial: "Plan ishrane je bio savršeno prilagođen mom životnom stilu. Preporučujem svima!"
     }
   ];
