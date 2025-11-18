@@ -106,12 +106,12 @@ export default function ResultsSection() {
               className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
             >
               {/* Before/After Image Slider */}
-              <div className="relative h-80 overflow-hidden bg-gray-100">
+              <div className="relative aspect-[3/4] overflow-hidden">
                 <div className="absolute inset-0">
                   <img
                     src={result.beforeImage}
                     alt={`${result.name} - pre`}
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-cover"
                   />
                 </div>
                 <div 
@@ -121,7 +121,7 @@ export default function ResultsSection() {
                   <img
                     src={result.afterImage}
                     alt={`${result.name} - posle`}
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-cover"
                   />
                 </div>
                 
