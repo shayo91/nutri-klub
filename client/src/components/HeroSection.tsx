@@ -149,7 +149,7 @@ export default function HeroSection() {
                 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
                 style={{ color: "#000" }}
               >
-                Tvoja početna tačka za zdrave promjene u ishrani.
+                Tvoja početna tačka za promjenu.
               </h2>
 
               <p className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed">
@@ -201,16 +201,17 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* About me section - desktop version (bottom left corner) */}
+        {/* About me section - desktop version (centered bottom) */}
         <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="hidden md:block absolute bottom-8 left-8 z-10"
+          className="hidden md:block absolute bottom-8 z-10"
+          style={{ left: '50%', marginLeft: '-350px' }}
         >
           <div 
             className="bg-white rounded-xl shadow-lg flex"
-            style={{ width: '535px', height: '232px' }}
+            style={{ width: '700px', height: '232px' }}
             data-testid="white-box-jelena"
           >
             <div className="flex-1 flex flex-col" style={{ padding: '24px' }}>
