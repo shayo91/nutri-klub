@@ -5,6 +5,8 @@ import dobrilaBeforeImg from "@assets/image_1763294829938.png";
 import dobrilaAfterImg from "@assets/image_1763294848283.png";
 import milenaBeforeImg from "@assets/image_1763295037026.png";
 import milenaAfterImg from "@assets/image_1763295022857.png";
+import danijelBeforeImg from "@assets/image_1763462202365.png";
+import danijelAfterImg from "@assets/image_1763462217900.png";
 
 type ResultCard = {
   id: number;
@@ -46,12 +48,12 @@ export default function ResultsSection() {
     },
     {
       id: 3,
-      name: "Ana T.",
-      beforeImage: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=500&fit=crop&crop=face",
-      afterImage: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=500&fit=crop&crop=face",
-      weightLoss: "-12 kg",
-      timeframe: "4 meseca",
-      testimonial: "Konačno sam naučila kako da se hranim zdravo bez odricanja od ukusa."
+      name: "Danijel",
+      beforeImage: danijelBeforeImg,
+      afterImage: danijelAfterImg,
+      weightLoss: "-11 kg",
+      timeframe: "6 meseci",
+      testimonial: "Nakon mjeseci netreniranja zbog oporavka od gripa i terapija pod lijekovima, dobijam visak kilograma 106 kg. Danas 95 kg, tijelo na vrhuncu snage! Raspoloženje, samopouzdanje, energija - benefiti procesa."
     },
     {
       id: 4,
