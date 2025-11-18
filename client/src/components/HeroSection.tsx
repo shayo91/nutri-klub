@@ -206,22 +206,28 @@ export default function HeroSection() {
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="hidden md:block absolute bottom-8 left-8 z-10 max-w-md"
+          className="hidden md:block absolute bottom-8 left-8 z-10"
         >
-          <div className="bg-white rounded-xl shadow-lg p-8 md:p-10">
-            <div className="text-gray-700">
-              <p className="text-lg leading-relaxed mb-4">
-                <strong className="text-xl">Ja sam Jelena i drago mi je što si ovdje.</strong>
-              </p>
-              <p className="leading-relaxed">
-                Znam da nije lako promijeniti navike ali isto tako znam da je moguće, kad imaš podršku i razumijevanje. Kroz individualni rad i edukacije, pomoći ću ti da razumiješ svoje tijelo, da prepoznaš njegove signale i da napraviš promjene koje traju.
-              </p>
-              
-              {/* Learn more button */}
-              <div className="mt-6">
-                <a href="#about-me" className="inline-block px-6 py-3 rounded-lg shadow-lg text-gray-800 font-medium hover:shadow-xl transition-shadow" style={{ backgroundColor: "#9FE2BF" }}>
-                  Malo više o meni
-                </a>
+          <div 
+            className="bg-white rounded-xl shadow-lg flex"
+            style={{ width: '535px', height: '232px' }}
+            data-testid="white-box-jelena"
+          >
+            <div className="flex-1 flex flex-col" style={{ padding: '24px' }}>
+              <div className="text-gray-700 flex-1 overflow-hidden">
+                <p className="text-base leading-snug mb-3">
+                  <strong className="text-lg">Ja sam Jelena i drago mi je što si ovdje.</strong>
+                </p>
+                <p className="text-sm leading-snug">
+                  Znam da nije lako promijeniti navike ali isto tako znam da je moguće, kad imaš podršku i razumijevanje. Kroz individualni rad i edukacije, pomoći ću ti da razumiješ svoje tijelo, da prepoznaš njegove signale i da napraviš promjene koje traju.
+                </p>
+                
+                {/* Learn more button */}
+                <div className="mt-4">
+                  <a href="#about-me" className="inline-block px-5 py-2 rounded-lg shadow-lg text-gray-800 font-medium text-sm hover:shadow-xl transition-shadow" style={{ backgroundColor: "#9FE2BF" }}>
+                    Malo više o meni
+                  </a>
+                </div>
               </div>
             </div>
           </div>
