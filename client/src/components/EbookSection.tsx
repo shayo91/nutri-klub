@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
+import ebookCoverImage from "@assets/image_1764108519857.png";
 
 type Ebook = {
   id: number;
@@ -22,14 +23,14 @@ export default function EbookSection() {
   const ebooks: Ebook[] = [
     {
       id: 1,
-      title: "Vodič za Zdravu Ishranu - Besplatno",
-      description: "Osnove zdrave ishrane, jednostavni recepti i praktični saveti za svakodnevni život. Savršen početak vašeg wellness putovanja.",
-      image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=600&fit=crop",
+      title: "Mini vodič kroz 4 faze menstrualnog ciklusa i kako jesti u svakoj.",
+      description: "Žurimo, jurimo, ganjamo, očekujemo da smo svaki dan iste.. jednako produktivne, kreativne, smirene, fokusirane, motivisane. A istina je: mi nismo stvorene da budemo iste.",
+      image: ebookCoverImage,
       price: 0,
       isFree: true,
       downloadUrl: "/attached_assets/vodic-zdrava-ishrana.pdf",
-      pages: 45,
-      category: "Osnovni vodič"
+      pages: 10,
+      category: "Besplatni vodič"
     },
     {
       id: 2,
@@ -89,11 +90,11 @@ export default function EbookSection() {
             E-BOOK BIBLIOTEKA
           </p>
           <h2 className="text-3xl md:text-4xl font-bold font-poppins mb-6">
-            Preuzmite Naše Stručne Vodiče
+            Preuzmite naše stručne vodiče
           </h2>
           <p className="text-gray-600 text-lg leading-relaxed">
-            Otkrijte naše detaljne e-bookove o zdravoj ishrani, receptima i wellness savetima. 
-            Počnite sa besplatnim vodičem ili investirajte u premium sadržaj.
+            Kolekcija vodiča kreiranih da ti olakšaju razumijevanje ishrane i zdravih navika. 
+            Bilo da tek počinješ ili želiš da unaprijediš svoju rutinu, ovdje ćeš pronaći podršku i kvalitetne informacije.
           </p>
         </motion.div>
 
