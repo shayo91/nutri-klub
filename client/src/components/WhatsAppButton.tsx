@@ -1,9 +1,17 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, type MouseEvent } from "react";
 import { Mail } from "lucide-react";
 
 export default function EmailButton() {
   const [isHovered, setIsHovered] = useState(false);
+
+  const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const contactSection = document.querySelector('#contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <motion.div
@@ -13,14 +21,15 @@ export default function EmailButton() {
       transition={{ delay: 2, duration: 0.3 }}
     >
       <motion.a
-        href="mailto:kontakt@nutriklub.com?subject=Upit o uslugama ishrane"
+        href="#contact"
+        onClick={handleClick}
         className="group flex items-center text-white rounded-full shadow-lg transition-all duration-300"
         style={{ backgroundColor: "#9FE2BF" }}
         onHoverStart={() => setIsHovered(true)}
         onHoverEnd={() => setIsHovered(false)}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        data-testid="button-email"
+        data-testid="button-contact"
       >
         <div className="p-4">
           <Mail className="w-6 h-6" />
@@ -33,7 +42,7 @@ export default function EmailButton() {
               exit={{ width: 0, opacity: 0 }}
               className="overflow-hidden pr-4 whitespace-nowrap"
             >
-              <span className="text-sm font-medium">Pošaljite e-mail</span>
+              <span className="text-sm font-medium">Pošalji poruku</span>
             </motion.div>
           )}
         </AnimatePresence>

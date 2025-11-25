@@ -172,15 +172,16 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* White box with text and button - bottom right corner */}
+        {/* White box with text and button - positioned left of image */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.7 }}
-          className="hidden md:block absolute bottom-8 right-8 z-20"
+          className="hidden md:block absolute bottom-8 z-20"
+          style={{ right: 'calc(474px + 2rem)' }}
         >
-          <div className="bg-white rounded-xl shadow-lg p-6 max-w-sm relative">
-            <p className="text-black text-base leading-relaxed mb-4 pr-4">
+          <div className="bg-white rounded-xl shadow-lg p-6 pb-20 max-w-md relative">
+            <p className="text-black text-base leading-relaxed">
               Zdravo! Ja sam Jelena i želim da ti pomognem da se osjećaš dobro u svom tijelu i da uživaš u hrani! :)
             </p>
             <a 
