@@ -159,8 +159,8 @@ export const translations = {
     
     // Videos Section
     'videos.subtitle': 'NUTRITIVNI VIDEI',
-    'videos.title': 'Pogledajte Vredan Sadržaj o Ishrani',
-    'videos.description': 'Istražite našu video biblioteku punu praktičnih saveta, demonstracija kuvanja i uvida u ishranu da vam pomognemo na vašem zdravstvenom putovanju.',
+    'videos.title': 'Nisi siguran/na odakle da kreneš?',
+    'videos.description': 'Ovdje počinje tvoje Nutriputovanje – ECONOMY.\n\n✈️ ECONOMY\nOnline platforma za sve koji žele:\n• pronaći inspiraciju u kuhinji\n• kreirati strukturu (nabavka, kuhanje, organizacija)\n• uživati u hrani – bez kazne i grižnje savjesti\n\nOvo je program koji sam napravila da bude dostupan svima.\nBez moje direktne podrške, ali sa jasnim smjernicama koje te pokreću sa mjesta.\nDobijaš konkretne korake koji su se pokazali najboljim – u mojoj kuhinji i u radu sa klijentima uz 100+ zdravih i ukusnih recepata na jednom mjestu.\n\nAko osjećaš da želiš više…\nAko želiš:\n• lični pristup\n• strukturu prilagođenu baš tebi\n• individualan rad na tvojim navikama\n• personalizovan jelovnik\n• kontinuiranu podršku\n\nČekam te u 1:1 programima PREMIUM ECONOMY ili BUSINESS.\n\nPrijavi se i polijećemo. ✈️',
     
     // Podcasts Section
     'podcasts.subtitle': 'NUTRITIVNI PODKASTI',

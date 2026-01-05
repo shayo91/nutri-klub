@@ -80,7 +80,7 @@ export default function VideoSection() {
           <h2 className="text-3xl md:text-4xl font-bold font-poppins mb-6">
             {t("videos.title")}
           </h2>
-          <p className="text-gray-600 text-lg leading-relaxed">
+          <p className="text-gray-600 text-lg leading-relaxed whitespace-pre-line">
             {t("videos.description")}
           </p>
         </motion.div>
