@@ -5,7 +5,6 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import BlogSection from "@/components/BlogSection";
 import ContactSection from "@/components/ContactSection";
 import ProgramsSection from "@/components/ProgramsSection";
-import ResultsSection from "@/components/ResultsSection";
 import EbookSection from "@/components/EbookSection";
 import EmailButton from "@/components/WhatsAppButton";
 import { useEffect } from "react";
@@ -13,18 +12,16 @@ import { useQuery } from "@tanstack/react-query";
 import { Testimonial, BlogPost } from "@/lib/types";
 
 export default function Home() {
-  // Fetch any necessary data
   const { data: blogPosts } = useQuery<BlogPost[]>({
     queryKey: ['/api/blog-posts'],
-    staleTime: 60 * 1000, // 1 minute
+    staleTime: 60 * 1000,
   });
 
   const { data: testimonials } = useQuery<Testimonial[]>({
     queryKey: ['/api/testimonials'],
-    staleTime: 60 * 1000, // 1 minute
+    staleTime: 60 * 1000,
   });
 
-  // Scroll to hash on load if present
   useEffect(() => {
     if (window.location.hash) {
       const element = document.querySelector(window.location.hash);
@@ -38,7 +35,6 @@ export default function Home() {
     <>
       <HeroSection />
       <BMICalculator />
-      <ResultsSection />
       <TestimonialsSection testimonials={testimonials} />
       <PricingSection />
       <ProgramsSection />

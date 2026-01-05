@@ -10,12 +10,14 @@ import TermsOfService from "@/pages/TermsOfService";
 import CookiePolicy from "@/pages/CookiePolicy";
 import Purchase from "@/pages/Purchase";
 import TestimonialsPage from "@/pages/TestimonialsPage";
+import AboutMe from "@/pages/AboutMe";
 import NotFound from "@/pages/not-found";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/about" component={AboutMe} />
       <Route path="/blog/:slug" component={BlogPost} />
       <Route path="/testimonials" component={TestimonialsPage} />
       <Route path="/purchase" component={Purchase} />

@@ -185,7 +185,7 @@ export default function HeroSection() {
               Zdravo! Ja sam Jelena i želim da ti pomognem da se osjećaš dobro u svom tijelu i da uživaš u hrani! :)
             </p>
             <a 
-              href="#about-me" 
+              href="/about" 
               className="absolute bottom-6 right-6 px-6 py-3 rounded-lg shadow-lg text-gray-800 font-medium hover:shadow-xl transition-shadow" 
               style={{ backgroundColor: "#9FE2BF" }}
               data-testid="button-learn-more"
@@ -207,7 +207,7 @@ export default function HeroSection() {
               Zdravo! Ja sam Jelena i želim da ti pomognem da se osjećaš dobro u svom tijelu i da uživaš u hrani! :)
             </p>
             <a 
-              href="#about-me" 
+              href="/about" 
               className="absolute bottom-6 right-6 px-6 py-3 rounded-lg shadow-lg text-gray-800 font-medium hover:shadow-xl transition-shadow" 
               style={{ backgroundColor: "#9FE2BF" }}
               data-testid="button-learn-more-mobile"
