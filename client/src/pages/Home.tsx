@@ -4,7 +4,7 @@ import PricingSection from "@/components/PricingSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import BlogSection from "@/components/BlogSection";
 import ContactSection from "@/components/ContactSection";
-import VideoSection from "@/components/VideoSection";
+import ProgramsSection from "@/components/ProgramsSection";
 import ResultsSection from "@/components/ResultsSection";
 import EbookSection from "@/components/EbookSection";
 import EmailButton from "@/components/WhatsAppButton";
@@ -41,7 +41,7 @@ export default function Home() {
       <ResultsSection />
       <TestimonialsSection testimonials={testimonials} />
       <PricingSection />
-      <VideoSection />
+      <ProgramsSection />
       <EbookSection />
       <BlogSection posts={blogPosts} />
       <ContactSection />

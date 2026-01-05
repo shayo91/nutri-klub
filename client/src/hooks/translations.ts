@@ -157,11 +157,18 @@ export const translations = {
     'bmi.male': 'Muški',
     'bmi.female': 'Ženski',
     
-    // Videos Section
-    'videos.subtitle': 'NUTRITIVNI VIDEI',
-    'videos.title': 'Nisi siguran/na odakle da kreneš?',
-    'videos.description': 'Ovdje počinje tvoje Nutriputovanje – ECONOMY.\n\n✈️ ECONOMY\nOnline platforma za sve koji žele:\n• pronaći inspiraciju u kuhinji\n• kreirati strukturu (nabavka, kuhanje, organizacija)\n• uživati u hrani – bez kazne i grižnje savjesti\n\nOvo je program koji sam napravila da bude dostupan svima.\nBez moje direktne podrške, ali sa jasnim smjernicama koje te pokreću sa mjesta.\nDobijaš konkretne korake koji su se pokazali najboljim – u mojoj kuhinji i u radu sa klijentima uz 100+ zdravih i ukusnih recepata na jednom mjestu.\n\nAko osjećaš da želiš više…\nAko želiš:\n• lični pristup\n• strukturu prilagođenu baš tebi\n• individualan rad na tvojim navikama\n• personalizovan jelovnik\n• kontinuiranu podršku\n\nČekam te u 1:1 programima PREMIUM ECONOMY ili BUSINESS.\n\nPrijavi se i polijećemo. ✈️',
-    
+    // Programs Section
+    'programs.subtitle': 'MOJI PROGRAMI',
+    'programs.title': 'Nisi siguran/na odakle da kreneš?',
+    'programs.start.title': 'START',
+    'programs.start.description': 'Online platforma za sve koji žele:',
+    'programs.start.points': '• pronaći inspiraciju u kuhinji\n• kreirati strukturu (nabavka, kuhanje, organizacija)\n• uživati u hrani – bez kazne i grižnje savjesti',
+    'programs.start.info': 'Ovo je program koji sam napravila da bude dostupan svima. Bez moje direktne podrške, ali sa jasnim smjernicama koje te pokreću sa mjesta. Dobijaš konkretne korake koji su se pokazali najboljim – u mojoj kuhinji i u radu sa klijentima uz 100+ zdravih i ukusnih recepata na jednom mjestu.',
+    'programs.more.title': 'Ako osjećaš da želiš više…',
+    'programs.more.description': 'Ako želiš:',
+    'programs.more.points': '• lični pristup\n• strukturu prilagođenu baš tebi\n• individualan rad na tvojim navikama\n• personalizovan jelovnik\n• kontinuiranu podršku',
+    'programs.more.footer': 'Čekam te u 1:1 programima BALANS ili TRANSFORMACIJA.',
+
     // Podcasts Section
     'podcasts.subtitle': 'NUTRITIVNI PODKASTI',
     'podcasts.title': 'Slušajte Stručne Savete o Ishrani',
