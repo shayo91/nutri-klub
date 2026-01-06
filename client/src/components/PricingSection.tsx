@@ -1,69 +1,70 @@
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
-import { useLanguage } from "@/hooks/useLanguage";
+import { Check } from "lucide-react";
 
 export default function PricingSection() {
-  const { t } = useLanguage();
-  const { ref: pricingRef, inView: pricingInView } = useAnimateOnScroll(0.2);
+  const { ref: pricingRef, inView: pricingInView } = useAnimateOnScroll(0.1);
 
   const plans = [
     {
-      name: "Start",
-      price: "35€",
-      period: "",
-      originalPrice: "50€",
+      name: "Konsultacije",
+      price: "60",
+      currency: "KM",
+      description: "Individualna konsultacija osmišljena da ti pomogne da razumiješ svoje trenutno stanje, navike i izazove. Kroz razgovor, analizu i konkretne smjernice, dobijaš jasnu sliku šta trebaš mijenjati i kako da napraviš prve korake ka boljem balansu.",
       features: [
-        "Nauči osnove pravilne ishrane",
-        "Lista za kupovinu",
-        "Jednostavni recepti za svakodnevnu upotrebu",
-        "Kako pripremiti balansiran doručak/ručak/večeru",
-        "E-book i video materijali koji ti ostaju zauvijek"
+        "Detaljna anamneza i analiza dnevnika ishrane",
+        "Savjeti za poboljšanje ishrane",
+        "Razgovor u trajanju od 1h (video poziv)",
+        "Uputstvo sa smjernicama nakon poziva",
+        "Prijedlog dnevnog jelovnika"
       ],
-      results: "Za one koji žele razumjeti osnove bez pritiska",
       popular: false,
-      savings: "Uštedite 15€",
-      buttonText: "Izaberi Plan"
+      originalPrice: null,
+      savings: null,
+      continuation: null
     },
     {
       name: "Balans",
-      price: "100€",
-      period: "",
-      originalPrice: "120€",
+      subtitle: "30 dana promjene uz jasnu strukturu i podršku",
+      price: "190",
+      currency: "KM",
+      description: "Kroz personalizovane jelovnike, jasne smjernice i podršku, učiš kako da organizuješ ishranu i gradiš održive navike koje ćeš primjenjivati i nakon završetka programa.",
       features: [
-        "Sve iz Start paketa",
-        "Online uvodne konsultacije",
-        "Analiza dnevnika ishrane",
+        "Uvodne konsultacije (video poziv)",
+        "Detaljna anamneza i analiza dnevnika ishrane",
+        "Savjeti i personalizovane preporuke za ishranu",
         "2 individualna sedmična jelovnika",
-        "Kontrola (online)"
+        "Lista namirnica za kupovinu",
+        "Podrška putem poruka tokom 30 dana"
       ],
-      results: "Za one koji žele ličnu podršku i jasnu strukturu.",
       popular: true,
-      savings: "Uštedite 20€",
-      continuationPrice: "Nastavak saradnje 75€/mjesec",
-      buttonText: "ZAKAŽI TERMIN"
+      originalPrice: "230",
+      savings: "Uštedi 40KM",
+      continuation: "Nastavak saradnje 150KM/mjesečno"
     },
     {
       name: "Transformacija",
-      price: "200€",
-      period: "",
-      originalPrice: "250€",
-      features: [
-        "Sve iz Start paketa",
-        "Online uvodne konsultacije",
-        "Mjesečne kontrole i analiza napretka (x3)",
-        "6 individualnih jelovnika",
-        "3 mjeseca kontinuirane podrške"
-      ],
-      results: "Za one koji žele dublju promjenu i trajne rezultate.",
+      subtitle: "90 dana resetovanja tijela i navika",
+      price: "390",
+      currency: "KM",
       description: "Tromjesečni program koji te vodi kroz proces razumijevanja, promjene i održavanja balansa. Kroz redovne razgovore, planove i podršku, učiš da se oslanjaš na sebe i svoje tijelo.",
+      features: [
+        "3 mjeseca kontinuirane podrške",
+        "6 individualnih jelovnika",
+        "Smjernice i preporuke za ishranu",
+        "Rad na odnosu s hranom",
+        "Mjesečne kontrole i analiza napretka",
+        "Podrška putem poruka tokom 90 dana"
+      ],
       popular: false,
-      savings: "Uštedite 50€",
-      buttonText: "Izaberi Plan"
+      originalPrice: "450",
+      savings: "Uštedi 100KM",
+      continuation: null
     }
   ];
 
   return (
-    <section id="pricing" className="py-16 md:py-24 bg-white">
+    <section id="pricing" className="py-16 md:py-24 bg-gray-50">
       <div className="container mx-auto px-4">
         <motion.div
           ref={pricingRef}
@@ -72,85 +73,97 @@ export default function PricingSection() {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <p className="text-primary font-medium tracking-wide uppercase mb-2">
+          <p className="text-primary font-medium tracking-wide uppercase mb-2" data-testid="text-pricing-subtitle">
             PAKETI
           </p>
-          <h2 className="text-3xl md:text-4xl font-bold font-poppins mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold font-poppins mb-6" data-testid="text-pricing-title">
             Na koji način možemo raditi zajedno?
           </h2>
-          <p className="text-gray-600">
+          <p className="text-gray-600 text-lg" data-testid="text-pricing-description">
             Bilo da želiš lagani početak ili potpunu transformaciju — izaberi plan koji ti trenutno najviše odgovara.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {plans.map((plan, planIndex) => (
             <motion.div
               key={planIndex}
               initial={{ opacity: 0, y: 30 }}
               animate={
                 pricingInView
-                  ? { opacity: 1, y: 0, scale: plan.popular ? 1.05 : 1 }
-                  : { opacity: 0, y: 30, scale: 1 }
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: 30 }
               }
               transition={{ duration: 0.6, delay: planIndex * 0.15 }}
-              className={`bg-white rounded-xl shadow-lg overflow-hidden relative transform transition-transform duration-300 ${
+              className={`bg-white rounded-3xl overflow-hidden relative flex flex-col ${
                 plan.popular
-                  ? "border-2 border-primary shadow-2xl scale-105"
-                  : "border border-gray-200"
+                  ? "border-2 border-primary shadow-2xl md:scale-105 z-10"
+                  : "border border-gray-200 shadow-lg"
               }`}
+              data-testid={`card-pricing-${plan.name.toLowerCase()}`}
             >
-              <div className="p-8">
-                {plan.popular && (
-                  <div className="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full text-center mb-4">
-                    NAJPOPULARNIJI
-                  </div>
-                )}
+              {plan.popular && (
+                <div className="bg-primary text-white text-sm font-bold py-2 text-center" data-testid="badge-popular">
+                  NAJPOPULARNIJI
+                </div>
+              )}
 
-                <h3 className="text-xl font-bold mb-2">{plan.name}</h3>
-                <p className="text-primary font-semibold text-sm mb-4">{plan.results}</p>
-                
-                {(plan as any).description && (
-                  <p className="text-gray-600 text-sm mb-4">{(plan as any).description}</p>
-                )}
-
+              <div className="p-8 flex-1 flex flex-col">
                 <div className="mb-6">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <span className="text-4xl font-bold text-primary">{plan.price}</span>
-                    <div className="flex flex-col">
-                      <span className="text-sm text-gray-400 line-through">{plan.originalPrice}</span>
-                      <span className="text-sm text-green-600 font-semibold">{plan.savings}</span>
-                    </div>
-                  </div>
-                  {plan.period && <span className="text-gray-600">/{plan.period}</span>}
+                  <h3 className="text-2xl font-bold mb-1" data-testid={`text-plan-name-${planIndex}`}>{plan.name}</h3>
+                  {plan.subtitle && (
+                    <p className="text-sm text-gray-500" data-testid={`text-plan-subtitle-${planIndex}`}>{plan.subtitle}</p>
+                  )}
                 </div>
 
-                <ul className="space-y-3 mb-8">
-                  {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-start">
-                      <svg className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
-                      <span className="text-sm">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="mb-6">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-5xl font-bold text-primary" data-testid={`text-plan-price-${planIndex}`}>{plan.price}</span>
+                    <span className="text-xl text-gray-600">{plan.currency}</span>
+                  </div>
+                  {plan.originalPrice && (
+                    <div className="flex items-center gap-3 mt-2">
+                      <span className="text-lg text-gray-400 line-through" data-testid={`text-original-price-${planIndex}`}>{plan.originalPrice} {plan.currency}</span>
+                      <span className="text-sm font-semibold text-green-600 bg-green-50 px-3 py-1 rounded-full" data-testid={`badge-savings-${planIndex}`}>
+                        {plan.savings}
+                      </span>
+                    </div>
+                  )}
+                </div>
 
-                {(plan as any).continuationPrice && (
-                  <p className="text-sm text-gray-600 text-center mb-4 font-medium">
-                    {(plan as any).continuationPrice}
+                <p className="text-gray-600 mb-8 leading-relaxed" data-testid={`text-plan-description-${planIndex}`}>
+                  {plan.description}
+                </p>
+
+                <div className="flex-1">
+                  <ul className="space-y-4 mb-8">
+                    {plan.features.map((feature, index) => (
+                      <li key={index} className="flex items-start" data-testid={`feature-${planIndex}-${index}`}>
+                        <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center mr-3 mt-0.5">
+                          <Check className="w-4 h-4 text-primary" />
+                        </div>
+                        <span className="text-gray-700">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {plan.continuation && (
+                  <p className="text-sm text-gray-500 text-center mb-6 font-medium bg-gray-50 py-2 px-4 rounded-lg" data-testid={`text-continuation-${planIndex}`}>
+                    {plan.continuation}
                   </p>
                 )}
 
                 <a
                   href="#contact"
-                  className={`block w-full py-4 px-6 rounded-md font-bold text-lg transition transform hover:scale-105 shadow-md text-center ${
+                  className={`block w-full py-4 px-6 rounded-full font-bold text-lg text-center transition-all transform hover:scale-105 shadow-md ${
                     plan.popular
-                      ? 'bg-primary text-white hover:bg-primary-dark'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      ? 'bg-primary text-white hover:bg-primary/90'
+                      : 'bg-primary/10 text-primary hover:bg-primary/20'
                   }`}
+                  data-testid={`button-schedule-${planIndex}`}
                 >
-                  {(plan as any).buttonText || 'Izaberi Plan'}
+                  ZAKAŽI TERMIN
                 </a>
               </div>
             </motion.div>
