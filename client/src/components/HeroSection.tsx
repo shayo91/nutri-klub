@@ -1,238 +1,173 @@
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
-import { useLanguage } from "@/hooks/useLanguage";
 import doctorImage from "@assets/jelena-hero.png";
 
 export default function HeroSection() {
-  const { t } = useLanguage();
   const { ref: contentRef, inView: contentInView } = useAnimateOnScroll();
 
   return (
-    <>
-      <section
-        id="home"
-        className="relative min-h-screen py-16 flex items-center overflow-hidden"
-        style={{ backgroundColor: "#9FE2BF" }}
-      >
-        {/* Animated background elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Animated circles */}
-          <motion.div
-            className="absolute top-1/4 left-1/6 w-64 h-64 rounded-full bg-green-100"
-            animate={{
-              scale: [1, 1.05, 1],
-              opacity: [0.3, 0.2, 0.3],
-              x: [0, 10, 0],
-              y: [0, -10, 0],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
+    <section
+      id="home"
+      className="relative min-h-[85vh] md:min-h-[90vh] py-12 md:py-16 flex items-center overflow-hidden"
+      style={{ backgroundColor: "#9FE2BF" }}
+    >
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Animated circles */}
+        <motion.div
+          className="absolute top-1/4 left-[10%] w-48 md:w-64 h-48 md:h-64 rounded-full bg-green-100"
+          animate={{
+            scale: [1, 1.05, 1],
+            opacity: [0.3, 0.2, 0.3],
+            x: [0, 10, 0],
+            y: [0, -10, 0],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
 
-          <motion.div
-            className="absolute bottom-1/4 right-1/6 w-96 h-96 rounded-full bg-yellow-50"
-            animate={{
-              scale: [1, 1.08, 1],
-              opacity: [0.2, 0.3, 0.2],
-              x: [0, -15, 0],
-              y: [0, 10, 0],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1,
-            }}
-          />
+        <motion.div
+          className="absolute bottom-1/4 right-[10%] w-64 md:w-96 h-64 md:h-96 rounded-full bg-yellow-50"
+          animate={{
+            scale: [1, 1.08, 1],
+            opacity: [0.2, 0.3, 0.2],
+            x: [0, -15, 0],
+            y: [0, 10, 0],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1,
+          }}
+        />
 
-          {/* Floating food elements with parallax effect */}
+        {/* Floating leaf element */}
+        <motion.div
+          className="absolute top-20 right-[20%] w-16 h-16 md:w-24 md:h-24"
+          animate={{
+            y: [0, 15, 0],
+            rotate: [0, 10, 0],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <div className="w-full h-full rounded-full bg-green-200/40" />
+        </motion.div>
+
+        <motion.div
+          className="absolute top-1/3 left-[5%] w-20 h-20 md:w-32 md:h-32"
+          animate={{
+            y: [0, -20, 0],
+            x: [0, 10, 0],
+            rotate: [0, -5, 0],
+          }}
+          transition={{
+            duration: 7,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 0.5,
+          }}
+        >
+          <div className="w-full h-full rounded-full bg-green-100/50" />
+        </motion.div>
+
+        <motion.div
+          className="absolute bottom-[30%] left-[25%] w-12 h-12 md:w-20 md:h-20"
+          animate={{
+            y: [0, 25, 0],
+            rotate: [0, 15, 0],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1.5,
+          }}
+        >
+          <div className="w-full h-full rounded-full bg-yellow-100/40" />
+        </motion.div>
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
+          {/* Left content */}
           <motion.div
-            className="absolute -top-10 right-1/4 w-32 h-32"
-            animate={{
-              y: [0, 15, 0],
-              rotate: [0, 10, 0],
-            }}
-            transition={{
-              duration: 6,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            ref={contentRef}
+            initial={{ opacity: 0, y: 30 }}
+            animate={
+              contentInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }
+            }
+            transition={{ duration: 0.8 }}
+            className="max-w-2xl text-center lg:text-left flex-1"
           >
-            <img
-              src="https://images.unsplash.com/photo-1516685125522-3c692dcd695c?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150"
-              alt="Dekorativna jagoda"
-              className="w-full h-auto rounded-full opacity-30"
-            />
-          </motion.div>
+            {/* Main headline */}
+            <h1
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 leading-tight"
+              style={{ color: "#000" }}
+            >
+              Tvoja početna tačka za promjenu.
+            </h1>
 
-          <motion.div
-            className="absolute top-1/3 -left-10 w-40 h-40"
-            animate={{
-              y: [0, -20, 0],
-              x: [0, 10, 0],
-              rotate: [0, -5, 0],
-            }}
-            transition={{
-              duration: 7,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 0.5,
-            }}
-          >
-            <img
-              src="https://images.unsplash.com/photo-1528825871115-3581a5387919?ixlib=rb-4.0.3&auto=format&fit=crop&w=180&h=180"
-              alt="Dekorativni avokado"
-              className="w-full h-auto rounded-full opacity-30"
-            />
-          </motion.div>
+            <p className="text-base sm:text-lg md:text-xl text-gray-700 mb-6 md:mb-8 leading-relaxed">
+              Uz male korake, jednostavne obroke i pravu podršku, nauči kako da jedeš bez stresa, razumiješ svoje tijelo i osjetiš više energije svakog dana.
+            </p>
 
-          <motion.div
-            className="absolute bottom-1/4 left-1/3 w-24 h-24"
-            animate={{
-              y: [0, 25, 0],
-              rotate: [0, 15, 0],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1.5,
-            }}
-          >
-            <img
-              src="https://images.unsplash.com/photo-1546630392-1a5ed41714ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&h=120"
-              alt="Dekorativna naranča"
-              className="w-full h-auto rounded-full opacity-30"
-            />
-          </motion.div>
-
-          <motion.div
-            className="absolute -bottom-5 right-1/3 w-36 h-36"
-            animate={{
-              y: [0, -15, 0],
-              x: [0, -10, 0],
-              rotate: [0, -8, 0],
-            }}
-            transition={{
-              duration: 9,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2,
-            }}
-          >
-            <img
-              src="https://images.unsplash.com/photo-1589927986089-35812388d1f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150"
-              alt="Dekorativni kivi"
-              className="w-full h-auto rounded-full opacity-30"
-            />
-          </motion.div>
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="flex flex-col">
-            {/* Top centered content */}
+            {/* CTA Button */}
             <motion.div
-              ref={contentRef}
-              initial={{ opacity: 0, y: 30 }}
-              animate={
-                contentInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }
-              }
-              transition={{ duration: 0.8 }}
-              className="max-w-4xl mx-auto text-center mb-16"
+              className="inline-block"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
             >
-              {/* Main headline */}
-              <h2
-                className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
-                style={{ color: "#000" }}
+              <a 
+                href="#pricing"
+                className="bg-white px-8 py-4 rounded-xl shadow-lg inline-block hover:shadow-xl transition-all duration-300 hover:scale-105"
+                data-testid="button-kreni-ovdje"
               >
-                Tvoja početna tačka za promjenu.
-              </h2>
-
-              <p className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed">
-                Uz male korake, jednostavne obroke i pravu podršku, nauči kako da jedeš bez stresa, razumiješ svoje tijelo i osjetiš više energije svakog dana.
-              </p>
-
-              {/* CTA Box */}
-              <motion.div
-                className="inline-block"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.5 }}
-              >
-                <div className="bg-white px-8 py-4 rounded-lg shadow-lg inline-block">
-                  <span className="text-gray-800 font-medium text-lg">Kreni ovdje.</span>
-                </div>
-              </motion.div>
+                <span className="text-gray-800 font-semibold text-lg">Kreni ovdje.</span>
+              </a>
             </motion.div>
+          </motion.div>
 
-
-          </div>
+          {/* Right - Image (visible on larger screens) */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.5 }}
+            className="hidden lg:flex justify-end flex-shrink-0"
+          >
+            <img
+              src={doctorImage}
+              alt="Jelena - Magistar nutricionizma"
+              className="w-[350px] xl:w-[420px] h-auto object-contain"
+              data-testid="img-jelena-hero"
+            />
+          </motion.div>
         </div>
+      </div>
 
-        {/* White box with text and button - positioned left of image */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
-          className="hidden md:block absolute bottom-8 z-20"
-          style={{ right: 'calc(474px + 2rem)' }}
-        >
-          <div className="bg-white rounded-xl shadow-lg p-6 pb-20 max-w-md relative">
-            <p className="text-black text-base leading-relaxed">
-              Zdravo! Ja sam Jelena i želim da ti pomognem da se osjećaš dobro u svom tijelu i da uživaš u hrani! :)
-            </p>
-            <a 
-              href="/about" 
-              className="absolute bottom-6 right-6 px-6 py-3 rounded-lg shadow-lg text-gray-800 font-medium hover:shadow-xl transition-shadow" 
-              style={{ backgroundColor: "#9FE2BF" }}
-              data-testid="button-learn-more"
-            >
-              Malo više o meni
-            </a>
-          </div>
-        </motion.div>
-        
-        {/* Mobile version - centered */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
-          className="md:hidden absolute bottom-8 left-1/2 -translate-x-1/2 z-20 px-4"
-        >
-          <div className="bg-white rounded-xl shadow-lg p-6 max-w-sm relative">
-            <p className="text-black text-base leading-relaxed mb-4 pr-4">
-              Zdravo! Ja sam Jelena i želim da ti pomognem da se osjećaš dobro u svom tijelu i da uživaš u hrani! :)
-            </p>
-            <a 
-              href="/about" 
-              className="absolute bottom-6 right-6 px-6 py-3 rounded-lg shadow-lg text-gray-800 font-medium hover:shadow-xl transition-shadow" 
-              style={{ backgroundColor: "#9FE2BF" }}
-              data-testid="button-learn-more-mobile"
-            >
-              Malo više o meni
-            </a>
-          </div>
-        </motion.div>
-
-        {/* Jelena's image - bottom right corner (hidden on mobile) */}
-        <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="hidden md:block absolute bottom-0 right-0 pointer-events-none"
-          style={{ zIndex: 5 }}
-        >
-          <img
-            src={doctorImage}
-            alt="Jelena - Magistar nutricionizma"
-            className="w-[474px] h-[589px] object-cover"
-            data-testid="img-jelena-hero"
-          />
-        </motion.div>
-      </section>
-    </>
+      {/* Mobile image - bottom centered */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.5 }}
+        className="lg:hidden absolute bottom-0 right-0 pointer-events-none"
+        style={{ zIndex: 5 }}
+      >
+        <img
+          src={doctorImage}
+          alt="Jelena - Magistar nutricionizma"
+          className="w-[200px] sm:w-[280px] h-auto object-contain"
+          data-testid="img-jelena-hero-mobile"
+        />
+      </motion.div>
+    </section>
   );
 }
