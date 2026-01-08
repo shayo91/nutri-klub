@@ -1,173 +1,187 @@
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
+import { Users, Award, Calendar } from "lucide-react";
 import doctorImage from "@assets/jelena-hero.png";
 
 export default function HeroSection() {
   const { ref: contentRef, inView: contentInView } = useAnimateOnScroll();
 
+  const trustBadges = [
+    { icon: Users, value: "100+", label: "Klijenata" },
+    { icon: Award, value: "5+", label: "Godina" },
+    { icon: Calendar, value: "500+", label: "Konsultacija" },
+  ];
+
   return (
     <section
       id="home"
-      className="relative min-h-[85vh] md:min-h-[90vh] py-12 md:py-16 flex items-center overflow-hidden"
-      style={{ backgroundColor: "#9FE2BF" }}
+      className="relative min-h-[90vh] flex items-center overflow-hidden"
+      style={{ backgroundColor: "#ECF8F2" }}
     >
-      {/* Animated background elements */}
+      {/* Subtle background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Animated circles */}
-        <motion.div
-          className="absolute top-1/4 left-[10%] w-48 md:w-64 h-48 md:h-64 rounded-full bg-green-100"
-          animate={{
-            scale: [1, 1.05, 1],
-            opacity: [0.3, 0.2, 0.3],
-            x: [0, 10, 0],
-            y: [0, -10, 0],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-
-        <motion.div
-          className="absolute bottom-1/4 right-[10%] w-64 md:w-96 h-64 md:h-96 rounded-full bg-yellow-50"
-          animate={{
-            scale: [1, 1.08, 1],
-            opacity: [0.2, 0.3, 0.2],
-            x: [0, -15, 0],
-            y: [0, 10, 0],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1,
-          }}
-        />
-
-        {/* Floating leaf element */}
-        <motion.div
-          className="absolute top-20 right-[20%] w-16 h-16 md:w-24 md:h-24"
-          animate={{
-            y: [0, 15, 0],
-            rotate: [0, 10, 0],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          <div className="w-full h-full rounded-full bg-green-200/40" />
-        </motion.div>
-
-        <motion.div
-          className="absolute top-1/3 left-[5%] w-20 h-20 md:w-32 md:h-32"
-          animate={{
-            y: [0, -20, 0],
-            x: [0, 10, 0],
-            rotate: [0, -5, 0],
-          }}
-          transition={{
-            duration: 7,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 0.5,
-          }}
-        >
-          <div className="w-full h-full rounded-full bg-green-100/50" />
-        </motion.div>
-
-        <motion.div
-          className="absolute bottom-[30%] left-[25%] w-12 h-12 md:w-20 md:h-20"
-          animate={{
-            y: [0, 25, 0],
-            rotate: [0, 15, 0],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1.5,
-          }}
-        >
-          <div className="w-full h-full rounded-full bg-yellow-100/40" />
-        </motion.div>
+        <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-[#9FE2BF]/20 blur-2xl" />
+        <div className="absolute bottom-20 right-1/3 w-48 h-48 rounded-full bg-[#9FE2BF]/15 blur-3xl" />
+        <div className="absolute top-1/2 left-1/4 w-24 h-24 rounded-full bg-[#D4F5E9]/40 blur-xl" />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
-          {/* Left content */}
+      <div className="container mx-auto px-4 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          {/* Left Content */}
           <motion.div
             ref={contentRef}
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, x: -30 }}
             animate={
-              contentInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }
+              contentInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }
             }
             transition={{ duration: 0.8 }}
-            className="max-w-2xl text-center lg:text-left flex-1"
+            className="order-2 lg:order-1 text-center lg:text-left py-8 lg:py-0"
           >
-            {/* Main headline */}
-            <h1
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 leading-tight"
-              style={{ color: "#000" }}
+            {/* Small tagline */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-[#1F7A5C] font-medium text-sm md:text-base tracking-wide mb-4"
             >
-              Tvoja početna tačka za promjenu.
+              Magistar nutricionizma
+            </motion.p>
+
+            {/* Main Headline */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-[#1F2937] leading-tight mb-6">
+              Tvoja početna
+              <br />
+              <span className="text-[#1F7A5C]">tačka za promjenu.</span>
             </h1>
 
-            <p className="text-base sm:text-lg md:text-xl text-gray-700 mb-6 md:mb-8 leading-relaxed">
-              Uz male korake, jednostavne obroke i pravu podršku, nauči kako da jedeš bez stresa, razumiješ svoje tijelo i osjetiš više energije svakog dana.
+            {/* Subtitle */}
+            <p className="text-base md:text-lg text-gray-600 mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed">
+              Uz male korake, jednostavne obroke i pravu podršku, nauči kako da jedeš bez stresa i osjetiš više energije svakog dana.
             </p>
 
             {/* CTA Button */}
             <motion.div
-              className="inline-block"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="mb-10"
             >
-              <a 
+              <a
                 href="#pricing"
-                className="bg-white px-8 py-4 rounded-xl shadow-lg inline-block hover:shadow-xl transition-all duration-300 hover:scale-105"
-                data-testid="button-kreni-ovdje"
+                className="inline-block bg-[#1F7A5C] text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:bg-[#185F48] hover:shadow-xl transition-all duration-300 hover:scale-105"
+                data-testid="button-cta-hero"
               >
-                <span className="text-gray-800 font-semibold text-lg">Kreni ovdje.</span>
+                Kreni ovdje
               </a>
+            </motion.div>
+
+            {/* Trust Badges */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="flex flex-wrap justify-center lg:justify-start gap-6 md:gap-8"
+            >
+              {trustBadges.map((badge, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col items-center lg:items-start"
+                  data-testid={`trust-badge-${index}`}
+                >
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className="w-10 h-10 rounded-full bg-[#9FE2BF]/30 flex items-center justify-center">
+                      <badge.icon className="w-5 h-5 text-[#1F7A5C]" />
+                    </div>
+                    <span className="text-2xl md:text-3xl font-bold text-[#1F2937]">
+                      {badge.value}
+                    </span>
+                  </div>
+                  <span className="text-sm text-gray-500 font-medium">
+                    {badge.label}
+                  </span>
+                </div>
+              ))}
             </motion.div>
           </motion.div>
 
-          {/* Right - Image (visible on larger screens) */}
+          {/* Right Content - Image */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.5 }}
-            className="hidden lg:flex justify-end flex-shrink-0"
+            transition={{ duration: 1, delay: 0.3 }}
+            className="order-1 lg:order-2 relative flex justify-center lg:justify-end"
           >
-            <img
-              src={doctorImage}
-              alt="Jelena - Magistar nutricionizma"
-              className="w-[350px] xl:w-[420px] h-auto object-contain"
-              data-testid="img-jelena-hero"
-            />
+            {/* Decorative frame behind image */}
+            <div className="relative">
+              {/* Food elements decoration */}
+              <motion.div
+                className="absolute -bottom-4 -left-4 w-20 h-20 md:w-28 md:h-28 z-10"
+                animate={{
+                  y: [0, -8, 0],
+                  rotate: [0, 5, 0],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <div className="w-full h-full rounded-2xl bg-gradient-to-br from-green-400/80 to-green-500/80 shadow-lg flex items-center justify-center">
+                  <span className="text-3xl md:text-4xl">🥦</span>
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="absolute -top-4 -right-4 w-16 h-16 md:w-24 md:h-24 z-10"
+                animate={{
+                  y: [0, 8, 0],
+                  rotate: [0, -5, 0],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 0.5,
+                }}
+              >
+                <div className="w-full h-full rounded-2xl bg-gradient-to-br from-orange-300/80 to-orange-400/80 shadow-lg flex items-center justify-center">
+                  <span className="text-2xl md:text-3xl">🍊</span>
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="absolute top-1/2 -left-8 w-14 h-14 md:w-20 md:h-20 z-10"
+                animate={{
+                  x: [0, 8, 0],
+                  rotate: [0, -3, 0],
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 1,
+                }}
+              >
+                <div className="w-full h-full rounded-2xl bg-gradient-to-br from-yellow-300/80 to-yellow-400/80 shadow-lg flex items-center justify-center">
+                  <span className="text-xl md:text-2xl">🍋</span>
+                </div>
+              </motion.div>
+
+              {/* Main image container */}
+              <div className="relative bg-gradient-to-b from-[#9FE2BF]/40 to-[#9FE2BF]/20 rounded-3xl p-2 md:p-4 shadow-xl">
+                <div className="bg-white/50 rounded-2xl overflow-hidden backdrop-blur-sm">
+                  <img
+                    src={doctorImage}
+                    alt="Jelena - Magistar nutricionizma"
+                    className="w-[280px] sm:w-[350px] md:w-[400px] lg:w-[450px] h-auto object-contain"
+                    data-testid="img-jelena-hero"
+                  />
+                </div>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
-
-      {/* Mobile image - bottom centered */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.5 }}
-        className="lg:hidden absolute bottom-0 right-0 pointer-events-none"
-        style={{ zIndex: 5 }}
-      >
-        <img
-          src={doctorImage}
-          alt="Jelena - Magistar nutricionizma"
-          className="w-[200px] sm:w-[280px] h-auto object-contain"
-          data-testid="img-jelena-hero-mobile"
-        />
-      </motion.div>
     </section>
   );
 }
