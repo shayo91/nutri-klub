@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
-import { Users, Award, Calendar } from "lucide-react";
+import { Users, Award, UtensilsCrossed } from "lucide-react";
 import doctorImage from "@assets/jelena-hero.png";
 
 export default function HeroSection() {
@@ -9,7 +9,7 @@ export default function HeroSection() {
   const trustBadges = [
     { icon: Users, value: "100+", label: "Klijenata" },
     { icon: Award, value: "5+", label: "Godina" },
-    { icon: Calendar, value: "500+", label: "Recepata" },
+    { icon: UtensilsCrossed, value: "500+", label: "Recepata" },
   ];
 
   return (
@@ -24,7 +24,19 @@ export default function HeroSection() {
         <div className="absolute bottom-20 right-1/3 w-48 h-48 rounded-full bg-[#9FE2BF]/15 blur-3xl" />
         <div className="absolute top-1/2 left-1/4 w-24 h-24 rounded-full bg-[#D4F5E9]/40 blur-xl" />
         
-        {/* Subtle food decorations in background */}
+        {/* Animated circular element on left side */}
+        <motion.div
+          className="absolute top-1/3 left-[5%] w-40 h-40 md:w-56 md:h-56 rounded-full border-4 border-[#9FE2BF]/30"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.div
+          className="absolute top-1/3 left-[5%] w-40 h-40 md:w-56 md:h-56 rounded-full border-2 border-dashed border-[#9FE2BF]/20"
+          animate={{ rotate: -360 }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+        />
+        
+        {/* Subtle food decorations in background - Right side */}
         <motion.div
           className="absolute bottom-1/4 right-[15%] text-4xl opacity-20"
           animate={{ y: [0, -8, 0], rotate: [0, 5, 0] }}
@@ -52,6 +64,52 @@ export default function HeroSection() {
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
         >
           🥑
+        </motion.div>
+        
+        {/* Additional food decorations - Left side */}
+        <motion.div
+          className="absolute top-[20%] left-[12%] text-3xl opacity-15"
+          animate={{ y: [0, -10, 0], x: [0, 5, 0] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
+        >
+          🥕
+        </motion.div>
+        <motion.div
+          className="absolute bottom-[25%] left-[8%] text-2xl opacity-15"
+          animate={{ y: [0, 8, 0], rotate: [0, 10, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+        >
+          🍎
+        </motion.div>
+        <motion.div
+          className="absolute top-[60%] left-[15%] text-2xl opacity-10"
+          animate={{ x: [0, -6, 0], y: [0, 4, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
+        >
+          🥬
+        </motion.div>
+        
+        {/* More scattered decorations */}
+        <motion.div
+          className="absolute top-[15%] right-[40%] text-2xl opacity-10"
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        >
+          🍇
+        </motion.div>
+        <motion.div
+          className="absolute bottom-[15%] right-[45%] text-2xl opacity-10"
+          animate={{ y: [0, -5, 0], rotate: [0, -5, 0] }}
+          transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: 1.8 }}
+        >
+          🫐
+        </motion.div>
+        <motion.div
+          className="absolute top-[45%] left-[25%] text-xl opacity-10"
+          animate={{ x: [0, 4, 0], y: [0, -4, 0] }}
+          transition={{ duration: 7.5, repeat: Infinity, ease: "easeInOut", delay: 2.5 }}
+        >
+          🍓
         </motion.div>
       </div>
 

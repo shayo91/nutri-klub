@@ -81,55 +81,57 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center space-x-8">
-          {navLinks.map((item, index) => (
-            item.type === "link" ? (
-              <Link
-                key={index}
-                href={item.href!}
-                className={`relative font-medium transition py-2 ${
-                  isActive(item) 
-                    ? "text-[#1F7A5C]" 
-                    : "text-gray-700 hover:text-[#1F7A5C]"
-                }`}
-                data-testid={`nav-link-${item.label.toLowerCase().replace(' ', '-')}`}
-              >
-                {item.label}
-                {isActive(item) && (
-                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#1F7A5C] rounded-full" />
-                )}
-              </Link>
-            ) : (
-              <button
-                key={index}
-                onClick={() => handleNavigation(item.target!)}
-                className={`relative font-medium transition py-2 ${
-                  isActive(item)
-                    ? "text-[#1F7A5C]"
-                    : "text-gray-700 hover:text-[#1F7A5C]"
-                }`}
-                data-testid={`nav-link-${item.label.toLowerCase().replace(' ', '-')}`}
-              >
-                {item.label}
-                {isActive(item) && (
-                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#1F7A5C] rounded-full" />
-                )}
-              </button>
-            )
-          ))}
-        </nav>
+        {/* Desktop Navigation + Instagram */}
+        <div className="hidden lg:flex items-center space-x-8">
+          <nav className="flex items-center space-x-8">
+            {navLinks.map((item, index) => (
+              item.type === "link" ? (
+                <Link
+                  key={index}
+                  href={item.href!}
+                  className={`relative font-medium transition py-2 ${
+                    isActive(item) 
+                      ? "text-[#1F7A5C]" 
+                      : "text-gray-700 hover:text-[#1F7A5C]"
+                  }`}
+                  data-testid={`nav-link-${item.label.toLowerCase().replace(' ', '-')}`}
+                >
+                  {item.label}
+                  {isActive(item) && (
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#1F7A5C] rounded-full" />
+                  )}
+                </Link>
+              ) : (
+                <button
+                  key={index}
+                  onClick={() => handleNavigation(item.target!)}
+                  className={`relative font-medium transition py-2 ${
+                    isActive(item)
+                      ? "text-[#1F7A5C]"
+                      : "text-gray-700 hover:text-[#1F7A5C]"
+                  }`}
+                  data-testid={`nav-link-${item.label.toLowerCase().replace(' ', '-')}`}
+                >
+                  {item.label}
+                  {isActive(item) && (
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#1F7A5C] rounded-full" />
+                  )}
+                </button>
+              )
+            ))}
+          </nav>
 
-        {/* Instagram Link - Desktop */}
-        <a
-          href="https://www.instagram.com/nutriputovanje/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hidden lg:flex items-center gap-2 text-gray-600 hover:text-[#E4405F] transition-colors duration-300"
-          data-testid="link-instagram"
-        >
-          <SiInstagram className="w-5 h-5" />
-        </a>
+          {/* Instagram Link - Desktop */}
+          <a
+            href="https://www.instagram.com/nutriputovanje/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-gray-600 hover:text-[#E4405F] transition-colors duration-300"
+            data-testid="link-instagram"
+          >
+            <SiInstagram className="w-5 h-5" />
+          </a>
+        </div>
 
         {/* Mobile menu button */}
         <div className="lg:hidden flex items-center gap-4">
