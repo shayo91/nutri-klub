@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
+import { SiInstagram } from "react-icons/si";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -11,7 +12,6 @@ export default function Header() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
       
-      // Update active section based on scroll position
       const sections = ["home", "pricing", "testimonials", "contact"];
       for (const section of sections) {
         const element = document.getElementById(section);
@@ -73,16 +73,16 @@ export default function Header() {
     >
       <div className="container mx-auto px-4 lg:px-8 py-4 flex justify-between items-center">
         {/* Logo */}
-        <div className="flex items-center">
+        <div className="flex items-center flex-shrink-0">
           <Link href="/" className="flex items-center" onClick={() => handleNavigation('home')}>
-            <span className="text-[#1F7A5C] text-2xl font-bold">
-              NutriKlub
+            <span className="text-[#1F7A5C] text-lg md:text-xl lg:text-2xl font-bold whitespace-nowrap">
+              Nutricionista Jelena Matijaš
             </span>
           </Link>
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-10">
+        <nav className="hidden lg:flex items-center space-x-8">
           {navLinks.map((item, index) => (
             item.type === "link" ? (
               <Link
@@ -120,8 +120,28 @@ export default function Header() {
           ))}
         </nav>
 
+        {/* Instagram Link - Desktop */}
+        <a
+          href="https://www.instagram.com/nutriputovanje/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden lg:flex items-center gap-2 text-gray-600 hover:text-[#E4405F] transition-colors duration-300"
+          data-testid="link-instagram"
+        >
+          <SiInstagram className="w-5 h-5" />
+        </a>
+
         {/* Mobile menu button */}
-        <div className="md:hidden flex items-center">
+        <div className="lg:hidden flex items-center gap-4">
+          <a
+            href="https://www.instagram.com/nutriputovanje/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-600 hover:text-[#E4405F] transition-colors duration-300"
+            data-testid="link-instagram-mobile"
+          >
+            <SiInstagram className="w-5 h-5" />
+          </a>
           <button
             onClick={toggleMobileMenu}
             className="text-gray-700 focus:outline-none p-2"
@@ -142,7 +162,7 @@ export default function Header() {
 
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
-        <nav className="md:hidden absolute top-full left-0 right-0 bg-white shadow-lg py-4 px-6 space-y-2 border-t border-gray-100">
+        <nav className="lg:hidden absolute top-full left-0 right-0 bg-white shadow-lg py-4 px-6 space-y-2 border-t border-gray-100">
           {navLinks.map((item, index) => (
             item.type === "link" ? (
               <Link

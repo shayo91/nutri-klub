@@ -9,7 +9,7 @@ export default function HeroSection() {
   const trustBadges = [
     { icon: Users, value: "100+", label: "Klijenata" },
     { icon: Award, value: "5+", label: "Godina" },
-    { icon: Calendar, value: "500+", label: "Konsultacija" },
+    { icon: Calendar, value: "500+", label: "Recepata" },
   ];
 
   return (
@@ -23,6 +23,36 @@ export default function HeroSection() {
         <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-[#9FE2BF]/20 blur-2xl" />
         <div className="absolute bottom-20 right-1/3 w-48 h-48 rounded-full bg-[#9FE2BF]/15 blur-3xl" />
         <div className="absolute top-1/2 left-1/4 w-24 h-24 rounded-full bg-[#D4F5E9]/40 blur-xl" />
+        
+        {/* Subtle food decorations in background */}
+        <motion.div
+          className="absolute bottom-1/4 right-[15%] text-4xl opacity-20"
+          animate={{ y: [0, -8, 0], rotate: [0, 5, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        >
+          🥦
+        </motion.div>
+        <motion.div
+          className="absolute top-1/4 right-[25%] text-3xl opacity-15"
+          animate={{ y: [0, 8, 0], rotate: [0, -5, 0] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+        >
+          🍊
+        </motion.div>
+        <motion.div
+          className="absolute top-1/2 right-[10%] text-3xl opacity-15"
+          animate={{ x: [0, 8, 0], rotate: [0, -3, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        >
+          🍋
+        </motion.div>
+        <motion.div
+          className="absolute bottom-1/3 right-[30%] text-2xl opacity-10"
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+        >
+          🥑
+        </motion.div>
       </div>
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
@@ -111,72 +141,15 @@ export default function HeroSection() {
             transition={{ duration: 1, delay: 0.3 }}
             className="order-1 lg:order-2 relative flex justify-center lg:justify-end"
           >
-            {/* Decorative frame behind image */}
-            <div className="relative">
-              {/* Food elements decoration */}
-              <motion.div
-                className="absolute -bottom-4 -left-4 w-20 h-20 md:w-28 md:h-28 z-10"
-                animate={{
-                  y: [0, -8, 0],
-                  rotate: [0, 5, 0],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              >
-                <div className="w-full h-full rounded-2xl bg-gradient-to-br from-green-400/80 to-green-500/80 shadow-lg flex items-center justify-center">
-                  <span className="text-3xl md:text-4xl">🥦</span>
-                </div>
-              </motion.div>
-
-              <motion.div
-                className="absolute -top-4 -right-4 w-16 h-16 md:w-24 md:h-24 z-10"
-                animate={{
-                  y: [0, 8, 0],
-                  rotate: [0, -5, 0],
-                }}
-                transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 0.5,
-                }}
-              >
-                <div className="w-full h-full rounded-2xl bg-gradient-to-br from-orange-300/80 to-orange-400/80 shadow-lg flex items-center justify-center">
-                  <span className="text-2xl md:text-3xl">🍊</span>
-                </div>
-              </motion.div>
-
-              <motion.div
-                className="absolute top-1/2 -left-8 w-14 h-14 md:w-20 md:h-20 z-10"
-                animate={{
-                  x: [0, 8, 0],
-                  rotate: [0, -3, 0],
-                }}
-                transition={{
-                  duration: 6,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 1,
-                }}
-              >
-                <div className="w-full h-full rounded-2xl bg-gradient-to-br from-yellow-300/80 to-yellow-400/80 shadow-lg flex items-center justify-center">
-                  <span className="text-xl md:text-2xl">🍋</span>
-                </div>
-              </motion.div>
-
-              {/* Main image container */}
-              <div className="relative bg-gradient-to-b from-[#9FE2BF]/40 to-[#9FE2BF]/20 rounded-3xl p-2 md:p-4 shadow-xl">
-                <div className="bg-white/50 rounded-2xl overflow-hidden backdrop-blur-sm">
-                  <img
-                    src={doctorImage}
-                    alt="Jelena - Magistar nutricionizma"
-                    className="w-[280px] sm:w-[350px] md:w-[400px] lg:w-[450px] h-auto object-contain"
-                    data-testid="img-jelena-hero"
-                  />
-                </div>
+            {/* Main image container */}
+            <div className="relative bg-gradient-to-b from-[#9FE2BF]/40 to-[#9FE2BF]/20 rounded-3xl p-2 md:p-4 shadow-xl">
+              <div className="bg-white/50 rounded-2xl overflow-hidden backdrop-blur-sm">
+                <img
+                  src={doctorImage}
+                  alt="Jelena Matijaš - Magistar nutricionizma"
+                  className="w-[280px] sm:w-[350px] md:w-[400px] lg:w-[450px] h-auto object-contain"
+                  data-testid="img-jelena-hero"
+                />
               </div>
             </div>
           </motion.div>
