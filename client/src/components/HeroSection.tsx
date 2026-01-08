@@ -18,100 +18,122 @@ export default function HeroSection() {
       className="relative min-h-[90vh] flex items-center overflow-hidden"
       style={{ backgroundColor: "#ECF8F2" }}
     >
-      {/* Subtle background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-[#9FE2BF]/20 blur-2xl" />
-        <div className="absolute bottom-20 right-1/3 w-48 h-48 rounded-full bg-[#9FE2BF]/15 blur-3xl" />
-        <div className="absolute top-1/2 left-1/4 w-24 h-24 rounded-full bg-[#D4F5E9]/40 blur-xl" />
-        
-        {/* Animated circular element on left side */}
+      {/* Large decorative circle on left - similar to reference */}
+      <div className="absolute left-[-8%] top-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[500px] md:h-[500px] lg:w-[600px] lg:h-[600px] pointer-events-none">
         <motion.div
-          className="absolute top-1/3 left-[5%] w-40 h-40 md:w-56 md:h-56 rounded-full border-4 border-[#9FE2BF]/30"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        />
-        <motion.div
-          className="absolute top-1/3 left-[5%] w-40 h-40 md:w-56 md:h-56 rounded-full border-2 border-dashed border-[#9FE2BF]/20"
-          animate={{ rotate: -360 }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-        />
-        
-        {/* Subtle food decorations in background - Right side */}
-        <motion.div
-          className="absolute bottom-1/4 right-[15%] text-4xl opacity-20"
-          animate={{ y: [0, -8, 0], rotate: [0, 5, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          className="w-full h-full rounded-full bg-gradient-to-br from-[#9FE2BF]/60 to-[#7DD3A8]/40 flex items-center justify-center"
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
         >
-          🥦
-        </motion.div>
-        <motion.div
-          className="absolute top-1/4 right-[25%] text-3xl opacity-15"
-          animate={{ y: [0, 8, 0], rotate: [0, -5, 0] }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-        >
-          🍊
-        </motion.div>
-        <motion.div
-          className="absolute top-1/2 right-[10%] text-3xl opacity-15"
-          animate={{ x: [0, 8, 0], rotate: [0, -3, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        >
-          🍋
-        </motion.div>
-        <motion.div
-          className="absolute bottom-1/3 right-[30%] text-2xl opacity-10"
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-        >
-          🥑
-        </motion.div>
-        
-        {/* Additional food decorations - Left side */}
-        <motion.div
-          className="absolute top-[20%] left-[12%] text-3xl opacity-15"
-          animate={{ y: [0, -10, 0], x: [0, 5, 0] }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
-        >
-          🥕
-        </motion.div>
-        <motion.div
-          className="absolute bottom-[25%] left-[8%] text-2xl opacity-15"
-          animate={{ y: [0, 8, 0], rotate: [0, 10, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
-        >
-          🍎
-        </motion.div>
-        <motion.div
-          className="absolute top-[60%] left-[15%] text-2xl opacity-10"
-          animate={{ x: [0, -6, 0], y: [0, 4, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
-        >
-          🥬
-        </motion.div>
-        
-        {/* More scattered decorations */}
-        <motion.div
-          className="absolute top-[15%] right-[40%] text-2xl opacity-10"
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        >
-          🍇
-        </motion.div>
-        <motion.div
-          className="absolute bottom-[15%] right-[45%] text-2xl opacity-10"
-          animate={{ y: [0, -5, 0], rotate: [0, -5, 0] }}
-          transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: 1.8 }}
-        >
-          🫐
-        </motion.div>
-        <motion.div
-          className="absolute top-[45%] left-[25%] text-xl opacity-10"
-          animate={{ x: [0, 4, 0], y: [0, -4, 0] }}
-          transition={{ duration: 7.5, repeat: Infinity, ease: "easeInOut", delay: 2.5 }}
-        >
-          🍓
+          <motion.div
+            className="w-[85%] h-[85%] rounded-full border-4 border-white/30 flex items-center justify-center"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+          >
+            <div className="w-[70%] h-[70%] rounded-full bg-[#9FE2BF]/30 flex items-center justify-center">
+              <motion.span
+                className="text-6xl md:text-7xl lg:text-8xl"
+                animate={{ rotate: [0, 10, 0, -10, 0] }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              >
+                🥗
+              </motion.span>
+            </div>
+          </motion.div>
         </motion.div>
       </div>
+
+      {/* Decorative food elements - Large and visible around the image */}
+      <motion.div
+        className="absolute bottom-[15%] left-[5%] md:left-[8%] z-20"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.5 }}
+      >
+        <motion.div
+          className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-2xl bg-gradient-to-br from-green-400 to-green-500 shadow-lg flex items-center justify-center"
+          animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <span className="text-3xl md:text-4xl lg:text-5xl">🥦</span>
+        </motion.div>
+      </motion.div>
+
+      <motion.div
+        className="absolute top-[20%] right-[3%] md:right-[5%] z-20"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.7 }}
+      >
+        <motion.div
+          className="w-14 h-14 md:w-18 md:h-18 lg:w-20 lg:h-20 rounded-2xl bg-gradient-to-br from-orange-300 to-orange-400 shadow-lg flex items-center justify-center"
+          animate={{ y: [0, 8, 0], rotate: [0, -5, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+        >
+          <span className="text-2xl md:text-3xl lg:text-4xl">🍊</span>
+        </motion.div>
+      </motion.div>
+
+      <motion.div
+        className="absolute bottom-[25%] right-[2%] md:right-[4%] z-20"
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, delay: 0.9 }}
+      >
+        <motion.div
+          className="w-12 h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 rounded-2xl bg-gradient-to-br from-yellow-300 to-yellow-400 shadow-lg flex items-center justify-center"
+          animate={{ x: [0, 6, 0], rotate: [0, -3, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        >
+          <span className="text-xl md:text-2xl lg:text-3xl">🍋</span>
+        </motion.div>
+      </motion.div>
+
+      <motion.div
+        className="absolute top-[35%] left-[2%] md:left-[3%] z-20 hidden md:block"
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, delay: 1.1 }}
+      >
+        <motion.div
+          className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 shadow-lg flex items-center justify-center"
+          animate={{ y: [0, -8, 0] }}
+          transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
+        >
+          <span className="text-2xl md:text-3xl">🥑</span>
+        </motion.div>
+      </motion.div>
+
+      <motion.div
+        className="absolute top-[60%] right-[8%] md:right-[10%] z-20 hidden lg:block"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, delay: 1.3 }}
+      >
+        <motion.div
+          className="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-400 to-red-500 shadow-lg flex items-center justify-center"
+          animate={{ y: [0, 6, 0], rotate: [0, 8, 0] }}
+          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+        >
+          <span className="text-2xl">🍎</span>
+        </motion.div>
+      </motion.div>
+
+      <motion.div
+        className="absolute bottom-[10%] left-[25%] md:left-[30%] z-20 hidden lg:block"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 1.5 }}
+      >
+        <motion.div
+          className="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-400 to-orange-500 shadow-lg flex items-center justify-center"
+          animate={{ y: [0, -6, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
+        >
+          <span className="text-xl">🥕</span>
+        </motion.div>
+      </motion.div>
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
