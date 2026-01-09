@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
 import doctorImage from "@assets/jelena-hero.png";
 import { Link } from "wouter";
-import { ArrowLeft, Award, Users, Heart, Clock } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 export default function AboutMe() {
   const { ref, inView } = useAnimateOnScroll(0.1);
@@ -29,10 +29,10 @@ export default function AboutMe() {
                 Zdravo, ja sam Jelena!
               </h1>
               <p className="text-lg text-gray-800 leading-relaxed mb-6" data-testid="text-about-intro">
-                Magistar sam nutricionizma sa dugogodišnjim iskustvom u radu sa klijentima koji žele da promijene svoj odnos prema hrani i tijelu.
+                Pomažem ljudima koji žele da unaprijede ishranu kroz praktične, zdrave i ukusne recepte. Želim da te inspirišem i pokažem da pravilna ishrana ne mora biti teška, komplikovana ni isključiva.
               </p>
               <p className="text-lg text-gray-700 leading-relaxed mb-8" data-testid="text-about-description">
-                Moja misija je da ti pomognem da se osjećaš dobro u svom tijelu, da uživaš u hrani bez osjećaja krivice, i da pronađeš balans koji funkcioniše baš za tebe. Vjerujem da promjena ne mora biti teška – treba ti samo pravi pristup i podrška.
+                Oduvijek sam bila gurman, ali sam svoju pravu strast prema kuhanju otkrila tokom pandemije 2020. godine. Tada smo svi nekako imali više vremena za nove hobije, pa sam i ja večeri provodila istražujući recepte koje bih već sljedeći dan isprobavala u kuhinji.
               </p>
               <a
                 href="/#contact"
@@ -50,11 +50,11 @@ export default function AboutMe() {
               className="flex justify-center"
             >
               <div className="relative">
-                <div className="absolute -inset-4 bg-white/30 rounded-3xl transform rotate-3"></div>
+                <div className="absolute -inset-4 bg-white rounded-3xl transform rotate-3"></div>
                 <img
                   src={doctorImage}
                   alt="Jelena - Magistar nutricionizma"
-                  className="relative w-full max-w-md h-auto rounded-2xl shadow-2xl"
+                  className="relative w-full max-w-md h-auto rounded-2xl shadow-2xl bg-white"
                   data-testid="img-about-jelena"
                 />
               </div>
@@ -63,50 +63,28 @@ export default function AboutMe() {
         </div>
       </section>
 
-      <section className="py-16 md:py-24 bg-gray-50">
+      <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="grid md:grid-cols-4 gap-8 max-w-5xl mx-auto"
+            className="max-w-3xl mx-auto"
           >
-            <div className="text-center p-6" data-testid="stat-clients">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-primary" />
-              </div>
-              <h3 className="text-3xl font-bold text-primary mb-2">100+</h3>
-              <p className="text-gray-600">Zadovoljnih klijenata</p>
-            </div>
-            
-            <div className="text-center p-6" data-testid="stat-experience">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Clock className="w-8 h-8 text-primary" />
-              </div>
-              <h3 className="text-3xl font-bold text-primary mb-2">10+</h3>
-              <p className="text-gray-600">Godina iskustva</p>
-            </div>
-            
-            <div className="text-center p-6" data-testid="stat-education">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Award className="w-8 h-8 text-primary" />
-              </div>
-              <h3 className="text-3xl font-bold text-primary mb-2">MSc</h3>
-              <p className="text-gray-600">Magistar nutricionizma</p>
-            </div>
-            
-            <div className="text-center p-6" data-testid="stat-passion">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Heart className="w-8 h-8 text-primary" />
-              </div>
-              <h3 className="text-3xl font-bold text-primary mb-2">100%</h3>
-              <p className="text-gray-600">Posvećenost klijentima</p>
-            </div>
+            <p className="text-lg text-gray-700 leading-relaxed mb-6">
+              U međuvremenu sam završila osnovne i master studije na Tehnološkom fakultetu, a potom i master nutricionizma. Tako sam stekla zvanja dipl. ing. prehrambene tehnologije (Univerzitet u Banjoj Luci) i magistrica nutricionizma (Univerzitet u Tuzli). Tamo sam imala priliku da o hrani učim na potpuno drugačiji način. Ne samo šta jedemo, već i zašto je važno i kako, kada i u kojim količinama jedemo, te kako različiti sastojci i kombinacije namirnica utiču na naš organizam.
+            </p>
+            <p className="text-lg text-gray-700 leading-relaxed mb-6">
+              Veliki dio mog profesionalnog puta oblikovalo je lično iskustvo sa autoimunim i probavnim izazovima (gastritis, Hashimoto, celijakija). To me je naučilo koliko su hrana, okolina, naše navike, misli i ritam života snažno povezani sa zdravljem, hormonima i probavom.
+            </p>
+            <p className="text-lg text-gray-700 leading-relaxed">
+              Volim da putujem, istražujem nova mjesta i nove kuhinje, skupljam ideje i pretvaram ih u recepte koje dijelim s tobom. I sama sam na bezglutenskoj ishrani, pa ćeš ovdje pronaći mnoštvo bezglutenskih recepata.
+            </p>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-16 md:py-24 bg-white">
+      <section className="py-16 md:py-24 bg-gray-50">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -115,7 +93,7 @@ export default function AboutMe() {
             className="max-w-3xl mx-auto text-center"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-8" data-testid="text-ready-title">
-              Spremna sam da ti pomognem na putu ka zdravlju
+              Radujem se našoj saradnji.
             </h2>
             <p className="text-lg text-gray-600 mb-10 leading-relaxed" data-testid="text-ready-description">
               Bez obzira da li tek počinješ ili si već probao/la razne pristupe – ovdje ćeš pronaći podršku, jasne smjernice i pristup koji je prilagođen tebi. Zajedno ćemo napraviti plan koji možeš održati dugoročno.
