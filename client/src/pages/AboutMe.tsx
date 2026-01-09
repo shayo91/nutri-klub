@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
-import aboutImage1 from "@assets/image_1767986294610.png";
-import aboutImage2 from "@assets/IMG-132a419e679f41d6e9b25bb06da7a165-V_1767986949409.jpg";
+import aboutImage1 from "@assets/viber_slika_2023-03-27_22-03-28-302_1767987346331.jpg";
+import aboutImage2 from "@assets/image_1767986294610.png";
 
 export default function AboutMe() {
   const { ref, inView } = useAnimateOnScroll(0.1);
@@ -55,10 +55,10 @@ export default function AboutMe() {
         </div>
       </section>
 
-      {/* Second Section - Light mint background with text left, image right */}
-      <section className="py-12 md:py-20" style={{ backgroundColor: "#ECF8F2" }}>
+      {/* Second Section - Light mint background with text left, image right - smaller */}
+      <section className="py-8 md:py-12" style={{ backgroundColor: "#ECF8F2" }}>
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center" ref={ref2}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-center" ref={ref2}>
             {/* Text Content - Left */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -81,11 +81,11 @@ export default function AboutMe() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="order-1 lg:order-2 flex justify-center lg:justify-end"
             >
-              <div className="relative bg-[#9FE2BF] rounded-3xl p-4 md:p-6">
+              <div className="relative bg-[#9FE2BF] rounded-3xl p-3 md:p-4">
                 <img
                   src={aboutImage2}
                   alt="Jelena sa laptopom"
-                  className="w-full max-w-sm md:max-w-md h-auto object-contain"
+                  className="w-full max-w-xs md:max-w-sm h-auto rounded-2xl"
                   data-testid="img-about-jelena-2"
                 />
               </div>
