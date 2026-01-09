@@ -18,11 +18,11 @@ export default function AboutMe() {
       </Helmet>
       
       <main className="min-h-screen bg-white font-sans">
-        {/* First Section - Mint background */}
+        {/* First Section - Mint background - Image smaller, text wider */}
         <section className="py-16 md:py-24" style={{ backgroundColor: "#9FE2BF" }} aria-label="Upoznajte Jelenu">
           <div className="container mx-auto px-4 max-w-6xl">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center" ref={ref}>
-              {/* Text Content - Left on desktop, bottom on mobile */}
+            <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_0.7fr] gap-8 lg:gap-12 items-center" ref={ref}>
+              {/* Text Content - Left on desktop, wider column */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
@@ -43,19 +43,19 @@ export default function AboutMe() {
                 </p>
               </motion.div>
 
-              {/* Image - Right on desktop, top on mobile */}
+              {/* Image - Right on desktop, smaller */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="order-1 lg:order-2 flex justify-center lg:justify-end"
               >
-                <div className="relative">
-                  <div className="absolute -inset-4 bg-white/50 rounded-3xl transform rotate-3"></div>
+                <div className="relative group">
+                  <div className="absolute -inset-3 bg-white/50 rounded-3xl transform rotate-3 group-hover:rotate-2 transition-transform duration-300"></div>
                   <img
                     src={aboutImage1}
                     alt="Jelena Matijaš - Nutricionista i magistrica nutricionizma"
-                    className="relative w-full max-w-xs sm:max-w-sm md:max-w-md h-auto rounded-2xl shadow-xl"
+                    className="relative w-full max-w-[280px] md:max-w-[320px] h-auto rounded-2xl shadow-xl group-hover:shadow-2xl group-hover:scale-[1.02] transition-all duration-300"
                     loading="eager"
                   />
                 </div>
@@ -64,16 +64,34 @@ export default function AboutMe() {
           </div>
         </section>
 
-        {/* Second Section - Light mint background with text left, image far right */}
+        {/* Second Section - Light mint background - Image LEFT, Text RIGHT */}
         <section className="py-12 md:py-16" style={{ backgroundColor: "#ECF8F2" }} aria-label="Moj profesionalni put">
           <div className="container mx-auto px-4 max-w-6xl">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center" ref={ref2}>
-              {/* Text Content - Left */}
+              {/* Image - Left */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 animate={inView2 ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
                 transition={{ duration: 0.6 }}
-                className="order-2 lg:order-1"
+                className="order-1 lg:order-1 flex justify-center lg:justify-start"
+              >
+                <div className="relative group">
+                  <div className="absolute -inset-3 bg-[#9FE2BF]/40 rounded-3xl transform -rotate-2 group-hover:-rotate-1 transition-transform duration-300"></div>
+                  <img
+                    src={aboutImage2}
+                    alt="Jelena Matijaš sa laptopom - Online nutricionističke konsultacije"
+                    className="relative w-full max-w-xs sm:max-w-sm h-auto rounded-2xl shadow-xl group-hover:shadow-2xl group-hover:scale-[1.02] transition-all duration-300"
+                    loading="lazy"
+                  />
+                </div>
+              </motion.div>
+
+              {/* Text Content - Right */}
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={inView2 ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="order-2 lg:order-2"
               >
                 <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-5">
                   Veliki dio mog profesionalnog puta oblikovalo je lično iskustvo sa autoimunim i probavnim izazovima (gastritis, Hashimoto, celijakija). To me je naučilo koliko su hrana, okolina, naše navike, misli i ritam života snažno povezani sa zdravljem, hormonima i probavom.
@@ -81,21 +99,6 @@ export default function AboutMe() {
                 <p className="text-base md:text-lg text-gray-700 leading-relaxed">
                   Volim da putujem, istražujem nova mjesta i nove kuhinje, skupljam ideje i pretvaram ih u recepte koje dijelim s tobom. I sama sam na bezglutenskoj ishrani, pa ćeš ovdje pronaći mnoštvo bezglutenskih recepata.
                 </p>
-              </motion.div>
-
-              {/* Image - Far Right */}
-              <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                animate={inView2 ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="order-1 lg:order-2 flex justify-center lg:justify-end"
-              >
-                <img
-                  src={aboutImage2}
-                  alt="Jelena Matijaš sa laptopom - Online nutricionističke konsultacije"
-                  className="w-full max-w-xs sm:max-w-sm h-auto rounded-2xl shadow-lg"
-                  loading="lazy"
-                />
               </motion.div>
             </div>
           </div>
