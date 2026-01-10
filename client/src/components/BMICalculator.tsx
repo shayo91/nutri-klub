@@ -113,68 +113,68 @@ export default function BMICalculator() {
             initial={{ opacity: 0, y: 20 }}
             animate={formInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="w-full lg:w-1/2 bg-secondary rounded-xl p-8 shadow-lg flex flex-col"
+            className="w-full lg:w-1/2 bg-secondary rounded-xl p-4 sm:p-6 md:p-8 shadow-lg flex flex-col min-w-0"
           >
             <h3 className="text-2xl font-bold font-poppins mb-6">
               Izračunajte svoj BMI
             </h3>
 
             <form id="bmi-form" className="space-y-6 flex-grow" onSubmit={calculateBMI}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                <div className="min-w-0">
                   <label
                     htmlFor="weight"
-                    className="block text-gray-700 font-medium mb-2"
+                    className="block text-gray-700 font-medium mb-2 text-sm sm:text-base"
                   >
                     Težina
                   </label>
-                  <div className="flex">
+                  <div className="flex min-w-0">
                     <input
                       type="number"
                       id="weight"
                       name="weight"
-                      className="flex-grow px-4 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                      placeholder="Unesite težinu"
+                      className="flex-grow min-w-0 px-3 sm:px-4 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm sm:text-base"
+                      placeholder="Težina"
                       required
                       onChange={handleChange}
                       min="1"
                     />
-                    <div className="px-4 py-2 bg-gray-50 rounded-r-md border border-l-0 border-gray-300 text-gray-600">
+                    <div className="px-3 sm:px-4 py-2 bg-gray-50 rounded-r-md border border-l-0 border-gray-300 text-gray-600 text-sm sm:text-base flex-shrink-0">
                       kg
                     </div>
                   </div>
                 </div>
 
-                <div>
+                <div className="min-w-0">
                   <label
                     htmlFor="height"
-                    className="block text-gray-700 font-medium mb-2"
+                    className="block text-gray-700 font-medium mb-2 text-sm sm:text-base"
                   >
                     Visina
                   </label>
-                  <div className="flex">
+                  <div className="flex min-w-0">
                     <input
                       type="number"
                       id="height"
                       name="height"
-                      className="flex-grow px-4 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                      placeholder="Unesite visinu"
+                      className="flex-grow min-w-0 px-3 sm:px-4 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm sm:text-base"
+                      placeholder="Visina"
                       required
                       onChange={handleChange}
                       min="1"
                     />
-                    <div className="px-4 py-2 bg-gray-50 rounded-r-md border border-l-0 border-gray-300 text-gray-600">
+                    <div className="px-3 sm:px-4 py-2 bg-gray-50 rounded-r-md border border-l-0 border-gray-300 text-gray-600 text-sm sm:text-base flex-shrink-0">
                       cm
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                <div className="min-w-0">
                   <label
                     htmlFor="age"
-                    className="block text-gray-700 font-medium mb-2"
+                    className="block text-gray-700 font-medium mb-2 text-sm sm:text-base"
                   >
                     Godine
                   </label>
@@ -182,19 +182,19 @@ export default function BMICalculator() {
                     type="number"
                     id="age"
                     name="age"
-                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                    placeholder="Unesite godine"
+                    className="w-full px-3 sm:px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm sm:text-base"
+                    placeholder="Godine"
                     required
                     onChange={handleChange}
                     min="1"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-gray-700 font-medium mb-2">
+                <div className="min-w-0">
+                  <label className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
                     Pol
                   </label>
-                  <div className="flex space-x-4 h-[42px] items-center">
+                  <div className="flex space-x-3 sm:space-x-4 h-[42px] items-center">
                     <label className="flex items-center">
                       <input
                         type="radio"
