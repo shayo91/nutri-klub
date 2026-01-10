@@ -1,7 +1,7 @@
 import { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
-import { getBMICategory } from "@/lib/utils"; // Ensure to import the helper function
+import { getBMICategory } from "@/lib/utils";
 
 type WeightUnit = "kg";
 type HeightUnit = "cm";
@@ -70,14 +70,11 @@ export default function BMICalculator() {
   const calculateBMI = (e: FormEvent) => {
     e.preventDefault();
 
-    // Use metric units directly
     let weightKg = formData.weight;
-    let heightM = formData.height / 100; // Convert cm to meters
+    let heightM = formData.height / 100;
 
-    // Calculate BMI
     const bmi = weightKg / (heightM * heightM);
 
-    // Get category, message, and indicator position
     const { category, message, indicatorPosition } = getBMICategory(bmi);
 
     setResult({
@@ -109,20 +106,20 @@ export default function BMICalculator() {
           </p>
         </motion.div>
 
-        <div className="flex flex-col lg:flex-row items-start gap-10">
+        <div className="flex flex-col lg:flex-row items-stretch gap-10">
           {/* BMI Calculator Form */}
           <motion.div
             ref={formRef}
             initial={{ opacity: 0, y: 20 }}
             animate={formInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="w-full lg:w-1/2 bg-secondary rounded-xl p-8 shadow-lg"
+            className="w-full lg:w-1/2 bg-secondary rounded-xl p-8 shadow-lg flex flex-col"
           >
             <h3 className="text-2xl font-bold font-poppins mb-6">
               Izračunajte svoj BMI
             </h3>
 
-            <form id="bmi-form" className="space-y-6" onSubmit={calculateBMI}>
+            <form id="bmi-form" className="space-y-6 flex-grow" onSubmit={calculateBMI}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label
@@ -197,7 +194,7 @@ export default function BMICalculator() {
                   <label className="block text-gray-700 font-medium mb-2">
                     Pol
                   </label>
-                  <div className="flex space-x-4">
+                  <div className="flex space-x-4 h-[42px] items-center">
                     <label className="flex items-center">
                       <input
                         type="radio"
@@ -267,19 +264,16 @@ export default function BMICalculator() {
             )}
           </motion.div>
 
-          {/* BMI Chart */}
+          {/* BMI Chart - No subtitle, same height as left */}
           <motion.div
             ref={chartRef}
             initial={{ opacity: 0, y: 20 }}
             animate={chartInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="w-full lg:w-1/2"
+            className="w-full lg:w-1/2 flex flex-col"
           >
-            <h3 className="text-2xl font-bold font-poppins mb-6">
-              BMI Kategorije
-            </h3>
-            <div className="overflow-hidden rounded-xl shadow-lg">
-              <table className="w-full">
+            <div className="overflow-hidden rounded-xl shadow-lg flex-grow">
+              <table className="w-full h-full">
                 <thead className="bg-primary text-white">
                   <tr>
                     <th className="py-4 px-6 text-left">BMI Opseg</th>
@@ -349,15 +343,16 @@ export default function BMICalculator() {
                 </tbody>
               </table>
             </div>
-
-            <div className="mt-6 bg-secondary p-4 rounded-lg">
-              <p className="text-gray-600 text-sm">
-                <strong>Napomena:</strong> BMI je alat za procjenu, a ne dijagnostički instrument.
-                Faktori poput mišićne mase, gustine kostiju i ukupnog sastava tijela nisu uzeti u obzir.
-                Za cjelovitu procjenu zdravstvenog stanja preporučuje se konsultacija sa zdravstvenim stručnjakom.
-              </p>
-            </div>
           </motion.div>
+        </div>
+
+        {/* Note - Full width below both columns */}
+        <div className="mt-8 bg-secondary p-4 rounded-lg">
+          <p className="text-gray-600 text-sm">
+            <strong>Napomena:</strong> BMI je alat za procjenu, a ne dijagnostički instrument.
+            Faktori poput mišićne mase, gustine kostiju i ukupnog sastava tijela nisu uzeti u obzir.
+            Za cjelovitu procjenu zdravstvenog stanja preporučuje se konsultacija sa zdravstvenim stručnjakom.
+          </p>
         </div>
       </div>
     </section>
