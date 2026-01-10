@@ -106,75 +106,75 @@ export default function BMICalculator() {
           </p>
         </motion.div>
 
-        <div className="flex flex-col lg:flex-row items-stretch gap-6 lg:gap-10">
+        <div className="flex flex-col lg:flex-row items-stretch gap-10">
           {/* BMI Calculator Form */}
           <motion.div
             ref={formRef}
             initial={{ opacity: 0, y: 20 }}
             animate={formInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="w-full lg:w-1/2 bg-secondary rounded-xl p-4 sm:p-6 md:p-8 shadow-lg flex flex-col min-w-0"
+            className="w-full lg:w-1/2 bg-secondary rounded-xl p-8 shadow-lg flex flex-col"
           >
-            <h3 className="text-xl sm:text-2xl font-bold font-poppins mb-4 sm:mb-6">
+            <h3 className="text-2xl font-bold font-poppins mb-6">
               Izračunajte svoj BMI
             </h3>
 
-            <form id="bmi-form" className="space-y-4 sm:space-y-6 flex-grow" onSubmit={calculateBMI}>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                <div className="min-w-0">
+            <form id="bmi-form" className="space-y-6 flex-grow" onSubmit={calculateBMI}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
                   <label
                     htmlFor="weight"
-                    className="block text-gray-700 font-medium mb-2 text-sm sm:text-base"
+                    className="block text-gray-700 font-medium mb-2"
                   >
                     Težina
                   </label>
-                  <div className="flex min-w-0">
+                  <div className="flex">
                     <input
                       type="number"
                       id="weight"
                       name="weight"
-                      className="flex-grow min-w-0 px-3 sm:px-4 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm sm:text-base"
-                      placeholder="Težina"
+                      className="flex-grow px-4 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                      placeholder="Unesite težinu"
                       required
                       onChange={handleChange}
                       min="1"
                     />
-                    <div className="px-3 sm:px-4 py-2 bg-gray-50 rounded-r-md border border-l-0 border-gray-300 text-gray-600 text-sm sm:text-base flex-shrink-0">
+                    <div className="px-4 py-2 bg-gray-50 rounded-r-md border border-l-0 border-gray-300 text-gray-600">
                       kg
                     </div>
                   </div>
                 </div>
 
-                <div className="min-w-0">
+                <div>
                   <label
                     htmlFor="height"
-                    className="block text-gray-700 font-medium mb-2 text-sm sm:text-base"
+                    className="block text-gray-700 font-medium mb-2"
                   >
                     Visina
                   </label>
-                  <div className="flex min-w-0">
+                  <div className="flex">
                     <input
                       type="number"
                       id="height"
                       name="height"
-                      className="flex-grow min-w-0 px-3 sm:px-4 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm sm:text-base"
-                      placeholder="Visina"
+                      className="flex-grow px-4 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                      placeholder="Unesite visinu"
                       required
                       onChange={handleChange}
                       min="1"
                     />
-                    <div className="px-3 sm:px-4 py-2 bg-gray-50 rounded-r-md border border-l-0 border-gray-300 text-gray-600 text-sm sm:text-base flex-shrink-0">
+                    <div className="px-4 py-2 bg-gray-50 rounded-r-md border border-l-0 border-gray-300 text-gray-600">
                       cm
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                <div className="min-w-0">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
                   <label
                     htmlFor="age"
-                    className="block text-gray-700 font-medium mb-2 text-sm sm:text-base"
+                    className="block text-gray-700 font-medium mb-2"
                   >
                     Godine
                   </label>
@@ -182,19 +182,19 @@ export default function BMICalculator() {
                     type="number"
                     id="age"
                     name="age"
-                    className="w-full px-3 sm:px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm sm:text-base"
-                    placeholder="Godine"
+                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    placeholder="Unesite godine"
                     required
                     onChange={handleChange}
                     min="1"
                   />
                 </div>
 
-                <div className="min-w-0">
-                  <label className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">
                     Pol
                   </label>
-                  <div className="flex space-x-3 sm:space-x-4 h-[42px] items-center text-sm sm:text-base">
+                  <div className="flex space-x-4 h-[42px] items-center">
                     <label className="flex items-center">
                       <input
                         type="radio"
