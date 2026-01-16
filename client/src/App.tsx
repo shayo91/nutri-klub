@@ -18,27 +18,77 @@ import Register from "@/pages/Register";
 import ForgotPassword from "@/pages/ForgotPassword";
 import Onboarding from "@/pages/Onboarding";
 import Dashboard from "@/pages/Dashboard";
+import Recipes from "@/pages/dashboard/Recipes";
+import Upgrade from "@/pages/dashboard/Upgrade";
 import NotFound from "@/pages/not-found";
 
 function Router() {
   return (
     <Switch>
-      {/* Public routes */}
-      <Route path="/" component={Home} />
-      <Route path="/about" component={AboutMe} />
-      <Route path="/blog/:slug" component={BlogPost} />
-      <Route path="/testimonials" component={TestimonialsPage} />
-      <Route path="/purchase" component={Purchase} />
-      <Route path="/terms" component={TermsOfService} />
-      <Route path="/privacy" component={PrivacyPolicy} />
-      <Route path="/cookies" component={CookiePolicy} />
+      {/* Public routes with Layout */}
+      <Route path="/">
+        {() => (
+          <Layout>
+            <Home />
+          </Layout>
+        )}
+      </Route>
+      <Route path="/about">
+        {() => (
+          <Layout>
+            <AboutMe />
+          </Layout>
+        )}
+      </Route>
+      <Route path="/blog/:slug">
+        {(params) => (
+          <Layout>
+            <BlogPost {...params} />
+          </Layout>
+        )}
+      </Route>
+      <Route path="/testimonials">
+        {() => (
+          <Layout>
+            <TestimonialsPage />
+          </Layout>
+        )}
+      </Route>
+      <Route path="/purchase">
+        {() => (
+          <Layout>
+            <Purchase />
+          </Layout>
+        )}
+      </Route>
+      <Route path="/terms">
+        {() => (
+          <Layout>
+            <TermsOfService />
+          </Layout>
+        )}
+      </Route>
+      <Route path="/privacy">
+        {() => (
+          <Layout>
+            <PrivacyPolicy />
+          </Layout>
+        )}
+      </Route>
+      <Route path="/cookies">
+        {() => (
+          <Layout>
+            <CookiePolicy />
+          </Layout>
+        )}
+      </Route>
       
-      {/* Auth routes */}
+      {/* Auth routes without Layout (standalone pages) */}
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
       <Route path="/forgot-password" component={ForgotPassword} />
       
-      {/* Protected routes */}
+      {/* Protected routes without Layout (have their own headers) */}
       <Route path="/onboarding">
         {() => (
           <ProtectedRoute>
@@ -53,9 +103,29 @@ function Router() {
           </ProtectedRoute>
         )}
       </Route>
+      <Route path="/dashboard/recipes">
+        {() => (
+          <ProtectedRoute>
+            <Recipes />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/dashboard/upgrade">
+        {() => (
+          <ProtectedRoute>
+            <Upgrade />
+          </ProtectedRoute>
+        )}
+      </Route>
       
-      {/* 404 */}
-      <Route component={NotFound} />
+      {/* 404 with Layout */}
+      <Route>
+        {() => (
+          <Layout>
+            <NotFound />
+          </Layout>
+        )}
+      </Route>
     </Switch>
   );
 }
@@ -65,9 +135,7 @@ function App() {
     <LanguageProvider>
       <AuthProvider>
         <TooltipProvider>
-          <Layout>
-            <Router />
-          </Layout>
+          <Router />
           <Toaster />
         </TooltipProvider>
       </AuthProvider>

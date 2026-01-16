@@ -219,4 +219,31 @@ router.patch("/preferences", authenticate, async (req, res) => {
   }
 });
 
+/**
+ * POST /api/onboarding/skip - Skip onboarding and mark as completed
+ */
+router.post("/skip", authenticate, async (req, res) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
+
+    // Mark onboarding as completed without saving preferences
+    await db
+      .update(users)
+      .set({
+        onboardingCompleted: true,
+        updatedAt: new Date().toISOString(),
+      })
+      .where(eq(users.id, req.user.userId));
+
+    res.json({
+      message: "Onboarding skipped successfully",
+    });
+  } catch (error) {
+    console.error("Skip onboarding error:", error);
+    res.status(500).json({ error: "Failed to skip onboarding" });
+  }
+});
+
 export default router;

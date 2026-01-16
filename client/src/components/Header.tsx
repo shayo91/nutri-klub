@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { SiInstagram } from "react-icons/si";
+import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [location, setLocation] = useLocation();
   const [activeSection, setActiveSection] = useState("home");
+  const { isAuthenticated, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -131,6 +134,31 @@ export default function Header() {
           >
             <SiInstagram className="w-5 h-5" />
           </a>
+
+          {/* Auth Buttons - Desktop */}
+          {isAuthenticated ? (
+            <>
+              <Link href="/dashboard">
+                <Button variant="outline" className="border-[#1F7A5C] text-[#1F7A5C] hover:bg-[#1F7A5C] hover:text-white">
+                  Dashboard
+                </Button>
+              </Link>
+              <Button variant="outline" onClick={logout}>
+                Odjava
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link href="/login">
+                <Button variant="outline">Prijava</Button>
+              </Link>
+              <Link href="/register">
+                <Button className="bg-[#1F7A5C] hover:bg-[#185A44] text-white">
+                  Registracija
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile menu button */}
@@ -195,6 +223,53 @@ export default function Header() {
               </button>
             )
           ))}
+
+          {/* Auth Buttons - Mobile */}
+          <div className="border-t border-gray-200 mt-4 pt-4 space-y-2">
+            {isAuthenticated ? (
+              <>
+                <Link href="/dashboard">
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-[#1F7A5C] text-[#1F7A5C] hover:bg-[#1F7A5C] hover:text-white"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Dashboard
+                  </Button>
+                </Link>
+                <Button 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={() => {
+                    logout();
+                    setMobileMenuOpen(false);
+                  }}
+                >
+                  Odjava
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link href="/login">
+                  <Button 
+                    variant="outline" 
+                    className="w-full"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Prijava
+                  </Button>
+                </Link>
+                <Link href="/register">
+                  <Button 
+                    className="w-full bg-[#1F7A5C] hover:bg-[#185A44] text-white"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Registracija
+                  </Button>
+                </Link>
+              </>
+            )}
+          </div>
         </nav>
       )}
     </header>

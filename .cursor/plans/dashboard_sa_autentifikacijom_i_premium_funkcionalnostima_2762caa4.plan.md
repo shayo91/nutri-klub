@@ -4,607 +4,633 @@ overview: Implementacija kompletnog sistema autentifikacije, dashboard-a sa 5 pr
 todos: []
 ---
 
+---
+name: Dashboard sa autentifikacijom i premium funkcionalnostima - REVIDIRANI PLAN
+overview: Implementacija kompletnog sistema autentifikacije, dashboard-a sa premium feature-ima (recepti, e-bookovi, recept dana, AI asistent, community), i Stripe integracije za mesečnu (4€) i godišnju (35€) pretplatu. Planovi (Start/Balans/Transformacija) UKLJUČUJU Premium pristup + personalizovano coaching. Korišćenje besplatnih API-ja i servisa.
+version: 2.0
+last_updated: 2025-01-15
+---
+
 # Plan implementacije Dashboard-a sa autentifikacijom i premium funkcionalnostima
 
-## Pregled arhitekture
+## 🎯 Pregled arhitekture
 
-Aplikacija će imati četiri nivoa pristupa:
+Aplikacija će imati ČETIRI nivoa pristupa sa jasnom progresijom:
 
-1. **Neregistrovani korisnici (Javni)** - postojeći sadržaj (blog, testimonials, kontakt, BMI kalkulator)
-2. **Registrovani korisnici (Free)** - osnovni dashboard pristup sa ograničenim feature-ima
-3. **Premium korisnici** - pristup svim feature-ima (35€/godišnje subscription)
-4. **Kupci planova** - korisnici koji su kupili postojeće planove (Start, Balans, Transformacija) preko Stripe-a
+1. **Neregistrovani korisnici (Javni)** - postojeći sadržaj + demo funkcionalnosti
+2. **Registrovani korisnici (Free Trial)** - ograničen pristup za testiranje platforme
+3. **Premium korisnici** - pun pristup svim self-service alatima
+4. **Kupci planova** - Premium pristup + personalizovano coaching
 
-## Faza 1: Autentifikacija i autorizacija
+### 🔑 Ključna promena u pristupu
+
+**STARA STRATEGIJA (problem):**
+- Premium i Planovi su bili odvojeni proizvodi
+- Zbunjujuće za korisnike
+- Kanibalizacija prodaje
+
+**NOVA STRATEGIJA (rešenje):**
+- Premium = Self-service alati
+- Planovi = Premium UKLJUČEN + Coaching sa nutricionistom
+- Jasna progresija: Free → Premium → Plan (za one koji žele personalizovanu podršku)
+
+---
+
+## 💎 Faza 1: Autentifikacija i autorizacija
 
 ### 1.1 Backend - Auth sistem
 
 **Tehnologije:**
-
 - `bcrypt` za hash lozinki
 - `jsonwebtoken` za JWT tokene
 - Drizzle ORM za korisnike (već postoji `users` tabela u `shared/schema.ts`)
 - Express middleware za zaštitu ruta
 
-**Nove tabele u bazi:**
+**Nove/izmenjene tabele u bazi:**
 
-- Proširiti `users` tabelu: dodati `email`, `password_hash`, `role` (user/premium), `subscription_status`, `subscription_expires_at`, `created_at`
-- `user_preferences` tabela: alergije, nepoželjne namirnice, ciljevi
-- `subscriptions` tabela: Stripe subscription ID, status, payment history
+```typescript
+// shared/schema.ts - Proširenja
+
+// Users tabela (extended)
+export const users = pgTable('users', {
+  id: serial('id').primaryKey(),
+  email: text('email').unique().notNull(),
+  password_hash: text('password_hash').notNull(),
+  first_name: text('first_name'),
+  last_name: text('last_name'),
+  role: text('role').default('free'), // 'free' | 'premium' | 'admin'
+  subscription_status: text('subscription_status').default('inactive'), // 'inactive' | 'active' | 'cancelled' | 'expired'
+  subscription_tier: text('subscription_tier'), // 'monthly' | 'yearly'
+  subscription_expires_at: timestamp('subscription_expires_at'),
+  stripe_customer_id: text('stripe_customer_id'),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+  last_login: timestamp('last_login'),
+  onboarding_completed: boolean('onboarding_completed').default(false),
+  referral_code: text('referral_code').unique(), // Za referral program
+  referred_by: integer('referred_by').references(() => users.id),
+});
+
+// User Preferences (alergije, ciljevi, preferencije)
+export const userPreferences = pgTable('user_preferences', {
+  id: serial('id').primaryKey(),
+  user_id: integer('user_id').references(() => users.id).notNull(),
+  goal: text('goal'), // 'lose_weight' | 'gain_muscle' | 'maintain' | 'health'
+  target_weight: decimal('target_weight'),
+  current_weight: decimal('current_weight'),
+  height: decimal('height'),
+  age: integer('age'),
+  gender: text('gender'), // 'male' | 'female' | 'other'
+  activity_level: text('activity_level'), // 'sedentary' | 'light' | 'moderate' | 'active' | 'very_active'
+  allergies: text('allergies').array(), // ['laktoza', 'gluten', ...]
+  dietary_restrictions: text('dietary_restrictions').array(), // ['vegetarian', 'vegan', 'keto', ...]
+  disliked_foods: text('disliked_foods').array(),
+  meal_preferences: text('meal_preferences').array(), // ['brzi_obroci', 'meal_prep', ...]
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+});
+
+// Subscriptions (Premium i Planovi)
+export const subscriptions = pgTable('subscriptions', {
+  id: serial('id').primaryKey(),
+  user_id: integer('user_id').references(() => users.id).notNull(),
+  type: text('type').notNull(), // 'premium_monthly' | 'premium_yearly' | 'plan'
+  plan_type: text('plan_type'), // null za premium, 'start' | 'balans' | 'transformacija' za planove
+  stripe_subscription_id: text('stripe_subscription_id'),
+  stripe_payment_intent_id: text('stripe_payment_intent_id'),
+  status: text('status').notNull(), // 'active' | 'cancelled' | 'expired' | 'pending'
+  amount_paid: decimal('amount_paid').notNull(),
+  currency: text('currency').default('EUR'),
+  current_period_start: timestamp('current_period_start'),
+  current_period_end: timestamp('current_period_end'),
+  cancel_at_period_end: boolean('cancel_at_period_end').default(false),
+  purchased_at: timestamp('purchased_at').defaultNow(),
+  expires_at: timestamp('expires_at'), // Za planove (one-time)
+  cancelled_at: timestamp('cancelled_at'),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+});
+
+// Usage Tracking (rate limiting za Free tier)
+export const usageTracking = pgTable('usage_tracking', {
+  id: serial('id').primaryKey(),
+  user_id: integer('user_id').references(() => users.id).notNull(),
+  feature: text('feature').notNull(), // 'recipe_view' | 'ai_message' | 'ebook_download'
+  count: integer('count').default(0),
+  reset_date: timestamp('reset_date'), // Kada se resetuje brojač (daily/monthly)
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+});
+
+// AI Chat History
+export const aiChatHistory = pgTable('ai_chat_history', {
+  id: serial('id').primaryKey(),
+  user_id: integer('user_id').references(() => users.id).notNull(),
+  message: text('message').notNull(),
+  response: text('response').notNull(),
+  context: jsonb('context'), // User preferences za personalizaciju
+  created_at: timestamp('created_at').defaultNow(),
+});
+
+// Referrals
+export const referrals = pgTable('referrals', {
+  id: serial('id').primaryKey(),
+  referrer_id: integer('referrer_id').references(() => users.id).notNull(),
+  referred_id: integer('referred_id').references(() => users.id).notNull(),
+  status: text('status').default('pending'), // 'pending' | 'completed'
+  reward_granted: boolean('reward_granted').default(false),
+  created_at: timestamp('created_at').defaultNow(),
+});
+
+// Gamification - Achievements
+export const achievements = pgTable('achievements', {
+  id: serial('id').primaryKey(),
+  user_id: integer('user_id').references(() => users.id).notNull(),
+  achievement_type: text('achievement_type').notNull(), // 'first_recipe' | '7_day_streak' | 'lost_5kg'
+  unlocked_at: timestamp('unlocked_at').defaultNow(),
+});
+
+// Streaks
+export const streaks = pgTable('streaks', {
+  id: serial('id').primaryKey(),
+  user_id: integer('user_id').references(() => users.id).notNull(),
+  streak_type: text('streak_type').notNull(), // 'login' | 'meal_log' | 'water'
+  current_streak: integer('current_streak').default(0),
+  longest_streak: integer('longest_streak').default(0),
+  last_activity: timestamp('last_activity'),
+  updated_at: timestamp('updated_at').defaultNow(),
+});
+```
 
 **API endpointi:**
 
-- `POST /api/auth/register` - registracija
-- `POST /api/auth/login` - prijava
-- `POST /api/auth/logout` - odjava
-- `GET /api/auth/me` - trenutni korisnik
-- `POST /api/auth/refresh` - refresh token
-- `GET /api/auth/check-subscription` - provera premium statusa
+```
+AUTH:
+POST   /api/auth/register           - Registracija
+POST   /api/auth/login              - Prijava
+POST   /api/auth/logout             - Odjava
+GET    /api/auth/me                 - Trenutni korisnik
+POST   /api/auth/refresh            - Refresh token
+POST   /api/auth/forgot-password    - Reset lozinke
+POST   /api/auth/reset-password     - Potvrda reset-a
+
+SUBSCRIPTION:
+GET    /api/subscription/status     - Premium status
+GET    /api/subscription/usage      - Usage limits (za free tier)
+POST   /api/subscription/cancel     - Otkazivanje premium-a
+
+ONBOARDING:
+POST   /api/onboarding/preferences  - Čuvanje preferenci
+GET    /api/onboarding/status       - Da li je završen onboarding
+```
 
 **Fajlovi:**
-
 - `server/middleware/auth.ts` - JWT middleware
-- `server/routes/auth.ts` - auth rute
-- `server/utils/password.ts` - hash/verify lozinki
+- `server/middleware/checkSubscription.ts` - Provera premium statusa
+- `server/middleware/rateLimit.ts` - Rate limiting za free tier
+- `server/routes/auth.ts` - Auth rute
+- `server/routes/onboarding.ts` - Onboarding wizard rute
+- `server/utils/password.ts` - Hash/verify lozinki
 - `server/utils/jwt.ts` - JWT generisanje/verifikacija
 
 ### 1.2 Frontend - Auth UI
 
 **Komponente:**
-
-- `client/src/pages/Login.tsx` - login stranica
-- `client/src/pages/Register.tsx` - registracija
-- `client/src/components/auth/ProtectedRoute.tsx` - zaštita ruta
-- `client/src/contexts/AuthContext.tsx` - globalno auth stanje
-- `client/src/hooks/useAuth.ts` - auth hook
+- `client/src/pages/Login.tsx` - Login stranica
+- `client/src/pages/Register.tsx` - Registracija
+- `client/src/pages/ForgotPassword.tsx` - Zaboravljena lozinka
+- `client/src/pages/Onboarding.tsx` - Multi-step onboarding wizard
+- `client/src/components/auth/ProtectedRoute.tsx` - Zaštita ruta
+- `client/src/components/auth/PremiumRoute.tsx` - Zaštita premium ruta
+- `client/src/contexts/AuthContext.tsx` - Globalno auth stanje
+- `client/src/hooks/useAuth.ts` - Auth hook
+- `client/src/hooks/useSubscription.ts` - Subscription hook
 
 **Rute:**
-
-- `/login` - prijava
-- `/register` - registracija
-- `/dashboard` - glavni dashboard (zaštićeno)
+- `/login` - Prijava
+- `/register` - Registracija
+- `/forgot-password` - Reset lozinke
+- `/onboarding` - Setup wizard (posle registracije)
+- `/dashboard` - Glavni dashboard (zaštićeno)
 
 **State management:**
-
 - React Context za auth stanje
-- localStorage za JWT token (ili httpOnly cookie za sigurnost)
+- httpOnly cookie za JWT token (sigurnije od localStorage)
 - React Query za server state
 
-## Faza 2: Dashboard struktura i nivoi pristupa
+---
+
+## 🎨 Faza 2: Dashboard struktura i nivoi pristupa
 
 ### 2.1 Dashboard layout
 
 **Komponente:**
-
-- `client/src/pages/Dashboard.tsx` - glavni dashboard
-- `client/src/components/dashboard/DashboardNav.tsx` - navigacija
-- `client/src/components/dashboard/SubscriptionBanner.tsx` - banner za upgrade
-- `client/src/components/dashboard/FeatureLock.tsx` - komponenta za zaključane feature-e
+- `client/src/pages/Dashboard.tsx` - Glavni dashboard
+- `client/src/components/dashboard/DashboardNav.tsx` - Sidebar navigacija
+- `client/src/components/dashboard/DashboardHeader.tsx` - Top header sa user menu
+- `client/src/components/dashboard/UpgradeBanner.tsx` - Banner za upgrade (free korisnici)
+- `client/src/components/dashboard/FeatureLock.tsx` - Overlay za zaključane feature-e
+- `client/src/components/dashboard/UsageMeter.tsx` - Prikaz usage limita (free tier)
+- `client/src/components/dashboard/WelcomeWidget.tsx` - Dobrodošli widget
+- `client/src/components/dashboard/QuickStats.tsx` - Brza statistika
 
 ### 2.2 Feature-e po nivoima pristupa
 
-**Neregistrovani korisnici (Javni pristup):**
+#### **NIVO 1: Neregistrovani korisnici (Javni pristup)**
 
-- Blog postovi (čitati)
+**Pristup:**
+- Blog postovi (čitanje)
 - Testimonials (pregled)
-- BMI kalkulator
+- BMI kalkulator (javno dostupan)
 - Kontakt forma
 - Informacije o planovima (Start, Balans, Transformacija)
-- Call-to-action za registraciju na svim premium feature-ima
+- Preview recepti (samo 3 recepti bez detalja)
+- **Call-to-action za registraciju na SVAKOJ stranici**
 
-**Registrovani korisnici (Free tier):**
+**UI Elementi:**
+- Banner: "Registruj se besplatno i isprobaj Premium 7 dana!"
+- Blur overlay na premium sadržaju
+- Feature comparison tabela (Free vs Premium vs Planovi)
 
-- Profil korisnika (pregled i edit)
-- Postavke (alergije, preferencije, ciljevi)
-- Ograničen pregled recepata (3-5 recepata/dan)
-- Ograničen pregled e-bookova (samo besplatni)
-- Ograničen AI chat (5 poruka/dan)
-- Recept dana (pregled, ali ne može da sačuva)
-- Favoriti (do 10 recepata)
-- Tracking napretka (osnovni)
-- Upgrade banner na svim premium feature-ima
+---
 
-**Premium korisnici (35€/godišnje):**
+#### **NIVO 2: Registrovani korisnici (Free Trial)**
 
-- Neograničen pristup svim receptima
-- Neograničen pristup svim e-bookovima
-- Neograničen AI chat
-- Recept dana sa opcijom čuvanja
-- Neograničeni favoriti
-- Meal planning (7-dnevni plan)
-- Personalizovani plan ishrane
-- Shopping list generator
-- Napredno tracking napretka
+**VAŽNA IZMENA:** Free tier je sada TRIAL, ne puna funkcionalnost!
 
-**Kupci planova (Start/Balans/Transformacija):**
+**Pristup:**
 
-- Pristup specifičnim sadržajima vezanim za kupljeni plan
-- Calendly link za rezervaciju termina (nakon uspešne kupovine)
-- Tracking napretka za kupljeni plan
-- Podrška putem poruka (prema planu)
-- Mogućnost upgrade-a na premium
+**RECEPTI:**
+- ✅ Samo **3 recepta UKUPNO** (ne dnevno!) kao demo
+- ✅ Bez filtera
+- ✅ Bez mogućnosti čuvanja favorita
+- ❌ Nema meal planner-a
+- ❌ Nema shopping list-e
 
-**Dashboard sekcije:**
+**E-BOOKOVI:**
+- ✅ Samo **1 besplatni mini e-book** ("Vodič za početnike" - 10 strana)
+- ❌ Nema pristupa premium e-bookovima (15+ knjiga)
 
-1. Recepti (free: ograničeno, premium: neograničeno)
-2. E-bookovi (free: samo besplatni, premium: svi)
-3. Recept dana (free: pregled, premium: sa čuvanjem)
-4. AI Asistent (free: 5/dan, premium: neograničeno)
-5. Profil korisnika (svi registrovani)
-6. Postavke (alergije, preferencije) (svi registrovani)
-7. Moji planovi (kupci planova)
-8. Tracking napretka (svi registrovani, različiti nivoi)
+**RECEPT DANA:**
+- ✅ Vidi naslov i sliku
+- ❌ Ne vidi sastojke i instrukcije (blur overlay)
+- ❌ Ne može da sačuva
 
-## Faza 3: Premium feature 1 - Besplatni zdravi recepti
+**AI ASISTENT:**
+- ✅ **2 AI poruke UKUPNO** (trial)
+- ❌ Bez personalizacije
+- ❌ Bez context history
+- ❌ Generičke odgovore
+
+**PROFIL I POSTAVKE:**
+- ✅ Pregled i edit profila
+- ✅ Osnovne postavke (alergije, ciljevi - ali ne utiču na AI)
+- ✅ BMI kalkulator
+
+**TRACKING:**
+- ✅ Unos težine (samo trenutna, bez historije)
+- ❌ Nema grafova napretka
+- ❌ Nema merenja (obim struka, grudi, itd.)
+- ❌ Nema progress photos
+
+**GAMIFICATION:**
+- ❌ Nema achievements
+- ❌ Nema streaks
+- ❌ Nema leaderboard
+
+**COMMUNITY:**
+- ❌ Nema pristupa zajednici
+
+**UI Elementi:**
+- **Konstantan upgrade banner** na svakoj stranici
+- Usage meter: "Iskoristio si 2/3 recepta. Upgrade za neograničeno!"
+- Modal nakon svake akcije: "Želiš više? Probaj Premium!"
+- Blur overlay + lock ikona na premium sadržaju
+- Countdown timer: "Premium trial ističe za 7 dana"
+
+---
+
+#### **NIVO 3: Premium korisnici (4€/mesec ili 35€/godišnje)**
+
+**PUNA FUNKCIONALNOST - SELF-SERVICE ALATI:**
+
+**RECEPTI:**
+- ✅ **Neograničeni pristup** svim receptima (500+ recepata)
+- ✅ Napredno filtriranje (kategorija, kalorije, alergije, vreme pripreme)
+- ✅ Pretraga po sastojcima
+- ✅ **Neograničeni favoriti**
+- ✅ Personalizovane preporuke na osnovu preferenci
+- ✅ **7-dnevni meal planner** (drag & drop)
+- ✅ **Auto-generisana shopping lista** iz meal plana
+- ✅ Recipe collections ("Moji brzi doručci", "Low carb večere")
+
+**E-BOOKOVI:**
+- ✅ Pristup **15+ premium e-bookovima**:
+  - "7 Dana Zdravih Doručaka"
+  - "Meal Prep Za Početnike"
+  - "Vodič Za Čitanje Nutritivnih Deklaracija"
+  - "50 Zdravih Zamjena"
+  - "Keto Vodič Za Balkanski Način Ishrane"
+  - "Brze Večere Za Radne Dane"
+  - "Recepti Sa 5 Sastojaka"
+  - + mesečno novi e-book
+- ✅ PDF download
+- ✅ Printable templates (meal prep, shopping list)
+- ✅ Food swap charts
+
+**RECEPT DANA:**
+- ✅ **Pun pristup** receptu dana (sastojci, instrukcije, nutritivne vrednosti)
+- ✅ Mogućnost čuvanja u favorite
+- ✅ Dodavanje u meal planner
+- ✅ Historie recepata dana
+
+**AI ASISTENT (NUTRI AI):**
+- ✅ **Neograničen AI chat**
+- ✅ **Personalizovani odgovori** na osnovu profila (ciljevi, alergije, preferenci)
+- ✅ **Context-aware** (AI pamti prethodne razgovore)
+- ✅ Može da generiše meal plans
+- ✅ Može da prilagodi recepte ("Zameni piletinu sa tofuom")
+- ✅ Može da odgovori na pitanja o ishrani
+- ✅ **PDF export konverzacija**
+- ✅ Branded kao "Tvoj AI Nutritionist"
+
+**TRACKING NAPRETKA:**
+- ✅ **Tracking težine** (sa grafovima i trendovima)
+- ✅ **Body measurements** (obim struka, grudi, bedra, ruka)
+- ✅ **Progress photos** (before/after galerija)
+- ✅ **Weekly/Monthly insights**:
+  - "Izgubio si 2kg ovog meseca!"
+  - "Prosečan unos kalorija: 1800kcal/dan"
+- ✅ Goal tracking (postavljanje ciljeva i praćenje napretka)
+- ✅ **Export podataka** (PDF report)
+
+**HABIT TRACKERS:**
+- ✅ **Water intake tracker** (dnevni cilj, podsetnici)
+- ✅ **Meal timing tracker** (kada jedeš obroke)
+- ✅ Sleep tracker (kvalitet sna vs ishrana)
+- ✅ Mood & Energy tracker (kako se osećaš)
+- ✅ **AI insights**: "Primetio sam da kada spavaš <6h, unosiš više kalorija"
+
+**GAMIFICATION:**
+- ✅ **Achievement sistem**:
+  - 🏆 "First Recipe Saved"
+  - 🔥 "7 Day Login Streak"
+  - 🎯 "Lost First 5kg"
+  - 💎 "30 Days Premium Member"
+  - ⭐ "Helped 10 Community Members"
+- ✅ **Streak system** (login, meal logging, water intake)
+- ✅ **Leaderboards**:
+  - Najdosljedniji korisnici meseca
+  - Najveći progress meseca
+  - Najkorisniji član zajednice
+- ✅ **Badge collection** (unlock special badges)
+
+**COMMUNITY (NOVA FUNKCIONALNOST):**
+- ✅ **Podeli napredak** (progress photos, merenja, achievements)
+- ✅ **Like i komentariši** druge korisnike
+- ✅ **Weekly challenges** (npr. "30 dana bez šećera")
+- ✅ **Success stories** (featured transformacije)
+- ✅ **Recipe sharing** (podeli svoje kolekcije)
+- ✅ **Support sistem** (pitaj zajednicu)
+- ✅ **Accountability partners** (pronađi workout buddy-ja)
+
+**NOTIFIKACIJE (SMART):**
+- ✅ **Personalizovani podsetnici**:
+  - "Nisi uneo obrok danas"
+  - "Vreme je za čašu vode!"
+  - "Sutra je utorak, pripremi meal prep"
+- ✅ **Weekly progress report** (email summary)
+- ✅ **Motivacione poruke** (na osnovu tvog napretka)
+- ✅ **Community notifications** (neko te je lajkovao, novi komentar)
+
+**CONTENT:**
+- ✅ **Premium blog članci** (weekly insights, research)
+- ✅ **Seasonal eating guides**
+- ✅ **Newsletter** (1x nedeljno, ekskluzivan sadržaj)
+
+**PODRŠKA:**
+- ✅ **Prioritetna email podrška** (odgovor u 24h)
+- ✅ **FAQ i Help Center**
+
+**REFERRAL PROGRAM:**
+- ✅ **Pozovi prijatelja**:
+  - Prijatelj dobija 20% popust
+  - Ti dobijaš 1 mesec FREE
+  - 5 referrala = cela godina FREE
+- ✅ Unique referral link
+- ✅ Tracking referrala
+
+---
+
+#### **NIVO 4: Kupci planova (Start/Balans/Transformacija)**
+
+**KLJUČNA IZMENA:** Planovi UKLJUČUJU Premium pristup + personalizovano coaching!
+
+**ŠTA DOBIJAJU:**
+
+**SVE IZ PREMIUM TIER-a + COACHING:**
+
+**START PLAN (90 KM = ~46€):**
+- ✅ **Premium membership UKLJUČEN** (godišnji, vrednost 35€)
+- ✅ **1 personalizovana konsultacija** (60 minuta, video call)
+- ✅ **Prilagođen plan ishrane** (1 mesec)
+- ✅ **Email podrška** (odgovor u 24h)
+- ✅ **Calendly link** za zakazivanje termina (nakon kupovine)
+- ✅ **Tracking napretka** sa tvojim pregledom
+- ✅ **Pristup Notion planu** (ako koristiš Notion za klijente)
+
+**BALANS PLAN (190 KM = ~97€):**
+- ✅ **Premium membership UKLJUČEN** (godišnji)
+- ✅ **3 konsultacije** (inicijalna + 2 follow-up)
+- ✅ **Prilagođen plan ishrane** (3 meseca)
+- ✅ **Bi-weekly check-ins** (email ili WhatsApp)
+- ✅ **WhatsApp podrška** (brži odgovori)
+- ✅ **Prilagođavanje plana** tokom trajanja
+- ✅ **Weekly progress reviews**
+
+**TRANSFORMACIJA PLAN (390 KM = ~199€):**
+- ✅ **Premium membership UKLJUČEN** (godišnji)
+- ✅ **6 konsultacija** (mesečno + po potrebi)
+- ✅ **Prilagođen plan ishrane** (6 meseci)
+- ✅ **Weekly check-ins** (WhatsApp ili video)
+- ✅ **WhatsApp podrška** (prioritetna, odgovor isti dan)
+- ✅ **Meal prep coaching** (kako da pripremiš obroke)
+- ✅ **Accountability coaching** (motivacija, podrška)
+- ✅ **Prilagođavanje plana** bilo kada
+- ✅ **Progress milestones** (celebration i rewards)
+- ✅ **LIFETIME Premium pristup** nakon završetka 6 meseci!
+
+**DODATNE FUNKCIONALNOSTI ZA KUPCE PLANOVA:**
+
+**DASHBOARD SEKCIJA: "Moj Plan"**
+- ✅ Pregled trenutnog plana (koje feature-e imaš)
+- ✅ Preostale konsultacije
+- ✅ Calendly link (zakaži sledeći termin)
+- ✅ Chat sa nutricionistom (za Balans i Transformacija)
+- ✅ Upload progress photos (direktno tebi)
+- ✅ Deljenje napretka sa nutricionistom
+- ✅ Milestones i ciljevi (koje si postavio u konsultacijama)
+
+**INTEGRACIJA SA NOTION (Backend):**
+- Kada neko kupi plan, automatski se kreira:
+  - Notion stranica za tog klijenta
+  - Tracking database
+  - Plan ishrane template
+  - Ti dobijaš notifikaciju da imaš novog klijenta
+
+---
+
+### 2.3 Dashboard Sekcije (Navigation)
+
+**SIDEBAR NAVIGACIJA:**
+
+```
+🏠 Dashboard (home)
+📖 Recepti
+📚 E-bookovi
+🍽️ Recept Dana
+🤖 AI Asistent
+👥 Zajednica (Premium/Planovi)
+📊 Napredak (Premium/Planovi)
+🎯 Moj Plan (samo kupci planova)
+⚙️ Postavke
+```
+
+**DASHBOARD HOME:**
+- Welcome widget (personalizovano pozdrav)
+- Daily recipe featured (velika kartica)
+- Quick stats (recepti sačuvani, streak, progress)
+- Upcoming features (teaser za premium ako si free)
+- Community highlights (ako si premium)
+- Usage meter (ako si free)
+
+---
+
+## 🍳 Faza 3: Premium Feature 1 - Besplatni zdravi recepti
 
 ### 3.1 API integracija
 
-**Besplatni API opcije:**
+**Koristi srpsku bazu podataka + besplatne API-je:**
 
-1. **Edamam Recipe API** - 5,000 poziva/mesec besplatno
+**GLAVNI SOURCES:**
 
-   - Recepti sa kalorijama, makronutrijentima
-   - Filteri po kategorijama, alergijama
-   - Pretraga po namirnicama
+1. **Serbian Food Composition Database (FCDB)**
+   - URL: http://104.155.19.23/serbianfood/
+   - 1,046+ srpskih namirnica i 129 tradicionalnih jela
+   - FREE pristup (kontaktiraj za API pristup)
 
-2. **Spoonacular API** - 150 poziva/dan besplatno
+2. **Edamam Recipe API**
+   - FREE tier: 5,000 poziva/mesec
+   - Recipe search, nutrition data
+   - Filter po alergijama, diet type
 
-   - Slične funkcionalnosti
+3. **Spoonacular API**
+   - FREE tier: 150 poziva/dan
    - Bolja dokumentacija
+   - Nutrition analysis
 
-**Backend:**
+4. **TheMealDB**
+   - Potpuno BESPLATNO
+   - 283 meals sa slikama
+   - Može se koristiti kao fallback
 
-- `server/routes/recipes.ts` - API rute za recepte
-- `server/services/recipeService.ts` - logika za filtriranje
-- Cache rezultata (Redis ili memory cache) da smanjimo API pozive
+5. **Tvoji custom recepti (Notion baza)**
+   - Najbolje za srpsku kuhinju
+   - Potpuna kontrola
 
-**Funkcionalnosti:**
+**STRATEGIJA:**
+- Kombiniraj sve sources
+- Cache sve rezultate u database
+- Korisnici prvo vide tvoje recepte (srpski)
+- Zatim API recepte (prevedene na srpski preko DeepL)
 
-- Pretraga recepata
-- Filteri: kategorije (doručak, ručak, večera), alergije, nepoželjne namirnice
-- Prikaz: kalorije, makronutrijenti, vreme pripreme, težina
-- Favoriti (čuvanje u bazi)
-- Meal planning (predlog za dan/nedelju)
-
-**Frontend:**
-
-- `client/src/pages/dashboard/Recipes.tsx` - lista recepata
-- `client/src/components/recipes/RecipeCard.tsx` - kartica recepta
-- `client/src/components/recipes/RecipeFilters.tsx` - filteri
-- `client/src/components/recipes/RecipeDetail.tsx` - detalji recepta
-- `client/src/components/recipes/MealPlanner.tsx` - planer obroka
-
-**Notion integracija:**
-
-- Možeš dodati custom recepte u Notion bazu "Recipes"
-- Backend kombinuje Notion recepte + API recepte
-
-## Faza 4: Premium feature 2 - E-book biblioteka
-
-### 4.1 E-book sistem
-
-**Backend:**
-
-- Notion baza "Ebooks" sa poljima: title, description, category, file_url, cover_image, is_premium
-- `server/routes/ebooks.ts` - API za e-bookove
-- Download tracking u bazi (ko je preuzeo šta)
-
-**Frontend:**
-
-- `client/src/pages/dashboard/Ebooks.tsx` - biblioteka
-- `client/src/components/ebooks/EbookCard.tsx` - kartica e-booka
-- `client/src/components/ebooks/EbookReader.tsx` - pregled (opcionalno)
-- Kategorije: "Zdravlje", "Recepti", "Planovi ishrane", itd.
-
-**Fajl storage:**
-
-- PDF fajlovi u `attached_assets/ebooks/` folderu
-- Backend servira fajlove preko `/api/ebooks/:id/download` (zaštićeno)
-
-## Faza 5: Premium feature 3 - Recept dana
-
-### 5.1 Dnevni recept sistem
-
-**Backend:**
-
-- `server/routes/daily-recipe.ts` - API za recept dana
-- Logika: random recept iz kategorije ili Notion baze
-- Cache za dan (isti recept ceo dan)
-- Tracking: ko je video recept dana
-
-**Frontend:**
-
-- `client/src/components/dashboard/DailyRecipe.tsx` - widget na dashboardu
-- Prikaz: velika kartica sa receptom, "Spremi u favorit", "Dodaj u planer"
-
-## Faza 6: Premium feature 4 - Nutri AI Asistent
-
-### 6.1 AI Chat integracija
-
-**Besplatni AI opcije:**
-
-1. **Hugging Face Inference API** - besplatno za manje modele
-
-   - Koristi `mistral-7b-instruct` ili sličan model
-   - Nutrition-specifičan fine-tuned model ako postoji
-
-2. **Ollama (self-hosted)** - potpuno besplatno
-
-   - Lokalni deployment
-   - Koristi `llama2` ili `mistral` model
-
-3. **OpenRouter API** - besplatni tier sa ograničenjima
-
-   - Pristup različitim modelima
-
-**Backend:**
-
-- `server/routes/ai-chat.ts` - chat endpoint
-- `server/services/aiService.ts` - AI integracija
-- Context management (pamćenje konverzacije)
-- Rate limiting (npr. 20 poruka/dan za free tier)
-
-**Frontend:**
-
-- `client/src/components/dashboard/AIChat.tsx` - chat interfejs
-- Chat history u bazi ili localStorage
-- UI: chat bubbles, typing indicator, message history
-
-**Prompt engineering:**
-
-- System prompt fokusiran na nutricionizam
-- Kontekst: korisnikove alergije, ciljevi, preferencije
-
-## Faza 7: Premium feature 5 - Dodatni feature predlog
-
-### 7.1 Predlog: Personalizovani plan ishrane
-
-**Funkcionalnosti:**
-
-- Korisnik unosi: ciljeve (gubitak težine, dobitak mišića, održavanje), aktivnost, preferencije
-- AI generiše 7-dnevni plan ishrane
-- Integracija sa receptima (koristi recepte iz feature 1)
-- Shopping list generator
-- Progress tracking (opcionalno)
-
-**Alternativni predlozi:**
-
-- **Nutrični dnevnik** - unos obroka, tracking kalorija
-- **Water intake tracker** - praćenje unosa vode
-- **Meal prep planner** - planiranje meal prep-a
-- **Community forum** - diskusije, deljenje recepata
-
-## Faza 8: Stripe integracija za plaćanje
-
-### 8.1 Stripe setup
-
-**Stripe proizvodi:**
-
-1. **Premium Membership** - 35€/godišnje (recurring subscription)
-2. **Start Plan** - 90 KM (one-time payment)
-3. **Balans Plan** - 190 KM (one-time payment)
-4. **Transformacija Plan** - 390 KM (one-time payment)
-
-**Stripe konfiguracija:**
-
-- Kreiraj Stripe account (besplatno)
-- Dodaj sve produkte u Stripe Dashboard
-- Webhook endpoint za payment events
-- Success/Cancel redirect URL-ovi
-
-### 8.2 Backend - Stripe integracija
+### 3.2 Backend
 
 **Fajlovi:**
+- `server/routes/recipes.ts` - Recipe API rute
+- `server/services/recipeService.ts` - Logika za filtriranje i kombinovanje sources
+- `server/services/translationService.ts` - DeepL integracija za prevod
+- `server/services/cacheService.ts` - Redis ili memory cache
 
-- `server/routes/stripe.ts` - Stripe webhook handler
-- `server/routes/payments.ts` - checkout/create session za planove
-- `server/routes/subscription.ts` - checkout za premium subscription
-- `server/services/stripeService.ts` - Stripe logika
+**API Endpointi:**
 
-**API endpointi:**
+```
+GET    /api/recipes                  - Lista recepata (sa paginacijom)
+GET    /api/recipes/:id              - Detalji recepta
+POST   /api/recipes/search           - Pretraga recepata
+GET    /api/recipes/categories       - Kategorije
+GET    /api/recipes/daily            - Recept dana
+POST   /api/recipes/:id/favorite     - Dodaj u favorite (Premium)
+DELETE /api/recipes/:id/favorite     - Ukloni iz favorita
+GET    /api/recipes/favorites        - Moji favoriti (Premium)
+POST   /api/recipes/collections      - Kreiraj kolekciju (Premium)
+GET    /api/recipes/recommendations  - Personalizovane preporuke (Premium)
+```
 
-- `POST /api/payments/create-checkout` - kreira Stripe Checkout session za planove
-  - Body: `{ planId: 'start' | 'balans' | 'transformacija', userId: number }`
-  - Vraća: Stripe Checkout URL
-- `POST /api/subscription/create-checkout` - kreira Stripe Checkout za premium
-  - Body: `{ userId: number }`
-  - Vraća: Stripe Checkout URL
-- `POST /api/stripe/webhook` - prima Stripe events
-  - Handluje: `checkout.session.completed`, `customer.subscription.updated`, `customer.subscription.deleted`
-- `GET /api/payments/my-plans` - vraća kupljene planove korisnika (zaštićeno)
+**Rate Limiting za FREE tier:**
+```javascript
+// server/middleware/rateLimit.ts
+const recipeLimiter = {
+  free: {
+    total: 3, // Samo 3 recepta ukupno
+    period: 'lifetime', // Ne resetuje se
+  },
+  premium: {
+    unlimited: true,
+  }
+};
+```
 
-**Database tabele:**
+### 3.3 Funkcionalnosti
 
-- `subscriptions` tabela:
-  - `user_id`, `stripe_subscription_id`, `type` ('premium' | 'plan'), `status`, `plan_type` ('start' | 'balans' | 'transformacija' | 'premium'), `stripe_payment_intent_id`, `amount_paid`, `currency`, `purchased_at`, `expires_at` (za planove), `current_period_end` (za premium)
+**ZA SVE KORISNIKE (Basic Info):**
+- Pretraga recepata (samo 3 rezultata za free)
+- Kategorije (doručak, ručak, večera, užina, desert)
 
-**Stripe webhook events:**
+**ZA PREMIUM:**
+- Filteri:
+  - Kategorije
+  - Alergije (automatski iz profila)
+  - Dijetni tip (keto, vegan, low-carb, itd.)
+  - Vreme pripreme
+  - Težina (lako, srednje, teško)
+  - Kalorije (range slider)
+  - Makronutrijenti (proteini, ugljeni hidrati, masti)
+- Favoriti (neograničeno)
+- Kolekcije (kreiraj svoje grupe recepata)
+- Meal planner (dodaj recepte u nedelju)
+- Shopping list generator
+- Recipe history (šta si spremao)
 
-- `checkout.session.completed` - uspešna kupovina
-  - Ažurira `subscriptions` tabelu
-  - Postavlja `user.plan_status`
-  - Šalje email sa Calendly linkom (za planove)
-- `customer.subscription.updated` - promena premium subscriptiona
-- `customer.subscription.deleted` - otkazana premium subscription
-
-### 8.3 Frontend - Stripe integracija
+### 3.4 Frontend
 
 **Komponente:**
-
-- `client/src/pages/Subscription.tsx` - premium subscription stranica
-- `client/src/pages/PurchasePlan.tsx` - kupovina planova (modifikacija postojeće)
-- `client/src/components/subscription/UpgradeButton.tsx` - CTA dugme za premium
-- `client/src/components/payments/PurchaseButton.tsx` - dugme za kupovinu plana
-- `client/src/components/payments/PaymentSuccess.tsx` - success stranica sa Calendly linkom
-- `client/src/components/payments/PaymentCancel.tsx` - cancel stranica
-
-**Stripe Checkout flow:**
-
-1. Korisnik klikne "Kupi plan" ili "Upgrade na Premium"
-2. Frontend poziva backend endpoint (`/api/payments/create-checkout` ili `/api/subscription/create-checkout`)
-3. Backend kreira Stripe Checkout session i vraća URL
-4. Frontend redirectuje korisnika na Stripe Checkout stranicu
-5. Nakon uspešne kupovine, Stripe redirectuje na `/payment/success?session_id=xxx`
-6. Frontend poziva backend da verifikuje payment
-7. Backend proverava Stripe session i ažurira bazu
-8. Za planove: prikazuje Calendly link za rezervaciju termina
-9. Za premium: automatski aktivira premium pristup
-
-### 8.4 Calendly integracija
-
-**Backend:**
-
-- `server/services/calendlyService.ts` - Calendly integracija
-- Generisanje Calendly linka sa korisničkim podacima
-- `GET /api/calendly/link` - vraća Calendly link za korisnika (zaštićeno)
-
-**Frontend:**
-
-- `client/src/components/calendly/CalendlyWidget.tsx` - embed Calendly widget
-- Prikaz na `/payment/success` stranici nakon kupovine plana
-- Link u dashboard-u za korisnike sa kupljenim planovima
-
-**Calendly setup:**
-
-- Kreiraj Calendly account (besplatno)
-- Podesi event types (konsultacije)
-- Integriši Calendly API (opcionalno) ili koristi embed widget
-- Preporučeno: koristi Calendly embed widget (jednostavnije)
-
-**Flow nakon kupovine:**
-
-1. Korisnik uspešno kupi plan preko Stripe-a
-2. Backend ažurira `subscriptions` tabelu
-3. Frontend prikazuje success stranicu sa:
-
-   - Porukom o uspešnoj kupovini
-   - Calendly embed widget-om ili linkom
-   - Informacijama o kupljenom planu
-   - Linkom ka dashboard-u
-
-## Faza 9: Notion CMS integracija
-
-### 9.1 Notion baze za dashboard
-
-**Nove Notion baze:**
-
-1. **Recipes** (custom recepti)
-
-   - Title, Description, Category, Ingredients, Instructions, Calories, Macros, Image
-
-2. **Ebooks**
-
-   - Title, Description, Category, File URL, Cover Image, Is Premium
-
-3. **Daily Recipes** (opcionalno)
-
-   - Date, Recipe ID, Featured
-
-**Backend:**
-
-- Proširiti `server/notion.ts` sa novim funkcijama
-- Cache Notion podataka (da smanjimo API pozive)
-
-## Faza 10: UI/UX dizajn
-
-### 10.1 Dashboard dizajn
-
-**Dizajn principi:**
-
-- Koristi postojeće Shadcn UI komponente
-- Tailwind CSS za styling sa postojećim bojama
-- Framer Motion za animacije
-- Responsive design (mobile-first)
-- Konzistentnost sa postojećim dizajnom
-
-**Postojeće boje (iz `index.css`):**
-
-- Primary: `#1F7A5C` (zelena) - `hsl(153 56% 75%)`
-- Primary Light: `hsl(153 56% 82%)`
-- Primary Dark: `hsl(153 56% 65%)`
-- Secondary: `hsl(120 34% 92%)` (svetlo zelena)
-- Accent: `hsl(80 13% 95%)`
-- Background: `hsl(var(--tertiary))` - svetlo bež
-- Text: `hsl(var(--dark))` - tamno siva
-- Bež pozadine: `#F3E6D3`, `#ECF8F2`
-
-**Dashboard layout:**
-
-```
-┌─────────────────────────────────────┐
-│ Header (Logo, Nav, User Menu)      │
-│ Boje: primary (#1F7A5C)           │
-├─────────────────────────────────────┤
-│ ┌──────────┐ ┌──────────┐          │
-│ │ Daily    │ │ Quick    │          │
-│ │ Recipe   │ │ Stats    │          │
-│ │ (widget) │ │ (widget) │          │
-│ └──────────┘ └──────────┘          │
-│                                     │
-│ ┌──────────────────────────────┐   │
-│ │ Main Content Area            │   │
-│ │ (Recepti/Ebooks/AI Chat)    │   │
-│ │ Feature Lock overlay         │   │
-│ │ (za free korisnike)          │   │
-│ └──────────────────────────────┘   │
-│                                     │
-│ ┌──────────────────────────────┐   │
-│ │ Upgrade Banner               │   │
-│ │ (za free korisnike)          │   │
-│ └──────────────────────────────┘   │
-└─────────────────────────────────────┘
-```
-
-**Feature Lock dizajn:**
-
-- Overlay sa blur efektom na zaključanim feature-ima
-- Badge "Premium" ili "Upgrade" na kartama
-- Modal sa upgrade opcijom pri kliku
-- Koristi postojeće boje: primary za CTA, muted za disabled state
-
-**Komponente sa postojećim stilom:**
-
-- Kartice: `bg-white`, `rounded-xl`, `shadow-lg`, `border border-[#E5E7EB]`
-- Dugmad: `bg-[#1F7A5C] hover:bg-[#185F48]` (primary)
-- Badge-ovi: `bg-[#ECF8F2]` ili `bg-[#F3E6D3]` sa odgovarajućim tekstom
-- Hover efekti: `hover:shadow-xl`, `transition-all duration-300`
-
-## Faza 11: Optimizacija i performanse
-
-### 11.1 Performance optimizacije
-
-- React Query caching za API pozive
-- Image optimization (WebP format, lazy loading)
-- Code splitting (lazy load dashboard komponente)
-- API rate limiting
-- Database indexing
-
-### 11.2 Security
-
-- JWT token expiration (15min access, 7d refresh)
-- HTTPS u produkciji
-- Input sanitization
-- SQL injection prevention (Drizzle ORM već štiti)
-- XSS prevention
-- CSRF tokens
-
-## Implementacioni todo listi
-
-### Backend
-
-- [ ] Proširiti `shared/schema.ts` sa novim tabelama (users, subscriptions, user_preferences, purchases)
-- [ ] Implementirati auth middleware
-- [ ] Kreirati auth rute (register, login, logout, me)
-- [ ] Implementirati role-based access control (neregistrovani/free/premium/plan customer)
-- [ ] Integrisati Edamam/Spoonacular API
-- [ ] Kreirati recipe service sa filtriranjem i rate limiting za free korisnike
-- [ ] Implementirati e-book download sistem sa pristup kontrolom
-- [ ] Kreirati daily recipe endpoint
-- [ ] Integrisati AI chat (Hugging Face/Ollama) sa rate limiting
-- [ ] Implementirati Stripe checkout za planove (one-time payments)
-- [ ] Implementirati Stripe checkout za premium (recurring subscription)
-- [ ] Kreirati Stripe webhook handler
-- [ ] Integrisati Calendly (embed widget ili API)
-- [ ] Kreirati endpoint za Calendly link generisanje
-- [ ] Proširiti Notion integraciju
-
-### Frontend
-
-- [ ] Kreirati AuthContext i useAuth hook
-- [ ] Implementirati Login/Register stranice (sa postojećim dizajnom)
-- [ ] Kreirati ProtectedRoute komponentu
-- [ ] Implementirati Dashboard layout sa navigacijom
-- [ ] Kreirati FeatureLock komponentu za zaključane feature-e
-- [ ] Kreirati Recipes stranicu sa filterima i rate limiting indikatorom
-- [ ] Implementirati Ebooks biblioteku sa pristup kontrolom
-- [ ] Kreirati Daily Recipe widget
-- [ ] Implementirati AI Chat interfejs sa rate limiting
-- [ ] Kreirati Subscription/Upgrade stranicu
-- [ ] Modifikovati Purchase stranicu za Stripe integraciju
-- [ ] Kreirati PaymentSuccess stranicu sa Calendly widget-om
-- [ ] Kreirati PaymentCancel stranicu
-- [ ] Dodati user preferences form
-- [ ] Kreirati "Moji planovi" sekciju za kupce planova
-- [ ] Implementirati upgrade banner komponentu
-
-### Database
-
-- [ ] Migracije za nove tabele
-- [ ] Seed podaci za testiranje
-- [ ] Indexi za performanse
-
-### Testing
-
-- [ ] Unit testovi za auth
-- [ ] Integration testovi za API
-- [ ] E2E testovi za kritične flow-ove
-
-## Tehnologije i biblioteke
-
-**Backend:**
-
-- `bcrypt` - hash lozinki
-- `jsonwebtoken` - JWT tokene
-- `stripe` - Stripe SDK
-- `axios` - HTTP klijent za API pozive
-- `node-cache` ili `ioredis` - caching
-
-**Frontend:**
-
-- `@stripe/stripe-js` - Stripe Checkout
-- `react-hook-form` - forme
-- `zod` - validacija (već u projektu)
-- `date-fns` - datum manipulacija (već u projektu)
-
-## Procena vremena
-
-- Faza 1 (Auth): 2-3 dana
-- Faza 2 (Dashboard + nivoi pristupa): 2-3 dana
-- Faza 3 (Recepti sa rate limiting): 3-4 dana
-- Faza 4 (E-bookovi sa pristup kontrolom): 1-2 dana
-- Faza 5 (Recept dana): 1 dan
-- Faza 6 (AI Chat sa rate limiting): 2-3 dana
-- Faza 7 (Dodatni feature): 2-3 dana
-- Faza 8 (Stripe za planove + premium + Calendly): 3-4 dana
-- Faza 9 (Notion): 1 dan
-- Faza 10 (UI/UX sa postojećim dizajnom): 2-3 dana
-- Faza 11 (Optimizacija): 1-2 dana
-
-**Ukupno: ~20-28 dana rada**
-
-## Prioritet implementacije
-
-1. **Visok prioritet:** Auth sistem, Dashboard osnova, Stripe integracija za planove, Calendly integracija
-2. **Srednji prioritet:** Recepti (sa rate limiting), E-bookovi (sa pristup kontrolom), Recept dana, Stripe za premium
-3. **Nizak prioritet:** AI Chat, Dodatni feature, Napredne optimizacije
-
-## Dodatne napomene
-
-### Rate limiting za free korisnike
-
-- Recepti: 5 recepata/dan (ili 3 za neregistrovane)
-- AI Chat: 5 poruka/dan
-- E-bookovi: samo besplatni
-- Favoriti: do 10 recepata
-
-### Stripe payment flow
-
-1. Korisnik klikne "Kupi plan" na PricingSection
-2. Redirect na Stripe Checkout (one-time payment)
-3. Nakon uspešne kupovine → redirect na `/payment/success`
-4. Prikaz Calendly widget-a za rezervaciju termina
-5. Ažuriranje korisničkog statusa u bazi
-
-### Calendly integracija
-
-- Preporučeno: Calendly embed widget (najjednostavnije)
-- Alternativa: Calendly API za napredniju integraciju
-- Link se generiše sa korisničkim podacima (ime, email, kupljeni plan)
-
-## Napomene
-
-- Svi API pozivi treba da imaju fallback na Notion ako eksterni API ne radi
-- Implementirati rate limiting da zaštitimo besplatne API limite
-- Koristiti environment varijable za sve API ključeve
-- Logging za debugging i monitoring
-- Error handling na svim nivoima
+- `client/src/pages/dashboard/Recipes.tsx` - Lista recepata
+- `client/src/components/recipes/RecipeCard.tsx` - Kartica recepta
+- `client/src/components/recipes/RecipeFilters.tsx` - Filteri (samo Premium)
+- `client/src/components/recipes/RecipeDetail.tsx` - Detalji recepta
+- `client/src/components/recipes/RecipeDetailLocked.tsx` - Zaključan recept (Free tier)
+- `client/src/components/recipes/FavoriteButton.tsx` - Favorite dugme
+- `client/src/components/recipes/AddToMealPlan.tsx` - Dodaj u planer (Premium)
+- `client/src/components/recipes/RecipeCollections.tsx` - Kolekcije (Premium)
+- `client/src/components/recipes/MealPlanner.tsx` - 7-dnevni planer (Premium)
+- `client/src/components/recipes/ShoppingList.tsx` - Shopping lista (Premium)
+
+**UI Design (koristi postojeće boje):**
+```css
+.recipe-card {
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  border: 1px solid #E5E7EB;
+  transition: all 0.3s;
+}
+
+.recipe-card:hover {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  transform: translateY(-4px);
+}
+
+.recipe-locked {
+  position: relative;
+  filter: blur(4

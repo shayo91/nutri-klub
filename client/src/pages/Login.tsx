@@ -23,7 +23,24 @@ export default function Login() {
 
     try {
       await login(email, password);
-      setLocation("/dashboard");
+      
+      // Proveri da li je onboarding završen
+      const response = await fetch("/api/onboarding/status", {
+        credentials: "include"
+      });
+      
+      if (response.ok) {
+        const { onboardingCompleted } = await response.json();
+        
+        if (!onboardingCompleted) {
+          setLocation("/onboarding");
+        } else {
+          setLocation("/dashboard");
+        }
+      } else {
+        // Ako nema odgovora, idi na dashboard (fail-safe)
+        setLocation("/dashboard");
+      }
     } catch (err: any) {
       setError(err.message || "Login failed. Please try again.");
     } finally {

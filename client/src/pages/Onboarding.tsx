@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
+import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -21,6 +22,7 @@ export default function Onboarding() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [, setLocation] = useLocation();
+  const { refreshUser } = useAuth();
 
   const [formData, setFormData] = useState({
     goal: "",
@@ -35,7 +37,30 @@ export default function Onboarding() {
     dislikedFoods: [] as string[],
   });
 
+  function validateStep(step: number): boolean {
+    setError("");
+    
+    if (step === 1) {
+      if (!formData.goal) {
+        setError("Molimo odaberite vaš glavni cilj pre nego što nastavite.");
+        return false;
+      }
+    } else if (step === 2) {
+      if (!formData.gender || !formData.activityLevel) {
+        setError("Molimo popunite osnovne informacije (pol i nivo aktivnosti).");
+        return false;
+      }
+    }
+    // Step 3 nema obavezna polja (preferencije su opcione)
+    
+    return true;
+  }
+
   function handleNext() {
+    if (!validateStep(currentStep)) {
+      return;
+    }
+    
     if (currentStep < STEPS.length) {
       setCurrentStep(currentStep + 1);
     } else {
@@ -46,11 +71,33 @@ export default function Onboarding() {
   function handleBack() {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
+      setError(""); // Clear errors when going back
     }
   }
 
-  function handleSkip() {
-    setLocation("/dashboard");
+  async function handleSkip() {
+    setIsLoading(true);
+    setError("");
+    
+    try {
+      const response = await fetch("/api/onboarding/skip", {
+        method: "POST",
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to skip onboarding");
+      }
+
+      // Refresh user data to update onboardingCompleted flag
+      await refreshUser();
+      
+      setLocation("/dashboard");
+    } catch (err: any) {
+      setError(err.message || "Failed to skip onboarding. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   function toggleArrayItem(field: keyof typeof formData, value: string) {
@@ -98,6 +145,9 @@ export default function Onboarding() {
         throw new Error(data.error || "Failed to save preferences");
       }
 
+      // Refresh user data to update onboardingCompleted flag
+      await refreshUser();
+      
       setLocation("/dashboard");
     } catch (err: any) {
       setError(err.message || "Failed to save preferences. Please try again.");

@@ -12,8 +12,8 @@ export function ProtectedRoute({
   requirePremium = false,
   requireAdmin = false,
 }: ProtectedRouteProps) {
-  const { isAuthenticated, isPremium, isAdmin, isLoading } = useAuth();
-  const location = useLocation();
+  const { isAuthenticated, isPremium, isAdmin, isLoading, user } = useAuth();
+  const [location] = useLocation();
 
   if (isLoading) {
     // Show loading spinner while checking auth
@@ -27,6 +27,11 @@ export function ProtectedRoute({
   if (!isAuthenticated) {
     // Redirect to login
     return <Redirect to="/login" />;
+  }
+
+  // Proveri da li je onboarding završen (osim ako je trenutna ruta /onboarding)
+  if (isAuthenticated && user && !user.onboardingCompleted && location !== "/onboarding") {
+    return <Redirect to="/onboarding" />;
   }
 
   if (requireAdmin && !isAdmin) {
