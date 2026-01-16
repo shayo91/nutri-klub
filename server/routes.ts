@@ -3,8 +3,16 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { getBlogPosts, getTestimonials, getAnnouncements, getVideos, getPodcasts, getSocialMedia } from "./notion";
 import { z } from "zod";
+import authRoutes from "./routes/auth";
+import subscriptionRoutes from "./routes/subscription";
+import onboardingRoutes from "./routes/onboarding";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Auth routes
+  app.use("/api/auth", authRoutes);
+  app.use("/api/subscription", subscriptionRoutes);
+  app.use("/api/onboarding", onboardingRoutes);
+  
   // API Routes
   
   // Get blog posts from Notion
