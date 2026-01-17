@@ -6,12 +6,24 @@ import { z } from "zod";
 import authRoutes from "./routes/auth";
 import subscriptionRoutes from "./routes/subscription";
 import onboardingRoutes from "./routes/onboarding";
+import recipesRoutes from "./routes/recipes";
+import recipesExternalRoutes from "./routes/recipes-external";
+import aiRoutes from "./routes/ai";
+import ebooksRoutes from "./routes/ebooks";
+import trackingRoutes from "./routes/tracking";
+import paymentsRoutes from "./routes/payments";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth routes
   app.use("/api/auth", authRoutes);
   app.use("/api/subscription", subscriptionRoutes);
   app.use("/api/onboarding", onboardingRoutes);
+  app.use("/api/recipes", recipesRoutes);
+  app.use("/api/recipes-external", recipesExternalRoutes);
+  app.use("/api/ai", aiRoutes);
+  app.use("/api/ebooks", ebooksRoutes);
+  app.use("/api/tracking", trackingRoutes);
+  app.use("/api/payments", paymentsRoutes);
   
   // API Routes
   

@@ -57,12 +57,6 @@ export function DashboardNav() {
       badge: "NEW",
     },
     {
-      label: "Zajednica",
-      href: "/dashboard/community",
-      icon: <Users className="w-5 h-5" />,
-      requirePremium: true,
-    },
-    {
       label: "Napredak",
       href: "/dashboard/progress",
       icon: <TrendingUp className="w-5 h-5" />,

@@ -113,6 +113,27 @@ export async function requirePlan(req: Request, res: Response, next: NextFunctio
 }
 
 /**
+ * Factory function to create subscription check middleware
+ * @param tier - "free" | "premium" | "plan" | "premium_or_plan"
+ */
+export function checkSubscription(tier: "free" | "premium" | "plan" | "premium_or_plan" = "free") {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    if (tier === "free") {
+      // Anyone can access free tier
+      return next();
+    } else if (tier === "premium") {
+      return requirePremium(req, res, next);
+    } else if (tier === "plan") {
+      return requirePlan(req, res, next);
+    } else if (tier === "premium_or_plan") {
+      return requirePremiumOrPlan(req, res, next);
+    }
+    
+    return next();
+  };
+}
+
+/**
  * Middleware that allows both premium users and plan purchasers
  */
 export async function requirePremiumOrPlan(req: Request, res: Response, next: NextFunction) {

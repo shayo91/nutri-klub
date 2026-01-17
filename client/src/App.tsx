@@ -19,7 +19,15 @@ import ForgotPassword from "@/pages/ForgotPassword";
 import Onboarding from "@/pages/Onboarding";
 import Dashboard from "@/pages/Dashboard";
 import Recipes from "@/pages/dashboard/Recipes";
+import RecipeDetail from "@/pages/dashboard/RecipeDetail";
+import Ebooks from "@/pages/dashboard/Ebooks";
+import RecipeOfTheDay from "@/pages/dashboard/RecipeOfTheDay";
+import AIAssistant from "@/pages/dashboard/AIAssistant";
+import Settings from "@/pages/dashboard/Settings";
 import Upgrade from "@/pages/dashboard/Upgrade";
+import Progress from "@/pages/dashboard/Progress";
+import CheckoutMock from "@/pages/dashboard/CheckoutMock";
+import PaymentSuccess from "@/pages/dashboard/PaymentSuccess";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -110,10 +118,66 @@ function Router() {
           </ProtectedRoute>
         )}
       </Route>
+      <Route path="/dashboard/recipes/:id">
+        {() => (
+          <ProtectedRoute>
+            <RecipeDetail />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/dashboard/ebooks">
+        {() => (
+          <ProtectedRoute>
+            <Ebooks />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/dashboard/recipe-of-the-day">
+        {() => (
+          <ProtectedRoute>
+            <RecipeOfTheDay />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/dashboard/ai-assistant">
+        {() => (
+          <ProtectedRoute>
+            <AIAssistant />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/dashboard/settings">
+        {() => (
+          <ProtectedRoute>
+            <Settings />
+          </ProtectedRoute>
+        )}
+      </Route>
       <Route path="/dashboard/upgrade">
         {() => (
           <ProtectedRoute>
             <Upgrade />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/dashboard/progress">
+        {() => (
+          <ProtectedRoute>
+            <Progress />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/dashboard/checkout-mock">
+        {() => (
+          <ProtectedRoute>
+            <CheckoutMock />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/dashboard/success">
+        {() => (
+          <ProtectedRoute>
+            <PaymentSuccess />
           </ProtectedRoute>
         )}
       </Route>

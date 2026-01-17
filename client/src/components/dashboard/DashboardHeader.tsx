@@ -1,5 +1,7 @@
+import { useState, useEffect } from "react";
 import { Bell, Search, ChevronDown, LogOut, User, Settings, CreditCard } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLocation } from "wouter";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,20 +17,51 @@ import { Link } from "wouter";
 
 export function DashboardHeader() {
   const { user, logout, isPremium } = useAuth();
+  const [, setLocation] = useLocation();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Update search query from URL when on recipes page
+  useEffect(() => {
+    const updateSearchFromURL = () => {
+      const params = new URLSearchParams(window.location.search);
+      const search = params.get("search");
+      if (window.location.pathname === "/dashboard/recipes") {
+        setSearchQuery(search || "");
+      } else {
+        setSearchQuery("");
+      }
+    };
+
+    updateSearchFromURL();
+
+    // Listen for URL changes
+    window.addEventListener("popstate", updateSearchFromURL);
+    return () => window.removeEventListener("popstate", updateSearchFromURL);
+  }, []);
 
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
       <div className="flex items-center justify-between px-6 py-4">
         {/* Search Bar */}
         <div className="flex-1 max-w-md">
-          <div className="relative">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (searchQuery.trim()) {
+                setLocation(`/dashboard/recipes?search=${encodeURIComponent(searchQuery.trim())}`);
+              }
+            }}
+            className="relative"
+          >
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
             <Input
               type="search"
               placeholder="Pretraži recepte, e-bookove..."
               className="pl-10 bg-gray-50 border-gray-200"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
-          </div>
+          </form>
         </div>
 
         {/* Right Side Actions */}
