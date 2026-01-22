@@ -4,8 +4,49 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Check, Crown, Sparkles, Zap } from "lucide-react";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Upgrade() {
+  const [loading, setLoading] = useState<string | null>(null);
+  const { toast } = useToast();
+
+  const handleCheckout = async (orderType: string) => {
+    setLoading(orderType);
+
+    try {
+      const response = await fetch("/api/payments/create-checkout-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ orderType }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create checkout session");
+      }
+
+      const data = await response.json();
+
+      if (data.mockMode) {
+        // Mock mode - redirect to mock checkout
+        window.location.href = data.checkoutUrl;
+      } else {
+        // Real Stripe - redirect to Stripe Checkout
+        window.location.href = data.checkoutUrl;
+      }
+    } catch (error) {
+      console.error("Checkout error:", error);
+      toast({
+        title: "Greška",
+        description: "Došlo je do greške pri kreiranju plaćanja. Pokušajte ponovo.",
+        variant: "destructive",
+      });
+      setLoading(null);
+    }
+  };
   const premiumFeatures = [
     "500+ zdravih recepata sa detaljnim instrukcijama",
     "15+ premium e-bookova (meal prep, keto, vodici)",
@@ -68,8 +109,13 @@ export default function Upgrade() {
                     </p>
                   </div>
 
-                  <Button size="lg" className="w-full bg-gray-900 hover:bg-gray-800">
-                    Započni 7-dnevni trial
+                  <Button 
+                    size="lg" 
+                    className="w-full bg-gray-900 hover:bg-gray-800"
+                    onClick={() => handleCheckout("premium_monthly")}
+                    disabled={loading !== null}
+                  >
+                    {loading === "premium_monthly" ? "Učitavanje..." : "Započni 7-dnevni trial"}
                   </Button>
 
                   <div className="pt-4 space-y-3">
@@ -114,9 +160,11 @@ export default function Upgrade() {
                   <Button
                     size="lg"
                     className="w-full bg-gradient-to-r from-[#1F7A5C] to-[#185A44] hover:opacity-90"
+                    onClick={() => handleCheckout("premium_yearly")}
+                    disabled={loading !== null}
                   >
                     <Sparkles className="w-4 h-4 mr-2" />
-                    Započni 7-dnevni trial
+                    {loading === "premium_yearly" ? "Učitavanje..." : "Započni 7-dnevni trial"}
                   </Button>
 
                   <div className="pt-4 space-y-3">

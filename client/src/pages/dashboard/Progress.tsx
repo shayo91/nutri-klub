@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { FeatureLock } from "@/components/dashboard/FeatureLock";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import {
@@ -228,6 +229,33 @@ export default function Progress() {
               <Badge className="bg-[#1F7A5C]">Premium - Svi chart-ovi i insights!</Badge>
             )}
 
+            {!isPremium ? (
+              <FeatureLock
+                title="Praćenje Napretka - Premium Feature"
+                description="Upgrade za pristup naprednom praćenju težine, vode, obroka i detaljnoj statistici!"
+                features={[
+                  "📊 Interaktivni grafikoni težine i napretka",
+                  "📈 Analiza trendova i predviđanja",
+                  "💧 Praćenje hidratacije sa podsetnicima",
+                  "🍽️ Dnevnik obroka sa kalorijama",
+                  "🔥 Streak sistem i motivacioni insights",
+                  "🎯 Personalizovani ciljevi i preporuke"
+                ]}
+              >
+                {/* Dummy content for blur effect */}
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <Card className="bg-gray-200 h-24"></Card>
+                    <Card className="bg-gray-200 h-24"></Card>
+                    <Card className="bg-gray-200 h-24"></Card>
+                    <Card className="bg-gray-200 h-24"></Card>
+                  </div>
+                  <Card className="bg-gray-200 h-80"></Card>
+                  <Card className="bg-gray-200 h-64"></Card>
+                </div>
+              </FeatureLock>
+            ) : (
+              <>
             {/* Quick Stats */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               {/* Current Weight */}
@@ -441,64 +469,41 @@ export default function Progress() {
             </div>
 
             {/* Weight Chart */}
-            {isPremium ? (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Grafik Težine (Poslednjih 30 dana)</CardTitle>
-                  <CardDescription>
-                    Vizuelizacija tvog napretka tokom poslednja meseca.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {isLoading ? (
-                    <div className="h-[300px] flex items-center justify-center">
-                      <Loader2 className="w-8 h-8 animate-spin text-[#1F7A5C]" />
-                    </div>
-                  ) : chartData.length > 0 ? (
-                    <ResponsiveContainer width="100%" height={300}>
-                      <LineChart data={chartData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="date" />
-                        <YAxis />
-                        <Tooltip />
-                        <Line
-                          type="monotone"
-                          dataKey="weight"
-                          stroke="#1F7A5C"
-                          strokeWidth={2}
-                          dot={{ fill: "#1F7A5C" }}
-                        />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  ) : (
-                    <div className="h-[300px] flex items-center justify-center text-gray-600">
-                      Nema podataka za prikaz. Započni praćenje težine!
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            ) : (
-              <Card className="relative overflow-hidden">
-                <div className="absolute inset-0 bg-black/10 backdrop-blur-sm z-10 flex items-center justify-center">
-                  <div className="text-center bg-white p-6 rounded-lg shadow-lg">
-                    <Target className="w-12 h-12 mx-auto mb-4 text-[#1F7A5C]" />
-                    <h3 className="text-xl font-bold mb-2">Premium Feature</h3>
-                    <p className="text-gray-600 mb-4">
-                      Upgrade za pristup naprednim chart-ovima i AI insights!
-                    </p>
-                    <Button className="bg-[#1F7A5C] hover:bg-[#185A44]">
-                      Upgrade Now
-                    </Button>
+            <Card>
+              <CardHeader>
+                <CardTitle>Grafik Težine (Poslednjih 30 dana)</CardTitle>
+                <CardDescription>
+                  Vizuelizacija tvog napretka tokom poslednja meseca.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {isLoading ? (
+                  <div className="h-[300px] flex items-center justify-center">
+                    <Loader2 className="w-8 h-8 animate-spin text-[#1F7A5C]" />
                   </div>
-                </div>
-                <CardHeader>
-                  <CardTitle>Grafik Težine</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="h-[300px] bg-gray-100 blur-sm"></div>
-                </CardContent>
-              </Card>
-            )}
+                ) : chartData.length > 0 ? (
+                  <ResponsiveContainer width="100%" height={300}>
+                    <LineChart data={chartData}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="date" />
+                      <YAxis />
+                      <Tooltip />
+                      <Line
+                        type="monotone"
+                        dataKey="weight"
+                        stroke="#1F7A5C"
+                        strokeWidth={2}
+                        dot={{ fill: "#1F7A5C" }}
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <div className="h-[300px] flex items-center justify-center text-gray-600">
+                    Nema podataka za prikaz. Započni praćenje težine!
+                  </div>
+                )}
+              </CardContent>
+            </Card>
 
             {/* Weight History */}
             <Card>
@@ -552,6 +557,8 @@ export default function Progress() {
                 )}
               </CardContent>
             </Card>
+            </>
+            )}
           </div>
         </main>
       </div>

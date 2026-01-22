@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import { Link } from "wouter";
 import { DashboardNav } from "@/components/dashboard/DashboardNav";
 import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 import { useAuth } from "@/contexts/AuthContext";
@@ -8,9 +10,164 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { User, Bell, Shield, CreditCard, Crown } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Settings() {
-  const { user, isPremium } = useAuth();
+  const { user, isPremium, refreshUser } = useAuth();
+  const { toast } = useToast();
+  
+  // Profile state
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  
+  // Initialize form with user data when user loads
+  useEffect(() => {
+    if (user) {
+      setFirstName(user.firstName || "");
+      setLastName(user.lastName || "");
+    }
+  }, [user]);
+  const [isUpdatingProfile, setIsUpdatingProfile] = useState(false);
+  
+  // Password state
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isChangingPassword, setIsChangingPassword] = useState(false);
+  
+  async function handleUpdateProfile() {
+    setIsUpdatingProfile(true);
+    
+    try {
+      const response = await fetch("/api/auth/profile", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          firstName,
+          lastName,
+        }),
+      });
+      
+      if (!response.ok) {
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          const error = await response.json();
+          throw new Error(error.error || "Failed to update profile");
+        } else {
+          throw new Error(`Server error: ${response.status} ${response.statusText}`);
+        }
+      }
+      
+      await refreshUser();
+      
+      toast({
+        title: "Uspešno!",
+        description: "Profil je uspešno ažuriran.",
+      });
+    } catch (error: any) {
+      console.error("Profile update error:", error);
+      toast({
+        title: "Greška",
+        description: error.message || "Neuspešno ažuriranje profila.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUpdatingProfile(false);
+    }
+  }
+  
+  async function handleChangePassword() {
+    if (newPassword !== confirmPassword) {
+      toast({
+        title: "Greška",
+        description: "Nova lozinka i potvrda se ne poklapaju.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    setIsChangingPassword(true);
+    
+    try {
+      const response = await fetch("/api/auth/change-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          currentPassword,
+          newPassword,
+        }),
+      });
+      
+      if (!response.ok) {
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          const error = await response.json();
+          throw new Error(error.error || "Failed to change password");
+        } else {
+          throw new Error(`Server error: ${response.status} ${response.statusText}`);
+        }
+      }
+      
+      // Clear fields
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+      
+      toast({
+        title: "Uspešno!",
+        description: "Lozinka je uspešno promenjena.",
+      });
+    } catch (error: any) {
+      console.error("Password change error:", error);
+      toast({
+        title: "Greška",
+        description: error.message || "Neuspešna promena lozinke.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsChangingPassword(false);
+    }
+  }
+
+  async function handleCancelSubscription() {
+    if (!confirm("Da li ste sigurni da želite da otkažete pretplatu? Izgubićete pristup Premium funkcionalnostima.")) {
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/payments/cancel-subscription", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to cancel subscription");
+      }
+
+      await refreshUser();
+
+      toast({
+        title: "Pretplata otkazana",
+        description: "Vaša pretplata je uspešno otkazana.",
+      });
+    } catch (error) {
+      console.error("Cancel subscription error:", error);
+      toast({
+        title: "Greška",
+        description: "Neuspešno otkazivanje pretplate.",
+        variant: "destructive",
+      });
+    }
+  }
 
   return (
     <div className="flex min-h-screen bg-gray-50">
@@ -57,11 +214,17 @@ export default function Settings() {
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
                         <Label>Ime</Label>
-                        <Input defaultValue={user?.firstName || ""} />
+                        <Input 
+                          value={firstName} 
+                          onChange={(e) => setFirstName(e.target.value)}
+                        />
                       </div>
                       <div>
                         <Label>Prezime</Label>
-                        <Input defaultValue={user?.lastName || ""} />
+                        <Input 
+                          value={lastName} 
+                          onChange={(e) => setLastName(e.target.value)}
+                        />
                       </div>
                     </div>
                     <div>
@@ -71,8 +234,12 @@ export default function Settings() {
                         Email ne može biti promenjen
                       </p>
                     </div>
-                    <Button className="bg-[#1F7A5C] hover:bg-[#185A44]">
-                      Sačuvaj Promene
+                    <Button 
+                      className="bg-[#1F7A5C] hover:bg-[#185A44]"
+                      onClick={handleUpdateProfile}
+                      disabled={isUpdatingProfile}
+                    >
+                      {isUpdatingProfile ? "Čuvanje..." : "Sačuvaj Promene"}
                     </Button>
                   </CardContent>
                 </Card>
@@ -124,9 +291,11 @@ export default function Settings() {
                         <p className="text-gray-600 mb-4">
                           Otkljucaj sve funkcionalnosti već od 4€/mesec
                         </p>
-                        <Button className="bg-[#1F7A5C] hover:bg-[#185A44]">
-                          Pogledaj Planove
-                        </Button>
+                        <Link href="/dashboard/upgrade">
+                          <Button className="bg-[#1F7A5C] hover:bg-[#185A44]">
+                            Pogledaj Planove
+                          </Button>
+                        </Link>
                       </div>
                     ) : (
                       <div>
@@ -140,7 +309,11 @@ export default function Settings() {
                             <p className="text-lg font-semibold text-gray-900">15.02.2026</p>
                           </div>
                         </div>
-                        <Button variant="outline" className="text-red-600">
+                        <Button 
+                          variant="outline" 
+                          className="text-red-600"
+                          onClick={handleCancelSubscription}
+                        >
                           Otkaži Pretplatu
                         </Button>
                       </div>
@@ -162,11 +335,30 @@ export default function Settings() {
                     <div>
                       <h3 className="text-sm font-medium mb-2">Promeni Lozinku</h3>
                       <div className="space-y-3">
-                        <Input type="password" placeholder="Trenutna lozinka" />
-                        <Input type="password" placeholder="Nova lozinka" />
-                        <Input type="password" placeholder="Potvrdi novu lozinku" />
-                        <Button className="bg-[#1F7A5C] hover:bg-[#185A44]">
-                          Promeni Lozinku
+                        <Input 
+                          type="password" 
+                          placeholder="Trenutna lozinka" 
+                          value={currentPassword}
+                          onChange={(e) => setCurrentPassword(e.target.value)}
+                        />
+                        <Input 
+                          type="password" 
+                          placeholder="Nova lozinka" 
+                          value={newPassword}
+                          onChange={(e) => setNewPassword(e.target.value)}
+                        />
+                        <Input 
+                          type="password" 
+                          placeholder="Potvrdi novu lozinku" 
+                          value={confirmPassword}
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                        />
+                        <Button 
+                          className="bg-[#1F7A5C] hover:bg-[#185A44]"
+                          onClick={handleChangePassword}
+                          disabled={isChangingPassword}
+                        >
+                          {isChangingPassword ? "Menjanje..." : "Promeni Lozinku"}
                         </Button>
                       </div>
                     </div>

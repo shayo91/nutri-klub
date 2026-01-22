@@ -5,6 +5,14 @@ import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
+
+// Stripe webhook needs raw body for signature verification
+// This must come BEFORE express.json() middleware
+app.use(
+  "/api/payments/webhook",
+  express.raw({ type: "application/json" })
+);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

@@ -85,11 +85,7 @@ export function RecipeFilters({
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
           <Input
             type="text"
-            placeholder={
-              isPremium
-                ? "Pretraži recepte..."
-                : "Pretraga dostupna samo za Premium korisnike"
-            }
+            placeholder={isPremium ? "Pretraži recepte..." : "Pretraga dostupna samo za Premium"}
             value={searchQuery}
             onChange={(e) => handleSearchChange(e.target.value)}
             disabled={!isPremium}
@@ -118,9 +114,7 @@ export function RecipeFilters({
             <SheetHeader>
               <SheetTitle>Napredni Filteri</SheetTitle>
               <SheetDescription>
-                {isPremium
-                  ? "Filtrirajte recepte prema vašim preferencijama"
-                  : "Napredni filteri dostupni samo za Premium korisnike"}
+                {isPremium ? "Filtrirajte recepte prema vašim preferencijama" : "Napredni filteri dostupni samo za Premium korisnike"}
               </SheetDescription>
             </SheetHeader>
 

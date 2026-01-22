@@ -46,6 +46,24 @@ export default function RecipeDetail() {
       });
 
       if (!response.ok) {
+        const error = await response.json();
+        
+        // Check if user has reached the limit
+        if (error.upgradeUrl) {
+          // Show toast and redirect back to list where overlay will be shown
+          toast({
+            title: error.error || "Limit dostignut",
+            description: error.message,
+            variant: "destructive",
+          });
+          
+          // Redirect back to recipes page to show overlay
+          setTimeout(() => {
+            window.location.href = "/dashboard/recipes";
+          }, 1000);
+          return;
+        }
+        
         throw new Error("Failed to fetch recipe");
       }
 

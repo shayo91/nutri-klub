@@ -46,12 +46,14 @@ export default function Onboarding() {
         return false;
       }
     } else if (step === 2) {
-      if (!formData.gender || !formData.activityLevel) {
-        setError("Molimo popunite osnovne informacije (pol i nivo aktivnosti).");
+      if (!formData.currentWeight || !formData.targetWeight || !formData.height || !formData.age || !formData.gender || !formData.activityLevel) {
+        setError("Molimo popunite sva obavezna polja.");
         return false;
       }
+    } else if (step === 3) {
+      // Treci korak je opcionalan - korisnik moze da preskoci
+      // Validacija je uklonjena jer korisnik moze da ne odabere nista
     }
-    // Step 3 nema obavezna polja (preferencije su opcione)
     
     return true;
   }
@@ -184,7 +186,7 @@ export default function Onboarding() {
 
           {currentStep === 1 && (
             <div className="space-y-4">
-              <Label>Šta je vaš glavni cilj?</Label>
+              <Label>Šta je vaš glavni cilj? *</Label>
               <RadioGroup value={formData.goal} onValueChange={(value) => setFormData({ ...formData, goal: value })}>
                 <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">
                   <RadioGroupItem value="lose_weight" id="lose_weight" />
@@ -218,52 +220,56 @@ export default function Onboarding() {
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="currentWeight">Trenutna težina (kg)</Label>
+                  <Label htmlFor="currentWeight">Trenutna težina (kg) *</Label>
                   <Input
                     id="currentWeight"
                     type="number"
                     placeholder="70"
                     value={formData.currentWeight}
                     onChange={(e) => setFormData({ ...formData, currentWeight: e.target.value })}
+                    required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="targetWeight">Ciljna težina (kg)</Label>
+                  <Label htmlFor="targetWeight">Ciljna težina (kg) *</Label>
                   <Input
                     id="targetWeight"
                     type="number"
                     placeholder="65"
                     value={formData.targetWeight}
                     onChange={(e) => setFormData({ ...formData, targetWeight: e.target.value })}
+                    required
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="height">Visina (cm)</Label>
+                  <Label htmlFor="height">Visina (cm) *</Label>
                   <Input
                     id="height"
                     type="number"
                     placeholder="170"
                     value={formData.height}
                     onChange={(e) => setFormData({ ...formData, height: e.target.value })}
+                    required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="age">Godina</Label>
+                  <Label htmlFor="age">Godina *</Label>
                   <Input
                     id="age"
                     type="number"
                     placeholder="30"
                     value={formData.age}
                     onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+                    required
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label>Pol</Label>
+                <Label>Pol *</Label>
                 <RadioGroup value={formData.gender} onValueChange={(value) => setFormData({ ...formData, gender: value })}>
                   <div className="flex gap-4">
                     <div className="flex items-center space-x-2">
@@ -283,7 +289,7 @@ export default function Onboarding() {
               </div>
 
               <div className="space-y-2">
-                <Label>Nivo aktivnosti</Label>
+                <Label>Nivo aktivnosti *</Label>
                 <RadioGroup
                   value={formData.activityLevel}
                   onValueChange={(value) => setFormData({ ...formData, activityLevel: value })}
@@ -316,9 +322,9 @@ export default function Onboarding() {
           {currentStep === 3 && (
             <div className="space-y-6">
               <div className="space-y-2">
-                <Label>Alergije (opcionalno)</Label>
+                <Label>Alergije *</Label>
                 <div className="flex flex-wrap gap-2">
-                  {["Laktoza", "Gluten", "Orasi", "Soja", "Jaja", "Riba", "Školjke"].map((item) => (
+                  {["Laktoza", "Gluten", "Orasi", "Soja", "Jaja", "Riba", "Školjke", "Ništa od navedenog"].map((item) => (
                     <Badge
                       key={item}
                       variant={formData.allergies.includes(item) ? "default" : "outline"}
@@ -333,9 +339,9 @@ export default function Onboarding() {
               </div>
 
               <div className="space-y-2">
-                <Label>Dijetetske preferencije (opcionalno)</Label>
+                <Label>Dijetetske preferencije *</Label>
                 <div className="flex flex-wrap gap-2">
-                  {["Vegetarijanska", "Veganska", "Keto", "Paleo", "Bezglutenska", "Halal", "Kosher"].map((item) => (
+                  {["Vegetarijanska", "Veganska", "Keto", "Paleo", "Bezglutenska", "Halal", "Kosher", "Ništa od navedenog"].map((item) => (
                     <Badge
                       key={item}
                       variant={formData.dietaryRestrictions.includes(item) ? "default" : "outline"}
@@ -350,9 +356,9 @@ export default function Onboarding() {
               </div>
 
               <div className="space-y-2">
-                <Label>Namirnice koje ne volite (opcionalno)</Label>
+                <Label>Namirnice koje ne volite *</Label>
                 <div className="flex flex-wrap gap-2">
-                  {["Pasulj", "Povrće", "Riba", "Sir", "Pečurke", "Avokado", "Masline"].map((item) => (
+                  {["Pasulj", "Povrće", "Riba", "Sir", "Pečurke", "Avokado", "Masline", "Ništa od navedenog"].map((item) => (
                     <Badge
                       key={item}
                       variant={formData.dislikedFoods.includes(item) ? "default" : "outline"}

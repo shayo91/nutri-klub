@@ -1,18 +1,83 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, ArrowRight, Sparkles } from "lucide-react";
+import { CheckCircle, ArrowRight, Sparkles, Loader2 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function PaymentSuccess() {
   const [, setLocation] = useLocation();
   const { refreshUser } = useAuth();
+  const [verifying, setVerifying] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Refresh user data to get updated premium status
-    refreshUser();
-  }, []);
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get("session_id");
+
+    if (!sessionId) {
+      // Mock mode or direct access
+      refreshUser();
+      setVerifying(false);
+      return;
+    }
+
+    // Give webhook time to process (1-2 seconds)
+    setTimeout(async () => {
+      try {
+        // Refresh user data to get updated premium status
+        await refreshUser();
+        setVerifying(false);
+      } catch (err) {
+        setError("Došlo je do greške pri verifikaciji plaćanja.");
+        setVerifying(false);
+      }
+    }, 2000);
+  }, [refreshUser]);
+
+  if (verifying) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center p-4">
+        <Card className="max-w-md w-full">
+          <CardContent className="pt-12 pb-8 text-center space-y-6">
+            <Loader2 className="w-16 h-16 text-green-600 animate-spin mx-auto" />
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                Verifikujemo Vaše Plaćanje
+              </h2>
+              <p className="text-gray-600">
+                Molimo sačekajte trenutak...
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 flex items-center justify-center p-4">
+        <Card className="max-w-md w-full">
+          <CardContent className="pt-12 pb-8 text-center space-y-6">
+            <div className="text-4xl">⚠️</div>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                Greška
+              </h2>
+              <p className="text-gray-600">{error}</p>
+            </div>
+            <Button
+              onClick={() => setLocation("/dashboard")}
+              className="w-full"
+            >
+              Nazad na Dashboard
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center p-4">

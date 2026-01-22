@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { db } from "../db";
 import { ebooks, ebookDownloads, usageTracking } from "@shared/schema";
-import { eq, and, desc, sql } from "drizzle-orm";
+import { eq, and, desc, sql, or } from "drizzle-orm";
 import { authenticate } from "../middleware/auth";
 
 const router = Router();
@@ -13,15 +13,29 @@ router.get("/", async (req, res) => {
   try {
     const category = req.query.category as string | undefined;
     const featured = req.query.featured === "true";
+    const search = req.query.search as string | undefined;
 
     let query = db.select().from(ebooks);
+    const conditions: any[] = [];
 
     if (category) {
-      query = query.where(eq(ebooks.category, category)) as any;
+      conditions.push(eq(ebooks.category, category));
     }
 
     if (featured) {
-      query = query.where(eq(ebooks.isFeatured, true)) as any;
+      conditions.push(eq(ebooks.isFeatured, true));
+    }
+
+    if (search) {
+      const searchTerm = `%${search.toLowerCase()}%`;
+      // Search only in title for more precise results
+      conditions.push(
+        sql`LOWER(${ebooks.title}) LIKE ${searchTerm}`
+      );
+    }
+
+    if (conditions.length > 0) {
+      query = query.where(and(...conditions)) as any;
     }
 
     const allEbooks = await query.orderBy(desc(ebooks.isFeatured), desc(ebooks.createdAt));

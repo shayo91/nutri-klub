@@ -11,6 +11,7 @@ import {
   Settings,
   CreditCard,
   Crown,
+  ShieldCheck,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
@@ -74,6 +75,15 @@ export function DashboardNav() {
       icon: <Settings className="w-5 h-5" />,
     },
   ];
+
+  // Add admin-only items
+  if (user?.role === "admin") {
+    navItems.push({
+      label: "Admin - Recepti",
+      href: "/dashboard/admin/recipes",
+      icon: <ShieldCheck className="w-5 h-5" />,
+    });
+  }
 
   const hasPlan = user?.subscriptionStatus === "active" && user?.role !== "free";
 

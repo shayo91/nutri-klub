@@ -24,8 +24,7 @@ export default function Recipes() {
     hasNextPage: false,
     hasPreviousPage: false,
   });
-  const [remainingViews, setRemainingViews] = useState<number | null>(null);
-
+  const [hasReachedLimit, setHasReachedLimit] = useState(false);
   const isPremium = user?.role === "premium" || user?.role === "admin";
 
   // Get search query from URL
@@ -40,6 +39,17 @@ export default function Recipes() {
   useEffect(() => {
     fetchRecipes();
   }, [filters, currentPage]);
+  
+  // Scroll to top when overlay is shown
+  useEffect(() => {
+    if (hasReachedLimit && !isPremium) {
+      // Scroll to the recipes section
+      const recipesSection = document.querySelector('.recipes-grid-section');
+      if (recipesSection) {
+        recipesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }, [hasReachedLimit, isPremium]);
 
   async function fetchRecipes() {
     setIsLoading(true);
@@ -47,7 +57,7 @@ export default function Recipes() {
     try {
       const params = new URLSearchParams({
         page: currentPage.toString(),
-        limit: isPremium ? "15" : "3",
+        limit: "15",
         ...Object.entries(filters).reduce((acc, [key, value]) => {
           if (value !== undefined && value !== "") {
             acc[key] = Array.isArray(value) ? value.join(",") : value.toString();
@@ -63,6 +73,8 @@ export default function Recipes() {
       if (!response.ok) {
         const error = await response.json();
         if (error.upgradeUrl) {
+          // User has reached the limit
+          setHasReachedLimit(true);
           toast({
             title: error.error || "Limit dostignut",
             description: error.message,
@@ -76,6 +88,13 @@ export default function Recipes() {
 
       const data = await response.json();
       
+      // Check if user has reached the limit (for showing overlay)
+      if (data.hasReachedLimit === true || data.recipeViewCount >= 3) {
+        setHasReachedLimit(true);
+      } else {
+        setHasReachedLimit(false);
+      }
+      
       // Parse JSON fields if they're strings
       const parsedRecipes = data.recipes.map((recipe: any) => ({
         ...recipe,
@@ -88,8 +107,19 @@ export default function Recipes() {
       }));
 
       setRecipes(parsedRecipes);
-      setPagination(data.pagination);
-      setRemainingViews(data.remainingViews ?? null);
+      
+      // Set pagination data
+      if (data.pagination) {
+        setPagination(data.pagination);
+      } else {
+        // If no pagination data (shouldn't happen), set defaults
+        setPagination({
+          totalCount: parsedRecipes.length,
+          totalPages: 1,
+          hasNextPage: false,
+          hasPreviousPage: false,
+        });
+      }
     } catch (error) {
       console.error("Error fetching recipes:", error);
       toast({
@@ -118,9 +148,7 @@ export default function Recipes() {
             <div>
               <h1 className="text-3xl font-bold text-gray-900 mb-2">Recepti</h1>
               <p className="text-gray-600">
-                {isPremium
-                  ? `Pregledaj našu kolekciju od ${pagination.totalCount}+ zdravih recepata.`
-                  : "Pregledaj demo recepte (3 besplatna). Upgrade za pristup svim receptima!"}
+                Pregledaj našu kolekciju od ${pagination.totalCount}+ zdravih recepata.
               </p>
             </div>
 
@@ -135,15 +163,15 @@ export default function Recipes() {
             />
 
             {/* Status Badge */}
-            {isPremium ? (
+            {!isPremium ? (
+              <Badge variant="outline" className="text-orange-600 border-orange-600">
+                Free Trial - Do 5 recepata
+              </Badge>
+            ) : (
               <Badge className="bg-[#1F7A5C] hover:bg-[#185A44]">
                 Premium - Neograničen pristup
               </Badge>
-            ) : remainingViews !== null ? (
-              <Badge className="bg-orange-500 hover:bg-orange-600">
-                Free Trial - Preostalo pregleda: {remainingViews}
-              </Badge>
-            ) : null}
+            )}
 
             {/* Loading State */}
             {isLoading && (
@@ -155,16 +183,36 @@ export default function Recipes() {
             {/* Recipe Grid */}
             {!isLoading && recipes.length > 0 && (
               <>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {recipes.map((recipe) => (
-                    <RecipeCard
-                      key={recipe.id}
-                      recipe={recipe}
-                      isPremium={isPremium}
-                      isLocked={!isPremium && recipes.indexOf(recipe) >= 3}
-                      onFavoriteToggle={handleFavoriteToggle}
-                    />
-                  ))}
+                <div className="relative min-h-[600px] recipes-grid-section">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {recipes.map((recipe) => (
+                      <RecipeCard
+                        key={recipe.id}
+                        recipe={recipe}
+                        isPremium={isPremium}
+                        isLocked={false}
+                        onFavoriteToggle={handleFavoriteToggle}
+                      />
+                    ))}
+                  </div>
+                  
+                  {/* Lock Overlay - Only over recipe grid */}
+                  {!isPremium && hasReachedLimit && (
+                    <div className="absolute inset-0 bg-white/95 backdrop-blur-sm flex items-start justify-center p-6 pt-12 rounded-lg overflow-y-auto">
+                      <FeatureLock
+                        title="Otkljucaj 45+ Zdravih Recepata"
+                        description="Iskoristili ste 3 besplatna recepta! Upgrade na Premium za neograničen pristup."
+                        features={[
+                          "45+ recepata sa detaljnim instrukcijama",
+                          "Napredno filtriranje (alergije, kalorije, vreme)",
+                          "Neograničeni favoriti",
+                          "7-dnevni meal planner",
+                          "Auto-generisana shopping lista",
+                        ]}
+                        variant="card"
+                      />
+                    </div>
+                  )}
                 </div>
 
                 {/* Pagination */}
@@ -208,21 +256,6 @@ export default function Recipes() {
               </div>
             )}
 
-            {/* Lock Overlay for Free Users */}
-            {!isPremium && recipes.length > 0 && (
-              <FeatureLock
-                title="Otkljucaj 45+ Zdravih Recepata"
-                description="Upgrade na Premium za neograničen pristup svim receptima, naprednim filterima i meal planner funkcionalnosti."
-                features={[
-                  "45+ recepata sa detaljnim instrukcijama",
-                  "Napredno filtriranje (alergije, kalorije, vreme)",
-                  "Neograničeni favoriti",
-                  "7-dnevni meal planner",
-                  "Auto-generisana shopping lista",
-                ]}
-                variant="card"
-              />
-            )}
           </div>
         </main>
       </div>

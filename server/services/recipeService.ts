@@ -424,4 +424,84 @@ export class RecipeService {
 
     return recommendations;
   }
+
+  /**
+   * Create a new recipe (Admin only)
+   */
+  static async createRecipe(recipeData: {
+    title: string;
+    description: string;
+    imageUrl: string;
+    category: string;
+    prepTime: number;
+    cookTime: number;
+    servings: number;
+    difficulty: "easy" | "medium" | "hard";
+    calories: number;
+    protein: number;
+    carbs: number;
+    fats: number;
+    ingredients: Array<{ name: string; quantity: number; unit: string }>;
+    instructions: string[];
+    dietaryTags?: string[];
+    allergens?: string[];
+  }) {
+    const [recipe] = await db
+      .insert(recipes)
+      .values({
+        ...recipeData,
+        ingredients: JSON.stringify(recipeData.ingredients),
+        instructions: JSON.stringify(recipeData.instructions),
+        dietaryTags: recipeData.dietaryTags ? JSON.stringify(recipeData.dietaryTags) : null,
+        allergens: recipeData.allergens ? JSON.stringify(recipeData.allergens) : null,
+        source: "custom",
+        sourceId: null,
+      })
+      .returning();
+
+    return recipe;
+  }
+
+  /**
+   * Update a recipe (Admin only)
+   */
+  static async updateRecipe(recipeId: number, updates: any) {
+    // Convert arrays to JSON strings if present
+    const processedUpdates: any = { ...updates };
+    
+    if (updates.ingredients && Array.isArray(updates.ingredients)) {
+      processedUpdates.ingredients = JSON.stringify(updates.ingredients);
+    }
+    if (updates.instructions && Array.isArray(updates.instructions)) {
+      processedUpdates.instructions = JSON.stringify(updates.instructions);
+    }
+    if (updates.dietaryTags && Array.isArray(updates.dietaryTags)) {
+      processedUpdates.dietaryTags = JSON.stringify(updates.dietaryTags);
+    }
+    if (updates.allergens && Array.isArray(updates.allergens)) {
+      processedUpdates.allergens = JSON.stringify(updates.allergens);
+    }
+
+    const [updated] = await db
+      .update(recipes)
+      .set(processedUpdates)
+      .where(eq(recipes.id, recipeId))
+      .returning();
+
+    return updated;
+  }
+
+  /**
+   * Delete a recipe (Admin only)
+   */
+  static async deleteRecipe(recipeId: number) {
+    // First delete related records
+    await db.delete(userFavorites).where(eq(userFavorites.recipeId, recipeId));
+    await db.delete(collectionRecipes).where(eq(collectionRecipes.recipeId, recipeId));
+    await db.delete(recipeOfTheDay).where(eq(recipeOfTheDay.recipeId, recipeId));
+    
+    // Then delete the recipe
+    await db.delete(recipes).where(eq(recipes.id, recipeId));
+    return true;
+  }
 }

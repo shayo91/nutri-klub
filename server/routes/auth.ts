@@ -330,4 +330,117 @@ router.post("/reset-password", async (req, res) => {
   }
 });
 
+/**
+ * PATCH /api/auth/profile - Update user profile
+ */
+router.patch("/profile", authenticate, async (req, res) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
+
+    const updateSchema = z.object({
+      firstName: z.string().min(1).optional(),
+      lastName: z.string().min(1).optional(),
+    });
+
+    const validatedData = updateSchema.parse(req.body);
+
+    if (Object.keys(validatedData).length === 0) {
+      return res.status(400).json({ error: "No fields to update" });
+    }
+
+    const [updatedUser] = await db
+      .update(users)
+      .set({
+        ...validatedData,
+        updatedAt: new Date().toISOString(),
+      })
+      .where(eq(users.id, req.user.userId))
+      .returning();
+
+    res.json({
+      message: "Profile updated successfully",
+      user: {
+        id: updatedUser.id,
+        email: updatedUser.email,
+        firstName: updatedUser.firstName,
+        lastName: updatedUser.lastName,
+        name: updatedUser.name,
+        role: updatedUser.role,
+      },
+    });
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({ error: error.errors[0].message });
+    }
+    console.error("Update profile error:", error);
+    res.status(500).json({ error: "Failed to update profile" });
+  }
+});
+
+/**
+ * POST /api/auth/change-password - Change user password
+ */
+router.post("/change-password", authenticate, async (req, res) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
+
+    const changePasswordSchema = z.object({
+      currentPassword: z.string().min(1),
+      newPassword: z.string().min(8, "New password must be at least 8 characters"),
+    });
+
+    const validatedData = changePasswordSchema.parse(req.body);
+    const { currentPassword, newPassword } = validatedData;
+
+    // Get current user
+    const [user] = await db
+      .select()
+      .from(users)
+      .where(eq(users.id, req.user.userId))
+      .limit(1);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Check if user has a password hash
+    if (!user.passwordHash || user.passwordHash.trim() === '') {
+      return res.status(400).json({ error: "Password not set for this account" });
+    }
+
+    // Verify current password
+    const isValid = await verifyPassword(currentPassword, user.passwordHash);
+    
+    if (!isValid) {
+      return res.status(400).json({ error: "Current password is incorrect" });
+    }
+
+    // Hash new password
+    const newPasswordHash = await hashPassword(newPassword);
+
+    // Update password
+    await db
+      .update(users)
+      .set({
+        passwordHash: newPasswordHash,
+        updatedAt: new Date().toISOString(),
+      })
+      .where(eq(users.id, req.user.userId));
+
+    res.json({
+      message: "Password changed successfully",
+    });
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({ error: error.errors[0].message });
+    }
+    console.error("Change password error:", error);
+    res.status(500).json({ error: "Failed to change password" });
+  }
+});
+
 export default router;

@@ -1,6 +1,6 @@
 /**
  * AI Service for Nutri AI Assistant
- * Uses free AI APIs: Hugging Face Inference API
+ * Uses Google Gemini API
  */
 
 interface ChatMessage {
@@ -23,18 +23,8 @@ interface UserContext {
 }
 
 export class AIService {
-  private static readonly HUGGINGFACE_API_URL = "https://api-inference.huggingface.co/models";
-  private static readonly HUGGINGFACE_API_KEY = process.env.HUGGINGFACE_API_KEY;
-  
-  // Free models available on Hugging Face
-  private static readonly MODELS = {
-    // Mistral 7B - Best free model for chat
-    mistral: "mistralai/Mistral-7B-Instruct-v0.2",
-    // Llama 2 - Good alternative
-    llama: "meta-llama/Llama-2-7b-chat-hf",
-    // Zephyr - Fast and efficient
-    zephyr: "HuggingFaceH4/zephyr-7b-beta",
-  };
+  private static readonly GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+  private static readonly GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
 
   /**
    * Generate system prompt based on user context
@@ -76,53 +66,55 @@ Odgovaraj kratko i jasno (max 200 reči).`;
   }
 
   /**
-   * Call Hugging Face Inference API
+   * Call Google Gemini API
    */
-  private static async callHuggingFace(
-    messages: ChatMessage[],
-    model: string = this.MODELS.zephyr
-  ): Promise<string> {
-    if (!this.HUGGINGFACE_API_KEY) {
+  private static async callGemini(messages: ChatMessage[]): Promise<string> {
+    if (!this.GEMINI_API_KEY) {
       // Fallback to mock response if no API key
+      console.log("⚠️ GEMINI_API_KEY not found - using mock responses");
       return this.getMockResponse(messages[messages.length - 1].content);
     }
 
-    try {
-      // Format messages for the model
-      const prompt = this.formatMessagesForModel(messages);
+    console.log("✅ Using Google Gemini API");
 
-      const response = await fetch(`${this.HUGGINGFACE_API_URL}/${model}`, {
+    try {
+      // Convert messages to Gemini format
+      const prompt = this.formatMessagesForGemini(messages);
+
+      const response = await fetch(`${this.GEMINI_API_URL}?key=${this.GEMINI_API_KEY}`, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${this.HUGGINGFACE_API_KEY}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          inputs: prompt,
-          parameters: {
-            max_new_tokens: 500,
+          contents: [
+            {
+              parts: [{ text: prompt }],
+            },
+          ],
+          generationConfig: {
             temperature: 0.7,
-            top_p: 0.95,
-            do_sample: true,
-            return_full_text: false,
+            topP: 0.95,
+            maxOutputTokens: 1024,
           },
         }),
       });
 
       if (!response.ok) {
-        console.error("Hugging Face API error:", response.status);
+        const errorText = await response.text();
+        console.error("Gemini API error:", response.status, errorText);
         return this.getMockResponse(messages[messages.length - 1].content);
       }
 
       const data = await response.json();
-      
-      // Handle different response formats
-      if (Array.isArray(data) && data[0]?.generated_text) {
-        return data[0].generated_text.trim();
-      } else if (data.generated_text) {
-        return data.generated_text.trim();
+      console.log("✅ Got response from Gemini API");
+
+      // Extract response from Gemini's format
+      if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
+        return data.candidates[0].content.parts[0].text.trim();
       }
 
+      console.log("⚠️ Unexpected response format, using mock");
       return this.getMockResponse(messages[messages.length - 1].content);
     } catch (error) {
       console.error("AI Service error:", error);
@@ -131,18 +123,18 @@ Odgovaraj kratko i jasno (max 200 reči).`;
   }
 
   /**
-   * Format messages for the model (Mistral/Llama format)
+   * Format messages for Gemini API
    */
-  private static formatMessagesForModel(messages: ChatMessage[]): string {
+  private static formatMessagesForGemini(messages: ChatMessage[]): string {
     let prompt = "";
 
     for (const msg of messages) {
       if (msg.role === "system") {
-        prompt += `<s>[INST] ${msg.content} [/INST]\n`;
+        prompt += `${msg.content}\n\n`;
       } else if (msg.role === "user") {
-        prompt += `<s>[INST] ${msg.content} [/INST]\n`;
+        prompt += `User: ${msg.content}\n\n`;
       } else if (msg.role === "assistant") {
-        prompt += `${msg.content}</s>\n`;
+        prompt += `Assistant: ${msg.content}\n\n`;
       }
     }
 
@@ -244,7 +236,7 @@ Postavi mi konkretno pitanje i rado ću ti pomoći! 😊`;
     });
 
     // Get AI response
-    const response = await this.callHuggingFace(messages);
+    const response = await this.callGemini(messages);
 
     return response;
   }
@@ -282,7 +274,7 @@ Uključi kalorije za svaki obrok.`;
       },
     ];
 
-    return await this.callHuggingFace(messages);
+    return await this.callGemini(messages);
   }
 
   /**

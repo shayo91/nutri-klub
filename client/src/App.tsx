@@ -26,6 +26,9 @@ import AIAssistant from "@/pages/dashboard/AIAssistant";
 import Settings from "@/pages/dashboard/Settings";
 import Upgrade from "@/pages/dashboard/Upgrade";
 import Progress from "@/pages/dashboard/Progress";
+import AdminRecipes from "@/pages/dashboard/AdminRecipes";
+import MyPlan from "@/pages/dashboard/MyPlan";
+import SearchResults from "@/pages/dashboard/SearchResults";
 import CheckoutMock from "@/pages/dashboard/CheckoutMock";
 import PaymentSuccess from "@/pages/dashboard/PaymentSuccess";
 import NotFound from "@/pages/not-found";
@@ -153,6 +156,27 @@ function Router() {
           </ProtectedRoute>
         )}
       </Route>
+      <Route path="/dashboard/admin/recipes">
+        {() => (
+          <ProtectedRoute>
+            <AdminRecipes />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/dashboard/my-plan">
+        {() => (
+          <ProtectedRoute>
+            <MyPlan />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/dashboard/search">
+        {() => (
+          <ProtectedRoute>
+            <SearchResults />
+          </ProtectedRoute>
+        )}
+      </Route>
       <Route path="/dashboard/upgrade">
         {() => (
           <ProtectedRoute>
@@ -175,6 +199,13 @@ function Router() {
         )}
       </Route>
       <Route path="/dashboard/success">
+        {() => (
+          <ProtectedRoute>
+            <PaymentSuccess />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/dashboard/payment-success">
         {() => (
           <ProtectedRoute>
             <PaymentSuccess />
