@@ -1,0 +1,90 @@
+**Zadatak:** Napravi sekciju za prikaz usluga i cijena za nutricionističku web stranicu NutriKlub.
+
+**Boje:**
+
+- Primarna: mint/teal zelena (`#4ECDC4`)
+- Pozadina: bijela (`#FFFFFF`)
+- Tekst: tamno siva (`#333333`)
+- Akcent za istaknutu karticu: mint zelena
+
+
+---
+
+**Layout:**
+
+- Naslov sekcije centriran na vrhu: "Usluge" ili "Moja ponuda"
+- Tri kartice u horizontalnom redu (responsive - na mobilnom vertikalno)
+- Srednja kartica vizualno istaknuta (mint pozadina, malo veća ili sa oznakom "Najpopularnije")
+
+
+---
+
+**KARTICA 1 - Konsultacije**
+
+- Pozadina: bijela sa suptilnim borderom
+- Naslov: "Konsultacije"
+- Podnaslov: "Za one koji žele početne smjernice"
+- Lista stavki:
+
+- Online konsultacije (60 minuta)
+- Analiza dnevnika ishrane
+- Pisane smjernice
+- Podrška 30 dana
+
+
+
+- Cijena: 80 KM (opciono: precrtano 120 KM)
+- CTA button: "Prijavi se" (mint obrub, bijela pozadina)
+
+
+---
+
+**KARTICA 2 - Mjesečni mentorski program (ISTAKNUTA)**
+
+- Pozadina: mint zelena
+- Oznaka: "Najpopularnije" badge
+- Naslov: "Mjesečni mentorski program"
+- Podnaslov: "Za one koji žele promjenu i jasnu strukturu"
+- Lista stavki:
+
+- Personalizirani plan ishrane
+- Sedmični jelovnici
+- Recepti prilagođeni tebi
+- Kontinuirana podrška putem poruka
+- Tjedno praćenje napretka
+
+
+
+- Cijena: 200 KM (opciono: precrtano 250 KM)
+- CTA button: "Prijavi se" (bijeli button)
+
+
+---
+
+**KARTICA 3 - Višemjesečni mentorski program**
+
+- Pozadina: bijela sa suptilnim borderom
+- Naslov: "Višemjesečni mentorski program"
+- Podnaslov: "Za one koji žele dugoročnu podršku i trajne rezultate"
+- Lista stavki:
+
+- 3 mjeseca saradnje
+- Sve uključeno iz mjesečnog programa
+- Dubinska analiza i prilagodba
+- Bonus materijali i recepti
+
+
+
+- Cijena: 400 KM (opciono: precrtano 500 KM)
+- CTA button: "Prijavi se" (mint obrub, bijela pozadina)
+
+
+---
+
+**Dizajn detalji:**
+
+- Zaobljeni uglovi na karticama (border-radius: 16px)
+- Suptilna sjenka na karticama
+- Hover efekt na karticama (blago podizanje)
+- Ikone pored svake stavke u listi (kvačica ili bullet)
+- Responzivan dizajn (kartice se slažu vertikalno na mobilnom)

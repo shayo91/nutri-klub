@@ -1,0 +1,92 @@
+**Zadatak:** Napravi sekciju za prikaz usluga i cijena za nutricionističku web stranicu NutriKlub.
+
+**Boje:**
+
+- Primarna: mint/teal zelena (`#4ECDC4`)
+- Pozadina: bijela (`#FFFFFF`)
+- Tekst: tamno siva (`#333333`)
+- Akcent za istaknutu karticu: mint zelena
+
+
+---
+
+**Layout:**
+
+- Naslov sekcije centriran na vrhu: "Na koji način možemo raditi zajedno?"
+- Ispod naslova: ,,Bilo da želiš lagani početak ili potpunu transformaciju — izaberi paket koji ti trenutno najviše odgovara.’’
+- Tri kartice u horizontalnom redu (responsive - na mobilnom vertikalno)
+- Srednja kartica vizualno istaknuta (mint pozadina, malo veća ili sa oznakom "Najpopularnije")
+
+
+---
+
+**KARTICA 1 - Konsultacije**
+
+- Pozadina: bijela sa suptilnim borderom
+- Naslov: "Konsultacije"
+- Podnaslov: "Za one koji žele početne smjernice"
+- Lista stavki:
+
+-	Online konsultacije (60 minuta)
+-	Analiza dnevnika ishrane 
+-	Pisane smjernice za poboljšanje ishrane
+-	Podrška putem poruka tokom 30 dana
+
+
+
+- Cijena: 80 KM (precrtano 120 KM)
+- CTA button: "Prijavi se" (mint obrub, bijela pozadina)
+
+
+---
+
+**KARTICA 2 - Mjesečni mentorski program (ISTAKNUTA)**
+
+- Pozadina: mint zelena
+- Oznaka: "Najpopularnije" badge
+- Naslov: "Mjesečni mentorski program"
+- Podnaslov: "Za one koji žele promjenu i jasnu strukturu"
+- Lista stavki:
+
+-	Online uvodne konsultacije (upoznavanje, anamneza i postavljanje ciljeva)
+-	Analiza dnevnika ishrane i prijedlozi za izmjene
+-	Pisane smjernice za poboljšanje ishrane
+-	Dva individualna sedmična jelovnika
+-	Podrška putem poruka tokom 30 dana
+-	Kontrolni poziv nakon mjesec dana
+
+
+- Cijena: 200 KM (precrtano 250 KM)
+- CTA button: "Prijavi se" (bijeli button)
+
+
+---
+
+**KARTICA 3 - Višemjesečni mentorski program**
+
+- Pozadina: bijela sa suptilnim borderom
+- Naslov: "Višemjesečni mentorski program"
+- Podnaslov: "Za one koji žele dugoročnu podršku i trajne rezultate"
+- Lista stavki:
+
+-	3 mjeseca saradnje
+-	Uvodne konsultacije, analiza dnevnika ishrane, pisane smjernice
+-	Šest individualnih sedmičnih jelovnika
+-	Podrška putem poruka tokom 90 dana
+-	Kontrolni poziv nakon mjesec dana (x3)
+
+
+
+- Cijena: 400 KM (precrtano 500 KM)
+- CTA button: "Prijavi se" (mint obrub, bijela pozadina)
+
+
+---
+
+**Dizajn detalji:**
+
+- Zaobljeni uglovi na karticama (border-radius: 16px)
+- Suptilna sjenka na karticama
+- Hover efekt na karticama (blago podizanje)
+- Ikone pored svake stavke u listi (kvačica ili bullet)
+- Responzivan dizajn (kartice se slažu vertikalno na mobilnom)
