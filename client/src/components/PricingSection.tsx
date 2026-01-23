@@ -94,13 +94,13 @@ export default function PricingSection() {
               }}
               className={`rounded-2xl overflow-visible relative flex flex-col transition-all duration-300 ${
                 plan.featured 
-                  ? "bg-[#4ECDC4] text-white md:scale-105 z-10 shadow-xl" 
+                  ? "bg-[#5DAD8C] text-white md:scale-105 z-10 shadow-xl" 
                   : "bg-white border border-[#E5E7EB] shadow-lg"
               }`}
             >
               {plan.badge && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
-                  <span className="bg-white text-[#4ECDC4] text-sm font-bold px-5 py-2 rounded-full shadow-md whitespace-nowrap">
+                  <span className="bg-white text-[#5DAD8C] text-sm font-bold px-5 py-2 rounded-full shadow-md whitespace-nowrap">
                     {plan.badge}
                   </span>
                 </div>
@@ -125,7 +125,7 @@ export default function PricingSection() {
                 <div className="text-center mb-8">
                   <div className="flex items-baseline justify-center gap-1 mb-2">
                     <span className={`text-4xl md:text-5xl font-bold ${
-                      plan.featured ? "text-white" : "text-[#4ECDC4]"
+                      plan.featured ? "text-white" : "text-[#5DAD8C]"
                     }`}>
                       {plan.price}
                     </span>
@@ -148,10 +148,10 @@ export default function PricingSection() {
                     {plan.features.map((feature, index) => (
                       <li key={index} className="flex items-start">
                         <div className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mr-3 mt-0.5 ${
-                          plan.featured ? "bg-white/20" : "bg-[#4ECDC4]/10"
+                          plan.featured ? "bg-white/20" : "bg-[#5DAD8C]/10"
                         }`}>
                           <Check className={`w-3 h-3 ${
-                            plan.featured ? "text-white" : "text-[#4ECDC4]"
+                            plan.featured ? "text-white" : "text-[#5DAD8C]"
                           }`} />
                         </div>
                         <span className={`text-sm leading-relaxed ${
@@ -169,8 +169,8 @@ export default function PricingSection() {
                   href="#contact"
                   className={`block w-full py-4 px-6 rounded-full font-semibold text-center transition-all duration-300 ${
                     plan.featured 
-                      ? "bg-white text-[#4ECDC4] hover:bg-gray-100 shadow-md hover:shadow-lg" 
-                      : "bg-white text-[#4ECDC4] border-2 border-[#4ECDC4] hover:bg-[#4ECDC4] hover:text-white"
+                      ? "bg-white text-[#5DAD8C] hover:bg-gray-100 shadow-md hover:shadow-lg" 
+                      : "bg-white text-[#5DAD8C] border-2 border-[#5DAD8C] hover:bg-[#5DAD8C] hover:text-white"
                   }`}
                 >
                   {plan.buttonText}
