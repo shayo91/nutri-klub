@@ -1,0 +1,102 @@
+**Zadatak:** Napravi "Coming Soon" sekciju koja ide ispod pricing sekcije na nutricionističkoj web stranici. Sekcija najavljuje novu platformu koja je u pripremi. Izbriši sve što se nalazi trenutno na stranici: Nisi siguran/na odakle da kreneš? ‘’ i umjesto toga stavi sledeće:
+
+
+**Boje (iste kao ostatak stranice):**
+
+- Primarna pozadina sekcije: #5DAD8C 
+- Kartice: bijela (`#FFFFFF`)
+- Tekst na zelenoj pozadini: bijeli
+- Tekst na karticama: tamno siva (`#333333`)
+- Akcent: zelena za dugme
+
+
+---
+
+**Layout:**
+
+- Cijela sekcija ima zelenu pozadinu
+- Centriran sadržaj
+- Responzivan dizajn
+
+
+---
+
+**GORNJI DIO - Naslov i uvod**
+
+- Naslov: "Nešto novo u pripremi" (bijeli tekst, veći font, ikona lista pored)
+- Podnaslov tekst (bijeli, manji font): "Na ovoj web stranici uskoro vas očekuje novi praktičan prostor za sve koji žele da unaprijede ishranu i stvore nove navike uz nutricionističku podršku."
+
+
+---
+
+**SREDNJI DIO - Feature kartice**
+
+- Podnaslov iznad kartica: "Šta te očekuje?" (bijeli tekst)
+- 4 kartice u horizontalnom redu (na mobilnom vertikalno)
+- Svaka kartica ima bijelu pozadinu, zaobljene uglove i suptilnu sjenku
+
+
+**Kartica 1 - Baza recepata**
+
+- Ikona: knjiga recepta ili tanjir
+- Naslov: "Baza recepata"
+- Tekst: "Jednostavni, balansirani i nutritivno bogati obroci prilagođeni svakodnevnom životu"
+
+
+**Kartica 2 - Dnevnik ishrane**
+
+- Ikona: notes ili dnevnik
+- Naslov: "Dnevnik ishrane"
+- Tekst: "Prostor gdje ćemo zajedno pratiti tvoje obroke, navike i napredak"
+
+
+**Kartica 3 - Prostor za pitanja**
+
+- Ikona: upitnik ili chat bubble
+- Naslov: "Prostor za pitanja"
+- Tekst: "Mjesto gdje možeš postavljati pitanja i dobiti stručne nutricionističke odgovore"
+
+
+**Kartica 4 - Mjesečna pretplata**
+
+- Ikona: kalendar ili članstvo
+- Naslov: "Mjesečna pretplata"
+- Tekst: "Kontinuiran pristup edukativnom sadržaju"
+
+
+---
+
+**DONJI DIO - CTA**
+
+- Tekst: "I još mnogo toga..." (bijeli, italic)
+- Tekst ispod: "Prati novosti i budi među prvima koji će imati pristup." (bijeli)
+- Email signup forma:
+
+- Input polje (bijela pozadina, placeholder: "Tvoja email adresa")
+- Button: "Obavijesti me" (bijeli button sa zelenim tekstom ili obrnuto)
+
+
+
+
+
+---
+
+**Dizajn detalji:**
+
+- Zaobljeni uglovi na karticama (border-radius: 12px)
+- Hover efekt na karticama (blago podizanje)
+- Ikone u zelenoj boji na bijelim karticama
+- Padding: dovoljno prostora oko elemenata
+- Font: isti kao ostatak stranice (sans-serif)
+- Animacija: suptilan fade-in efekat na karticama (opciono)
+
+
+---
+
+**Responsive:**
+
+- Desktop: 4 kartice u redu
+- Tablet: 2 kartice u redu
+- Mobitel: 1 kartica u redu
+
+
