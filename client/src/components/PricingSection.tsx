@@ -23,7 +23,8 @@ export default function PricingSection() {
       featured: false
     },
     {
-      name: "Mjesečni mentorski program",
+      name: "Mjesečni",
+      nameSecondLine: "mentorski program",
       subtitle: "Za one koji žele promjenu i jasnu strukturu",
       price: "200",
       currency: "KM",
@@ -41,7 +42,8 @@ export default function PricingSection() {
       featured: true
     },
     {
-      name: "Višemjesečni mentorski program",
+      name: "Višemjesečni",
+      nameSecondLine: "mentorski program",
       subtitle: "Za one koji žele dugoročnu podršku i trajne rezultate",
       price: "400",
       currency: "KM",
@@ -51,7 +53,7 @@ export default function PricingSection() {
         "Uvodne konsultacije, analiza dnevnika ishrane, pisane smjernice",
         "Šest individualnih sedmičnih jelovnika",
         "Podrška putem poruka tokom 90 dana",
-        "Kontrolni poziv nakon mjesec dana (x3)"
+        "Kontrolni poziv (x3)"
       ],
       badge: null,
       buttonText: "Prijavi se",
@@ -109,11 +111,18 @@ export default function PricingSection() {
               <div className="px-6 md:px-8 pt-10 pb-8 flex-1 flex flex-col">
                 {/* Header */}
                 <div className="text-center mb-6">
-                  <h3 className={`text-xl md:text-2xl font-bold mb-2 ${
+                  <h3 className={`text-xl md:text-2xl font-bold ${plan.nameSecondLine ? "mb-0" : "mb-2"} ${
                     plan.featured ? "text-white" : "text-[#333333]"
                   }`}>
                     {plan.name}
                   </h3>
+                  {plan.nameSecondLine && (
+                    <p className={`text-xl md:text-2xl font-bold mb-2 ${
+                      plan.featured ? "text-white" : "text-[#333333]"
+                    }`}>
+                      {plan.nameSecondLine}
+                    </p>
+                  )}
                   <p className={`text-sm ${
                     plan.featured ? "text-white/90" : "text-[#666666]"
                   }`}>
@@ -170,7 +179,7 @@ export default function PricingSection() {
                   className={`block w-full py-4 px-6 rounded-full font-semibold text-center transition-all duration-300 ${
                     plan.featured 
                       ? "bg-white text-[#5DAD8C] hover:bg-gray-100 shadow-md hover:shadow-lg" 
-                      : "bg-white text-[#5DAD8C] border-2 border-[#5DAD8C] hover:bg-[#5DAD8C] hover:text-white"
+                      : "bg-[#5DAD8C] text-white hover:bg-[#4A9A79] shadow-md hover:shadow-lg"
                   }`}
                 >
                   {plan.buttonText}
