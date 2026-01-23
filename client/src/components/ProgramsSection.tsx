@@ -86,9 +86,9 @@ export default function ProgramsSection() {
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
               whileHover={{ y: -6, boxShadow: "0 12px 30px -8px rgba(0,0,0,0.2)" }}
-              className="bg-white rounded-xl p-6 shadow-lg transition-all duration-300"
+              className="bg-white rounded-xl p-6 shadow-lg transition-all duration-300 text-center"
             >
-              <div className="mb-4">
+              <div className="mb-4 flex justify-center">
                 {feature.icon}
               </div>
               <h3 className="text-lg font-bold text-[#333333] mb-2">
