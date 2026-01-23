@@ -7,72 +7,55 @@ export default function PricingSection() {
 
   const plans = [
     {
-      name: "Start",
-      subtitle: "Jednokratne konsultacije za početak bez pritiska.",
-      price: "90",
+      name: "Konsultacije",
+      subtitle: "Za one koji žele početne smjernice",
+      price: "80",
       currency: "KM",
       originalPrice: "120",
-      savings: "Uštedi 30KM",
-      description: "Individualna konsultacija osmišljena da ti pomogne da razumiješ svoje trenutno stanje, navike i izazove. Kroz razgovor, analizu i konkretne smjernice, dobijaš jasnu sliku šta trebaš mijenjati i kako da napraviš prve korake ka boljem balansu.",
       features: [
-        "Detaljna anamneza i analiza dnevnika ishrane",
-        "Savjeti za poboljšanje ishrane",
-        "Razgovor u trajanju od 1h (video poziv)",
-        "Uputstvo sa smjernicama nakon poziva",
-        "Prijedlog dnevnog jelovnika za 3 dana"
-      ],
-      badge: null,
-      buttonText: "Započni svoj put",
-      headerBg: "bg-[#F3E6D3]",
-      buttonStyle: "bg-[#1F7A5C] hover:bg-[#185F48] text-white",
-      featured: false,
-      continuation: null
-    },
-    {
-      name: "Balans",
-      subtitle: "30 dana promjene uz jasnu strukturu i podršku",
-      price: "190",
-      currency: "KM",
-      originalPrice: "230",
-      savings: "Uštedi 40KM",
-      description: "Kroz personalizovane jelovnike, jasne smjernice i podršku, učiš kako da organizuješ ishranu i gradiš održive navike koje ćeš primjenjivati i nakon završetka programa.",
-      features: [
-        "Uvodne konsultacije (video poziv)",
-        "Detaljna anamneza i analiza dnevnika ishrane",
-        "Savjeti i personalizovane preporuke za ishranu",
-        "2 individualna sedmična jelovnika",
-        "Lista namirnica za kupovinu",
+        "Online konsultacije (60 minuta)",
+        "Analiza dnevnika ishrane",
+        "Pisane smjernice za poboljšanje ishrane",
         "Podrška putem poruka tokom 30 dana"
       ],
-      badge: "Najpopularniji",
-      buttonText: "Biraj Balans",
-      headerBg: "bg-[#ECF8F2]",
-      buttonStyle: "bg-[#1F7A5C] hover:bg-[#185F48] text-white",
-      featured: true,
-      continuation: "Nastavak saradnje 150KM/mjesec."
+      badge: null,
+      buttonText: "Prijavi se",
+      featured: false
     },
     {
-      name: "Transformacija",
-      subtitle: "90 dana resetovanja tijela i navika",
-      price: "390",
+      name: "Mjesečni mentorski program",
+      subtitle: "Za one koji žele promjenu i jasnu strukturu",
+      price: "200",
       currency: "KM",
-      originalPrice: "450",
-      savings: "Uštedi 100KM",
-      description: "Tromjesečni program koji te vodi kroz proces razumijevanja, promjene i održavanja balansa. Kroz redovne razgovore, planove i podršku, učiš da se oslanjaš na sebe i svoje tijelo.",
+      originalPrice: "250",
       features: [
-        "3 mjeseca kontinuirane podrške",
-        "6 individualnih jelovnika",
-        "Smjernice i preporuke za ishranu",
-        "Rad na odnosu s hranom",
-        "Mjesečne kontrole i analiza napretka",
-        "Podrška putem poruka tokom 90 dana"
+        "Online uvodne konsultacije (upoznavanje, anamneza i postavljanje ciljeva)",
+        "Analiza dnevnika ishrane i prijedlozi za izmjene",
+        "Pisane smjernice za poboljšanje ishrane",
+        "Dva individualna sedmična jelovnika",
+        "Podrška putem poruka tokom 30 dana",
+        "Kontrolni poziv nakon mjesec dana"
+      ],
+      badge: "Najpopularnije",
+      buttonText: "Prijavi se",
+      featured: true
+    },
+    {
+      name: "Višemjesečni mentorski program",
+      subtitle: "Za one koji žele dugoročnu podršku i trajne rezultate",
+      price: "400",
+      currency: "KM",
+      originalPrice: "500",
+      features: [
+        "3 mjeseca saradnje",
+        "Uvodne konsultacije, analiza dnevnika ishrane, pisane smjernice",
+        "Šest individualnih sedmičnih jelovnika",
+        "Podrška putem poruka tokom 90 dana",
+        "Kontrolni poziv nakon mjesec dana (x3)"
       ],
       badge: null,
-      buttonText: "Vrijeme je za promjenu",
-      headerBg: "bg-[#F3E6D3]",
-      buttonStyle: "bg-[#D8B26E] hover:bg-[#C9A35F] text-white",
-      featured: false,
-      continuation: null
+      buttonText: "Prijavi se",
+      featured: false
     }
   ];
 
@@ -84,20 +67,17 @@ export default function PricingSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={pricingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-16"
+          className="text-center max-w-3xl mx-auto mb-12 md:mb-16"
         >
-          <p className="text-[#1F7A5C] font-medium tracking-wide uppercase mb-2" data-testid="text-pricing-subtitle">
-            PAKETI
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-[#1F2937]" data-testid="text-pricing-title">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#333333]">
             Na koji način možemo raditi zajedno?
           </h2>
-          <p className="text-[#6B7280] text-lg" data-testid="text-pricing-description">
-            Bilo da želiš lagani početak ili potpunu transformaciju — izaberi plan koji ti trenutno najviše odgovara.
+          <p className="text-[#333333] text-lg">
+            Bilo da želiš lagani početak ili potpunu transformaciju — izaberi paket koji ti trenutno najviše odgovara.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10 max-w-7xl mx-auto items-end pt-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto items-stretch">
           {plans.map((plan, planIndex) => (
             <motion.div
               key={planIndex}
@@ -108,87 +88,75 @@ export default function PricingSection() {
                   : { opacity: 0, y: 30 }
               }
               transition={{ duration: 0.6, delay: planIndex * 0.15 }}
-              whileHover={{ scale: 1.02 }}
-              className={`rounded-[20px] overflow-visible relative flex flex-col transition-all duration-300 bg-white border border-[#E5E7EB] shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] ${
-                plan.featured ? "md:scale-105 z-10" : ""
+              whileHover={{ 
+                y: -8,
+                boxShadow: "0 20px 40px -12px rgba(0,0,0,0.15)"
+              }}
+              className={`rounded-2xl overflow-visible relative flex flex-col transition-all duration-300 ${
+                plan.featured 
+                  ? "bg-[#4ECDC4] text-white md:scale-105 z-10 shadow-xl" 
+                  : "bg-white border border-[#E5E7EB] shadow-lg"
               }`}
-              data-testid={`card-pricing-${plan.name.toLowerCase()}`}
             >
               {plan.badge && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
-                  <span 
-                    className="bg-[#F3E6D3] text-[#8B6F47] text-xs font-semibold px-5 py-2 rounded-full shadow-sm border border-[#E6D8C5] whitespace-nowrap"
-                    data-testid={`badge-${plan.name.toLowerCase()}`}
-                  >
+                  <span className="bg-white text-[#4ECDC4] text-sm font-bold px-5 py-2 rounded-full shadow-md whitespace-nowrap">
                     {plan.badge}
                   </span>
                 </div>
               )}
 
-              {/* Header Zone */}
-              <div className={`${plan.headerBg} rounded-t-[20px] px-8 py-6 text-center border-b border-[#E5E7EB]/50`}>
-                <h3 
-                  className="text-2xl font-bold text-[#1F2937] mb-2"
-                  data-testid={`text-plan-name-${planIndex}`}
-                >
-                  {plan.name}
-                </h3>
-                <p 
-                  className="text-sm text-[#6B7280]"
-                  data-testid={`text-plan-subtitle-${planIndex}`}
-                >
-                  {plan.subtitle}
-                </p>
-              </div>
+              <div className="px-6 md:px-8 pt-10 pb-8 flex-1 flex flex-col">
+                {/* Header */}
+                <div className="text-center mb-6">
+                  <h3 className={`text-xl md:text-2xl font-bold mb-2 ${
+                    plan.featured ? "text-white" : "text-[#333333]"
+                  }`}>
+                    {plan.name}
+                  </h3>
+                  <p className={`text-sm ${
+                    plan.featured ? "text-white/90" : "text-[#666666]"
+                  }`}>
+                    {plan.subtitle}
+                  </p>
+                </div>
 
-              {/* Body Zone */}
-              <div className="bg-white rounded-b-[20px] px-8 py-8 flex-1 flex flex-col">
                 {/* Price */}
-                <div className="mb-6 text-center">
-                  <div className="flex items-baseline justify-center gap-2 mb-2">
-                    <span 
-                      className="text-5xl font-bold text-[#1F7A5C]"
-                      data-testid={`text-plan-price-${planIndex}`}
-                    >
+                <div className="text-center mb-8">
+                  <div className="flex items-baseline justify-center gap-1 mb-2">
+                    <span className={`text-4xl md:text-5xl font-bold ${
+                      plan.featured ? "text-white" : "text-[#4ECDC4]"
+                    }`}>
                       {plan.price}
                     </span>
-                    <span className="text-xl text-[#6B7280]">
+                    <span className={`text-lg ${
+                      plan.featured ? "text-white/90" : "text-[#666666]"
+                    }`}>
                       {plan.currency}
                     </span>
                   </div>
-                  <div className="flex items-center justify-center gap-3">
-                    <span 
-                      className="text-base text-[#9CA3AF] line-through"
-                      data-testid={`text-original-price-${planIndex}`}
-                    >
-                      {plan.originalPrice} {plan.currency}
-                    </span>
-                    <span 
-                      className="text-xs font-semibold px-3 py-1 rounded-full bg-[#DCFCE7] text-[#166534]"
-                      data-testid={`badge-savings-${planIndex}`}
-                    >
-                      {plan.savings}
-                    </span>
-                  </div>
+                  <span className={`text-base line-through ${
+                    plan.featured ? "text-white/70" : "text-[#999999]"
+                  }`}>
+                    {plan.originalPrice} {plan.currency}
+                  </span>
                 </div>
-
-                {/* Description */}
-                <p 
-                  className="mb-6 leading-relaxed text-sm text-[#6B7280] text-center"
-                  data-testid={`text-plan-description-${planIndex}`}
-                >
-                  {plan.description}
-                </p>
 
                 {/* Features */}
                 <div className="flex-1">
                   <ul className="space-y-4 mb-8">
                     {plan.features.map((feature, index) => (
-                      <li key={index} className="flex items-start" data-testid={`feature-${planIndex}-${index}`}>
-                        <div className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5 bg-[#ECF8F2]">
-                          <Check className="w-4 h-4 text-[#1F7A5C]" />
+                      <li key={index} className="flex items-start">
+                        <div className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mr-3 mt-0.5 ${
+                          plan.featured ? "bg-white/20" : "bg-[#4ECDC4]/10"
+                        }`}>
+                          <Check className={`w-3 h-3 ${
+                            plan.featured ? "text-white" : "text-[#4ECDC4]"
+                          }`} />
                         </div>
-                        <span className="text-sm text-[#1F2937]">
+                        <span className={`text-sm leading-relaxed ${
+                          plan.featured ? "text-white/95" : "text-[#333333]"
+                        }`}>
                           {feature}
                         </span>
                       </li>
@@ -199,23 +167,14 @@ export default function PricingSection() {
                 {/* Button */}
                 <a
                   href="#contact"
-                  className={`block w-full py-4 px-6 rounded-full font-semibold text-center transition-all duration-300 shadow-md hover:shadow-lg ${plan.buttonStyle}`}
-                  data-testid={`button-schedule-${planIndex}`}
+                  className={`block w-full py-4 px-6 rounded-full font-semibold text-center transition-all duration-300 ${
+                    plan.featured 
+                      ? "bg-white text-[#4ECDC4] hover:bg-gray-100 shadow-md hover:shadow-lg" 
+                      : "bg-white text-[#4ECDC4] border-2 border-[#4ECDC4] hover:bg-[#4ECDC4] hover:text-white"
+                  }`}
                 >
                   {plan.buttonText}
                 </a>
-
-                {/* Continuation text below button - fixed height container for alignment */}
-                <div className="h-8 mt-4 flex items-center justify-center">
-                  {plan.continuation ? (
-                    <p 
-                      className="text-sm text-[#6B7280] text-center"
-                      data-testid={`text-continuation-${planIndex}`}
-                    >
-                      {plan.continuation}
-                    </p>
-                  ) : null}
-                </div>
               </div>
             </motion.div>
           ))}
