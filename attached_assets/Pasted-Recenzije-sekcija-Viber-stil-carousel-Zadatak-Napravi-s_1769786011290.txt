@@ -1,0 +1,96 @@
+Recenzije sekcija (Viber stil carousel)
+
+**Zadatak:** Napravi sekciju sa recenzijama za nutricionističku web stranicu. Recenzije trebaju izgledati kao Viber/chat screenshot poruke, anonimne, sa horizontalnim carousel-om koji se može pomjerati kursorom (drag) ili strelicama.
+
+**Boje (iste kao ostatak stranice):**
+- Pozadina sekcije: bijela (#FFFFFF)
+- Chat bubble: mint/teal zelena (#4ECDC4)
+- Tekst u bubble: bijeli ili tamno sivi
+- Strelice i akcenti: mint zelena
+- Avatar: siva (#E0E0E0)
+
+---
+
+**Layout:**
+- Naslov sekcije centriran na vrhu
+- Horizontalni carousel sa 3-4 vidljive kartice
+- Strelice lijevo/desno za navigaciju
+- Dot indikatori na dnu
+- Drag/swipe funkcionalnost za pomjeranje
+
+---
+
+**GORNJI DIO - Naslov**
+- Label: "RECENZIJE" (mint zelena, mali font)
+- Naslov: "Šta Moji Klijenti Kažu" (crni, veliki bold font)
+- Podnaslov: "Najljepši dio mog posla su priče ljudi koji su odlučili da promijene svoj odnos prema hrani, i prema sebi."
+
+---
+
+**KARTICE - Viber stil (10 recenzija)**
+
+Svaka kartica izgleda kao screenshot Viber poruke:
+- Okvir kartice: bijela pozadina sa suptilnom sjenkom, zaobljeni uglovi
+- Unutra: mint zeleni chat bubble sa tekstom
+- Avatar: sivi krug (anonimno, bez imena)
+- Timestamp ispod bubble: npr. "14:32" ili "prije 2 sedmice"
+- Za duže recenzije: prikazati 3-4 reda teksta + link "Pročitaj više..." koji proširuje karticu ili otvara modal
+
+**Tekstovi recenzija:**
+
+1. "Sa 65 godina, majka troje djece, baka osmoro unučadi, bila sam jako tužna i očajna jer nijedna dijeta koju sam primjenjivala nije dala rezultate. Čula sam za Jelenu i počela pratiti njene savjete. Uz puno truda i volje, ostvarila sam san - 25kg manje."
+
+2. "Skoro 2 godine sam imala problem sa kilogramima. Slučajno sam naišla na profil. Rekla sam sebi - ovo je zadnja šansa. Prošla su skoro 4 mjeseca, skinula sam 8kg, a put se nastavlja. Prezadovoljna sam!"
+
+3. "Strah je bio moje drugo ime, strah da neću uspjeti. Ali od prvog razgovora s Jelenom taj strah je nestao. Osjećala sam da imam podršku od osobe koja zna šta radi. Polako ali sigurno, stigla sam do rezultata, -16kg."
+
+4. "Rad sa tobom je nešto nevjerovatno. Uz sve obaveze, može se ako se hoće. Rezultat koji nisam mogao dobiti sam - čak -20kg! Od srca hvala."
+
+5. "Nakon par mjeseci bez treninga i loše ishrane, javila sam se Jeleni. Već nakon nekoliko sedmica osjetila sam razliku - i u kilogramima i u energiji. Rezultat: -11kg"
+
+6. "Želim da pohvalim nutricionistkinju Jelenu. Divna osoba, odgovorna, strpljiva, uvijek dostupna i spremna pomoći."
+
+7. "Mogu samo da kažem da je divno iskustvo raditi sa Jelenom. Od prvog dana osjećaj kao da je tvoj prijatelj. Sve pohvale!"
+
+8. "Divno iskustvo sa Jelenom. Profesionalna, posvećena i puna razumijevanja. Preporučujem svima!"
+
+9. "Iznad svih očekivanja! Javila sam se nesigurna, ali Jelena me vodila korak po korak. Par mjeseci kasnije - novi ja!"
+
+10. "Izuzetno sam zadovoljan saradnjom. Konkretan pristup, bez čuda, ali sa rezultatima. Svaka preporuka!"
+
+---
+
+**NAVIGACIJA CAROUSEL-A**
+- Lijeva strelica: mint zeleni krug sa bijelom strelicom (<)
+- Desna strelica: mint zeleni krug sa bijelom strelicom (>)
+- Dot indikatori: mint tackice na dnu, aktivna tackica tamnija
+- Drag funkcionalnost: korisnik može povlačiti mišem lijevo/desno
+- Na mobilnom: swipe gestom
+
+---
+
+**PONAŠANJE DUZIH RECENZIJA**
+- Ako je tekst duzi od 3-4 reda, prikazati skraćeno
+- Dodati link "Pročitaj više..." ispod
+- Klik na link: proširuje karticu ili otvara modal sa punim tekstom
+
+---
+
+**Dizajn detalji:**
+- Kartice: width ~280-320px, min-height za konzistentnost
+- Chat bubble: padding 16px, border-radius 18px (Viber stil - zaobljen donji desni ugao manje)
+- Avatar: 40px sivi krug, pozicioniran lijevo iznad bubble
+- Razmak između kartica: 20-24px
+- Smooth scroll animacija pri pomjeranju
+- Hover na kartici: blago podizanje (translateY -4px)
+
+---
+
+**Responsive:**
+- Desktop: 3-4 vidljive kartice
+- Tablet: 2 vidljive kartice
+- Mobitel: 1 vidljiva kartica, swipe za navigaciju
+
+---
+
+Kopiraj ovaj prompt u Replit zajedno sa mockup slikom kao vizualnom referencom.
