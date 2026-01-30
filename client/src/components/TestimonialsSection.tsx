@@ -12,12 +12,12 @@ interface Review {
 const reviews: Review[] = [
   {
     id: 1,
-    content: "Sa 65 godina i više zdravstvenih problema dugo sam se liječila i trudila da budem odgovoran pacijent, ali višak kilograma je ostajao veliki problem. Imala sam skoro 100kg i, uprkos raznim dijetama i ranijim pokušajima kod drugih nutricionista, bez uspjeha. Prije godinu dana odlučila sam se za saradnju sa nutricionistkinjom Jelenom i već na prvom susretu osjetila sam iskrenu želju da pomogne, a ne samo profesionalnu obavezu. Jelovnici su bili prilagođeni isključivo meni, mojim zdravstvenim potrebama i ukusu. Danas sam lakša za 25 kilograma i osjećam se bolje nego ikada!",
+    content: "Sa 65 godina i više zdravstvenih problema dugo sam se liječila i trudila da budem odgovoran pacijent, ali višak kilograma je ostajao veliki problem. Imala sam skoro 100kg i, uprkos raznim dijetama i ranijim pokušajima kod drugih nutricionista, bez uspjeha. Prije godinu dana odlučila sam se za saradnju sa nutricionistkinjom Jelenom i već na prvom susretu osjetila sam iskrenu želju da pomogne, a ne samo profesionalnu obavezu. Jelovnici su bili prilagođeni isključivo meni, mojim zdravstvenim potrebama i ukusu. Danas sam lakša za 25 kilograma i osjećam se bolje nego ikada! Naučila sam da jedem pravilno, bez gladovanja i stresa. Jelena je bila uz mene na svakom koraku, odgovarala na svako pitanje i pružala podršku kada mi je bilo najpotrebnije.",
     time: "14:32"
   },
   {
     id: 2,
-    content: "Skoro 2 godine sam imala problem, nelagodu, peckanje i blagu bol na lijevoj strani stomaka, ispod rebara. Tegobe su bile naročito izražene poslije jela. Pri tom sam dobila 15 kg viška u menopauzi iako sam dosta fizički aktivna. Bila sam teška, troma, a nisam navikla na takvu JA. 🥴 Išla sam na razno razne preglede, ultrazvuk, vadila nalaze.... sve je bilo u granicama normale i to je pripisano godinama, usporenom metabolizmu....propisivane su tablete protiv gasova i bolova. Ali problem je i dalje bio tu. Nisam se mirila s činjenicom da u svojoj 54 toj godini ne mogu da funkcionišem normalno. Riješila sam da probam otići kod nutricioniste. Nisam pogriješila. Napokon osvježenje, neko ko sluša, neko ko je zainteresovan za moj problem.",
+    content: "Skoro 2 godine sam imala problem, nelagodu, peckanje i blagu bol na lijevoj strani stomaka, ispod rebara. Tegobe su bile naročito izražene poslije jela. Pri tom sam dobila 15 kg viška u menopauzi iako sam dosta fizički aktivna. Bila sam teška, troma, a nisam navikla na takvu JA. 🥴 Išla sam na razno razne preglede, ultrazvuk, vadila nalaze.... sve je bilo u granicama normale i to je pripisano godinama, usporenom metabolizmu....propisivane su tablete protiv gasova i bolova. Ali problem je i dalje bio tu. Nisam se mirila s činjenicom da u svojoj 54 toj godini ne mogu da funkcionišem normalno. Riješila sam da probam otići kod nutricioniste. Nisam pogriješila. Napokon osvježenje, neko ko sluša, neko ko je zainteresovan za moj problem. Jelena mi je pomogla da shvatim uzroke mojih tegoba i prilagodila plan ishrane mojim potrebama.",
     time: "16:35"
   },
   {
@@ -129,7 +129,7 @@ export default function TestimonialsSection() {
     }
   };
 
-  const truncateText = (text: string, maxLength: number = 150) => {
+  const truncateText = (text: string, maxLength: number = 320) => {
     if (text.length <= maxLength) return { text, isTruncated: false };
     return { text: text.slice(0, maxLength) + "...", isTruncated: true };
   };
@@ -204,9 +204,9 @@ export default function TestimonialsSection() {
                   style={{ userSelect: "none" }}
                 >
                   {/* Phone Frame */}
-                  <div className="bg-gray-100 rounded-[28px] overflow-hidden shadow-xl border-4 border-gray-800">
+                  <div className="bg-gray-100 rounded-[28px] overflow-hidden shadow-xl border-4 border-white">
                     {/* Phone Status Bar */}
-                    <div className="bg-gray-800 px-4 py-2 flex items-center justify-between text-white text-xs">
+                    <div className="bg-gray-100 px-4 py-2 flex items-center justify-between text-gray-500 text-xs">
                       <span className="font-medium">{review.time}</span>
                       <div className="flex items-center gap-1">
                         <Signal className="w-3 h-3" />
@@ -216,7 +216,7 @@ export default function TestimonialsSection() {
                     </div>
                     
                     {/* Chat Area */}
-                    <div className="bg-[#E8E2EE] p-3 min-h-[320px] flex flex-col">
+                    <div className="bg-white p-3 min-h-[420px] flex flex-col">
                       {/* Chat Bubble */}
                       <div className="bg-[#EFEBF5] rounded-2xl rounded-br-sm p-4 shadow-sm max-w-full">
                         <p className="text-[#1A1A1A] text-sm leading-relaxed">
@@ -240,7 +240,7 @@ export default function TestimonialsSection() {
                       
                       {/* Message Input Area */}
                       <div className="mt-3 flex items-center gap-2">
-                        <div className="flex-grow bg-white rounded-full py-2 px-4 text-gray-400 text-sm">
+                        <div className="flex-grow bg-gray-100 rounded-full py-2 px-4 text-gray-400 text-sm">
                           Message...
                         </div>
                         <div className="w-8 h-8 bg-[#7B6BA8] rounded-full flex items-center justify-center">
@@ -308,7 +308,7 @@ export default function TestimonialsSection() {
               </div>
               
               {/* Modal Content - Phone Style */}
-              <div className="bg-[#E8E2EE] p-4 overflow-y-auto max-h-[60vh]">
+              <div className="bg-white p-4 overflow-y-auto max-h-[60vh]">
                 <div className="bg-[#EFEBF5] rounded-2xl rounded-br-sm p-5 shadow-sm">
                   <p className="text-[#1A1A1A] text-base leading-relaxed whitespace-pre-wrap">
                     {modalReview.content}
