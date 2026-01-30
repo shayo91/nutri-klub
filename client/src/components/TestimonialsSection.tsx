@@ -62,17 +62,25 @@ const reviews: Review[] = [
   }
 ];
 
-export default function TestimonialsSection() {
-  const { ref: headerRef, inView: headerInView } = useAnimateOnScroll(0.1);
+const row1Reviews = reviews.slice(0, 5);
+const row2Reviews = reviews.slice(5, 10);
+
+interface CarouselRowProps {
+  reviews: Review[];
+  onOpenModal: (review: Review) => void;
+  inView: boolean;
+  rowIndex: number;
+}
+
+function CarouselRow({ reviews, onOpenModal, inView, rowIndex }: CarouselRowProps) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [modalReview, setModalReview] = useState<Review | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const slidesPerView = useWindowSize();
 
-  const maxIndex = Math.max(0, reviews.length - slidesPerView);
+  const totalSlides = reviews.length;
 
   const scrollToIndex = (index: number) => {
     if (carouselRef.current) {
@@ -85,13 +93,13 @@ export default function TestimonialsSection() {
   };
 
   const nextSlide = () => {
-    const newIndex = Math.min(currentIndex + 1, maxIndex);
+    const newIndex = currentIndex >= totalSlides - 1 ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
     scrollToIndex(newIndex);
   };
 
   const prevSlide = () => {
-    const newIndex = Math.max(currentIndex - 1, 0);
+    const newIndex = currentIndex <= 0 ? totalSlides - 1 : currentIndex - 1;
     setCurrentIndex(newIndex);
     scrollToIndex(newIndex);
   };
@@ -117,7 +125,7 @@ export default function TestimonialsSection() {
     if (carouselRef.current) {
       const cardWidth = 290;
       const newIndex = Math.round(carouselRef.current.scrollLeft / cardWidth);
-      setCurrentIndex(Math.min(Math.max(newIndex, 0), maxIndex));
+      setCurrentIndex(Math.min(Math.max(newIndex, 0), totalSlides - 1));
     }
   };
 
@@ -125,7 +133,7 @@ export default function TestimonialsSection() {
     if (carouselRef.current && !isDragging) {
       const cardWidth = 290;
       const newIndex = Math.round(carouselRef.current.scrollLeft / cardWidth);
-      setCurrentIndex(Math.min(Math.max(newIndex, 0), maxIndex));
+      setCurrentIndex(Math.min(Math.max(newIndex, 0), totalSlides - 1));
     }
   };
 
@@ -135,8 +143,132 @@ export default function TestimonialsSection() {
   };
 
   return (
+    <div className="relative">
+      {/* Navigation Arrows */}
+      <button
+        onClick={prevSlide}
+        className="absolute top-1/2 -left-2 md:-left-6 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 bg-[#7B6BA8] rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:bg-[#6A5A97] hover:scale-110"
+        aria-label="Prethodna recenzija"
+      >
+        <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-white" />
+      </button>
+
+      <button
+        onClick={nextSlide}
+        className="absolute top-1/2 -right-2 md:-right-6 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 bg-[#7B6BA8] rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:bg-[#6A5A97] hover:scale-110"
+        aria-label="Sljedeća recenzija"
+      >
+        <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-white" />
+      </button>
+
+      {/* Carousel Container */}
+      <div
+        ref={carouselRef}
+        className="flex gap-5 overflow-x-auto scroll-smooth px-4 md:px-8 pb-4 cursor-grab active:cursor-grabbing scrollbar-hide"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+        onScroll={handleScroll}
+      >
+        {reviews.map((review, index) => {
+          const { text, isTruncated } = truncateText(review.content);
+
+          return (
+            <motion.div
+              key={review.id}
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.5, delay: (rowIndex * 5 + index) * 0.03 }}
+              whileHover={{ y: -4 }}
+              className="flex-shrink-0 w-[270px] md:w-[280px] select-none"
+              style={{ userSelect: "none" }}
+            >
+              {/* Phone Frame */}
+              <div className="bg-gray-100 rounded-[28px] overflow-hidden shadow-xl border-4 border-white">
+                {/* Phone Status Bar */}
+                <div className="bg-gray-100 px-4 py-2 flex items-center justify-between text-gray-500 text-xs">
+                  <span className="font-medium">{review.time}</span>
+                  <div className="flex items-center gap-1">
+                    <Signal className="w-3 h-3" />
+                    <Wifi className="w-3 h-3" />
+                    <Battery className="w-4 h-4" />
+                  </div>
+                </div>
+                
+                {/* Chat Area */}
+                <div className="bg-white p-3 min-h-[420px] flex flex-col">
+                  {/* Chat Bubble */}
+                  <div className="bg-[#EFEBF5] rounded-2xl rounded-br-sm p-4 shadow-sm max-w-full">
+                    <p className="text-[#1A1A1A] leading-relaxed" style={{ fontSize: '16px' }}>
+                      {text}
+                    </p>
+                    {isTruncated && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onOpenModal(review);
+                        }}
+                        className="mt-3 text-[#7B6BA8] font-medium hover:underline transition-colors"
+                        style={{ fontSize: '16px' }}
+                      >
+                        Pročitaj više...
+                      </button>
+                    )}
+                  </div>
+                  
+                  {/* Spacer */}
+                  <div className="flex-grow" />
+                  
+                  {/* Message Input Area */}
+                  <div className="mt-3 flex items-center gap-2">
+                    <div className="flex-grow bg-gray-100 rounded-full py-2 px-4 text-gray-400 text-sm">
+                      Message...
+                    </div>
+                    <div className="w-8 h-8 bg-[#7B6BA8] rounded-full flex items-center justify-center">
+                      <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* Dot Indicators */}
+      <div className="flex justify-center gap-2 mt-4">
+        {reviews.map((_, index) => {
+          const isActive = currentIndex === index;
+          return (
+            <button
+              key={index}
+              onClick={() => {
+                setCurrentIndex(index);
+                scrollToIndex(index);
+              }}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                isActive ? "bg-[#7B6BA8]" : "bg-[#7B6BA8]/30"
+              }`}
+              aria-label={`Idi na recenziju ${index + 1}`}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+export default function TestimonialsSection() {
+  const { ref: headerRef, inView: headerInView } = useAnimateOnScroll(0.1);
+  const [modalReview, setModalReview] = useState<Review | null>(null);
+
+  return (
     <section id="testimonials" className="py-16 md:py-24 bg-white">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 max-w-7xl">
         <motion.div
           ref={headerRef}
           initial={{ opacity: 0, y: 20 }}
@@ -155,128 +287,24 @@ export default function TestimonialsSection() {
           </p>
         </motion.div>
 
-        <div className="relative max-w-6xl mx-auto">
-          {/* Navigation Arrows */}
-          <button
-            onClick={prevSlide}
-            disabled={currentIndex === 0}
-            className={`absolute top-1/2 -left-2 md:-left-6 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 bg-[#7B6BA8] rounded-full flex items-center justify-center shadow-lg transition-all duration-300 ${
-              currentIndex === 0 ? "opacity-40 cursor-not-allowed" : "hover:bg-[#6A5A97] hover:scale-110"
-            }`}
-            aria-label="Prethodna recenzija"
-          >
-            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-white" />
-          </button>
+        {/* Row 1 */}
+        <CarouselRow 
+          reviews={row1Reviews} 
+          onOpenModal={setModalReview} 
+          inView={headerInView}
+          rowIndex={0}
+        />
 
-          <button
-            onClick={nextSlide}
-            disabled={currentIndex >= maxIndex}
-            className={`absolute top-1/2 -right-2 md:-right-6 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 bg-[#7B6BA8] rounded-full flex items-center justify-center shadow-lg transition-all duration-300 ${
-              currentIndex >= maxIndex ? "opacity-40 cursor-not-allowed" : "hover:bg-[#6A5A97] hover:scale-110"
-            }`}
-            aria-label="Sljedeća recenzija"
-          >
-            <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-white" />
-          </button>
+        {/* Spacing between rows */}
+        <div className="h-8" />
 
-          {/* Carousel Container */}
-          <div
-            ref={carouselRef}
-            className="flex gap-5 overflow-x-auto scroll-smooth px-4 md:px-8 pb-4 cursor-grab active:cursor-grabbing scrollbar-hide"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseUp}
-            onScroll={handleScroll}
-          >
-            {reviews.map((review, index) => {
-              const { text, isTruncated } = truncateText(review.content);
-
-              return (
-                <motion.div
-                  key={review.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                  transition={{ duration: 0.5, delay: index * 0.05 }}
-                  whileHover={{ y: -4 }}
-                  className="flex-shrink-0 w-[270px] md:w-[280px] select-none"
-                  style={{ userSelect: "none" }}
-                >
-                  {/* Phone Frame */}
-                  <div className="bg-gray-100 rounded-[28px] overflow-hidden shadow-xl border-4 border-white">
-                    {/* Phone Status Bar */}
-                    <div className="bg-gray-100 px-4 py-2 flex items-center justify-between text-gray-500 text-xs">
-                      <span className="font-medium">{review.time}</span>
-                      <div className="flex items-center gap-1">
-                        <Signal className="w-3 h-3" />
-                        <Wifi className="w-3 h-3" />
-                        <Battery className="w-4 h-4" />
-                      </div>
-                    </div>
-                    
-                    {/* Chat Area */}
-                    <div className="bg-white p-3 min-h-[420px] flex flex-col">
-                      {/* Chat Bubble */}
-                      <div className="bg-[#EFEBF5] rounded-2xl rounded-br-sm p-4 shadow-sm max-w-full">
-                        <p className="text-[#1A1A1A] text-sm leading-relaxed">
-                          {text}
-                        </p>
-                        {isTruncated && (
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setModalReview(review);
-                            }}
-                            className="mt-3 text-[#7B6BA8] text-sm font-medium hover:underline transition-colors"
-                          >
-                            Pročitaj više...
-                          </button>
-                        )}
-                      </div>
-                      
-                      {/* Spacer */}
-                      <div className="flex-grow" />
-                      
-                      {/* Message Input Area */}
-                      <div className="mt-3 flex items-center gap-2">
-                        <div className="flex-grow bg-gray-100 rounded-full py-2 px-4 text-gray-400 text-sm">
-                          Message...
-                        </div>
-                        <div className="w-8 h-8 bg-[#7B6BA8] rounded-full flex items-center justify-center">
-                          <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          {/* Dot Indicators */}
-          <div className="flex justify-center gap-2 mt-6">
-            {Array.from({ length: Math.ceil(reviews.length / slidesPerView) }).map((_, index) => {
-              const isActive = Math.floor(currentIndex / slidesPerView) === index;
-              return (
-                <button
-                  key={index}
-                  onClick={() => {
-                    const newIndex = index * slidesPerView;
-                    setCurrentIndex(newIndex);
-                    scrollToIndex(newIndex);
-                  }}
-                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                    isActive ? "bg-[#7B6BA8]" : "bg-[#7B6BA8]/30"
-                  }`}
-                  aria-label={`Idi na grupu ${index + 1}`}
-                />
-              );
-            })}
-          </div>
-        </div>
+        {/* Row 2 */}
+        <CarouselRow 
+          reviews={row2Reviews} 
+          onOpenModal={setModalReview} 
+          inView={headerInView}
+          rowIndex={1}
+        />
       </div>
 
       {/* Modal for Full Text */}
@@ -310,7 +338,7 @@ export default function TestimonialsSection() {
               {/* Modal Content - Phone Style */}
               <div className="bg-white p-4 overflow-y-auto max-h-[60vh]">
                 <div className="bg-[#EFEBF5] rounded-2xl rounded-br-sm p-5 shadow-sm">
-                  <p className="text-[#1A1A1A] text-base leading-relaxed whitespace-pre-wrap">
+                  <p className="text-[#1A1A1A] leading-relaxed whitespace-pre-wrap" style={{ fontSize: '16px' }}>
                     {modalReview.content}
                   </p>
                   <p className="text-gray-500 text-xs mt-4 text-right">{modalReview.time}</p>
