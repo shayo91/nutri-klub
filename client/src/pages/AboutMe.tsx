@@ -33,13 +33,10 @@ export default function AboutMe() {
                   Zdravo, ja sam Jelena!
                 </h1>
                 <p className="text-base md:text-lg text-gray-800 leading-relaxed mb-5">
-                  Pomažem ljudima koji žele da unaprijede ishranu kroz praktične, zdrave i ukusne recepte. Želim da te inspirišem i pokažem da pravilna ishrana ne mora biti teška, komplikovana ni isključiva.
-                </p>
-                <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-5">
-                  Oduvijek sam bila gurman, ali sam svoju pravu strast prema kuhanju otkrila tokom pandemije 2020. godine. Tada smo svi nekako imali više vremena za nove hobije, pa sam i ja večeri provodila istražujući recepte koje bih već sljedeći dan isprobavala u kuhinji.
+                  Kao magistrica nutricionizma (master studije nutricionizma na Tehnološlom fakultetu, Univerziteta u Tuzli) te dipl.ing.prehrambene tehnologije (osnovne studije na Tehnološkom fakultetu Univerziteta u Banjoj Luci, Biotehnološko – prehrambeni smjer) već više od 5 godina primjenjujem znanje u praksi kroz individualni nutricionistički pristup.
                 </p>
                 <p className="text-base md:text-lg text-gray-700 leading-relaxed">
-                  U međuvremenu sam završila osnovne i master studije na Tehnološkom fakultetu, a potom i master nutricionizma. Tako sam stekla zvanja dipl. ing. prehrambene tehnologije (Univerzitet u Banjoj Luci) i magistrica nutricionizma (Univerzitet u Tuzli). Tamo sam imala priliku da o hrani učim na potpuno drugačiji način. Ne samo šta jedemo, već i zašto je važno i kako, kada i u kojim količinama jedemo, te kako različiti sastojci i kombinacije namirnica utiču na naš organizam.
+                  Pomažem ljudima koji žele da unaprijede ishranu kroz praktične, zdrave i ukusne recepte. Želim da te inspirišem i pokažem da pravilna ishrana ne mora biti teška, komplikovana niti isključiva. U radu sa mnom naučićeš da ishrana nije samo pitanje šta jedemo, već i kako, kada i zašto jedemo, kao i kako kombinacija namirnica utiče na energiju i cjelokupno zdravlje.
                 </p>
               </motion.div>
 
@@ -94,7 +91,7 @@ export default function AboutMe() {
                 className="order-2 lg:order-2"
               >
                 <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-5">
-                  Veliki dio mog profesionalnog puta oblikovalo je lično iskustvo sa autoimunim i probavnim izazovima (gastritis, Hashimoto, celijakija). To me je naučilo koliko su hrana, okolina, naše navike, misli i ritam života snažno povezani sa zdravljem, hormonima i probavom.
+                  Veliki dio mog profesionalnog puta oblikovalo je lično iskustvo sa autoimunim i probavnim izazovima. To me je naučilo koliko su hrana, okolina, naše navike i ritam života snažno povezani sa zdravljem, hormonima i probavom.
                 </p>
                 <p className="text-base md:text-lg text-gray-700 leading-relaxed">
                   Volim da putujem, istražujem nova mjesta i nove kuhinje, skupljam ideje i pretvaram ih u recepte koje dijelim s tobom. I sama sam na bezglutenskoj ishrani, pa ćeš ovdje pronaći mnoštvo bezglutenskih recepata.
