@@ -23,22 +23,22 @@ const reviews: Review[] = [
   {
     id: 3,
     content: "Strah je bio moje drugo ime, strah od jojo efekta upravljao je sa mnom. Da li ću istrajati, da li ću ja to moći, da li će mi se vratiti kilogrami, glava mi je bila puna pitanja. Jelena me je naučila kako obrok može biti bogato nutritivan, i zasitan, pa je moj tanjir sada šareniji, nego ikada prije. Naučila sam od nje da pravilno formiram obroke i dobila niz ideja za to, uz gubitak 16 kilograma. Pola godine, bila je posvećena našoj saradnji i uvijek tu za sve nedoumice, pitanja i savjete. Velike preporuke za nutricionistkinju Jelenu.",
-    initials: "J.R."
+    initials: "J.V."
   },
   {
     id: 4,
     content: "Rad sa tobom mi je puno pomogao da napokon uvedem red u ishranu i trening bez stresa i rigidnih pravila (-20kg). Najkorisnije mi je bilo što je sve bilo prilagođeno meni, mom tempu i realnom životu, uz konstantnu podršku i jasna objašnjenja. Tokom saradnje primijetila sam više energije, prije saradnje najveći izazov mi je bio nedostatak motivacije, a kroz rad s tobom sam dobila osjećaj kontrole i jasnog smjera. Iskustvo je bilo jako pozitivno i osjećala sam se saslušano i podržano u svakom koraku.",
-    initials: "J.V."
+    initials: "J.R."
   },
   {
     id: 5,
     content: "Nakon mjeseci netreniranja zbog oporavka od gripa i terapija pod lijekovima, dobijam visak kilograma 106 kg. Danas 95 kg (-11kg), tijelo na vrhuncu snage! Raspoloženje, samopouzdanje, energija - benefiti procesa.",
-    initials: "M.Š."
+    initials: "D.P."
   },
   {
     id: 6,
     content: "Želim da pohvalim nutricionistu Jelenu jer je izuzetno stručna,prijatna i puna razumjevanja. Plan ishrane je prilagodila mom životnom stilu, tako da bez stresa postižem željene rezultate. Jelena prati svaki korak u procesu i uvijek je tu za dodatna pitanja i motivaciju. Ja sam prezadovoljna saradnjom sa njom i moje tople preporuke su svima koji žele zdrave promjene.",
-    initials: "D.P."
+    initials: "M.Š."
   },
   {
     id: 7,
