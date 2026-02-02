@@ -144,7 +144,7 @@ export default function TestimonialsSection() {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-12"
         >
-          <p className="text-[#7B6BA8] font-medium tracking-wide uppercase mb-2">
+          <p className="text-[#5DAD8C] font-medium tracking-wide uppercase mb-2">
             RECENZIJE
           </p>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
@@ -159,18 +159,18 @@ export default function TestimonialsSection() {
           {/* Navigation Arrows */}
           <button
             onClick={prevSlide}
-            className="absolute top-1/2 -left-2 md:-left-6 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 bg-[#7B6BA8] rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:bg-[#6A5A97] hover:scale-110"
+            className="absolute top-1/2 -left-2 md:-left-6 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:bg-gray-50 hover:scale-110"
             aria-label="Prethodna recenzija"
           >
-            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-white" />
+            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-[#5DAD8C]" />
           </button>
 
           <button
             onClick={nextSlide}
-            className="absolute top-1/2 -right-2 md:-right-6 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 bg-[#7B6BA8] rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:bg-[#6A5A97] hover:scale-110"
+            className="absolute top-1/2 -right-2 md:-right-6 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:bg-gray-50 hover:scale-110"
             aria-label="Sljedeća recenzija"
           >
-            <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-white" />
+            <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-[#5DAD8C]" />
           </button>
 
           {/* Carousel Container */}

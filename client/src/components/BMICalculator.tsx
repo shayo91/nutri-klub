@@ -223,8 +223,7 @@ export default function BMICalculator() {
 
               <button
                 type="submit"
-                className="w-full py-3 bg-primary hover:bg-primary-dark rounded-md font-medium transition duration-300 ease-in-out shadow-md hover:shadow-lg"
-                style={{ color: "#000" }}
+                className="w-full py-3 bg-[#5DAD8C] hover:bg-[#4A9A79] rounded-md font-medium transition duration-300 ease-in-out shadow-md hover:shadow-lg text-white"
               >
                 Izračunaj BMI
               </button>
@@ -274,7 +273,7 @@ export default function BMICalculator() {
           >
             <div className="overflow-hidden rounded-xl shadow-lg flex-grow">
               <table className="w-full h-full">
-                <thead className="bg-primary text-white">
+                <thead className="bg-[#5DAD8C] text-white">
                   <tr>
                     <th className="py-4 px-6 text-left">BMI Opseg</th>
                     <th className="py-4 px-6 text-left">Kategorija</th>
@@ -346,12 +345,10 @@ export default function BMICalculator() {
           </motion.div>
         </div>
 
-        {/* Note - Full width below both columns */}
-        <div className="mt-8 bg-secondary p-4 rounded-lg">
-          <p className="text-gray-600 text-sm">
-            <strong>Napomena:</strong> BMI je alat za procjenu, a ne dijagnostički instrument.
-            Faktori poput mišićne mase, gustine kostiju i ukupnog sastava tijela nisu uzeti u obzir.
-            Za cjelovitu procjenu zdravstvenog stanja preporučuje se konsultacija sa zdravstvenim stručnjakom.
+        {/* Note - Centered, same width as header text */}
+        <div className="mt-8 max-w-3xl mx-auto">
+          <p className="text-gray-600 text-sm text-center">
+            <strong>Napomena:</strong> BMI je alat za procjenu, a ne dijagnostički instrument. Za cjelovitu procjenu zdravstvenog stanja preporučuje se konsultacija sa stručnjakom.
           </p>
         </div>
       </div>

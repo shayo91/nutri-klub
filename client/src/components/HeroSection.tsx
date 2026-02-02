@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
 import { Users, Award, UtensilsCrossed } from "lucide-react";
-import doctorImage from "@assets/jelena-hero.png";
+import doctorImage from "@assets/Untitled_design_(18)_1770053110741.png";
 
 export default function HeroSection() {
   const { ref: contentRef, inView: contentInView } = useAnimateOnScroll();
@@ -44,7 +44,7 @@ export default function HeroSection() {
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-[#1F2937] leading-tight mb-6">
               Tvoja početna
               <br />
-              <span className="text-[#1F7A5C]">tačka za promjenu.</span>
+              <span className="text-[#5DAD8C]">tačka za promjenu.</span>
             </h1>
 
             {/* Subtitle */}
@@ -61,7 +61,7 @@ export default function HeroSection() {
             >
               <a
                 href="#pricing"
-                className="inline-block bg-[#1F7A5C] text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:bg-[#185F48] hover:shadow-xl transition-all duration-300 hover:scale-105"
+                className="inline-block bg-[#5DAD8C] text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:bg-[#4A9A79] hover:shadow-xl transition-all duration-300 hover:scale-105"
                 data-testid="button-cta-hero"
               >
                 Kreni ovdje
@@ -105,12 +105,12 @@ export default function HeroSection() {
             className="order-1 lg:order-2 relative flex justify-center lg:justify-end"
           >
             {/* Main image container */}
-            <div className="relative bg-gradient-to-b from-[#9FE2BF]/40 to-[#9FE2BF]/20 rounded-3xl p-2 md:p-4 shadow-xl">
+            <div className="relative bg-gradient-to-b from-[#5DAD8C]/40 to-[#5DAD8C]/20 rounded-3xl p-2 md:p-4 shadow-xl">
               <div className="bg-white/50 rounded-2xl overflow-hidden backdrop-blur-sm">
                 <img
                   src={doctorImage}
                   alt="Jelena Matijaš - Magistar nutricionizma"
-                  className="w-[280px] sm:w-[350px] md:w-[400px] lg:w-[450px] h-auto object-contain"
+                  className="w-[560px] sm:w-[700px] md:w-[800px] lg:w-[900px] h-auto object-contain rounded-2xl"
                   data-testid="img-jelena-hero"
                 />
               </div>

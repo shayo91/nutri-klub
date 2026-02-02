@@ -75,7 +75,7 @@ export default function Header() {
         {/* Logo */}
         <div className="flex items-center flex-shrink-0">
           <Link href="/" className="flex items-center" onClick={() => handleNavigation('home')}>
-            <span className="text-[#1F7A5C] text-lg md:text-xl lg:text-2xl font-bold whitespace-nowrap">
+            <span className="text-[#5DAD8C] text-lg md:text-xl lg:text-2xl font-bold whitespace-nowrap">
               Nutricionista Jelena Matijaš
             </span>
           </Link>
