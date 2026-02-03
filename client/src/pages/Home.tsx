@@ -8,16 +8,11 @@ import ProgramsSection from "@/components/ProgramsSection";
 import EmailButton from "@/components/WhatsAppButton";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Testimonial, BlogPost } from "@/lib/types";
+import { BlogPost } from "@/lib/types";
 
 export default function Home() {
   const { data: blogPosts } = useQuery<BlogPost[]>({
     queryKey: ['/api/blog-posts'],
-    staleTime: 60 * 1000,
-  });
-
-  const { data: testimonials } = useQuery<Testimonial[]>({
-    queryKey: ['/api/testimonials'],
     staleTime: 60 * 1000,
   });
 
@@ -34,7 +29,7 @@ export default function Home() {
     <>
       <HeroSection />
       <BMICalculator />
-      <TestimonialsSection testimonials={testimonials} />
+      <TestimonialsSection />
       <PricingSection />
       <ProgramsSection />
       <BlogSection posts={blogPosts} />

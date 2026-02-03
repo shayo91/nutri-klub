@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
 import { Users, Award, UtensilsCrossed } from "lucide-react";
-import doctorImage from "@assets/Untitled_design_(18)_1770053110741.png";
+import doctorImage from "@assets/Untitled_design_(20)_1770121544343.png";
 
 export default function HeroSection() {
   const { ref: contentRef, inView: contentInView } = useAnimateOnScroll();
@@ -104,16 +104,15 @@ export default function HeroSection() {
             transition={{ duration: 1, delay: 0.3 }}
             className="order-1 lg:order-2 relative flex justify-center lg:justify-end"
           >
-            {/* Main image container */}
-            <div className="relative bg-gradient-to-b from-[#5DAD8C]/40 to-[#5DAD8C]/20 rounded-3xl p-2 md:p-4 shadow-xl">
-              <div className="bg-white/50 rounded-2xl overflow-hidden backdrop-blur-sm">
-                <img
-                  src={doctorImage}
-                  alt="Jelena Matijaš - Magistar nutricionizma"
-                  className="w-[560px] sm:w-[700px] md:w-[800px] lg:w-[900px] h-auto object-contain rounded-2xl"
-                  data-testid="img-jelena-hero"
-                />
-              </div>
+            {/* Main image container with hover effect like AboutMe page */}
+            <div className="relative group">
+              <div className="absolute -inset-3 bg-[#9fc9b6] rounded-3xl transform rotate-3 group-hover:rotate-2 transition-transform duration-300"></div>
+              <img
+                src={doctorImage}
+                alt="Jelena Matijaš - Magistar nutricionizma"
+                className="relative w-full max-w-[280px] sm:max-w-[320px] md:max-w-[380px] lg:max-w-[420px] h-auto rounded-2xl shadow-xl group-hover:shadow-2xl group-hover:scale-[1.02] transition-all duration-300"
+                data-testid="img-jelena-hero"
+              />
             </div>
           </motion.div>
         </div>
