@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
-import { Users, Award, UtensilsCrossed } from "lucide-react";
-import doctorImage from "@assets/Untitled_design_(20)_1770121544343.png";
+import { Users, Award, UtensilsCrossed, Apple, Carrot, Leaf, Cherry } from "lucide-react";
+import doctorImage from "@assets/Untitled_design_(18)_1770122157577.png";
 
 export default function HeroSection() {
   const { ref: contentRef, inView: contentInView } = useAnimateOnScroll();
@@ -12,12 +12,46 @@ export default function HeroSection() {
     { icon: UtensilsCrossed, value: "500+", label: "Recepata" },
   ];
 
+  const floatingIcons = [
+    { Icon: Apple, delay: 0, x: "5%", y: "15%", duration: 8 },
+    { Icon: Carrot, delay: 1, x: "85%", y: "20%", duration: 10 },
+    { Icon: Leaf, delay: 2, x: "10%", y: "70%", duration: 9 },
+    { Icon: Cherry, delay: 0.5, x: "90%", y: "65%", duration: 11 },
+    { Icon: Apple, delay: 1.5, x: "75%", y: "85%", duration: 7 },
+    { Icon: Carrot, delay: 2.5, x: "20%", y: "40%", duration: 12 },
+  ];
+
   return (
     <section
       id="home"
-      className="relative min-h-[90vh] flex items-center overflow-hidden"
+      className="relative min-h-[70vh] flex items-center overflow-hidden py-12 lg:py-16"
       style={{ backgroundColor: "#ECF8F2" }}
     >
+      {/* Floating fruit/vegetable icons */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {floatingIcons.map((item, index) => (
+          <motion.div
+            key={index}
+            className="absolute"
+            style={{ left: item.x, top: item.y }}
+            initial={{ opacity: 0 }}
+            animate={{ 
+              opacity: [0.08, 0.15, 0.08],
+              y: [0, -20, 0],
+              rotate: [0, 10, -10, 0]
+            }}
+            transition={{ 
+              duration: item.duration, 
+              delay: item.delay, 
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            <item.Icon className="w-12 h-12 md:w-16 md:h-16 text-[#5DAD8C]" />
+          </motion.div>
+        ))}
+      </div>
+
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Content */}

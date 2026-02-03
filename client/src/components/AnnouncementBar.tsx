@@ -53,7 +53,7 @@ export default function AnnouncementBar() {
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -50 }}
-      className="bg-gradient-to-r from-primary to-primary-dark text-white py-3 px-4 relative overflow-hidden"
+      className="bg-[#5DAD8C] text-white py-3 px-4 relative overflow-hidden"
     >
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center space-x-3 flex-1">
