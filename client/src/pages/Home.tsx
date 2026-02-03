@@ -5,7 +5,6 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import BlogSection from "@/components/BlogSection";
 import ContactSection from "@/components/ContactSection";
 import ProgramsSection from "@/components/ProgramsSection";
-import EbookSection from "@/components/EbookSection";
 import EmailButton from "@/components/WhatsAppButton";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -38,7 +37,6 @@ export default function Home() {
       <TestimonialsSection testimonials={testimonials} />
       <PricingSection />
       <ProgramsSection />
-      <EbookSection />
       <BlogSection posts={blogPosts} />
       <ContactSection />
       <EmailButton />
