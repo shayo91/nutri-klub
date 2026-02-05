@@ -307,3 +307,172 @@ export async function getTestimonials() {
         return [];
     }
 }
+
+// Get page content blocks (text, images, lists, etc.)
+export async function getPageContent(pageId: string): Promise<any[]> {
+    const blocks: any[] = [];
+    let hasMore = true;
+    let startCursor: string | undefined = undefined;
+
+    try {
+        while (hasMore) {
+            const response = await notion.blocks.children.list({
+                block_id: pageId,
+                start_cursor: startCursor,
+            });
+
+            for (const block of response.results as any[]) {
+                blocks.push(formatBlock(block));
+            }
+
+            hasMore = response.has_more;
+            startCursor = response.next_cursor || undefined;
+        }
+
+        return blocks;
+    } catch (error) {
+        console.error("Error fetching page content:", error);
+        return [];
+    }
+}
+
+// Format a Notion block to a simpler structure
+function formatBlock(block: any): any {
+    const baseBlock = {
+        id: block.id,
+        type: block.type,
+    };
+
+    switch (block.type) {
+        case "paragraph":
+            return {
+                ...baseBlock,
+                content: block.paragraph.rich_text.map((t: any) => ({
+                    text: t.plain_text,
+                    bold: t.annotations?.bold || false,
+                    italic: t.annotations?.italic || false,
+                    link: t.href || null,
+                })),
+            };
+        case "heading_1":
+            return {
+                ...baseBlock,
+                content: block.heading_1.rich_text.map((t: any) => t.plain_text).join(""),
+            };
+        case "heading_2":
+            return {
+                ...baseBlock,
+                content: block.heading_2.rich_text.map((t: any) => t.plain_text).join(""),
+            };
+        case "heading_3":
+            return {
+                ...baseBlock,
+                content: block.heading_3.rich_text.map((t: any) => t.plain_text).join(""),
+            };
+        case "bulleted_list_item":
+            return {
+                ...baseBlock,
+                content: block.bulleted_list_item.rich_text.map((t: any) => t.plain_text).join(""),
+            };
+        case "numbered_list_item":
+            return {
+                ...baseBlock,
+                content: block.numbered_list_item.rich_text.map((t: any) => t.plain_text).join(""),
+            };
+        case "image":
+            const imageUrl = block.image.type === "file" 
+                ? block.image.file.url 
+                : block.image.external?.url || "";
+            return {
+                ...baseBlock,
+                url: imageUrl,
+                caption: block.image.caption?.map((t: any) => t.plain_text).join("") || "",
+            };
+        case "quote":
+            return {
+                ...baseBlock,
+                content: block.quote.rich_text.map((t: any) => t.plain_text).join(""),
+            };
+        case "divider":
+            return baseBlock;
+        case "callout":
+            return {
+                ...baseBlock,
+                content: block.callout.rich_text.map((t: any) => t.plain_text).join(""),
+                icon: block.callout.icon?.emoji || "",
+            };
+        default:
+            return baseBlock;
+    }
+}
+
+// Get cover image or first image from page content
+async function getPageImage(page: any): Promise<string> {
+    // First try cover image
+    if (page.cover) {
+        if (page.cover.type === "file") {
+            return page.cover.file.url;
+        } else if (page.cover.type === "external") {
+            return page.cover.external.url;
+        }
+    }
+
+    // Try to get first image from page content
+    try {
+        const response = await notion.blocks.children.list({
+            block_id: page.id,
+            page_size: 20,
+        });
+
+        for (const block of response.results as any[]) {
+            if (block.type === "image") {
+                if (block.image.type === "file") {
+                    return block.image.file.url;
+                } else if (block.image.external) {
+                    return block.image.external.url;
+                }
+            }
+        }
+    } catch (error) {
+        console.error("Error fetching page image:", error);
+    }
+
+    // Fallback to default image
+    return "https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400";
+}
+
+// Get a single blog post by ID with full content
+export async function getBlogPostById(postId: string) {
+    try {
+        // Format the page ID with dashes if needed
+        const formattedId = postId.length === 32 
+            ? `${postId.slice(0, 8)}-${postId.slice(8, 12)}-${postId.slice(12, 16)}-${postId.slice(16, 20)}-${postId.slice(20)}`
+            : postId;
+
+        const page = await notion.pages.retrieve({ page_id: formattedId }) as any;
+        const properties = page.properties;
+        const content = await getPageContent(formattedId);
+        const image = await getPageImage(page);
+
+        return {
+            id: page.id.replace(/-/g, ''),
+            title: properties.Title?.title?.[0]?.plain_text || "Untitled Post",
+            excerpt: properties.Excerpt?.rich_text?.[0]?.plain_text || "",
+            category: properties.Category?.select?.name?.toLowerCase() || "nutrition",
+            image: image,
+            date: properties.Date?.date?.start || new Date().toISOString().split('T')[0],
+            slug: (properties.Title?.title?.[0]?.plain_text || "untitled")
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/(^-|-$)/g, ''),
+            author: {
+                name: properties.Author?.rich_text?.[0]?.plain_text || "NutriHub Team",
+                avatar: "https://images.unsplash.com/photo-1607453998774-d533f65dac99?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150"
+            },
+            content: content
+        };
+    } catch (error) {
+        console.error("Error fetching blog post:", error);
+        return null;
+    }
+}
