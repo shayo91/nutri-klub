@@ -226,7 +226,7 @@ export default function NutritionQuiz() {
                 >
                   <img
                     src="https://images.unsplash.com/photo-1505253758473-96b7015fcd40?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=300"
-                    alt="Nutrition Quiz"
+                    alt="Kviz o ishrani - nutricionista savjeti za zdrav život"
                     className="mx-auto rounded-lg mb-8"
                   />
                   <h3 className="text-2xl font-bold mb-4">

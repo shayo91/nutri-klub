@@ -187,7 +187,8 @@ export default function BlogPost() {
       setLoading(true);
       const response = await fetch('/api/blog-posts');
       if (response.ok) {
-        const posts = await response.json();
+        const data = await response.json();
+        const posts = data.posts || data;
         const foundPost = posts.find((p: BlogPostData) => 
           p.slug === slug || 
           p.title.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-') === slug

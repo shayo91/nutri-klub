@@ -221,7 +221,7 @@ export default function ContactSection() {
             </form>
           </div>
 
-          {/* Contact Information and Map */}
+          {/* Contact Information and Why Nutritionist */}
           <div className="w-full lg:w-5/12 space-y-6">
             {/* Contact Info */}
             <div className="bg-primary/5 rounded-xl p-6">
@@ -242,6 +242,57 @@ export default function ContactSection() {
                   </div>
                 </div>
               </div>
+            </div>
+
+            {/* Zašto Nutricionista - SEO optimized section */}
+            <div className="bg-white rounded-xl p-6 shadow-lg">
+              <h3 className="text-xl font-bold font-poppins mb-4 text-gray-800">
+                Zašto Nutricionista?
+              </h3>
+              <ul className="space-y-3">
+                <li className="flex items-start">
+                  <span className="text-primary mr-2 mt-1">✓</span>
+                  <span className="text-gray-700">
+                    <strong>Personalizovan plan ishrane</strong> - prilagođen vašim ciljevima, zdravstvenom stanju i načinu života
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-primary mr-2 mt-1">✓</span>
+                  <span className="text-gray-700">
+                    <strong>Stručno savjetovanje</strong> - magistar nutricionizma sa višegodišnjim iskustvom u BiH
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-primary mr-2 mt-1">✓</span>
+                  <span className="text-gray-700">
+                    <strong>Održivo mršavljenje</strong> - bez gladovanja, jojo efekta i striktnih dijeta
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-primary mr-2 mt-1">✓</span>
+                  <span className="text-gray-700">
+                    <strong>Zdravo debljanje</strong> - povećanje tjelesne mase pravilnom ishranom i treningom
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-primary mr-2 mt-1">✓</span>
+                  <span className="text-gray-700">
+                    <strong>Bezglutenska ishrana</strong> - planovi za celijakiju i intoleranciju na gluten
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-primary mr-2 mt-1">✓</span>
+                  <span className="text-gray-700">
+                    <strong>Online konsultacije</strong> - dostupne širom Bosne i Hercegovine iz udobnosti vašeg doma
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-primary mr-2 mt-1">✓</span>
+                  <span className="text-gray-700">
+                    <strong>Kontinuirana podrška</strong> - praćenje napretka i prilagođavanje plana vašim potrebama
+                  </span>
+                </li>
+              </ul>
             </div>
           </div>
         </motion.div>

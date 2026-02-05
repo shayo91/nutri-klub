@@ -28,11 +28,12 @@ export interface BMIResult {
 
 // Blog post
 export interface BlogPost {
-  id: number;
+  id: number | string;
   title: string;
   excerpt: string;
   content?: string;
-  category: 'recipes' | 'nutrition' | 'wellness';
+  category: string;
+  categories?: string[];
   image: string;
   date: string;
   slug: string;

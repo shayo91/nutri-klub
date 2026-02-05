@@ -95,7 +95,7 @@ export default function PodcastSection() {
             <div className="flex flex-col md:flex-row items-center gap-6">
               <img
                 src={activePodcast.image}
-                alt={activePodcast.title}
+                alt={`${activePodcast.title} - podcast nutricioniste o zdravoj ishrani`}
                 className="w-40 h-40 rounded-lg object-cover"
               />
               <div className="flex-1">
@@ -174,7 +174,7 @@ export default function PodcastSection() {
               <div className="relative">
                 <img
                   src={episode.image}
-                  alt={episode.title}
+                  alt={`${episode.title} - podcast o ishrani i zdravlju`}
                   className="w-full h-48 object-cover"
                 />
                 <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 hover:bg-opacity-40 transition-opacity">

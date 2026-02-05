@@ -11,8 +11,13 @@ import { useQuery } from "@tanstack/react-query";
 import { BlogPost } from "@/lib/types";
 import { Helmet } from "react-helmet";
 
+interface BlogResponse {
+  posts: BlogPost[];
+  categories: string[];
+}
+
 export default function Home() {
-  const { data: blogPosts } = useQuery<BlogPost[]>({
+  const { data: blogData } = useQuery<BlogResponse>({
     queryKey: ['/api/blog-posts'],
     staleTime: 60 * 1000,
   });
@@ -40,7 +45,7 @@ export default function Home() {
       <TestimonialsSection />
       <PricingSection />
       <ProgramsSection />
-      <BlogSection posts={blogPosts} />
+      <BlogSection posts={blogData?.posts} categories={blogData?.categories} />
       <ContactSection />
       <EmailButton />
     </>

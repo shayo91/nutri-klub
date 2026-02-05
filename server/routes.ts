@@ -10,13 +10,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get blog posts from Notion
   app.get("/api/blog-posts", async (req, res) => {
     try {
-      const posts = await getBlogPosts();
-      res.json(posts);
+      const result = await getBlogPosts();
+      res.json(result);
     } catch (error) {
       console.error("Error fetching blog posts from Notion:", error);
       // Fallback to storage if Notion fails
       const posts = await storage.getBlogPosts();
-      res.json(posts);
+      res.json({ posts, categories: [] });
     }
   });
 

@@ -167,28 +167,41 @@ export async function getBlogPosts() {
     try {
         const blogDb = await findDatabaseByTitle("Blog Posts");
         if (!blogDb) {
-            return [];
+            return { posts: [], categories: [] };
         }
 
         const response = await notion.databases.query({
             database_id: blogDb.id,
         });
 
+        // Extract all unique categories from the multi-select Category field
+        const categoriesSet = new Set<string>();
+        
         const posts = await Promise.all(response.results.map(async (page: any) => {
             const properties = page.properties;
             const image = await getPageImageForList(page);
+
+            // Handle multi-select or single select categories
+            let categories: string[] = [];
+            if (properties.Category?.multi_select && properties.Category.multi_select.length > 0) {
+                categories = properties.Category.multi_select.map((cat: any) => cat.name);
+            } else if (properties.Category?.select?.name) {
+                categories = [properties.Category.select.name];
+            }
+            categories.forEach((cat: string) => categoriesSet.add(cat));
 
             return {
                 id: page.id.replace(/-/g, ''),
                 title: properties.Title?.title?.[0]?.plain_text || "Untitled Post",
                 excerpt: properties.Excerpt?.rich_text?.[0]?.plain_text || "",
                 content: properties.Content?.rich_text?.[0]?.plain_text || "",
-                category: properties.Category?.select?.name?.toLowerCase() || "nutrition",
+                categories: categories,
+                category: categories[0] || "Savjeti",
                 image: image,
                 date: properties.Date?.date?.start || new Date().toISOString().split('T')[0],
                 slug: (properties.Title?.title?.[0]?.plain_text || "untitled")
                     .toLowerCase()
-                    .replace(/[^a-z0-9]+/g, '-')
+                    .replace(/[^a-z0-9\u0400-\u04FF\u0100-\u017F]+/g, '-')
                     .replace(/(^-|-$)/g, ''),
                 author: {
                     name: properties.Author?.rich_text?.[0]?.plain_text || "NutriHub Team",
@@ -197,10 +210,10 @@ export async function getBlogPosts() {
             };
         }));
 
-        return posts;
+        return { posts, categories: Array.from(categoriesSet) };
     } catch (error) {
         console.error("Error fetching blog posts from Notion:", error);
-        return [];
+        return { posts: [], categories: [] };
     }
 }
 
@@ -511,16 +524,25 @@ export async function getBlogPostById(postId: string) {
         const content = await getPageContent(formattedId);
         const image = await getPageImage(page);
 
+        // Handle multi-select or single select categories
+        let categories: string[] = [];
+        if (properties.Category?.multi_select && properties.Category.multi_select.length > 0) {
+            categories = properties.Category.multi_select.map((cat: any) => cat.name);
+        } else if (properties.Category?.select?.name) {
+            categories = [properties.Category.select.name];
+        }
+
         return {
             id: page.id.replace(/-/g, ''),
             title: properties.Title?.title?.[0]?.plain_text || "Untitled Post",
             excerpt: properties.Excerpt?.rich_text?.[0]?.plain_text || "",
-            category: properties.Category?.select?.name?.toLowerCase() || "nutrition",
+            categories: categories,
+            category: categories[0] || "Savjeti",
             image: image,
             date: properties.Date?.date?.start || new Date().toISOString().split('T')[0],
             slug: (properties.Title?.title?.[0]?.plain_text || "untitled")
                 .toLowerCase()
-                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/[^a-z0-9\u0400-\u04FF\u0100-\u017F]+/g, '-')
                 .replace(/(^-|-$)/g, ''),
             author: {
                 name: properties.Author?.rich_text?.[0]?.plain_text || "NutriHub Team",
