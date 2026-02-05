@@ -108,6 +108,41 @@ export async function createDatabaseIfNotExists(title: string, properties: any) 
     });
 }
 
+// Helper to get image from page (cover or first content image)
+async function getPageImageForList(page: any): Promise<string> {
+    // First try cover image
+    if (page.cover) {
+        if (page.cover.type === "file") {
+            return page.cover.file.url;
+        } else if (page.cover.type === "external") {
+            return page.cover.external.url;
+        }
+    }
+
+    // Try to get first image from page content
+    try {
+        const response = await notion.blocks.children.list({
+            block_id: page.id,
+            page_size: 10,
+        });
+
+        for (const block of response.results as any[]) {
+            if (block.type === "image") {
+                if (block.image.type === "file") {
+                    return block.image.file.url;
+                } else if (block.image.external) {
+                    return block.image.external.url;
+                }
+            }
+        }
+    } catch (error) {
+        console.error("Error fetching page image for list:", error);
+    }
+
+    // Fallback to default image
+    return "https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400";
+}
+
 // Get all blog posts from the Notion database
 export async function getBlogPosts() {
     try {
@@ -120,8 +155,9 @@ export async function getBlogPosts() {
             database_id: blogDb.id,
         });
 
-        return response.results.map((page: any) => {
+        const posts = await Promise.all(response.results.map(async (page: any) => {
             const properties = page.properties;
+            const image = await getPageImageForList(page);
 
             return {
                 id: page.id.replace(/-/g, ''),
@@ -129,7 +165,7 @@ export async function getBlogPosts() {
                 excerpt: properties.Excerpt?.rich_text?.[0]?.plain_text || "",
                 content: properties.Content?.rich_text?.[0]?.plain_text || "",
                 category: properties.Category?.select?.name?.toLowerCase() || "nutrition",
-                image: properties.Image?.url || "https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+                image: image,
                 date: properties.Date?.date?.start || new Date().toISOString().split('T')[0],
                 slug: (properties.Title?.title?.[0]?.plain_text || "untitled")
                     .toLowerCase()
@@ -140,7 +176,9 @@ export async function getBlogPosts() {
                     avatar: "https://images.unsplash.com/photo-1607453998774-d533f65dac99?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150"
                 }
             };
-        });
+        }));
+
+        return posts;
     } catch (error) {
         console.error("Error fetching blog posts from Notion:", error);
         return [];

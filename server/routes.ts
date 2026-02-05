@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { getBlogPosts, getTestimonials, getAnnouncements, getVideos, getPodcasts, getSocialMedia } from "./notion";
+import { getBlogPosts, getBlogPostById, getTestimonials, getAnnouncements, getVideos, getPodcasts, getSocialMedia } from "./notion";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -17,6 +17,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Fallback to storage if Notion fails
       const posts = await storage.getBlogPosts();
       res.json(posts);
+    }
+  });
+
+  // Get single blog post with full content
+  app.get("/api/blog-posts/:id", async (req, res) => {
+    try {
+      const post = await getBlogPostById(req.params.id);
+      if (!post) {
+        res.status(404).json({ message: "Blog post not found" });
+        return;
+      }
+      res.json(post);
+    } catch (error) {
+      console.error("Error fetching blog post:", error);
+      res.status(500).json({ message: "Error fetching blog post" });
     }
   });
 

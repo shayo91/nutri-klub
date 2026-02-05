@@ -4,10 +4,26 @@ import { motion } from "framer-motion";
 import { Calendar, User, ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
 
-interface BlogPost {
+interface TextBlock {
+  text: string;
+  bold?: boolean;
+  italic?: boolean;
+  link?: string | null;
+}
+
+interface ContentBlock {
+  id: string;
+  type: string;
+  content?: string | TextBlock[];
+  url?: string;
+  caption?: string;
+  icon?: string;
+}
+
+interface BlogPostData {
   id: string;
   title: string;
-  content: string;
+  content: ContentBlock[];
   excerpt: string;
   category: string;
   image: string;
@@ -19,9 +35,143 @@ interface BlogPost {
   };
 }
 
+function RenderTextSegment({ segment, index }: { segment: TextBlock; index: number }) {
+  let content: JSX.Element = <span>{segment.text}</span>;
+  
+  if (segment.bold && segment.italic) {
+    content = <strong><em>{segment.text}</em></strong>;
+  } else if (segment.bold) {
+    content = <strong>{segment.text}</strong>;
+  } else if (segment.italic) {
+    content = <em>{segment.text}</em>;
+  }
+  
+  if (segment.link) {
+    return (
+      <a key={index} href={segment.link} className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
+        {content}
+      </a>
+    );
+  }
+  
+  return <span key={index}>{content}</span>;
+}
+
+function RenderBlock({ block }: { block: ContentBlock }) {
+  switch (block.type) {
+    case "paragraph":
+      if (Array.isArray(block.content)) {
+        return (
+          <p className="text-gray-700 leading-relaxed mb-4">
+            {block.content.map((segment, i) => (
+              <RenderTextSegment key={i} segment={segment} index={i} />
+            ))}
+          </p>
+        );
+      }
+      return <p className="text-gray-700 leading-relaxed mb-4">{String(block.content || "")}</p>;
+
+    case "heading_1":
+      return <h1 className="text-3xl font-bold text-gray-900 mt-8 mb-4">{String(block.content)}</h1>;
+
+    case "heading_2":
+      return <h2 className="text-2xl font-bold text-gray-900 mt-6 mb-3">{String(block.content)}</h2>;
+
+    case "heading_3":
+      return <h3 className="text-xl font-semibold text-gray-900 mt-4 mb-2">{String(block.content)}</h3>;
+
+    case "bulleted_list_item":
+    case "numbered_list_item":
+      return null;
+
+    case "image":
+      return (
+        <figure className="my-6">
+          <img
+            src={block.url}
+            alt={block.caption || "Blog image"}
+            className="w-full rounded-lg shadow-md"
+          />
+          {block.caption && (
+            <figcaption className="text-center text-sm text-gray-500 mt-2">
+              {block.caption}
+            </figcaption>
+          )}
+        </figure>
+      );
+
+    case "quote":
+      return (
+        <blockquote className="border-l-4 border-primary pl-4 my-6 italic text-gray-600">
+          {String(block.content)}
+        </blockquote>
+      );
+
+    case "callout":
+      return (
+        <div className="bg-gray-100 rounded-lg p-4 my-4 flex items-start">
+          {block.icon && <span className="mr-3 text-xl">{block.icon}</span>}
+          <p className="text-gray-700">{String(block.content)}</p>
+        </div>
+      );
+
+    case "divider":
+      return <hr className="my-8 border-gray-200" />;
+
+    default:
+      return null;
+  }
+}
+
+function RenderContent({ blocks }: { blocks: ContentBlock[] }) {
+  const elements: JSX.Element[] = [];
+  let i = 0;
+
+  while (i < blocks.length) {
+    const block = blocks[i];
+
+    if (block.type === "bulleted_list_item") {
+      const listItems: ContentBlock[] = [];
+      while (i < blocks.length && blocks[i].type === "bulleted_list_item") {
+        listItems.push(blocks[i]);
+        i++;
+      }
+      elements.push(
+        <ul key={`ul-${listItems[0].id}`} className="list-disc ml-6 mb-4 space-y-2">
+          {listItems.map((item) => (
+            <li key={item.id} className="text-gray-700 leading-relaxed">
+              {String(item.content)}
+            </li>
+          ))}
+        </ul>
+      );
+    } else if (block.type === "numbered_list_item") {
+      const listItems: ContentBlock[] = [];
+      while (i < blocks.length && blocks[i].type === "numbered_list_item") {
+        listItems.push(blocks[i]);
+        i++;
+      }
+      elements.push(
+        <ol key={`ol-${listItems[0].id}`} className="list-decimal ml-6 mb-4 space-y-2">
+          {listItems.map((item) => (
+            <li key={item.id} className="text-gray-700 leading-relaxed">
+              {String(item.content)}
+            </li>
+          ))}
+        </ol>
+      );
+    } else {
+      elements.push(<RenderBlock key={block.id} block={block} />);
+      i++;
+    }
+  }
+
+  return <>{elements}</>;
+}
+
 export default function BlogPost() {
   const [, params] = useRoute("/blog/:slug");
-  const [post, setPost] = useState<BlogPost | null>(null);
+  const [post, setPost] = useState<BlogPostData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -37,13 +187,19 @@ export default function BlogPost() {
       const response = await fetch('/api/blog-posts');
       if (response.ok) {
         const posts = await response.json();
-        const foundPost = posts.find((p: BlogPost) => 
+        const foundPost = posts.find((p: BlogPostData) => 
           p.slug === slug || 
           p.title.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-') === slug
         );
         
         if (foundPost) {
-          setPost(foundPost);
+          const detailResponse = await fetch(`/api/blog-posts/${foundPost.id}`);
+          if (detailResponse.ok) {
+            const fullPost = await detailResponse.json();
+            setPost(fullPost);
+          } else {
+            setPost(foundPost);
+          }
         } else {
           setError(true);
         }
@@ -85,6 +241,8 @@ export default function BlogPost() {
       </div>
     );
   }
+
+  const hasContent = Array.isArray(post.content) && post.content.length > 0;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -158,12 +316,16 @@ export default function BlogPost() {
               </div>
             )}
 
-            {/* Sadržaj */}
-            <div className="prose prose-lg max-w-none">
-              <div className="text-gray-800 leading-relaxed whitespace-pre-line">
-                {post.content}
+            {/* Sadržaj iz Notion blokova */}
+            {hasContent ? (
+              <div className="prose prose-lg max-w-none">
+                <RenderContent blocks={post.content} />
               </div>
-            </div>
+            ) : (
+              <div className="text-gray-600 text-center py-8">
+                <p>Sadržaj članka će uskoro biti dostupan.</p>
+              </div>
+            )}
 
             {/* Autor info */}
             <div className="mt-12 pt-8 border-t border-gray-200">

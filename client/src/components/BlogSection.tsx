@@ -5,7 +5,7 @@ export interface BlogPost {
   id: number | string;
   title: string;
   excerpt: string;
-  category: "recipes" | "nutrition" | "wellness" | "weight loss" | "meal planning";
+  category: "recipes" | "nutrition" | "weight loss" | "meal planning";
   image: string;
   date: string;
   slug: string;
@@ -39,14 +39,14 @@ const fallbackPosts: BlogPost[] = [
     title: "Kako stres utiče na vašu ishranu",
     excerpt:
       "Otkrijte složenu vezu između stresa i obrazaca ishrane, i naučite strategije za održavanje zdravih navika tokom stresnih trenutaka.",
-    category: "wellness",
+    category: "nutrition",
     image:
       "https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
     date: "1. jun 2023.",
     slug: "stres-i-isharanu",
   },
 ];
-type Category = "all" | "recipes" | "nutrition" | "wellness" | "weight loss" | "meal planning";
+type Category = "all" | "recipes" | "nutrition" | "weight loss" | "meal planning";
 interface BlogSectionProps {
   posts?: BlogPost[];
 }
@@ -126,16 +126,6 @@ export default function BlogSection({ posts }: BlogSectionProps) {
             Saveti o Ishrani
           </button>
           <button
-            onClick={() => handleFilterChange("wellness")}
-            className={`px-6 py-2 m-1 rounded-full font-medium transition ${
-              activeFilter === "wellness"
-                ? "bg-primary text-white"
-                : "bg-white text-gray-600 hover:bg-gray-100"
-            }`}
-          >
-            Wellness
-          </button>
-          <button
             onClick={() => handleFilterChange("weight loss")}
             className={`px-6 py-2 m-1 rounded-full font-medium transition ${
               activeFilter === "weight loss"
@@ -192,8 +182,6 @@ function BlogPostCard({ post, index }: { post: BlogPost; index: number }) {
         return "Recept";
       case "nutrition":
         return "Saveti o Ishrani";
-      case "wellness":
-        return "Wellness";
       case "weight loss":
         return "Mršavljenje";
       case "meal planning":
