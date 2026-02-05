@@ -12,7 +12,7 @@ export default function Header() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
       
-      const sections = ["home", "pricing", "testimonials", "contact"];
+      const sections = ["home", "testimonials", "pricing", "blog", "contact"];
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
@@ -54,10 +54,11 @@ export default function Header() {
 
   const navLinks = [
     { label: "Početna", target: "home", type: "scroll" },
-    { label: "O meni", href: "/about", type: "link" },
-    { label: "Usluge", target: "pricing", type: "scroll" },
     { label: "Recenzije", target: "testimonials", type: "scroll" },
+    { label: "Usluge", target: "pricing", type: "scroll" },
+    { label: "Recepti", target: "blog", type: "scroll" },
     { label: "Kontakt", target: "contact", type: "scroll" },
+    { label: "O meni", href: "/about", type: "link" },
   ];
 
   const isActive = (item: typeof navLinks[0]) => {

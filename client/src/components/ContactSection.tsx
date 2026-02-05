@@ -106,6 +106,32 @@ export default function ContactSection() {
           </p>
         </motion.div>
 
+        {/* Contact Info - Full Width */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="bg-primary/5 rounded-xl p-6 mb-10 max-w-3xl mx-auto"
+        >
+          <h3 className="text-xl font-bold font-poppins mb-4 text-gray-800 text-center">
+            Kontakt Informacije
+          </h3>
+          <div className="flex justify-center">
+            <div className="flex items-center">
+              <div className="bg-primary text-white p-2 rounded-lg mr-3">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                </svg>
+              </div>
+              <div>
+                <p className="font-medium text-gray-800">Email</p>
+                <p className="text-gray-600">nutriklub@gmail.com</p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
         <motion.div
           ref={contentRef}
           initial={{ opacity: 0, y: 20 }}
@@ -113,7 +139,7 @@ export default function ContactSection() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="flex flex-col lg:flex-row gap-10"
         >
-          <div className="w-full lg:w-7/12 bg-white rounded-xl p-8 shadow-lg">
+          <div className="w-full lg:w-1/2 bg-white rounded-xl p-8 shadow-lg">
             <form
               id="contact-form"
               className="space-y-6"
@@ -221,31 +247,9 @@ export default function ContactSection() {
             </form>
           </div>
 
-          {/* Contact Information and Why Nutritionist */}
-          <div className="w-full lg:w-5/12 space-y-6">
-            {/* Contact Info */}
-            <div className="bg-primary/5 rounded-xl p-6">
-              <h3 className="text-xl font-bold font-poppins mb-4 text-gray-800">
-                Kontakt Informacije
-              </h3>
-              <div className="space-y-4">
-                <div className="flex items-center">
-                  <div className="bg-primary text-white p-2 rounded-lg mr-3">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-                      <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-800">Email</p>
-                    <p className="text-gray-600">nutriklub@gmail.com</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Zašto Nutricionista - SEO optimized section */}
-            <div className="bg-white rounded-xl p-6 shadow-lg">
+          {/* Zašto Nutricionista - SEO optimized section */}
+          <div className="w-full lg:w-1/2">
+            <div className="bg-white rounded-xl p-8 shadow-lg h-full">
               <h3 className="text-xl font-bold font-poppins mb-4 text-gray-800">
                 Zašto Nutricionista?
               </h3>
