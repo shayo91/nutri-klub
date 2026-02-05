@@ -5,6 +5,29 @@ export const notion = new Client({
     auth: process.env.NOTION_INTEGRATION_SECRET!,
 });
 
+// Simple in-memory cache for Notion data
+interface CacheEntry<T> {
+    data: T;
+    timestamp: number;
+}
+
+const cache = new Map<string, CacheEntry<any>>();
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
+function getCached<T>(key: string): T | null {
+    const entry = cache.get(key);
+    if (!entry) return null;
+    if (Date.now() - entry.timestamp > CACHE_TTL) {
+        cache.delete(key);
+        return null;
+    }
+    return entry.data as T;
+}
+
+function setCache<T>(key: string, data: T): void {
+    cache.set(key, { data, timestamp: Date.now() });
+}
+
 // Extract the page ID from the Notion page URL
 function extractPageIdFromUrl(pageUrl: string): string {
     const match = pageUrl.match(/([a-f0-9]{32})(?:[?#]|$)/i);
@@ -22,11 +45,17 @@ export const NOTION_PAGE_ID = extractPageIdFromUrl(process.env.NOTION_PAGE_URL!)
  * @returns {Promise<Array<{id: string, title: string}>>} - Array of database objects with id and title
  */
 export async function getNotionDatabases() {
+    const cacheKey = 'notion-databases';
+    const cached = getCached<any[]>(cacheKey);
+    if (cached) {
+        return cached;
+    }
 
     // Array to store the child databases
     const childDatabases = [];
 
     try {
+        console.log('[Notion] Fetching database list...');
         // Query all child blocks in the specified page
         let hasMore = true;
         let startCursor: string | undefined = undefined;
@@ -62,6 +91,8 @@ export async function getNotionDatabases() {
             startCursor = response.next_cursor || undefined;
         }
 
+        setCache(cacheKey, childDatabases);
+        console.log('[Cache] Database list cached');
         return childDatabases;
     } catch (error) {
         console.error("Error listing child databases:", error);
@@ -164,7 +195,15 @@ async function getPageImageForList(page: any): Promise<string> {
 
 // Get all blog posts from the Notion database
 export async function getBlogPosts() {
+    const cacheKey = 'blog-posts';
+    const cached = getCached<{ posts: any[], categories: string[] }>(cacheKey);
+    if (cached) {
+        console.log('[Cache] Returning cached blog posts');
+        return cached;
+    }
+
     try {
+        console.log('[Notion] Fetching blog posts from Notion...');
         const blogDb = await findDatabaseByTitle("Blog Posts");
         if (!blogDb) {
             return { posts: [], categories: [] };
@@ -210,7 +249,10 @@ export async function getBlogPosts() {
             };
         }));
 
-        return { posts, categories: Array.from(categoriesSet) };
+        const result = { posts, categories: Array.from(categoriesSet) };
+        setCache(cacheKey, result);
+        console.log('[Cache] Blog posts cached for 5 minutes');
+        return result;
     } catch (error) {
         console.error("Error fetching blog posts from Notion:", error);
         return { posts: [], categories: [] };
@@ -350,7 +392,15 @@ export async function getSocialMedia() {
 }
 
 export async function getTestimonials() {
+    const cacheKey = 'testimonials';
+    const cached = getCached<any[]>(cacheKey);
+    if (cached) {
+        console.log('[Cache] Returning cached testimonials');
+        return cached;
+    }
+
     try {
+        console.log('[Notion] Fetching testimonials...');
         const testimonialsDb = await findDatabaseByTitle("Testimonials");
         if (!testimonialsDb) {
             return [];
@@ -360,7 +410,7 @@ export async function getTestimonials() {
             database_id: testimonialsDb.id,
         });
 
-        return response.results.map((page: any) => {
+        const result = response.results.map((page: any) => {
             const properties = page.properties;
 
             return {
@@ -372,6 +422,10 @@ export async function getTestimonials() {
                 rating: properties.Rating?.number || 5
             };
         });
+
+        setCache(cacheKey, result);
+        console.log('[Cache] Testimonials cached');
+        return result;
     } catch (error) {
         console.error("Error fetching testimonials from Notion:", error);
         return [];
@@ -513,7 +567,15 @@ async function getPageImage(page: any): Promise<string> {
 
 // Get a single blog post by ID with full content
 export async function getBlogPostById(postId: string) {
+    const cacheKey = `blog-post-${postId}`;
+    const cached = getCached<any>(cacheKey);
+    if (cached) {
+        console.log(`[Cache] Returning cached blog post: ${postId}`);
+        return cached;
+    }
+
     try {
+        console.log(`[Notion] Fetching blog post: ${postId}`);
         // Format the page ID with dashes if needed
         const formattedId = postId.length === 32 
             ? `${postId.slice(0, 8)}-${postId.slice(8, 12)}-${postId.slice(12, 16)}-${postId.slice(16, 20)}-${postId.slice(20)}`
@@ -532,7 +594,7 @@ export async function getBlogPostById(postId: string) {
             categories = [properties.Category.select.name];
         }
 
-        return {
+        const result = {
             id: page.id.replace(/-/g, ''),
             title: properties.Title?.title?.[0]?.plain_text || "Untitled Post",
             excerpt: properties.Excerpt?.rich_text?.[0]?.plain_text || "",
@@ -550,6 +612,10 @@ export async function getBlogPostById(postId: string) {
             },
             content: content
         };
+        
+        setCache(cacheKey, result);
+        console.log(`[Cache] Blog post cached: ${postId}`);
+        return result;
     } catch (error) {
         console.error("Error fetching blog post:", error);
         return null;

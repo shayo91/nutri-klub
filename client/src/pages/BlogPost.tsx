@@ -177,6 +177,7 @@ export default function BlogPost() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (params?.slug) {
       fetchBlogPost(params.slug);
     }
