@@ -89,8 +89,9 @@ function RenderBlock({ block }: { block: ContentBlock }) {
         <figure className="my-6">
           <img
             src={block.url}
-            alt={block.caption || "Blog image"}
+            alt={block.caption || "Blog slika nutricionista ishrana BiH"}
             className="w-full rounded-lg shadow-md"
+            loading="lazy"
           />
           {block.caption && (
             <figcaption className="text-center text-sm text-gray-500 mt-2">

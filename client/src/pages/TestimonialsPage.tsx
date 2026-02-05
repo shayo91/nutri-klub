@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
+import { useEffect } from "react";
 
 // Header is handled by the main layout
 
@@ -120,10 +121,14 @@ const successStories: SuccessStory[] = [
 export default function TestimonialsPage() {
   const { ref: headerRef, inView: headerInView } = useAnimateOnScroll();
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-primary to-primary-dark text-white">
+      <section className="py-16 md:py-24" style={{ backgroundColor: "#F5F5F0" }}>
         <div className="container mx-auto px-4">
           <motion.div
             ref={headerRef}
@@ -132,10 +137,10 @@ export default function TestimonialsPage() {
             transition={{ duration: 0.8 }}
             className="text-center max-w-4xl mx-auto"
           >
-            <h1 className="text-4xl md:text-6xl font-bold font-poppins mb-6">
+            <h1 className="text-4xl md:text-6xl font-bold font-poppins mb-6 text-gray-800">
               Šta Kažu Naši Klijenti?
             </h1>
-            <p className="text-xl md:text-2xl text-primary-light mb-8">
+            <p className="text-xl md:text-2xl text-gray-600 mb-8">
               Fokusirajte se na lične planove ishrane za zdraviji život.
             </p>
           </motion.div>
@@ -185,16 +190,18 @@ export default function TestimonialsPage() {
                         <div className="text-center">
                           <img
                             src={story.beforeImage}
-                            alt={`${story.name} pre`}
+                            alt={`${story.name} pre nutricionista transformacija`}
                             className="w-full h-64 object-cover rounded-lg"
+                            loading="lazy"
                           />
                           <p className="text-sm font-medium text-gray-500 mt-2">PRE</p>
                         </div>
                         <div className="text-center">
                           <img
                             src={story.afterImage}
-                            alt={`${story.name} posle`}
+                            alt={`${story.name} posle nutricionista transformacija mršavljenje`}
                             className="w-full h-64 object-cover rounded-lg"
+                            loading="lazy"
                           />
                           <p className="text-sm font-medium text-gray-500 mt-2">POSLE</p>
                         </div>

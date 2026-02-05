@@ -86,7 +86,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-16 md:py-24 bg-secondary">
+    <section id="contact" className="py-16 md:py-24" style={{ backgroundColor: "#F5F5F0" }}>
       <div className="container mx-auto px-4">
         <motion.div
           ref={headerRef}

@@ -22,8 +22,9 @@ export default function AboutSection() {
             <div className="relative">
               <img
                 src="/attached_assets/medica-nutricionista-em-seu-consultorio-demonstra-o-conceito-de-alimentacao-saudavel_441923-12693.avif"
-                alt="Professional Nutritionist creating healthy meal plans"
+                alt="Nutricionista BiH - zdrava ishrana i planovi ishrane za mršavljenje"
                 className="rounded-lg shadow-xl w-full h-auto object-cover"
+                loading="lazy"
               />
               <div className="absolute -bottom-6 -right-6 bg-secondary rounded-lg p-4 shadow-lg">
                 <p className="text-primary font-bold text-3xl">5+</p>

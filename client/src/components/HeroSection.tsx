@@ -143,9 +143,10 @@ export default function HeroSection() {
               <div className="absolute -inset-3 bg-[#9fc9b6] rounded-3xl transform rotate-3 group-hover:rotate-2 transition-transform duration-300"></div>
               <img
                 src={doctorImage}
-                alt="Jelena Matijaš - Magistar nutricionizma"
+                alt="Jelena Matijaš - Nutricionista BiH - Magistar nutricionizma - planovi ishrane"
                 className="relative w-full max-w-[280px] sm:max-w-[320px] md:max-w-[380px] lg:max-w-[420px] h-auto rounded-2xl shadow-xl group-hover:shadow-2xl group-hover:scale-[1.02] transition-all duration-300"
                 data-testid="img-jelena-hero"
+                loading="eager"
               />
             </div>
           </motion.div>

@@ -1,10 +1,13 @@
 import { motion } from "framer-motion";
-import Layout from "@/components/Layout";
+import { useEffect } from "react";
 
 export default function PrivacyPolicy() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <Layout>
-      <div className="min-h-screen bg-gray-50 py-16">
+    <div className="min-h-screen bg-gray-50 py-16">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -79,6 +82,5 @@ export default function PrivacyPolicy() {
           </motion.div>
         </div>
       </div>
-    </Layout>
   );
 }

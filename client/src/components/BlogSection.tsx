@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
 export interface BlogPost {
@@ -74,13 +74,13 @@ export default function BlogSection({ posts }: BlogSectionProps) {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <p className="text-primary font-medium tracking-wide uppercase mb-2">
+          <p className="text-[#1F7A5C] font-semibold tracking-wide uppercase mb-2">
             BLOG O ISHRANI
           </p>
-          <h2 className="text-3xl md:text-4xl font-bold font-poppins mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold font-poppins mb-6 text-gray-800">
             Recepti i Saveti o Ishrani
           </h2>
-          <p className="text-gray-600">
+          <p className="text-gray-700">
             Istražite našu kolekciju zdravih recepata, saveta o ishrani i
             wellness saveta da vam pomognemo na vašem putovanju ka boljem
             zdravlju.
@@ -156,26 +156,40 @@ export default function BlogSection({ posts }: BlogSectionProps) {
           ))}
         </div>
 
-        <motion.div
-          ref={ctaRef}
-          initial={{ opacity: 0, y: 20 }}
-          animate={ctaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="text-center mt-12"
-        >
-          <button
-            onClick={() => handleFilterChange("all")}
-            className="inline-block px-8 py-4 bg-white hover:bg-gray-100 text-primary border border-primary rounded-md font-medium transition duration-300 ease-in-out shadow-md hover:shadow-lg"
+        {activeFilter !== "all" && (
+          <motion.div
+            ref={ctaRef}
+            initial={{ opacity: 0, y: 20 }}
+            animate={ctaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="text-center mt-12"
           >
-            Pogledajte Sve Članke
-          </button>
-        </motion.div>
+            <button
+              onClick={() => handleFilterChange("all")}
+              className="inline-block px-8 py-4 bg-white hover:bg-gray-100 text-primary border border-primary rounded-md font-medium transition duration-300 ease-in-out shadow-md hover:shadow-lg"
+            >
+              Pogledajte Sve Članke
+            </button>
+          </motion.div>
+        )}
       </div>
     </section>
   );
 }
 function BlogPostCard({ post, index }: { post: BlogPost; index: number }) {
   const { ref, inView } = useAnimateOnScroll(0.2 + index * 0.1);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
+  const handleImageLoad = useCallback(() => {
+    setImageLoaded(true);
+  }, []);
+
+  const handleImageError = useCallback(() => {
+    setImageError(true);
+    setImageLoaded(true);
+  }, []);
+
   const getCategoryLabel = (category: string) => {
     switch (category) {
       case "recipes":
@@ -198,16 +212,24 @@ function BlogPostCard({ post, index }: { post: BlogPost; index: number }) {
       transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
       className="bg-white rounded-xl overflow-hidden shadow-lg"
     >
-      <div className="h-56 overflow-hidden">
+      <div className="h-56 overflow-hidden bg-gray-100 relative">
+        {!imageLoaded && (
+          <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-full bg-gray-300"></div>
+          </div>
+        )}
         <img
-          src={post.image}
-          alt={post.title}
-          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+          src={imageError ? "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=400&fit=crop" : post.image}
+          alt={`${post.title} - blog nutricionista BiH`}
+          className={`w-full h-full object-cover transition-all duration-500 hover:scale-105 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+          loading="lazy"
+          onLoad={handleImageLoad}
+          onError={handleImageError}
         />
       </div>
       <div className="p-6">
         <div className="flex items-center mb-3">
-          <span className="bg-primary-light bg-opacity-20 text-primary-dark text-xs px-3 py-1 rounded-full">
+          <span className="bg-[#1F7A5C] text-white text-xs px-3 py-1 rounded-full font-medium">
             {getCategoryLabel(post.category)}
           </span>
           <span className="text-gray-500 text-sm ml-auto">{post.date}</span>

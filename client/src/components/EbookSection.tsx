@@ -111,8 +111,9 @@ export default function EbookSection() {
               <div className="relative">
                 <img
                   src={ebook.image}
-                  alt={ebook.title}
+                  alt={`${ebook.title} - nutricionista e-knjiga plan ishrane BiH`}
                   className="w-full h-64 object-cover"
+                  loading="lazy"
                 />
                 <div className="absolute top-4 left-4">
                   <span className={`px-3 py-1 rounded-full text-xs font-medium ${
