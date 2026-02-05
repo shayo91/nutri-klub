@@ -108,14 +108,33 @@ export async function createDatabaseIfNotExists(title: string, properties: any) 
     });
 }
 
-// Helper to get image from page (cover or first content image)
+// Helper to get image from page (cover, Image property, or first content image)
 async function getPageImageForList(page: any): Promise<string> {
+    const properties = page.properties;
+    
     // First try cover image
     if (page.cover) {
         if (page.cover.type === "file") {
             return page.cover.file.url;
         } else if (page.cover.type === "external") {
             return page.cover.external.url;
+        }
+    }
+
+    // Try Image property from database (URL or file)
+    if (properties?.Image) {
+        // If it's a URL property
+        if (properties.Image.url) {
+            return properties.Image.url;
+        }
+        // If it's a files property
+        if (properties.Image.files && properties.Image.files.length > 0) {
+            const file = properties.Image.files[0];
+            if (file.type === "file") {
+                return file.file.url;
+            } else if (file.type === "external") {
+                return file.external.url;
+            }
         }
     }
 

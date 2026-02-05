@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
 import { Helmet } from "react-helmet";
@@ -7,6 +8,10 @@ import aboutImage2 from "@assets/image_1767988208117.png";
 export default function AboutMe() {
   const { ref, inView } = useAnimateOnScroll(0.1);
   const { ref: ref2, inView: inView2 } = useAnimateOnScroll(0.1);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>

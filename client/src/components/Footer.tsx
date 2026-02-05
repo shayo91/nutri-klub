@@ -74,13 +74,23 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/#testimonials" className="text-gray-600 hover:text-[#1F7A5C] transition">
+                <Link href="/testimonials" className="text-gray-600 hover:text-[#1F7A5C] transition">
                   Recenzije
                 </Link>
               </li>
               <li>
                 <Link href="/#contact" className="text-gray-600 hover:text-[#1F7A5C] transition">
                   Kontakt
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy" className="text-gray-600 hover:text-[#1F7A5C] transition">
+                  Politika Privatnosti
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="text-gray-600 hover:text-[#1F7A5C] transition">
+                  Uslovi Korištenja
                 </Link>
               </li>
             </ul>

@@ -9,6 +9,7 @@ import EmailButton from "@/components/WhatsAppButton";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { BlogPost } from "@/lib/types";
+import { Helmet } from "react-helmet";
 
 export default function Home() {
   const { data: blogPosts } = useQuery<BlogPost[]>({
@@ -27,6 +28,13 @@ export default function Home() {
 
   return (
     <>
+      <Helmet>
+        <title>Nutricionista Jelena Matijaš | Planovi Ishrane BiH | Mršavljenje i Debljanje</title>
+        <meta name="description" content="Nutricionista u Bosni i Hercegovini. Personalizovani planovi ishrane za mršavljenje, debljanje i zdrav život. Online konsultacije dostupne širom BiH. Bezglutenska ishrana i nutritivno savjetovanje." />
+        <meta property="og:title" content="Nutricionista Jelena Matijaš | Planovi Ishrane BiH" />
+        <meta property="og:description" content="Personalizovani planovi ishrane za mršavljenje, debljanje i zdrav život. Magistar nutricionizma sa 5+ godina iskustva." />
+        <link rel="canonical" href="https://nutriputovanje.com" />
+      </Helmet>
       <HeroSection />
       <BMICalculator />
       <TestimonialsSection />

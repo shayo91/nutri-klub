@@ -163,12 +163,12 @@ export default function BlogSection({ posts }: BlogSectionProps) {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="text-center mt-12"
         >
-          <a
-            href="#"
+          <button
+            onClick={() => handleFilterChange("all")}
             className="inline-block px-8 py-4 bg-white hover:bg-gray-100 text-primary border border-primary rounded-md font-medium transition duration-300 ease-in-out shadow-md hover:shadow-lg"
           >
             Pogledajte Sve Članke
-          </a>
+          </button>
         </motion.div>
       </div>
     </section>
