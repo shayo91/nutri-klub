@@ -21,10 +21,10 @@ export default function CTABanner() {
       >
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-            Započnite Svoju Transformaciju Danas
+            Vaš Nutricionista za Zdrav Plan Ishrane
           </h2>
           <p className="text-white/90 text-lg mb-8">
-            Zakažite besplatnu konsultaciju sa nutricionistom i napravite prvi korak ka zdravijem životu
+            Napravite prvi korak ka zdravoj ishrani — personalizovan plan ishrane kreiran od strane nutricioniste, prilagođen vašim ciljevima i potrebama
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
@@ -32,7 +32,7 @@ export default function CTABanner() {
               className="inline-flex items-center justify-center gap-2 bg-white text-[#5DAD8C] px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-lg"
             >
               <FileText className="w-5 h-5" />
-              Zakažite Besplatnu Konsultaciju
+              Zakažite Konsultaciju
             </a>
             <a
               href="#contact"
