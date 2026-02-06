@@ -1,32 +1,32 @@
-
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
+import { Helmet } from "react-helmet";
 
 const faqs = [
   {
+    question: "Koliko košta nutricionist?",
+    answer: "Cijene usluga nutricionista variraju u zavisnosti od paketa. Osnovni plan ishrane kreće od 50€, dok premium program sa individualnim praćenjem košta do 150€. Prva konsultacija sa nutricionistom je potpuno besplatna - zakažite online konsultaciju i saznajte koji plan ishrane BiH odgovara vašim ciljevima za mršavljenje ili debljanje."
+  },
+  {
+    question: "Kako funkcioniše online konsultacija?",
+    answer: "Online konsultacija sa nutricionistom je jednostavna i dostupna iz cijele Bosne i Hercegovine. Zakazujete termin putem kontakt forme ili WhatsApp-a, a konsultacija se odvija putem video poziva. Dobijate personalizovan plan ishrane, dijeta savjete prilagođene vašem načinu života, i kontinuiranu podršku za zdravlje i ishranu. Idealno za klijente iz Banja Luke, Sarajeva, Tuzle i svih drugih gradova BiH."
+  },
+  {
+    question: "Da li trebam dijetu ili promjenu lifestyle-a?",
+    answer: "Većina ljudi ne treba striktnu dijetu - treba im održiva promjena načina ishrane i životnih navika. Kao nutricionist, ne preporučujem gladovanje ili restriktivne dijete koje vode jojo efektu. Umjesto toga, kreiram personalizovan plan ishrane koji se uklapa u vaš svakodnevni život, pomažući vam da postignete ciljeve mršavljenja ili zdravog debljanja bez stresa. Dijeta savjeti koje dobijete su praktični i primjenjivi odmah."
+  },
+  {
     question: "Koliko brzo mogu da vidim rezultate?",
-    answer: "Većina klijenata vidi prve rezultate nakon 2-3 nedelje, a značajne promene nakon 4-6 nedelja. Brzina zavisi od vaše početne situacije i posvećenosti planu."
+    answer: "Većina klijenata vidi prve rezultate nakon 2-3 sedmice, a značajne promjene nakon 4-6 sedmica. Brzina zavisi od vaše početne situacije i posvećenosti planu ishrane. Mršavljenje u Bosni i Hercegovini ne mora biti teško - uz pravilnu ishranu i stručnu podršku online nutricionista, rezultati dolaze prirodno."
   },
   {
     question: "Da li mogu da jedem svoju omiljenu hranu?",
-    answer: "Apsolutno! Moj pristup ne zabranjuje hranu, već uči balans. 80% zdrave hrane, 20% onog što volite - to je formula koja funkcioniše dugoročno."
-  },
-  {
-    question: "Koliko košta vaša usluga?",
-    answer: "Cene se kreću od 50€ za osnovni plan do 150€ za premium program sa individualnim praćenjem. Prva konsultacija je besplatna."
+    answer: "Apsolutno! Moj pristup kao nutricionista ne zabranjuje hranu, već uči balans. 80% zdrave hrane, 20% onog što volite - to je formula koja funkcioniše dugoročno. Plan ishrane BiH koji kreiram uključuje lokalne namirnice i recepte prilagođene vašem ukusu."
   },
   {
     question: "Da li radite sa specifičnim zdravstvenim stanjima?",
-    answer: "Da, imam iskustva sa dijabetesom, hipertenzijom, PCOS, i drugim stanjima. Uvek preporučujem saradnju sa vašim lekarom."
-  },
-  {
-    question: "Šta ako ne vidim rezultate?",
-    answer: "Nudim 30-dnevnu garanciju. Ako se držite plana i ne vidite rezultate, vratićemo vam novac ili prilagoditi pristup."
-  },
-  {
-    question: "Koliko često se konsultujemo?",
-    answer: "Nedeljno ili bi-nedeljno, u zavisnosti od paketa. Uvek sam dostupna preko WhatsApp-a za hitna pitanja."
+    answer: "Da, imam iskustva sa dijabetesom, hipertenzijom, PCOS, celijakijom i drugim stanjima. Kao online nutricionist, uvijek preporučujem saradnju sa vašim ljekarom. Bezglutenska ishrana, planovi za zdravlje ishrana kod hroničnih bolesti - sve je dio moje prakse nutricionista u Banja Luci i širom BiH."
   }
 ];
 
@@ -34,8 +34,26 @@ export default function FAQSection() {
   const { ref: headerRef, inView: headerInView } = useAnimateOnScroll();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  };
+
   return (
-    <section className="py-16 md:py-24 bg-gray-50">
+    <section id="faq" className="py-16 md:py-24" style={{ backgroundColor: "#F5F5F0" }}>
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(faqJsonLd)}
+        </script>
+      </Helmet>
       <div className="container mx-auto px-4">
         <motion.div
           ref={headerRef}
@@ -51,7 +69,7 @@ export default function FAQSection() {
             Odgovori na Najčešća Pitanja
           </h2>
           <p className="text-gray-600">
-            Evo odgovora na pitanja koja mi klijenti najčešće postavljaju
+            Evo odgovora na pitanja koja klijenti najčešće postavljaju nutricionisti
           </p>
         </motion.div>
 
@@ -71,7 +89,7 @@ export default function FAQSection() {
                 <div className="flex justify-between items-center">
                   <h3 className="font-semibold text-lg pr-4">{faq.question}</h3>
                   <svg
-                    className={`w-5 h-5 text-primary transform transition-transform ${
+                    className={`w-5 h-5 text-primary transform transition-transform flex-shrink-0 ${
                       openIndex === index ? 'rotate-180' : ''
                     }`}
                     fill="none"
@@ -92,7 +110,7 @@ export default function FAQSection() {
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden"
                   >
-                    <div className="px-6 pb-6 text-gray-600 leading-relaxed">
+                    <div className="px-6 pb-6 pt-3 text-gray-600 leading-relaxed">
                       {faq.answer}
                     </div>
                   </motion.div>
@@ -109,7 +127,7 @@ export default function FAQSection() {
           className="text-center mt-12"
         >
           <p className="text-gray-600 mb-6">
-            Imate još pitanja? Kontaktirajte me direktno!
+            Imate još pitanja? Kontaktirajte nutricionista direktno!
           </p>
           <a
             href="#contact"

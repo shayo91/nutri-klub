@@ -3,6 +3,7 @@ import { useRoute } from "wouter";
 import { motion } from "framer-motion";
 import { Calendar, User, ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
+import { Helmet } from "react-helmet";
 
 interface TextBlock {
   text: string;
@@ -72,13 +73,13 @@ function RenderBlock({ block }: { block: ContentBlock }) {
       return <p className="text-gray-700 leading-relaxed mb-4">{String(block.content || "")}</p>;
 
     case "heading_1":
-      return <h1 className="text-3xl font-bold text-gray-900 mt-8 mb-4">{String(block.content)}</h1>;
+      return <h2 className="text-3xl font-bold text-gray-900 mt-8 mb-4">{String(block.content)}</h2>;
 
     case "heading_2":
-      return <h2 className="text-2xl font-bold text-gray-900 mt-6 mb-3">{String(block.content)}</h2>;
+      return <h3 className="text-2xl font-bold text-gray-900 mt-6 mb-3">{String(block.content)}</h3>;
 
     case "heading_3":
-      return <h3 className="text-xl font-semibold text-gray-900 mt-4 mb-2">{String(block.content)}</h3>;
+      return <h4 className="text-xl font-semibold text-gray-900 mt-4 mb-2">{String(block.content)}</h4>;
 
     case "bulleted_list_item":
     case "numbered_list_item":
@@ -249,6 +250,18 @@ export default function BlogPost() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Helmet>
+        <title>{post.title} | Nutricionista Jelena Matijaš</title>
+        <meta name="description" content={post.excerpt || `${post.title} - savjeti nutricionista za zdravlje i ishranu u BiH`} />
+        <meta property="og:title" content={`${post.title} | Nutricionista Jelena Matijaš`} />
+        <meta property="og:description" content={post.excerpt || `${post.title} - savjeti nutricionista za zdravlje i ishranu u BiH`} />
+        <meta property="og:type" content="article" />
+        {post.image && <meta property="og:image" content={post.image} />}
+        <meta property="og:locale" content="bs_BA" />
+        <link rel="canonical" href={`https://nutriputovanje.com/blog/${post.slug}`} />
+        <meta property="article:author" content={post.author.name} />
+        <meta property="article:section" content={post.category} />
+      </Helmet>
       {/* Hero sekcija */}
       <div className="relative h-96 bg-gray-900 overflow-hidden">
         {post.image && (
