@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { SiInstagram } from "react-icons/si";
+import { SiInstagram, SiFacebook } from "react-icons/si";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -122,20 +122,31 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Instagram Link - Desktop */}
-          <a
-            href="https://www.instagram.com/nutriputovanje/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-gray-600 hover:text-[#E4405F] transition-colors duration-300"
-            data-testid="link-instagram"
-          >
-            <SiInstagram className="w-5 h-5" />
-          </a>
+          {/* Social Links - Desktop */}
+          <div className="flex items-center gap-3">
+            <a
+              href="https://www.instagram.com/nutriputovanje/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center text-gray-600 hover:text-[#E4405F] transition-colors duration-300"
+              data-testid="link-instagram"
+            >
+              <SiInstagram className="w-5 h-5" />
+            </a>
+            <a
+              href="https://www.facebook.com/nutricionistajelena/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center text-gray-600 hover:text-[#1877F2] transition-colors duration-300"
+              data-testid="link-facebook"
+            >
+              <SiFacebook className="w-5 h-5" />
+            </a>
+          </div>
         </div>
 
         {/* Mobile menu button */}
-        <div className="lg:hidden flex items-center gap-4">
+        <div className="lg:hidden flex items-center gap-3">
           <a
             href="https://www.instagram.com/nutriputovanje/"
             target="_blank"
@@ -144,6 +155,15 @@ export default function Header() {
             data-testid="link-instagram-mobile"
           >
             <SiInstagram className="w-5 h-5" />
+          </a>
+          <a
+            href="https://www.facebook.com/nutricionistajelena/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-600 hover:text-[#1877F2] transition-colors duration-300"
+            data-testid="link-facebook-mobile"
+          >
+            <SiFacebook className="w-5 h-5" />
           </a>
           <button
             onClick={toggleMobileMenu}

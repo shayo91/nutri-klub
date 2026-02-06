@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { useState } from "react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { SiInstagram } from "react-icons/si";
+import { SiInstagram, SiFacebook } from "react-icons/si";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -56,6 +56,15 @@ export default function Footer() {
                 className="w-10 h-10 bg-[#ECF8F2] rounded-full flex items-center justify-center text-[#1F7A5C] hover:bg-[#1F7A5C] hover:text-white transition"
               >
                 <SiInstagram className="w-5 h-5" />
+              </a>
+              <a
+                href="https://www.facebook.com/nutricionistajelena/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="w-10 h-10 bg-[#ECF8F2] rounded-full flex items-center justify-center text-[#1F7A5C] hover:bg-[#1877F2] hover:text-white transition"
+              >
+                <SiFacebook className="w-5 h-5" />
               </a>
             </div>
           </div>

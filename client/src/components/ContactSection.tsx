@@ -86,7 +86,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-16 md:py-24" style={{ backgroundColor: "#F5F5F0" }}>
+    <section id="contact" className="py-16 md:py-24 bg-[#5DAD8C]">
       <div className="container mx-auto px-4">
         <motion.div
           ref={headerRef}
@@ -95,13 +95,13 @@ export default function ContactSection() {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <p className="text-primary font-medium tracking-wide uppercase mb-2">
+          <p className="text-white/80 font-medium tracking-wide uppercase mb-2">
             KONTAKT
           </p>
-          <h2 className="text-3xl md:text-4xl font-bold font-poppins mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold font-poppins mb-6 text-white">
             Pošalji poruku
           </h2>
-          <p className="text-gray-600">
+          <p className="text-white/80">
             Za sve informacije o proizvodima i uslugama ispuni kontakt formu ili mi se javi direktno putem e-maila.
           </p>
         </motion.div>
@@ -111,22 +111,22 @@ export default function ContactSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-primary/5 rounded-xl p-6 mb-10 max-w-3xl mx-auto"
+          className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-10 max-w-3xl mx-auto border border-white/20"
         >
-          <h3 className="text-xl font-bold font-poppins mb-4 text-gray-800 text-center">
+          <h3 className="text-xl font-bold font-poppins mb-4 text-white text-center">
             Kontakt Informacije
           </h3>
           <div className="flex justify-center">
             <div className="flex items-center">
-              <div className="bg-primary text-white p-2 rounded-lg mr-3">
+              <div className="bg-white text-[#5DAD8C] p-2 rounded-lg mr-3">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
                   <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
                 </svg>
               </div>
               <div>
-                <p className="font-medium text-gray-800">Email</p>
-                <p className="text-gray-600">nutriklub@gmail.com</p>
+                <p className="font-medium text-white">Email</p>
+                <p className="text-white/80">nutriklub@gmail.com</p>
               </div>
             </div>
           </div>
@@ -231,7 +231,7 @@ export default function ContactSection() {
                 />
                 <label htmlFor="privacy" className="text-gray-600 text-sm">
                   Slažem se sa{" "}
-                  <a href="/privacy-policy" className="text-primary hover:underline">
+                  <a href="/privacy" className="text-primary hover:underline">
                     Politikom Privatnosti
                   </a>{" "}
                   i pristajem na kontaktiranje.

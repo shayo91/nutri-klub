@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
-import { FileText, MessageCircle } from "lucide-react";
+import { FileText, Mail } from "lucide-react";
 
 export default function CTABanner() {
   const { ref, inView } = useAnimateOnScroll();
@@ -35,13 +35,11 @@ export default function CTABanner() {
               Zakažite Besplatnu Konsultaciju
             </a>
             <a
-              href="https://wa.me/38766123456"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#contact"
               className="inline-flex items-center justify-center gap-2 bg-transparent border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white/10 transition-all duration-300 hover:scale-105"
             >
-              <MessageCircle className="w-5 h-5" />
-              Kontaktirajte nas na WhatsApp
+              <Mail className="w-5 h-5" />
+              Kontaktirajte Nas
             </a>
           </div>
         </div>
