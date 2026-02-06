@@ -1,0 +1,207 @@
+SEO Analiza: nutri-klub.replit.app
+✅ Što je dobro:
+
+Sajt se učitava brzo
+Responsive dizajn
+HTTPS aktivan
+Čist, profesionalan izgled
+
+❌ Kritični SEO problemi:
+1. META TAGS - KATASTROFA
+Trenutno imaš samo:
+html<title>Vite + React</title>
+Ovo mora biti:
+html<title>Nutri Klub - Nutritivni Savjeti i Planovi Ishrane | Bosnia</title>
+<meta name="description" content="Profesionalni nutritivni savjeti, personalizirani planovi ishrane i pratenje zdravlja. Online konsultacije sa licenciranim nutricionistom u Bosni i Hercegovini.">
+<meta name="keywords" content="nutricionist, ishrana, dijeta, zdravlje, Bosna, nutritivni savjeti, plan ishrane">
+
+<!-- Open Graph za društvene mreže -->
+<meta property="og:title" content="Nutri Klub - Nutritivni Savjeti Bosna">
+<meta property="og:description" content="Profesionalni nutritivni savjeti i planovi ishrane">
+<meta property="og:image" content="https://nutri-klub.ba/og-image.jpg">
+<meta property="og:url" content="https://nutri-klub.ba">
+<meta property="og:type" content="website">
+
+<!-- Lokacija -->
+<meta name="geo.region" content="BA">
+<meta name="geo.placename" content="Bosnia and Herzegovina">
+2. Nema Strukturiranih Podataka (JSON-LD)
+Google ne zna da si nutritionist! Dodaj:
+html<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dietitian",
+  "name": "Nutri Klub",
+  "image": "https://nutri-klub.ba/logo.jpg",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "BA",
+    "addressLocality": "Sarajevo"
+  },
+  "priceRange": "$$",
+  "telephone": "+387-XX-XXX-XXX",
+  "url": "https://nutri-klub.ba",
+  "description": "Profesionalni nutritivni savjeti i personalizirani planovi ishrane"
+}
+</script>
+```
+
+### 3. **Nema robots.txt i sitemap.xml**
+```
+# robots.txt
+User-agent: *
+Allow: /
+Sitemap: https://nutri-klub.ba/sitemap.xml
+4. Alt text za slike
+Sve slike moraju imati opisni alt text:
+html<!-- Loše -->
+<img src="nutritionist.jpg">
+
+<!-- Dobro -->
+<img src="nutritionist.jpg" alt="Licencirani nutricionist sa klijentom tokom konsultacije o zdravoj ishrani">
+5. Heading struktura
+
+Samo jedan <h1> po stranici
+Logična hijerarhija: h1 → h2 → h3
+Trenutno nemam uvid u strukturu, ali provjeri ovo
+
+6. Performance optimizacije
+
+Kompresuj slike (WebP format)
+Lazy loading za slike: <img loading="lazy">
+Minimiziraj CSS/JS
+
+
+Konkretne izmjene za tvoj kod:
+Fajl: index.html (u public folderu)
+Zamijeni trenutni <head> sa ovim:
+html<!DOCTYPE html>
+<html lang="bs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Primary Meta Tags -->
+  <title>Nutri Klub - Nutritivni Savjeti i Planovi Ishrane | Bosna i Hercegovina</title>
+  <meta name="title" content="Nutri Klub - Nutritivni Savjeti i Planovi Ishrane">
+  <meta name="description" content="Profesionalni nutritivni savjeti, personalizirani planovi ishrane i online konsultacije sa licenciranim nutricionistom u BiH. Ostvarite svoje zdravstvene ciljeve uz stručnu podršku.">
+  <meta name="keywords" content="nutricionist BiH, nutricionist Sarajevo, plan ishrane, dijeta, mršavljenje, zdravlje, nutritivni savjeti, online nutricionist">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nutri-klub.ba/">
+  <meta property="og:title" content="Nutri Klub - Nutritivni Savjeti BiH">
+  <meta property="og:description" content="Profesionalni nutritivni savjeti i personalizirani planovi ishrane">
+  <meta property="og:image" content="https://nutri-klub.ba/og-image.jpg">
+  <meta property="og:locale" content="bs_BA">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://nutri-klub.ba/">
+  <meta property="twitter:title" content="Nutri Klub - Nutritivni Savjeti">
+  <meta property="twitter:description" content="Profesionalni nutritivni savjeti i planovi ishrane">
+  <meta property="twitter:image" content="https://nutri-klub.ba/og-image.jpg">
+  
+  <!-- Geo Tags -->
+  <meta name="geo.region" content="BA">
+  <meta name="geo.placename" content="Bosnia and Herzegovina">
+  
+  <!-- Canonical -->
+  <link rel="canonical" href="https://nutri-klub.ba/">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/vite.svg">
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Nutri Klub",
+    "image": "https://nutri-klub.ba/logo.jpg",
+    "description": "Profesionalni nutritivni savjeti i personalizirani planovi ishrane u Bosni i Hercegovini",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "BA"
+    },
+    "url": "https://nutri-klub.ba",
+    "telephone": "+387-XX-XXX-XXX",
+    "priceRange": "$$",
+    "areaServed": {
+      "@type": "Country",
+      "name": "Bosnia and Herzegovina"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+</html>
+
+Kreiraj: public/robots.txt
+txtUser-agent: *
+Allow: /
+
+Sitemap: https://nutri-klub.ba/sitemap.xml
+
+Kreiraj: public/sitemap.xml
+xml<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://nutri-klub.ba/</loc>
+    <lastmod>2026-02-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://nutri-klub.ba/usluge</loc>
+    <lastmod>2026-02-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nutri-klub.ba/o-nama</loc>
+    <lastmod>2026-02-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nutri-klub.ba/kontakt</loc>
+    <lastmod>2026-02-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+</urlset>
+(Dodaj sve svoje stranice/rute)
+
+U React komponentama:
+Dodaj Helmet za dinamičke meta tagove:
+bashnpm install react-helmet-async
+jsx// U App.jsx ili glavnoj komponenti
+import { HelmetProvider } from 'react-helmet-async';
+
+function App() {
+  return (
+    <HelmetProvider>
+      {/* tvoj kod */}
+    </HelmetProvider>
+  );
+}
+jsx// U svakoj stranici, npr. HomePage.jsx
+import { Helmet } from 'react-helmet-async';
+
+function HomePage() {
+  return (
+    <>
+      <Helmet>
+        <title>Nutri Klub - Nutritivni Savjeti BiH</title>
+        <meta name="description" content="Profesionalni nutritivni savjeti..." />
+      </Helmet>
+      
+      <h1>Dobrodošli u Nutri Klub</h1>
+      {/* ostatak sadržaja */}
+    </>
+  );
+}
