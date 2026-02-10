@@ -29,7 +29,7 @@ export default function SocialMediaSection() {
     useAnimateOnScroll(0.6);
 
   return (
-    <section id="social-media" className="py-16 md:py-24 bg-white">
+    <section id="social-media" aria-label="Društvene mreže" className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-4">
         <motion.div
           ref={headerRef}

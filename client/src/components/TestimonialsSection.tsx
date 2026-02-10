@@ -135,7 +135,7 @@ export default function TestimonialsSection() {
   };
 
   return (
-    <section id="testimonials" className="py-16 md:py-24 bg-[#5DAD8C]">
+    <section id="testimonials" aria-label="Iskustva klijenata" className="py-16 md:py-24 bg-[#5DAD8C]">
       <div className="container mx-auto px-4 max-w-7xl">
         <motion.div
           ref={headerRef}

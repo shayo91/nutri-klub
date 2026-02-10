@@ -45,7 +45,7 @@ export default function ServicesSection() {
   const { ref: headerRef, inView: headerInView } = useAnimateOnScroll();
 
   return (
-    <section id="services" className="py-16 md:py-24 bg-secondary">
+    <section id="services" aria-label="Nutricionističke usluge" className="py-16 md:py-24 bg-secondary">
       <div className="container mx-auto px-4">
         <motion.div
           ref={headerRef}
@@ -89,6 +89,7 @@ function ServiceCard({ service }: { service: Service }) {
           src={service.image}
           alt={`${service.title} - nutricionista usluga plan ishrane BiH`}
           className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+          loading="lazy"
         />
       </div>
       <div className="p-6">

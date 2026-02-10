@@ -48,7 +48,7 @@ export default function FAQSection() {
   };
 
   return (
-    <section id="faq" className="py-16 md:py-24" style={{ backgroundColor: "#F5F5F0" }}>
+    <section id="faq" aria-label="Često postavljana pitanja" className="py-16 md:py-24" style={{ backgroundColor: "#F5F5F0" }}>
       <Helmet>
         <script type="application/ld+json">
           {JSON.stringify(faqJsonLd)}

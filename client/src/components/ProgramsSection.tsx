@@ -47,7 +47,7 @@ export default function ProgramsSection() {
   };
 
   return (
-    <section id="coming-soon" className="py-16 md:py-24 bg-[#5DAD8C]" ref={ref}>
+    <section id="coming-soon" aria-label="Uskoro dostupni programi" className="py-16 md:py-24 bg-[#5DAD8C]" ref={ref}>
       <div className="container mx-auto px-4">
         {/* Header */}
         <motion.div

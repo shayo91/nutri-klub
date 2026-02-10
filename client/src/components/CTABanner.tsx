@@ -6,7 +6,7 @@ export default function CTABanner() {
   const { ref, inView } = useAnimateOnScroll();
 
   return (
-    <section className="py-12 md:py-16 bg-gradient-to-r from-[#5DAD8C] to-[#4A9A79] relative overflow-hidden">
+    <section aria-label="Poziv na akciju - Zakažite konsultaciju" className="py-12 md:py-16 bg-gradient-to-r from-[#5DAD8C] to-[#4A9A79] relative overflow-hidden">
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-0 left-0 w-64 h-64 bg-white rounded-full -translate-x-1/2 -translate-y-1/2"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full translate-x-1/3 translate-y-1/3"></div>

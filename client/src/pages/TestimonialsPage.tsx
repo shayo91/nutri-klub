@@ -133,6 +133,12 @@ export default function TestimonialsPage() {
         <meta name="description" content="Pogledajte transformacije i iskustva klijenata nutricioniste Jelene Matijaš. Rezultati mršavljenja i zdrave ishrane u Bosni i Hercegovini." />
         <meta property="og:title" content="Recenzije i Rezultati | Nutricionista Jelena Matijaš" />
         <meta property="og:description" content="Pogledajte transformacije i iskustva klijenata nutricioniste u BiH. Rezultati personalizovanih planova ishrane." />
+        <meta property="og:image" content="https://nutriputovanje.com/attached_assets/Untitled_design_(18)_1770122157577.png" />
+        <meta property="og:locale" content="bs_BA" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Recenzije i Rezultati | Nutricionista Jelena Matijaš" />
+        <meta name="twitter:description" content="Pogledajte transformacije i iskustva klijenata nutricioniste u BiH. Rezultati personalizovanih planova ishrane." />
+        <meta name="twitter:image" content="https://nutriputovanje.com/attached_assets/Untitled_design_(18)_1770122157577.png" />
         <link rel="canonical" href="https://nutriputovanje.com/testimonials" />
       </Helmet>
       {/* Hero Section */}

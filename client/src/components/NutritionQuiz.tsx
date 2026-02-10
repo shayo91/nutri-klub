@@ -183,7 +183,7 @@ export default function NutritionQuiz() {
   };
 
   return (
-    <section id="nutrition-quiz" className="py-16 md:py-24 bg-gray-50">
+    <section id="nutrition-quiz" aria-label="Kviz o ishrani" className="py-16 md:py-24 bg-gray-50">
       <div className="container mx-auto px-4">
         <motion.div
           ref={ref}
@@ -228,6 +228,7 @@ export default function NutritionQuiz() {
                     src="https://images.unsplash.com/photo-1505253758473-96b7015fcd40?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=300"
                     alt="Kviz o ishrani - nutricionista savjeti za zdrav život"
                     className="mx-auto rounded-lg mb-8"
+                    loading="lazy"
                   />
                   <h3 className="text-2xl font-bold mb-4">
                     Spremni da pronađete svoj savršen plan ishrane?

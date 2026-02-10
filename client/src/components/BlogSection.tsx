@@ -93,7 +93,7 @@ export default function BlogSection({ posts, categories }: BlogSectionProps) {
   };
 
   return (
-    <section id="blog" className="py-16 md:py-24 bg-secondary">
+    <section id="blog" aria-label="Blog o ishrani" className="py-16 md:py-24 bg-secondary">
       <div className="container mx-auto px-4">
         <motion.div
           ref={headerRef}

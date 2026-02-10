@@ -261,6 +261,39 @@ export default function BlogPost() {
         <link rel="canonical" href={`https://nutriputovanje.com/blog/${post.slug}`} />
         <meta property="article:author" content={post.author.name} />
         <meta property="article:section" content={post.category} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${post.title} | Nutricionista Jelena Matijaš`} />
+        <meta name="twitter:description" content={post.excerpt || `${post.title} - savjeti nutricionista za zdravlje i ishranu u BiH`} />
+        {post.image && <meta name="twitter:image" content={post.image} />}
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": post.title,
+          "description": post.excerpt || `${post.title} - savjeti nutricionista za zdravlje i ishranu u BiH`,
+          "image": post.image || "",
+          "author": {
+            "@type": "Person",
+            "name": post.author.name,
+            "jobTitle": "Magistar nutricionizma",
+            "url": "https://nutriputovanje.com/about"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "NutriKlub",
+            "url": "https://nutriputovanje.com",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://nutriputovanje.com/attached_assets/Untitled_design_(18)_1770122157577.png"
+            }
+          },
+          "datePublished": post.date,
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": `https://nutriputovanje.com/blog/${post.slug}`
+          },
+          "articleSection": post.category,
+          "inLanguage": "bs"
+        })}</script>
       </Helmet>
       {/* Hero sekcija */}
       <div className="relative h-96 bg-gray-900 overflow-hidden">

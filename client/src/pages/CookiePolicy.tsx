@@ -1,9 +1,16 @@
 import { motion } from "framer-motion";
 import Layout from "@/components/Layout";
+import { Helmet } from "react-helmet";
 
 export default function CookiePolicy() {
   return (
     <Layout>
+      <Helmet>
+        <title>Politika Kolačića | Nutricionista Jelena Matijaš</title>
+        <meta name="description" content="Politika kolačića nutricioniste Jelene Matijaš. Saznajte kako koristimo kolačiće za poboljšanje vašeg iskustva na sajtu." />
+        <link rel="canonical" href="https://nutriputovanje.com/cookies" />
+        <meta name="robots" content="noindex, follow" />
+      </Helmet>
       <div className="min-h-screen bg-gray-50 py-16">
         <div className="container mx-auto px-4">
           <motion.div

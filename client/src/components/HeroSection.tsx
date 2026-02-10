@@ -24,6 +24,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
+      aria-label="Početna sekcija - Nutricionista Jelena Matijaš"
       className="relative min-h-[70vh] flex items-center overflow-hidden py-12 lg:py-16"
       style={{ backgroundColor: "#ECF8F2" }}
     >

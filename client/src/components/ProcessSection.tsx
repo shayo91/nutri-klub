@@ -58,7 +58,7 @@ export default function ProcessSection() {
   const { ref: ctaRef, inView: ctaInView } = useAnimateOnScroll(0.6);
 
   return (
-    <section id="process" className="py-16 md:py-24 bg-secondary">
+    <section id="process" aria-label="Proces rada sa nutricionistom" className="py-16 md:py-24 bg-secondary">
       <div className="container mx-auto px-4">
         <motion.div
           ref={headerRef}

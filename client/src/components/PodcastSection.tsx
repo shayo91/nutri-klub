@@ -62,7 +62,7 @@ export default function PodcastSection() {
   };
 
   return (
-    <section id="podcasts" className="py-16 md:py-24 bg-secondary">
+    <section id="podcasts" aria-label="Podcast epizode" className="py-16 md:py-24 bg-secondary">
       <div className="container mx-auto px-4">
         <motion.div
           ref={ref}
@@ -97,6 +97,7 @@ export default function PodcastSection() {
                 src={activePodcast.image}
                 alt={`${activePodcast.title} - podcast nutricioniste o zdravoj ishrani`}
                 className="w-40 h-40 rounded-lg object-cover"
+                loading="lazy"
               />
               <div className="flex-1">
                 <h3 className="text-xl font-bold mb-2">
@@ -176,6 +177,7 @@ export default function PodcastSection() {
                   src={episode.image}
                   alt={`${episode.title} - podcast o ishrani i zdravlju`}
                   className="w-full h-48 object-cover"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 hover:bg-opacity-40 transition-opacity">
                   <div className="bg-white bg-opacity-90 rounded-full p-3">

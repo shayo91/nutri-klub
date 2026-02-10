@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet";
 
 export default function TermsOfService() {
   useEffect(() => {
@@ -8,6 +9,12 @@ export default function TermsOfService() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-16">
+        <Helmet>
+          <title>Uslovi Korišćenja | Nutricionista Jelena Matijaš</title>
+          <meta name="description" content="Uslovi korišćenja usluga nutricioniste Jelene Matijaš. Pravila i odgovornosti za korisnike naših nutritivnih programa." />
+          <link rel="canonical" href="https://nutriputovanje.com/terms" />
+          <meta name="robots" content="noindex, follow" />
+        </Helmet>
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

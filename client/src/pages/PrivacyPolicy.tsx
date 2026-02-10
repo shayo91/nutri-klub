@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet";
 
 export default function PrivacyPolicy() {
   useEffect(() => {
@@ -8,6 +9,12 @@ export default function PrivacyPolicy() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-16">
+        <Helmet>
+          <title>Politika Privatnosti | Nutricionista Jelena Matijaš</title>
+          <meta name="description" content="Politika privatnosti nutricioniste Jelene Matijaš. Saznajte kako štitimo vaše lične podatke i zdravstvene informacije." />
+          <link rel="canonical" href="https://nutriputovanje.com/privacy" />
+          <meta name="robots" content="noindex, follow" />
+        </Helmet>
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
