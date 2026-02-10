@@ -5,6 +5,65 @@ import { getBlogPosts, getBlogPostById, getTestimonials, getAnnouncements, getVi
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  app.get("/robots.txt", (_req, res) => {
+    res.type("text/plain").send(`User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://nutriputovanje.com/sitemap.xml
+`);
+  });
+
+  app.get("/sitemap.xml", async (_req, res) => {
+    let blogUrls = "";
+    try {
+      const result = await getBlogPosts();
+      if (result.posts) {
+        blogUrls = result.posts.map((post: any) => `  <url>
+    <loc>https://nutriputovanje.com/blog/${post.slug}</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>`).join("\n");
+      }
+    } catch (e) {}
+
+    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://nutriputovanje.com/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://nutriputovanje.com/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nutriputovanje.com/testimonials</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nutriputovanje.com/privacy</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://nutriputovanje.com/terms</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://nutriputovanje.com/cookies</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+${blogUrls}
+</urlset>`;
+    res.type("application/xml").send(sitemap);
+  });
+
   // API Routes
   
   // Get blog posts from Notion

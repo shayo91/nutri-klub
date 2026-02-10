@@ -49,32 +49,32 @@ export default function ContactSection() {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
+      const response = await fetch("/api/contact", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to send message');
+        throw new Error("Failed to send message");
       }
 
       toast({
         title: "Uspešno!",
         description: "Poruka je uspešno poslana!",
       });
-      
+
       setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: '',
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
         privacyAgreed: false,
       });
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error("Error sending message:", error);
       toast({
         title: "Greška",
         description: "Došlo je do greške prilikom slanja poruke.",
@@ -102,34 +102,9 @@ export default function ContactSection() {
             Pošalji poruku
           </h2>
           <p className="text-white/80">
-            Za sve informacije o proizvodima i uslugama ispuni kontakt formu ili mi se javi direktno putem e-maila.
+            Za sve informacije o proizvodima i uslugama ispuni kontakt formu ili
+            mi se javi direktno putem e-maila.
           </p>
-        </motion.div>
-
-        {/* Contact Info - Full Width */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-10 max-w-3xl mx-auto border border-white/20"
-        >
-          <h3 className="text-xl font-bold font-poppins mb-4 text-white text-center">
-            Kontakt Informacije
-          </h3>
-          <div className="flex justify-center">
-            <div className="flex items-center">
-              <div className="bg-white text-[#5DAD8C] p-2 rounded-lg mr-3">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-                </svg>
-              </div>
-              <div>
-                <p className="font-medium text-white">Email</p>
-                <p className="text-white/80">nutriklub@gmail.com</p>
-              </div>
-            </div>
-          </div>
         </motion.div>
 
         <motion.div
@@ -255,25 +230,32 @@ export default function ContactSection() {
               </h3>
               <ul className="space-y-3">
                 <li className="text-gray-700">
-                  <strong>Personalizovan plan ishrane</strong> - prilagođen vašim ciljevima, zdravstvenom stanju i načinu života
+                  <strong>Personalizovan plan ishrane</strong> - prilagođen
+                  vašim ciljevima, zdravstvenom stanju i načinu života
                 </li>
                 <li className="text-gray-700">
-                  <strong>Stručno savjetovanje</strong> - magistar nutricionizma sa višegodišnjim iskustvom u BiH
+                  <strong>Stručno savjetovanje</strong> - magistar nutricionizma
+                  sa višegodišnjim iskustvom u BiH
                 </li>
                 <li className="text-gray-700">
-                  <strong>Održivo mršavljenje</strong> - bez gladovanja, jojo efekta i striktnih dijeta
+                  <strong>Održivo mršavljenje</strong> - bez gladovanja, jojo
+                  efekta i striktnih dijeta
                 </li>
                 <li className="text-gray-700">
-                  <strong>Zdravo debljanje</strong> - povećanje tjelesne mase pravilnom ishranom i treningom
+                  <strong>Zdravo debljanje</strong> - povećanje tjelesne mase
+                  pravilnom ishranom i treningom
                 </li>
                 <li className="text-gray-700">
-                  <strong>Bezglutenska ishrana</strong> - planovi za celijakiju i intoleranciju na gluten
+                  <strong>Bezglutenska ishrana</strong> - planovi za celijakiju
+                  i intoleranciju na gluten
                 </li>
                 <li className="text-gray-700">
-                  <strong>Online konsultacije</strong> - dostupne širom Bosne i Hercegovine iz udobnosti vašeg doma
+                  <strong>Online konsultacije</strong> - dostupne širom Bosne i
+                  Hercegovine iz udobnosti vašeg doma
                 </li>
                 <li className="text-gray-700">
-                  <strong>Kontinuirana podrška</strong> - praćenje napretka i prilagođavanje plana vašim potrebama
+                  <strong>Kontinuirana podrška</strong> - praćenje napretka i
+                  prilagođavanje plana vašim potrebama
                 </li>
               </ul>
             </div>

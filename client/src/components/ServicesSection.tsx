@@ -87,7 +87,7 @@ function ServiceCard({ service }: { service: Service }) {
       <div className="h-48 overflow-hidden">
         <img
           src={service.image}
-          alt={service.title}
+          alt={`${service.title} - nutricionista usluga plan ishrane BiH`}
           className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
         />
       </div>

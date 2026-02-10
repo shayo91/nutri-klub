@@ -267,7 +267,7 @@ export default function BlogPost() {
         {post.image && (
           <img 
             src={post.image} 
-            alt={post.title}
+            alt={`${post.title} - blog nutricionista Jelena Matijaš`}
             className="absolute inset-0 w-full h-full object-cover opacity-60"
           />
         )}

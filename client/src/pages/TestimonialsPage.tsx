@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet";
 
 // Header is handled by the main layout
 
@@ -127,6 +128,13 @@ export default function TestimonialsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Helmet>
+        <title>Recenzije i Rezultati | Nutricionista Jelena Matijaš BiH</title>
+        <meta name="description" content="Pogledajte transformacije i iskustva klijenata nutricioniste Jelene Matijaš. Rezultati mršavljenja i zdrave ishrane u Bosni i Hercegovini." />
+        <meta property="og:title" content="Recenzije i Rezultati | Nutricionista Jelena Matijaš" />
+        <meta property="og:description" content="Pogledajte transformacije i iskustva klijenata nutricioniste u BiH. Rezultati personalizovanih planova ishrane." />
+        <link rel="canonical" href="https://nutriputovanje.com/testimonials" />
+      </Helmet>
       {/* Hero Section */}
       <section className="py-16 md:py-24" style={{ backgroundColor: "#F5F5F0" }}>
         <div className="container mx-auto px-4">

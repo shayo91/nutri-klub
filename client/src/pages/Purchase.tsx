@@ -94,7 +94,7 @@ export default function Purchase() {
               <div>
                 <img
                   src={ebook.image}
-                  alt={ebook.title}
+                  alt={`${ebook.title} - e-knjiga nutricionista plan ishrane`}
                   className="w-full max-w-md mx-auto rounded-xl shadow-lg"
                 />
               </div>

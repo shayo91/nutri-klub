@@ -25,39 +25,91 @@
     <meta name="twitter:title" content="Nutricionista Jelena Matijaš | Planovi Ishrane BiH" />
     <meta name="twitter:description" content="Online nutricionist i nutricionista Banja Luka. Personalizovani planovi ishrane za mršavljenje i debljanje. Dijeta savjeti i zdravlje ishrana." />
     
-    <!-- Structured Data for Local Business -->
+    <!-- Structured Data: LocalBusiness + Person -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Nutritionist",
-      "name": "Jelena Matijaš",
-      "description": "Magistar nutricionizma - personalizovani planovi ishrane za mršavljenje, debljanje i zdrav život",
+      "@type": "LocalBusiness",
+      "name": "NutriKlub - Nutricionista Jelena Matijaš",
+      "description": "Magistar nutricionizma - personalizovani planovi ishrane za mršavljenje, debljanje i zdrav život u Bosni i Hercegovini",
       "url": "https://nutriputovanje.com",
-      "areaServed": {
-        "@type": "Country",
-        "name": "Bosna i Hercegovina"
+      "email": "nutriklub@gmail.com",
+      "image": "https://nutriputovanje.com/attached_assets/Untitled_design_(18)_1770122157577.png",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Banja Luka",
+        "addressCountry": "BA"
       },
-      "knowsAbout": ["Nutricionizam", "Planovi ishrane", "Mršavljenje", "Debljanje", "Bezglutenska ishrana", "Zdrava ishrana", "Dijeta savjeti", "Online nutricionist", "Zdravlje ishrana"],
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "44.7722",
+        "longitude": "17.1910"
+      },
+      "areaServed": [
+        { "@type": "Country", "name": "Bosna i Hercegovina" },
+        { "@type": "City", "name": "Banja Luka" },
+        { "@type": "City", "name": "Sarajevo" },
+        { "@type": "City", "name": "Tuzla" }
+      ],
+      "founder": {
+        "@type": "Person",
+        "name": "Jelena Matijaš",
+        "jobTitle": "Magistar nutricionizma",
+        "description": "Online nutricionista i stručnjak za personalizovane planove ishrane",
+        "knowsAbout": ["Nutricionizam", "Planovi ishrane", "Mršavljenje", "Debljanje", "Bezglutenska ishrana", "Zdrava ishrana", "Dijeta savjeti", "Online nutricionist"]
+      },
+      "sameAs": [
+        "https://www.instagram.com/nutriputovanje/",
+        "https://www.facebook.com/nutricionistajelena/"
+      ],
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
         "name": "Usluge nutricionizma",
         "itemListElement": [
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Personalizovani plan ishrane"
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Online konsultacije"
-            }
-          }
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Individualno nutricionističko savjetovanje", "description": "Personalizovan plan ishrane prilagođen vašim ciljevima" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Plan ishrane za mršavljenje", "description": "Održivo mršavljenje bez gladovanja i jojo efekta" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Plan ishrane za debljanje", "description": "Zdravo povećanje tjelesne mase pravilnom ishranom" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Bezglutenska ishrana", "description": "Planovi ishrane za celijakiju i intoleranciju na gluten" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Online nutricionističke konsultacije", "description": "Konsultacije sa nutricionistom iz udobnosti vašeg doma" } }
         ]
+      },
+      "priceRange": "$$"
+    }
+    </script>
+
+    <!-- Structured Data: WebSite -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "NutriKlub - Nutricionista Jelena Matijaš",
+      "url": "https://nutriputovanje.com",
+      "description": "Online nutricionista BiH - planovi ishrane, dijeta savjeti, mršavljenje i zdrava ishrana",
+      "inLanguage": "bs",
+      "publisher": {
+        "@type": "Organization",
+        "name": "NutriKlub",
+        "url": "https://nutriputovanje.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://nutriputovanje.com/attached_assets/Untitled_design_(18)_1770122157577.png"
+        }
       }
+    }
+    </script>
+
+    <!-- Structured Data: BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Početna", "item": "https://nutriputovanje.com/" },
+        { "@type": "ListItem", "position": 2, "name": "O Meni", "item": "https://nutriputovanje.com/about" },
+        { "@type": "ListItem", "position": 3, "name": "Usluge", "item": "https://nutriputovanje.com/#pricing" },
+        { "@type": "ListItem", "position": 4, "name": "Recenzije", "item": "https://nutriputovanje.com/testimonials" },
+        { "@type": "ListItem", "position": 5, "name": "Kontakt", "item": "https://nutriputovanje.com/#contact" }
+      ]
     }
     </script>
   </head>

@@ -45,7 +45,8 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-gray-600 mb-6">
-              Pomažem ljudima koji žele da unaprijede ishranu kroz praktične, zdrave i ukusne recepte.
+              Pomažem ljudima koji žele da unaprijede ishranu kroz praktične,
+              zdrave i ukusne recepte.
             </p>
             <div className="flex space-x-3">
               <a
@@ -73,27 +74,42 @@ export default function Footer() {
             <h3 className="text-[#1F7A5C] font-semibold mb-4">Navigacija</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/" className="text-gray-600 hover:text-[#1F7A5C] transition">
+                <Link
+                  href="/"
+                  className="text-gray-600 hover:text-[#1F7A5C] transition"
+                >
                   Početna
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="text-gray-600 hover:text-[#1F7A5C] transition">
+                <Link
+                  href="/about"
+                  className="text-gray-600 hover:text-[#1F7A5C] transition"
+                >
                   O Meni
                 </Link>
               </li>
               <li>
-                <Link href="/#pricing" className="text-gray-600 hover:text-[#1F7A5C] transition">
+                <Link
+                  href="/#pricing"
+                  className="text-gray-600 hover:text-[#1F7A5C] transition"
+                >
                   Usluge
                 </Link>
               </li>
               <li>
-                <Link href="/testimonials" className="text-gray-600 hover:text-[#1F7A5C] transition">
+                <Link
+                  href="/testimonials"
+                  className="text-gray-600 hover:text-[#1F7A5C] transition"
+                >
                   Recenzije
                 </Link>
               </li>
               <li>
-                <Link href="/#contact" className="text-gray-600 hover:text-[#1F7A5C] transition">
+                <Link
+                  href="/#contact"
+                  className="text-gray-600 hover:text-[#1F7A5C] transition"
+                >
                   Kontakt
                 </Link>
               </li>
@@ -103,31 +119,11 @@ export default function Footer() {
           <div>
             <h3 className="text-[#1F7A5C] font-semibold mb-4">Usluge</h3>
             <ul className="space-y-2">
-              <li>
-                <Link href="/#pricing" className="text-gray-600 hover:text-[#1F7A5C] transition">
-                  Individualno Savjetovanje
-                </Link>
-              </li>
-              <li>
-                <Link href="/#pricing" className="text-gray-600 hover:text-[#1F7A5C] transition">
-                  Plan Ishrane za Mršavljenje
-                </Link>
-              </li>
-              <li>
-                <Link href="/#pricing" className="text-gray-600 hover:text-[#1F7A5C] transition">
-                  Plan Ishrane za Debljanje
-                </Link>
-              </li>
-              <li>
-                <Link href="/#pricing" className="text-gray-600 hover:text-[#1F7A5C] transition">
-                  Bezglutenska Ishrana
-                </Link>
-              </li>
-              <li>
-                <Link href="/#pricing" className="text-gray-600 hover:text-[#1F7A5C] transition">
-                  Online Nutricionista
-                </Link>
-              </li>
+              <li>Individualno Savjetovanje</li>
+              <li>Plan Ishrane za Mršavljenje</li>
+              <li>Plan Ishrane za Debljanje</li>
+              <li>Bezglutenska Ishrana</li>
+              <li>Online Nutricionista</li>
             </ul>
           </div>
 
@@ -136,17 +132,24 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-[#5DAD8C] mt-0.5 flex-shrink-0" />
-                <span className="text-gray-600">Banja Luka, Bosna i Hercegovina</span>
+                <span className="text-gray-600">
+                  Banja Luka, Bosna i Hercegovina
+                </span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-[#5DAD8C] flex-shrink-0" />
-                <a href="mailto:nutriklub@gmail.com" className="text-gray-600 hover:text-[#1F7A5C] transition">
+                <a
+                  href="mailto:nutriklub@gmail.com"
+                  className="text-gray-600 hover:text-[#1F7A5C] transition"
+                >
                   nutriklub@gmail.com
                 </a>
               </li>
             </ul>
 
-            <h3 className="text-[#1F7A5C] font-semibold mt-6 mb-3">Newsletter</h3>
+            <h3 className="text-[#1F7A5C] font-semibold mt-6 mb-3">
+              Newsletter
+            </h3>
             <form onSubmit={handleSubscribe} className="space-y-2">
               <input
                 type="email"
@@ -173,15 +176,24 @@ export default function Footer() {
               © {new Date().getFullYear()} Jelena Matijaš. Sva prava zadržana.
             </p>
             <div className="flex items-center gap-4 text-sm">
-              <Link href="/privacy" className="text-gray-500 hover:text-[#1F7A5C] transition">
+              <Link
+                href="/privacy"
+                className="text-gray-500 hover:text-[#1F7A5C] transition"
+              >
                 Politika Privatnosti
               </Link>
               <span className="text-gray-300">|</span>
-              <Link href="/terms" className="text-gray-500 hover:text-[#1F7A5C] transition">
+              <Link
+                href="/terms"
+                className="text-gray-500 hover:text-[#1F7A5C] transition"
+              >
                 Uslovi Korištenja
               </Link>
               <span className="text-gray-300">|</span>
-              <Link href="/cookies" className="text-gray-500 hover:text-[#1F7A5C] transition">
+              <Link
+                href="/cookies"
+                className="text-gray-500 hover:text-[#1F7A5C] transition"
+              >
                 Kolačići
               </Link>
             </div>
