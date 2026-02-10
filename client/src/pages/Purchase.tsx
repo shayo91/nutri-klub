@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useParams } from "wouter";
 import Layout from "@/components/Layout";
+import { Helmet } from "react-helmet";
 
 type Ebook = {
   id: number;
