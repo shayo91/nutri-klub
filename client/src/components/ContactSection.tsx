@@ -258,6 +258,9 @@ export default function ContactSection() {
                   <strong>Personalizovan plan ishrane</strong> - prilagođen vašim ciljevima, zdravstvenom stanju i načinu života
                 </li>
                 <li className="text-gray-700">
+                  <strong>Stručno savjetovanje</strong> - magistar nutricionizma sa višegodišnjim iskustvom u BiH
+                </li>
+                <li className="text-gray-700">
                   <strong>Održivo mršavljenje</strong> - bez gladovanja, jojo efekta i striktnih dijeta
                 </li>
                 <li className="text-gray-700">
@@ -265,6 +268,9 @@ export default function ContactSection() {
                 </li>
                 <li className="text-gray-700">
                   <strong>Bezglutenska ishrana</strong> - planovi za celijakiju i intoleranciju na gluten
+                </li>
+                <li className="text-gray-700">
+                  <strong>Online konsultacije</strong> - dostupne širom Bosne i Hercegovine iz udobnosti vašeg doma
                 </li>
                 <li className="text-gray-700">
                   <strong>Kontinuirana podrška</strong> - praćenje napretka i prilagođavanje plana vašim potrebama
