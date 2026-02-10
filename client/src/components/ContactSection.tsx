@@ -254,47 +254,20 @@ export default function ContactSection() {
                 Zašto Nutricionista?
               </h3>
               <ul className="space-y-3">
-                <li className="flex items-start">
-                  <span className="text-primary mr-2 mt-1">✓</span>
-                  <span className="text-gray-700">
-                    <strong>Personalizovan plan ishrane</strong> - prilagođen vašim ciljevima, zdravstvenom stanju i načinu života
-                  </span>
+                <li className="text-gray-700">
+                  <strong>Personalizovan plan ishrane</strong> - prilagođen vašim ciljevima, zdravstvenom stanju i načinu života
                 </li>
-                <li className="flex items-start">
-                  <span className="text-primary mr-2 mt-1">✓</span>
-                  <span className="text-gray-700">
-                    <strong>Stručno savjetovanje</strong> - magistar nutricionizma sa višegodišnjim iskustvom u BiH
-                  </span>
+                <li className="text-gray-700">
+                  <strong>Održivo mršavljenje</strong> - bez gladovanja, jojo efekta i striktnih dijeta
                 </li>
-                <li className="flex items-start">
-                  <span className="text-primary mr-2 mt-1">✓</span>
-                  <span className="text-gray-700">
-                    <strong>Održivo mršavljenje</strong> - bez gladovanja, jojo efekta i striktnih dijeta
-                  </span>
+                <li className="text-gray-700">
+                  <strong>Zdravo debljanje</strong> - povećanje tjelesne mase pravilnom ishranom i treningom
                 </li>
-                <li className="flex items-start">
-                  <span className="text-primary mr-2 mt-1">✓</span>
-                  <span className="text-gray-700">
-                    <strong>Zdravo debljanje</strong> - povećanje tjelesne mase pravilnom ishranom i treningom
-                  </span>
+                <li className="text-gray-700">
+                  <strong>Bezglutenska ishrana</strong> - planovi za celijakiju i intoleranciju na gluten
                 </li>
-                <li className="flex items-start">
-                  <span className="text-primary mr-2 mt-1">✓</span>
-                  <span className="text-gray-700">
-                    <strong>Bezglutenska ishrana</strong> - planovi za celijakiju i intoleranciju na gluten
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-primary mr-2 mt-1">✓</span>
-                  <span className="text-gray-700">
-                    <strong>Online konsultacije</strong> - dostupne širom Bosne i Hercegovine iz udobnosti vašeg doma
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-primary mr-2 mt-1">✓</span>
-                  <span className="text-gray-700">
-                    <strong>Kontinuirana podrška</strong> - praćenje napretka i prilagođavanje plana vašim potrebama
-                  </span>
+                <li className="text-gray-700">
+                  <strong>Kontinuirana podrška</strong> - praćenje napretka i prilagođavanje plana vašim potrebama
                 </li>
               </ul>
             </div>

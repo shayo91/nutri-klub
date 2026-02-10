@@ -12,6 +12,7 @@ import Purchase from "@/pages/Purchase";
 import TestimonialsPage from "@/pages/TestimonialsPage";
 import AboutMe from "@/pages/AboutMe";
 import NotFound from "@/pages/not-found";
+import CookieConsent from "@/components/CookieConsent";
 
 function Router() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Router />
         </Layout>
         <Toaster />
+        <CookieConsent />
       </TooltipProvider>
     </LanguageProvider>
   );
