@@ -48,7 +48,7 @@ export default function FAQSection() {
   };
 
   return (
-    <section id="faq" aria-label="Često postavljana pitanja" className="py-16 md:py-24" style={{ backgroundColor: "#F5F5F0" }}>
+    <section id="faq" aria-label="Često postavljana pitanja" className="py-16 md:py-24 bg-primary-bg">
       <Helmet>
         <script type="application/ld+json">
           {JSON.stringify(faqJsonLd)}
@@ -131,7 +131,7 @@ export default function FAQSection() {
           </p>
           <a
             href="#contact"
-            className="inline-block px-8 py-3 bg-primary hover:bg-primary-dark text-white rounded-md font-medium transition duration-300 ease-in-out"
+            className="inline-block px-8 py-3 bg-[#5EBA9A] hover:bg-[#4DA88A] text-white rounded-full font-medium transition duration-300 ease-in-out shadow-md"
           >
             Postavite Pitanje
           </a>

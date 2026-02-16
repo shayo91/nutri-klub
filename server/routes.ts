@@ -9,6 +9,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.type("text/plain").send(`User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /purchase
 
 Sitemap: https://nutriputovanje.com/sitemap.xml
 `);
@@ -47,6 +48,24 @@ Sitemap: https://nutriputovanje.com/sitemap.xml
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nutriputovanje.com/privacy</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://nutriputovanje.com/terms</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://nutriputovanje.com/cookies</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 ${blogUrls}
 </urlset>`;

@@ -23,8 +23,8 @@ interface ContactFormData {
 }
 
 const contactInfo = [
-	{ icon: Mail, label: "Email", value: "info@nutricionista.ba" },
-	{ icon: Phone, label: "Telefon", value: "+387 65 123 456" },
+	{ icon: Mail, label: "Email", value: "contact@nutri-klub.ba" },
+	{ icon: Phone, label: "Telefon", value: "Po dogovoru" },
 	{ icon: MapPin, label: "Lokacija", value: "Banja Luka, BiH" },
 ]
 
@@ -93,23 +93,20 @@ export default function ContactSection() {
 		}
 	}
 
-	const handleSubmit = async (e: React.FormEvent) => {
+	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault()
 		setIsSubmitting(true)
 		try {
-			const response = await fetch("/api/contact", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(formData),
-			})
-
-			if (!response.ok) throw new Error("Failed to send message")
-
+			const subject = encodeURIComponent(formData.subject)
+			const body = encodeURIComponent(
+				`Ime: ${formData.name}\nEmail: ${formData.email}\n\nPoruka:\n${formData.message}`,
+			)
+			const mailtoUrl = `mailto:contact@nutri-klub.ba?subject=${subject}&body=${body}`
+			window.location.href = mailtoUrl
 			toast({
 				title: "Uspešno!",
-				description: "Poruka je uspešno poslana!",
+				description: "Vaš email klijent će se otvoriti sa porukom. Pošaljite poruku da završite.",
 			})
-
 			setFormData({
 				name: "",
 				email: "",
@@ -118,10 +115,10 @@ export default function ContactSection() {
 				privacyAgreed: false,
 			})
 		} catch (err) {
-			console.error("Error sending message:", err)
+			console.error("Error preparing message:", err)
 			toast({
 				title: "Greška",
-				description: "Došlo je do greške prilikom slanja poruke.",
+				description: "Došlo je do greške. Pokušajte direktno na contact@nutri-klub.ba",
 				variant: "destructive",
 			})
 		} finally {
@@ -136,12 +133,12 @@ export default function ContactSection() {
 		<section
 			id="contact"
 			aria-label="Kontakt forma"
-			className="relative w-full overflow-hidden bg-[hsl(157,34%,45%)]"
+			className="relative w-full overflow-hidden bg-[#62B895]"
 		>
 			{/* Decorative background shapes */}
 			<div className="pointer-events-none absolute inset-0">
-				<div className="absolute -left-20 -top-20 h-72 w-72 rounded-full bg-[hsl(157,34%,35%)] opacity-35" />
-				<div className="absolute -bottom-32 -right-20 h-96 w-96 rounded-full bg-[hsl(157,34%,35%)] opacity-35" />
+				<div className="absolute -left-20 -top-20 h-72 w-72 rounded-full bg-white/10 opacity-50" />
+				<div className="absolute -bottom-32 -right-20 h-96 w-96 rounded-full bg-white/10 opacity-50" />
 			</div>
 
 			<div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-24">
@@ -153,13 +150,13 @@ export default function ContactSection() {
 					transition={{ duration: 0.6 }}
 					className="mb-12 text-center"
 				>
-					<span className="mb-3 inline-block text-xs font-bold uppercase tracking-[0.2em] text-white/80">
+					<span className="mb-3 inline-block text-xs font-bold uppercase tracking-[0.2em] text-white/90">
 						KONTAKT
 					</span>
 					<h2 className="text-balance text-3xl font-bold text-white font-poppins sm:text-4xl">
 						Pošalji poruku
 					</h2>
-					<p className="mx-auto mt-4 max-w-xl text-pretty text-base leading-relaxed text-white/80">
+					<p className="mx-auto mt-4 max-w-xl text-pretty text-base leading-relaxed text-white/90">
 						Za sve informacije o proizvodima i uslugama ispuni kontakt formu ili
 						mi se javi direktno putem e-maila.
 					</p>
@@ -175,7 +172,7 @@ export default function ContactSection() {
 					{contactInfo.map((info) => (
 						<div
 							key={info.label}
-							className="flex items-center gap-2.5 rounded-full bg-white/15 px-5 py-2.5 backdrop-blur-sm"
+							className="flex items-center gap-2.5 rounded-full bg-white/20 px-5 py-2.5 backdrop-blur-sm border border-white/30"
 						>
 							<info.icon className="h-4 w-4 text-white" />
 							<span className="text-sm font-medium text-white">
@@ -310,7 +307,7 @@ export default function ContactSection() {
 							<button
 								type="submit"
 								disabled={isSubmitting}
-								className="flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-all duration-200 hover:bg-primary-dark hover:shadow-lg active:scale-[0.98] disabled:opacity-70"
+								className="flex items-center justify-center gap-2 rounded-full bg-[#5EBA9A] px-6 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-[#4DA88A] hover:shadow-lg active:scale-[0.98] disabled:opacity-70"
 							>
 								<Send className="h-4 w-4" />
 								{isSubmitting ? "Šaljem..." : "Pošaljite Poruku"}

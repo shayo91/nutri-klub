@@ -147,7 +147,10 @@ export default function HeroSection() {
                 alt="Jelena Matijaš - Nutricionista BiH - Magistar nutricionizma - planovi ishrane"
                 className="relative w-full max-w-[280px] sm:max-w-[320px] md:max-w-[380px] lg:max-w-[420px] h-auto rounded-2xl shadow-xl group-hover:shadow-2xl group-hover:scale-[1.02] transition-all duration-300"
                 data-testid="img-jelena-hero"
+                width={420}
+                height={525}
                 loading="eager"
+                fetchPriority="high"
               />
             </div>
           </motion.div>

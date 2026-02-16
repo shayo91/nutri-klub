@@ -65,6 +65,8 @@ export default function AboutMe() {
                     src={aboutImage1}
                     alt="Jelena Matijaš - Nutricionista i magistrica nutricionizma"
                     className="relative w-full max-w-[280px] md:max-w-[320px] h-auto rounded-2xl shadow-xl group-hover:shadow-2xl group-hover:scale-[1.02] transition-all duration-300"
+                    width={320}
+                    height={400}
                     loading="eager"
                   />
                 </div>
@@ -90,6 +92,8 @@ export default function AboutMe() {
                     src={aboutImage2}
                     alt="Jelena Matijaš sa laptopom - Online nutricionističke konsultacije"
                     className="relative w-full max-w-xs sm:max-w-sm h-auto rounded-2xl shadow-xl group-hover:shadow-2xl group-hover:scale-[1.02] transition-all duration-300"
+                    width={384}
+                    height={480}
                     loading="lazy"
                   />
                 </div>

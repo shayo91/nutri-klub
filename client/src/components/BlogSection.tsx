@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
 import { Link } from "wouter";
 
@@ -23,7 +24,7 @@ const fallbackPosts: BlogPost[] = [
     category: "Recepti",
     categories: ["Recepti", "Savjeti"],
     image:
-      "https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+      "https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80",
     date: "27. maj 2025.",
     slug: "supermoc-napraviti-od-nicega-rucak",
   },
@@ -35,7 +36,7 @@ const fallbackPosts: BlogPost[] = [
     category: "Savjeti",
     categories: ["Savjeti", "Zdravlje"],
     image:
-      "https://images.unsplash.com/photo-1610832958506-aa56368176cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+      "https://images.unsplash.com/photo-1610832958506-aa56368176cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80",
     date: "8. jun 2023.",
     slug: "razumijevanje-makronutrijenata",
   },
@@ -47,7 +48,7 @@ const fallbackPosts: BlogPost[] = [
     category: "Zdravlje",
     categories: ["Zdravlje", "Savjeti"],
     image:
-      "https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+      "https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80",
     date: "1. jun 2023.",
     slug: "stres-i-ishrana",
   },
@@ -211,9 +212,11 @@ function BlogPostCard({ post, index }: { post: BlogPost; index: number }) {
               </div>
             )}
             <img
-              src={imageError ? "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=400&fit=crop" : post.image}
+              src={imageError ? "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=400&fit=crop&q=80" : post.image}
               alt={`${post.title} - savjeti nutricioniste za zdravu ishranu`}
               className={`w-full h-full object-cover transition-all duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+              width={600}
+              height={400}
               loading="lazy"
               onLoad={handleImageLoad}
               onError={handleImageError}
@@ -236,7 +239,7 @@ function BlogPostCard({ post, index }: { post: BlogPost; index: number }) {
               style={{ color: "rgb(93, 173, 140)" }}
             >
               Pročitajte Članak{" "}
-              <i className="fas fa-arrow-right ml-2 text-sm"></i>
+              <ArrowRight className="ml-2 inline-block h-4 w-4" />
             </span>
           </div>
         </div>

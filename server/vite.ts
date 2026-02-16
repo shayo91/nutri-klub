@@ -76,7 +76,34 @@ export function serveStatic(app: Express) {
     );
   }
 
-  app.use(express.static(distPath));
+  const assetsPath = path.join(distPath, "assets");
+  if (fs.existsSync(assetsPath)) {
+    app.use(
+      "/assets",
+      express.static(assetsPath, {
+        maxAge: "1y",
+        immutable: true,
+      }),
+    );
+  }
+
+  app.use(
+    express.static(distPath, {
+      setHeaders: (res, filePath) => {
+        const relativePath = path.relative(distPath, filePath);
+        if (relativePath === "index.html" || relativePath.endsWith(".html")) {
+          res.setHeader("Cache-Control", "no-cache");
+        } else if (
+          !relativePath.startsWith("assets") &&
+          (relativePath.endsWith(".js") ||
+            relativePath.endsWith(".css") ||
+            relativePath.endsWith(".svg"))
+        ) {
+          res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+        }
+      },
+    }),
+  );
 
   // fall through to index.html if the file doesn't exist
   app.use("*", (_req, res) => {

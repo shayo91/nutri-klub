@@ -95,7 +95,7 @@ export default function ProcessSection() {
         >
           <a
             href="#contact"
-            className="inline-block px-8 py-4 bg-primary hover:bg-primary-dark text-white rounded-md font-medium transition duration-300 ease-in-out shadow-md hover:shadow-lg"
+            className="inline-block px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-md font-medium transition duration-300 ease-in-out shadow-md hover:shadow-lg"
           >
             Započnite Vašu Nutricionističku Avanturu
           </a>

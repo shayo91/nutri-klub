@@ -161,7 +161,7 @@ export default function Footer() {
               />
               <button
                 type="submit"
-                className="w-full py-2 bg-[#1F7A5C] hover:bg-[#185F48] text-white rounded-lg font-medium transition duration-300 ease-in-out disabled:opacity-70"
+                className="w-full py-2 bg-[#5EBA9A] hover:bg-[#4DA88A] text-white rounded-full font-medium transition duration-300 ease-in-out disabled:opacity-70 shadow-md"
                 disabled={isSubscribing}
               >
                 {isSubscribing ? "Pretplaćujem se..." : "Pretplatite se"}

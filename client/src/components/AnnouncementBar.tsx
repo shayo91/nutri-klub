@@ -66,6 +66,7 @@ export default function AnnouncementBar() {
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
               className="flex-1"
+              aria-live="polite"
             >
               <p className="font-semibold text-sm md:text-base">
                 {currentAnnouncement?.title}

@@ -24,7 +24,7 @@ export default function Purchase() {
       id: 2,
       title: "Mediteranska Dijeta - Kompletan Plan",
       description: "Detaljni vodič kroz mediteransku dijetu sa 60 recepata, planovima obroka i naučnim objašnjenjima prednosti.",
-      image: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=400&h=600&fit=crop",
+      image: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=400&h=600&fit=crop&q=80",
       price: 2499,
       originalPrice: 3499,
       pages: 120,
@@ -41,7 +41,7 @@ export default function Purchase() {
       id: 3,
       title: "Plan Mršavljenja za 30 Dana",
       description: "Strukturiran program mršavljenja sa dnevnim planovima obroka, vežbama i motivacionim savetima.",
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=600&fit=crop",
+      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=600&fit=crop&q=80",
       price: 1999,
       originalPrice: 2999,
       pages: 80,
@@ -104,6 +104,9 @@ export default function Purchase() {
                   src={ebook.image}
                   alt={`${ebook.title} - e-knjiga nutricionista plan ishrane`}
                   className="w-full max-w-md mx-auto rounded-xl shadow-lg"
+                  width={400}
+                  height={600}
+                  loading="lazy"
                 />
               </div>
 
@@ -147,7 +150,7 @@ export default function Purchase() {
                   <button
                     onClick={handlePurchase}
                     disabled={isProcessing}
-                    className="w-full py-4 bg-primary hover:bg-primary-dark text-white rounded-lg font-semibold text-lg transition duration-300 ease-in-out shadow-md hover:shadow-lg disabled:opacity-70"
+                    className="w-full py-4 bg-primary hover:bg-primary-hover text-white rounded-lg font-semibold text-lg transition duration-300 ease-in-out shadow-md hover:shadow-lg disabled:opacity-70"
                   >
                     {isProcessing ? (
                       <div className="flex items-center justify-center space-x-2">

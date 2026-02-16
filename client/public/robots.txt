@@ -3,6 +3,5 @@ Allow: /
 
 Sitemap: https://nutriputovanje.com/sitemap.xml
 
-# Disallow admin and private areas
 Disallow: /api/
 Disallow: /purchase

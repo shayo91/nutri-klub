@@ -92,6 +92,8 @@ function RenderBlock({ block }: { block: ContentBlock }) {
             src={block.url}
             alt={block.caption || "Blog slika nutricionista ishrana BiH"}
             className="w-full rounded-lg shadow-md"
+            width={800}
+            height={450}
             loading="lazy"
           />
           {block.caption && (
@@ -236,7 +238,7 @@ export default function BlogPost() {
           <h1 className="text-4xl font-bold text-gray-800 mb-4">Članak nije pronađen</h1>
           <p className="text-gray-600 mb-8">Žao nam je, traženi članak ne postoji ili je uklonjen.</p>
           <Link href="/#blog">
-            <a className="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
+            <a className="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-hover transition-colors">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Nazad na blog
             </a>
@@ -261,6 +263,12 @@ export default function BlogPost() {
         <link rel="canonical" href={`https://nutriputovanje.com/blog/${post.slug}`} />
         <meta property="article:author" content={post.author.name} />
         <meta property="article:section" content={post.category} />
+        {post.date && (() => {
+					const d = new Date(post.date);
+					return !isNaN(d.getTime()) ? (
+						<meta property="article:published_time" content={d.toISOString()} />
+					) : null;
+				})()}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`${post.title} | Nutricionista Jelena Matijaš`} />
         <meta name="twitter:description" content={post.excerpt || `${post.title} - savjeti nutricionista za zdravlje i ishranu u BiH`} />
@@ -286,7 +294,7 @@ export default function BlogPost() {
               "url": "https://nutriputovanje.com/attached_assets/Untitled_design_(18)_1770122157577.png"
             }
           },
-          "datePublished": post.date,
+          "datePublished": post.date ? new Date(post.date).toISOString() : undefined,
           "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": `https://nutriputovanje.com/blog/${post.slug}`
@@ -344,7 +352,7 @@ export default function BlogPost() {
             className="mb-8"
           >
             <Link href="/#blog">
-              <a className="inline-flex items-center text-primary hover:text-primary-dark transition-colors">
+              <a className="inline-flex items-center text-primary hover:text-primary-hover transition-colors">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Nazad na blog
               </a>

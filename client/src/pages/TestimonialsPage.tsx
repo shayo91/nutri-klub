@@ -34,8 +34,8 @@ const successStories: SuccessStory[] = [
     name: "Marija Petrović",
     age: 34,
     profession: "Profesorka",
-    beforeImage: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=600&fit=crop&crop=face",
-    afterImage: "https://images.unsplash.com/photo-1594736797933-d0f31cc1d181?w=400&h=600&fit=crop&crop=face",
+    beforeImage: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=600&fit=crop&crop=face&q=80",
+    afterImage: "https://images.unsplash.com/photo-1594736797933-d0f31cc1d181?w=400&h=600&fit=crop&crop=face&q=80",
     weightLoss: "-15 kg",
     timeframe: "6 meseci",
     story: "Posle rođenja deteta nisam mogla da se vratim u formu. Sve dijete su bile neuspešne.",
@@ -56,8 +56,8 @@ const successStories: SuccessStory[] = [
     name: "Stefan Jovanović",
     age: 29,
     profession: "IT Menadžer",
-    beforeImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=600&fit=crop&crop=face",
-    afterImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop&crop=face",
+    beforeImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=600&fit=crop&crop=face&q=80",
+    afterImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop&crop=face&q=80",
     weightLoss: "-12 kg",
     timeframe: "4 meseca",
     story: "Rad za kompjuterom ceo dan je doveo do loših navika u ishrani i nedostatka energije.",
@@ -78,8 +78,8 @@ const successStories: SuccessStory[] = [
     name: "Ana Milosavljević",
     age: 31,
     profession: "Mama dvoje dece",
-    beforeImage: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=600&fit=crop&crop=face",
-    afterImage: "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=400&h=600&fit=crop&crop=face",
+    beforeImage: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=600&fit=crop&crop=face&q=80",
+    afterImage: "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=400&h=600&fit=crop&crop=face&q=80",
     weightLoss: "-18 kg",
     timeframe: "8 meseci",
     story: "Posle drugog porođaja, gubila sam motivaciju i veru da mogu da se vratim u formu.",
@@ -100,8 +100,8 @@ const successStories: SuccessStory[] = [
     name: "Miloš Stojanović",
     age: 42,
     profession: "Preduzetnik",
-    beforeImage: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=600&fit=crop&crop=face",
-    afterImage: "https://images.unsplash.com/photo-1556157382-97eda2d62296?w=400&h=600&fit=crop&crop=face",
+    beforeImage: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=600&fit=crop&crop=face&q=80",
+    afterImage: "https://images.unsplash.com/photo-1556157382-97eda2d62296?w=400&h=600&fit=crop&crop=face&q=80",
     weightLoss: "-22 kg",
     timeframe: "10 meseci",
     story: "Stress na poslu je doveo do pogrešnih navika u ishrani i značajnog povećanja težine.",
@@ -142,7 +142,7 @@ export default function TestimonialsPage() {
         <link rel="canonical" href="https://nutriputovanje.com/testimonials" />
       </Helmet>
       {/* Hero Section */}
-      <section className="py-16 md:py-24" style={{ backgroundColor: "#F5F5F0" }}>
+      <section className="py-16 md:py-24 bg-primary-bg">
         <div className="container mx-auto px-4">
           <motion.div
             ref={headerRef}
@@ -206,6 +206,8 @@ export default function TestimonialsPage() {
                             src={story.beforeImage}
                             alt={`${story.name} pre nutricionista transformacija`}
                             className="w-full h-64 object-cover rounded-lg"
+                            width={400}
+                            height={256}
                             loading="lazy"
                           />
                           <p className="text-sm font-medium text-gray-500 mt-2">PRE</p>
@@ -215,6 +217,8 @@ export default function TestimonialsPage() {
                             src={story.afterImage}
                             alt={`${story.name} posle nutricionista transformacija mršavljenje`}
                             className="w-full h-64 object-cover rounded-lg"
+                            width={400}
+                            height={256}
                             loading="lazy"
                           />
                           <p className="text-sm font-medium text-gray-500 mt-2">POSLE</p>
@@ -299,7 +303,7 @@ export default function TestimonialsPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button 
                 onClick={() => window.location.href = '/#contact'}
-                className="bg-primary text-white px-8 py-4 rounded-lg font-medium hover:bg-primary-dark transition duration-300 shadow-lg"
+                className="bg-primary text-white px-8 py-4 rounded-lg font-medium hover:bg-primary-hover transition duration-300 shadow-lg"
               >
                 Zakazujte Konsultacije
               </button>
