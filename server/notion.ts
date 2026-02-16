@@ -38,7 +38,13 @@ function extractPageIdFromUrl(pageUrl: string): string {
     throw Error("Failed to extract page ID");
 }
 
-export const NOTION_PAGE_ID = extractPageIdFromUrl(process.env.NOTION_PAGE_URL!);
+const pageUrl = process.env.NOTION_PAGE_URL;
+if (!pageUrl) {
+    throw new Error(
+        'NOTION_PAGE_URL is not set. Ensure .env exists with NOTION_PAGE_URL and that dotenv loads it before this module.'
+    );
+}
+export const NOTION_PAGE_ID = extractPageIdFromUrl(pageUrl);
 
 /**
  * Lists all child databases contained within NOTION_PAGE_ID
@@ -68,8 +74,8 @@ export async function getNotionDatabases() {
 
             // Process the results
             for (const block of response.results) {
-                // Check if the block is a child database
-                if (block.type === "child_database") {
+                // Check if the block is a child database (PartialBlockObjectResponse lacks type)
+                if ('type' in block && block.type === "child_database") {
                     const databaseId = block.id;
 
                     // Retrieve the database title
