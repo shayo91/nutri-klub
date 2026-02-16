@@ -9,21 +9,17 @@ const routeBreadcrumbs: Record<string, { name: string; path: string }[]> = {
 		{ name: "Početna", path: "/" },
 		{ name: "O Meni", path: "/about" },
 	],
-	"/testimonials": [
-		{ name: "Početna", path: "/" },
-		{ name: "Recenzije", path: "/testimonials" },
-	],
 	"/privacy": [
 		{ name: "Početna", path: "/" },
-		{ name: "Politika Privatnosti", path: "/privacy" },
+		{ name: "Pravila Privatnosti", path: "/privacy" },
 	],
 	"/terms": [
 		{ name: "Početna", path: "/" },
-		{ name: "Uslovi Korištenja", path: "/terms" },
+		{ name: "Uslovi Poslovanja", path: "/terms" },
 	],
 	"/cookies": [
 		{ name: "Početna", path: "/" },
-		{ name: "Kolačići", path: "/cookies" },
+		{ name: "Pravila o Kolačićima", path: "/cookies" },
 	],
 };
 

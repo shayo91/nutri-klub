@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Info } from "lucide-react";
 
@@ -12,25 +13,20 @@ interface Announcement {
 }
 
 export default function AnnouncementBar() {
-  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
 
-  useEffect(() => {
-    fetchAnnouncements();
-  }, []);
-
-  const fetchAnnouncements = async () => {
-    try {
-      const response = await fetch('/api/announcements');
-      if (response.ok) {
-        const data = await response.json();
-        setAnnouncements(data.filter((a: Announcement) => a.active));
-      }
-    } catch (error) {
-      console.error('Error fetching announcements:', error);
-    }
-  };
+  const { data: announcementsData = [] } = useQuery<Announcement[]>({
+    queryKey: ["/api/announcements"],
+    staleTime: 5 * 60 * 1000,
+    queryFn: async () => {
+      const res = await fetch("/api/announcements");
+      if (!res.ok) return [];
+      const data = await res.json();
+      return Array.isArray(data) ? data : [];
+    },
+  });
+  const announcements = announcementsData.filter((a) => a.active);
 
   // Automatski prebacuj announcements
   useEffect(() => {

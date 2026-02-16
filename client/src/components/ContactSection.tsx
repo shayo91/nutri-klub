@@ -23,7 +23,7 @@ interface ContactFormData {
 }
 
 const contactInfo = [
-	{ icon: Mail, label: "Email", value: "contact@nutri-klub.ba" },
+	{ icon: Mail, label: "Email", value: "jelena@nutriklub.ba" },
 	{ icon: Phone, label: "Telefon", value: "Po dogovoru" },
 	{ icon: MapPin, label: "Lokacija", value: "Banja Luka, BiH" },
 ]
@@ -101,7 +101,7 @@ export default function ContactSection() {
 			const body = encodeURIComponent(
 				`Ime: ${formData.name}\nEmail: ${formData.email}\n\nPoruka:\n${formData.message}`,
 			)
-			const mailtoUrl = `mailto:contact@nutri-klub.ba?subject=${subject}&body=${body}`
+			const mailtoUrl = `mailto:info@nutriklub.ba?subject=${subject}&body=${body}`
 			window.location.href = mailtoUrl
 			toast({
 				title: "Uspešno!",
@@ -118,7 +118,7 @@ export default function ContactSection() {
 			console.error("Error preparing message:", err)
 			toast({
 				title: "Greška",
-				description: "Došlo je do greške. Pokušajte direktno na contact@nutri-klub.ba",
+				description: "Došlo je do greške. Pokušajte direktno na info@nutriklub.ba",
 				variant: "destructive",
 			})
 		} finally {
@@ -127,7 +127,7 @@ export default function ContactSection() {
 	}
 
 	const inputClasses =
-		"rounded-lg border border-input bg-card px-4 py-3 text-sm text-card-foreground placeholder:text-muted-foreground transition-all duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+		"rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-500 transition-all duration-200 focus:border-[#1F7A5C] focus:outline-none focus:ring-2 focus:ring-[#1F7A5C]/20"
 
 	return (
 		<section
@@ -150,13 +150,13 @@ export default function ContactSection() {
 					transition={{ duration: 0.6 }}
 					className="mb-12 text-center"
 				>
-					<span className="mb-3 inline-block text-xs font-bold uppercase tracking-[0.2em] text-white/90">
+					<span className="mb-3 inline-block text-xs font-bold uppercase tracking-[0.2em] text-white">
 						KONTAKT
 					</span>
 					<h2 className="text-balance text-3xl font-bold text-white font-poppins sm:text-4xl">
 						Pošalji poruku
 					</h2>
-					<p className="mx-auto mt-4 max-w-xl text-pretty text-base leading-relaxed text-white/90">
+					<p className="mx-auto mt-4 max-w-xl text-pretty text-base leading-relaxed text-white">
 						Za sve informacije o proizvodima i uslugama ispuni kontakt formu ili
 						mi se javi direktno putem e-maila.
 					</p>
@@ -172,10 +172,10 @@ export default function ContactSection() {
 					{contactInfo.map((info) => (
 						<div
 							key={info.label}
-							className="flex items-center gap-2.5 rounded-full bg-white/20 px-5 py-2.5 backdrop-blur-sm border border-white/30"
+							className="flex items-center gap-2.5 rounded-full bg-white px-5 py-2.5 shadow-md border border-white/50"
 						>
-							<info.icon className="h-4 w-4 text-white" />
-							<span className="text-sm font-medium text-white">
+							<info.icon className="h-4 w-4 text-[#1a5f4a]" />
+							<span className="text-sm font-medium text-[#1a5f4a]">
 								{info.value}
 							</span>
 						</div>
@@ -191,12 +191,12 @@ export default function ContactSection() {
 					className="grid grid-cols-1 gap-6 lg:grid-cols-5"
 				>
 					{/* Form card */}
-					<div className="rounded-2xl bg-card p-6 shadow-xl shadow-black/5 sm:p-8 lg:col-span-3">
+					<div className="rounded-2xl bg-white p-6 shadow-xl shadow-black/5 sm:p-8 lg:col-span-3">
 						<div className="mb-6">
-							<h3 className="text-lg font-bold text-card-foreground">
+							<h3 className="text-lg font-bold text-gray-900">
 								Pošaljite nam poruku
 							</h3>
-							<p className="mt-1 text-sm text-muted-foreground">
+							<p className="mt-1 text-sm text-gray-600">
 								Odgovaramo u roku od 24 sata
 							</p>
 						</div>
@@ -209,7 +209,7 @@ export default function ContactSection() {
 								<div className="flex flex-col gap-2">
 									<label
 										htmlFor="name"
-										className="text-sm font-medium text-card-foreground"
+										className="text-sm font-medium text-gray-900"
 									>
 										Ime
 									</label>
@@ -227,7 +227,7 @@ export default function ContactSection() {
 								<div className="flex flex-col gap-2">
 									<label
 										htmlFor="email"
-										className="text-sm font-medium text-card-foreground"
+										className="text-sm font-medium text-gray-900"
 									>
 										Email
 									</label>
@@ -247,7 +247,7 @@ export default function ContactSection() {
 							<div className="flex flex-col gap-2">
 								<label
 									htmlFor="subject"
-									className="text-sm font-medium text-card-foreground"
+									className="text-sm font-medium text-gray-900"
 								>
 									Tema
 								</label>
@@ -266,7 +266,7 @@ export default function ContactSection() {
 							<div className="flex flex-col gap-2">
 								<label
 									htmlFor="message"
-									className="text-sm font-medium text-card-foreground"
+									className="text-sm font-medium text-gray-900"
 								>
 									Poruka
 								</label>
@@ -292,13 +292,13 @@ export default function ContactSection() {
 									required
 									className="mt-0.5 h-4 w-4 rounded border-input accent-primary"
 								/>
-								<span className="text-sm leading-relaxed text-muted-foreground">
+								<span className="text-sm leading-relaxed text-gray-700">
 									Slažem se sa{" "}
 									<a
 										href="/privacy"
-										className="text-primary underline underline-offset-2 hover:text-accent"
+										className="text-[#1F7A5C] font-medium underline underline-offset-2 hover:text-[#1a5f4a]"
 									>
-										Politikom Privatnosti
+										Pravilima Privatnosti
 									</a>{" "}
 									i pristajem na kontaktiranje.
 								</span>
@@ -307,7 +307,7 @@ export default function ContactSection() {
 							<button
 								type="submit"
 								disabled={isSubmitting}
-								className="flex items-center justify-center gap-2 rounded-full bg-[#5EBA9A] px-6 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-[#4DA88A] hover:shadow-lg active:scale-[0.98] disabled:opacity-70"
+								className="flex items-center justify-center gap-2 rounded-full bg-[#1a5f4a] px-6 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-[#145042] hover:shadow-lg active:scale-[0.98] disabled:opacity-70"
 							>
 								<Send className="h-4 w-4" />
 								{isSubmitting ? "Šaljem..." : "Pošaljite Poruku"}
@@ -316,24 +316,24 @@ export default function ContactSection() {
 					</div>
 
 					{/* Benefits card */}
-					<div className="rounded-2xl bg-card p-6 shadow-xl shadow-black/5 sm:p-8 lg:col-span-2">
-						<h3 className="mb-4 text-xl font-bold text-card-foreground">
+					<div className="rounded-2xl bg-white p-6 shadow-xl shadow-black/5 sm:p-8 lg:col-span-2">
+						<h3 className="mb-4 text-xl font-bold text-gray-900">
 							Zašto Nutricionista?
 						</h3>
 						<div className="flex flex-col gap-4">
 							{benefits.map((benefit) => (
 								<div
 									key={benefit.title}
-									className="group flex items-start gap-3.5 rounded-lg p-2.5 transition-colors duration-200 hover:bg-muted"
+									className="group flex items-start gap-3.5 rounded-lg p-2.5 transition-colors duration-200 hover:bg-gray-50"
 								>
-									<div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-										<benefit.icon className="h-[18px] w-[18px] text-primary" />
+									<div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#1F7A5C]/15">
+										<benefit.icon className="h-[18px] w-[18px] text-[#1F7A5C]" />
 									</div>
 									<div className="flex flex-col gap-0.5">
-										<span className="text-sm font-semibold leading-snug text-card-foreground">
+										<span className="text-sm font-semibold leading-snug text-gray-900">
 											{benefit.title}
 										</span>
-										<span className="text-sm leading-relaxed text-muted-foreground">
+										<span className="text-sm leading-relaxed text-gray-600">
 											{benefit.description}
 										</span>
 									</div>

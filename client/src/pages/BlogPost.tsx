@@ -189,26 +189,19 @@ export default function BlogPost() {
   const fetchBlogPost = async (slug: string) => {
     try {
       setLoading(true);
-      const response = await fetch('/api/blog-posts');
+      const trimmedSlug = slug.trim();
+      if (!trimmedSlug) {
+        setError(true);
+        return;
+      }
+      const isNotionId = /^[a-f0-9]{32}$/i.test(trimmedSlug);
+      const url = isNotionId
+        ? `/api/blog-posts/${trimmedSlug}`
+        : `/api/blog-posts/by-slug/${encodeURIComponent(trimmedSlug)}`;
+      const response = await fetch(url);
       if (response.ok) {
-        const data = await response.json();
-        const posts = data.posts || data;
-        const foundPost = posts.find((p: BlogPostData) => 
-          p.slug === slug || 
-          p.title.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-') === slug
-        );
-        
-        if (foundPost) {
-          const detailResponse = await fetch(`/api/blog-posts/${foundPost.id}`);
-          if (detailResponse.ok) {
-            const fullPost = await detailResponse.json();
-            setPost(fullPost);
-          } else {
-            setPost(foundPost);
-          }
-        } else {
-          setError(true);
-        }
+        const fullPost = await response.json();
+        setPost(fullPost);
       } else {
         setError(true);
       }
@@ -291,7 +284,7 @@ export default function BlogPost() {
             "url": "https://nutriputovanje.com",
             "logo": {
               "@type": "ImageObject",
-              "url": "https://nutriputovanje.com/attached_assets/Untitled_design_(18)_1770122157577.png"
+              "url": "https://nutriputovanje.com/attached_assets/jelena-hero.png"
             }
           },
           "datePublished": post.date ? new Date(post.date).toISOString() : undefined,

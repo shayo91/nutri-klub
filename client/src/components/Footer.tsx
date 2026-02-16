@@ -99,7 +99,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/testimonials"
+                  href="/#testimonials"
                   className="text-gray-600 hover:text-[#1F7A5C] transition"
                 >
                   Recenzije
@@ -139,10 +139,10 @@ export default function Footer() {
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-[#5DAD8C] flex-shrink-0" />
                 <a
-                  href="mailto:nutriklub@gmail.com"
+                  href="mailto:jelena@nutriklub.ba"
                   className="text-gray-600 hover:text-[#1F7A5C] transition"
                 >
-                  nutriklub@gmail.com
+                  jelena@nutriklub.ba
                 </a>
               </li>
             </ul>
@@ -180,14 +180,14 @@ export default function Footer() {
                 href="/privacy"
                 className="text-gray-500 hover:text-[#1F7A5C] transition"
               >
-                Politika Privatnosti
+                Pravila Privatnosti
               </Link>
               <span className="text-gray-300">|</span>
               <Link
                 href="/terms"
                 className="text-gray-500 hover:text-[#1F7A5C] transition"
               >
-                Uslovi Korištenja
+                Uslovi Poslovanja
               </Link>
               <span className="text-gray-300">|</span>
               <Link

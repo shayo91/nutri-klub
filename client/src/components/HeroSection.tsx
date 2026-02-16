@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
 import { Users, Award, UtensilsCrossed, Apple, Carrot, Leaf, Cherry } from "lucide-react";
-import doctorImage from "@assets/Untitled_design_(18)_1770122157577.png";
+
+const HERO_IMAGE_WEBP = "/attached_assets/jelena-hero.webp";
+const HERO_IMAGE_PNG = "/attached_assets/jelena-hero.png";
 
 export default function HeroSection() {
   const { ref: contentRef, inView: contentInView } = useAnimateOnScroll();
@@ -142,16 +144,19 @@ export default function HeroSection() {
             {/* Main image container with hover effect like AboutMe page */}
             <div className="relative group">
               <div className="absolute -inset-3 bg-[#9fc9b6] rounded-3xl transform rotate-3 group-hover:rotate-2 transition-transform duration-300"></div>
-              <img
-                src={doctorImage}
-                alt="Jelena Matijaš - Nutricionista BiH - Magistar nutricionizma - planovi ishrane"
-                className="relative w-full max-w-[280px] sm:max-w-[320px] md:max-w-[380px] lg:max-w-[420px] h-auto rounded-2xl shadow-xl group-hover:shadow-2xl group-hover:scale-[1.02] transition-all duration-300"
-                data-testid="img-jelena-hero"
-                width={420}
-                height={525}
-                loading="eager"
-                fetchPriority="high"
-              />
+              <picture>
+                <source srcSet={HERO_IMAGE_WEBP} type="image/webp" />
+                <img
+                  src={HERO_IMAGE_PNG}
+                  alt="Jelena Matijaš - Nutricionista BiH - Magistar nutricionizma - planovi ishrane"
+                  className="relative w-full max-w-[280px] sm:max-w-[320px] md:max-w-[380px] lg:max-w-[420px] h-auto rounded-2xl shadow-xl group-hover:shadow-2xl group-hover:scale-[1.02] transition-all duration-300"
+                  data-testid="img-jelena-hero"
+                  width={420}
+                  height={525}
+                  loading="eager"
+                  fetchPriority="high"
+                />
+              </picture>
             </div>
           </motion.div>
         </div>

@@ -145,6 +145,24 @@ export async function createDatabaseIfNotExists(title: string, properties: any) 
     });
 }
 
+// Default cover image when Image property is empty
+const DEFAULT_BLOG_COVER_IMAGE =
+    "https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600";
+
+/** Get thumbnail from Notion Image property (database column), fallback to default */
+function getImageFromNotionProperty(properties: any): string {
+    const img = properties?.Image;
+    if (!img) return DEFAULT_BLOG_COVER_IMAGE;
+    const url = img.url;
+    if (url && typeof url === "string" && url.trim()) return url;
+    if (img.files?.length > 0) {
+        const file = img.files[0];
+        const fileUrl = file.type === "file" ? file.file?.url : file.external?.url;
+        if (fileUrl) return fileUrl;
+    }
+    return DEFAULT_BLOG_COVER_IMAGE;
+}
+
 // Helper to get image from page (cover, Image property, or first content image)
 async function getPageImageForList(page: any): Promise<string> {
     const properties = page.properties;
@@ -217,14 +235,19 @@ export async function getBlogPosts() {
 
         const response = await notion.databases.query({
             database_id: blogDb.id,
+            filter: {
+                property: "Published",
+                checkbox: {
+                    equals: true
+                }
+            }
         });
 
         // Extract all unique categories from the multi-select Category field
         const categoriesSet = new Set<string>();
         
-        const posts = await Promise.all(response.results.map(async (page: any) => {
+        const posts = response.results.map((page: any) => {
             const properties = page.properties;
-            const image = await getPageImageForList(page);
 
             // Handle multi-select or single select categories
             let categories: string[] = [];
@@ -242,7 +265,7 @@ export async function getBlogPosts() {
                 content: properties.Content?.rich_text?.[0]?.plain_text || "",
                 categories: categories,
                 category: categories[0] || "Savjeti",
-                image: image,
+                image: getImageFromNotionProperty(properties),
                 date: properties.Date?.date?.start || new Date().toISOString().split('T')[0],
                 slug: (properties.Title?.title?.[0]?.plain_text || "untitled")
                     .toLowerCase()
@@ -253,7 +276,7 @@ export async function getBlogPosts() {
                     avatar: "https://images.unsplash.com/photo-1607453998774-d533f65dac99?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150"
                 }
             };
-        }));
+        });
 
         const result = { posts, categories: Array.from(categoriesSet) };
         setCache(cacheKey, result);
@@ -590,7 +613,6 @@ export async function getBlogPostById(postId: string) {
         const page = await notion.pages.retrieve({ page_id: formattedId }) as any;
         const properties = page.properties;
         const content = await getPageContent(formattedId);
-        const image = await getPageImage(page);
 
         // Handle multi-select or single select categories
         let categories: string[] = [];
@@ -606,7 +628,7 @@ export async function getBlogPostById(postId: string) {
             excerpt: properties.Excerpt?.rich_text?.[0]?.plain_text || "",
             categories: categories,
             category: categories[0] || "Savjeti",
-            image: image,
+            image: getImageFromNotionProperty(properties),
             date: properties.Date?.date?.start || new Date().toISOString().split('T')[0],
             slug: (properties.Title?.title?.[0]?.plain_text || "untitled")
                 .toLowerCase()

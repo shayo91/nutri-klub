@@ -5,39 +5,50 @@ import { Helmet } from "react-helmet";
 
 const faqs = [
   {
-    question: "Koliko košta nutricionist?",
-    answer: "Cijene usluga nutricionista variraju u zavisnosti od paketa. Osnovni plan ishrane kreće od 50€, dok premium program sa individualnim praćenjem košta do 150€. Prva konsultacija sa nutricionistom je potpuno besplatna - zakažite online konsultaciju i saznajte koji plan ishrane BiH odgovara vašim ciljevima za mršavljenje ili debljanje."
+    question: "Kako izgleda online konsultacija?",
+    answer: "Online konsultacija je jednostavna i dostupna bez obzira gdje se nalazite. Termin zakazujete putem kontakt forme, a razgovor se odvija putem video poziva. Tokom konsultacije prolazimo kroz vaše navike, zdravstvenu istoriju, ciljeve i izazove. Nakon toga dobijate personalizovan plan ishrane i jasne smjernice, uz mogućnost kontinuirane podrške i praćenja napretka."
   },
   {
-    question: "Kako funkcioniše online konsultacija?",
-    answer: "Online konsultacija sa nutricionistom je jednostavna i dostupna iz cijele Bosne i Hercegovine. Zakazujete termin putem kontakt forme ili WhatsApp-a, a konsultacija se odvija putem video poziva. Dobijate personalizovan plan ishrane, dijeta savjete prilagođene vašem načinu života, i kontinuiranu podršku za zdravlje i ishranu. Idealno za klijente iz Banja Luke, Sarajeva, Tuzle i svih drugih gradova BiH."
+    question: "Da li mi je potrebna dijeta ili promjena načina života?",
+    answer: "Većini ljudi nije potrebna restriktivna dijeta, potrebna im je održiva promjena navika. Umjesto gladovanja i rigoroznih režima koji vode do jo-jo efekta, fokus je na balansiranoj, realnoj i dugoročno održivoj ishrani koja se uklapa u vaš svakodnevni život. Cilj nije kratkoročan rezultat, već stabilno zdravlje i odnos s hranom bez stresa."
   },
   {
-    question: "Da li trebam dijetu ili promjenu lifestyle-a?",
-    answer: "Većina ljudi ne treba striktnu dijetu - treba im održiva promjena načina ishrane i životnih navika. Kao nutricionist, ne preporučujem gladovanje ili restriktivne dijete koje vode jojo efektu. Umjesto toga, kreiram personalizovan plan ishrane koji se uklapa u vaš svakodnevni život, pomažući vam da postignete ciljeve mršavljenja ili zdravog debljanja bez stresa. Dijeta savjeti koje dobijete su praktični i primjenjivi odmah."
+    question: "Koliko brzo mogu očekivati rezultate?",
+    answer: "Prve promjene većina klijenata primijeti nakon 2–3 sedmice, dok su vidljiviji rezultati najčešće nakon 6–8 sedmica. Brzina napretka zavisi od početnog stanja, ciljeva i dosljednosti u primjeni plana. Fokus je na zdravim i održivim rezultatima, bez ekstremnih mjera."
   },
   {
-    question: "Koliko brzo mogu da vidim rezultate?",
-    answer: "Većina klijenata vidi prve rezultate nakon 2-3 sedmice, a značajne promjene nakon 4-6 sedmica. Brzina zavisi od vaše početne situacije i posvećenosti planu ishrane. Mršavljenje u Bosni i Hercegovini ne mora biti teško - uz pravilnu ishranu i stručnu podršku online nutricionista, rezultati dolaze prirodno."
+    question: "Da li ću morati da se odreknem omiljene hrane?",
+    answer: "Ne. Moj pristup se zasniva na balansu, a ne zabrani. Hrana nije “dobra” ili “loša” važno je koliko često i u kojoj količini je konzumiramo. Plan ishrane uključuje namirnice koje volite, uz jasne smjernice kako da ih uklopite bez osjećaja krivice."
   },
   {
-    question: "Da li mogu da jedem svoju omiljenu hranu?",
-    answer: "Apsolutno! Moj pristup kao nutricionista ne zabranjuje hranu, već uči balans. 80% zdrave hrane, 20% onog što volite - to je formula koja funkcioniše dugoročno. Plan ishrane BiH koji kreiram uključuje lokalne namirnice i recepte prilagođene vašem ukusu."
+    question: "Želim da se udebljam, a ne da smršam?",
+    answer: "Dobijanje zdrave težine zahtijeva isto toliko planiranja i pažnje kao i mršavljenje. Kao nutricionista, kreiram plan ishrane koji fokus stavlja na kvalitetne kalorije i nutritivno bogate obroke. Plan uključuje lokalne namirnice i recepte koje volite, uz praktične savjete kako da dodate više energije i obroka u svoj dan radi povećanja mišićne mase."
   },
   {
-    question: "Da li radite sa specifičnim zdravstvenim stanjima?",
-    answer: "Da, imam iskustva sa dijabetesom, hipertenzijom, PCOS, celijakijom i drugim stanjima. Kao online nutricionist, uvijek preporučujem saradnju sa vašim ljekarom. Bezglutenska ishrana, planovi za zdravlje ishrana kod hroničnih bolesti - sve je dio moje prakse nutricionista u Banja Luci i širom BiH."
+    question: "Da li nudite podršku između konsultacija?",
+    answer: "Da, podrška između konsultacija je dostupna putem poruka. Možete postavljati pitanja, dijeliti rezultate i dobijati smjernice u realnom vremenu. Online podrška pomaže da se držite plana ishrane i motivišete tokom cijelog procesa, što je ključno za održive rezultate."
+  },
+  {
+    question: "Radite li planove ishrane za specifične ciljeve?",
+    answer: `Da. Svaki plan ishrane prilagođavam vašim ciljevima i životnom stilu, npr.
+• Mršavljenje – bez gladovanja, sa održivim balansom makronutrijenata
+• Debljanje – fokus na kvalitetne kalorije i nutritivno bogate obroke
+• Hormonski balans – savjeti za žene sa PCOS, IR, u menopauzi
+• Bezglutenska ishrana – za osobe koje izbjegavaju gluten`
   }
+
+
 ];
 
 export default function FAQSection() {
   const { ref: headerRef, inView: headerInView } = useAnimateOnScroll();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
+  const visibleFaqs = faqs.filter((faq) => faq.question.trim())
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": faqs.map(faq => ({
+    "mainEntity": visibleFaqs.map(faq => ({
       "@type": "Question",
       "name": faq.question,
       "acceptedAnswer": {
@@ -74,7 +85,7 @@ export default function FAQSection() {
         </motion.div>
 
         <div className="max-w-3xl mx-auto">
-          {faqs.map((faq, index) => (
+          {visibleFaqs.map((faq, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
@@ -110,7 +121,7 @@ export default function FAQSection() {
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden"
                   >
-                    <div className="px-6 pb-6 pt-3 text-gray-600 leading-relaxed">
+                    <div className="px-6 pb-6 pt-3 text-gray-600 leading-relaxed whitespace-pre-line">
                       {faq.answer}
                     </div>
                   </motion.div>

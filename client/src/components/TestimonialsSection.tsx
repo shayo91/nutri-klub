@@ -212,7 +212,7 @@ export default function TestimonialsSection() {
                     {/* Chat Area */}
                     <div className="bg-white p-3 min-h-[420px] flex flex-col">
                       {/* Chat Bubble */}
-                      <div className="bg-[#EFEBF5] rounded-2xl rounded-br-sm p-4 shadow-sm max-w-full">
+                      <div className="bg-[#E8F5F0] rounded-2xl rounded-br-sm p-4 shadow-sm max-w-full">
                         <p className="text-[#1A1A1A] leading-relaxed" style={{ fontSize: '16px' }}>
                           {text}
                         </p>
@@ -222,7 +222,7 @@ export default function TestimonialsSection() {
                               e.stopPropagation();
                               setModalReview(review);
                             }}
-                            className="mt-3 text-[#7B6BA8] font-medium hover:underline transition-colors"
+                            className="mt-3 text-[#1F7A5C] font-medium hover:underline transition-colors"
                             style={{ fontSize: '16px' }}
                           >
                             Pročitaj više...
@@ -238,7 +238,7 @@ export default function TestimonialsSection() {
                         <div className="flex-grow bg-gray-100 rounded-full py-2 px-4 text-gray-400 text-sm">
                           Message...
                         </div>
-                        <div className="w-8 h-8 bg-[#7B6BA8] rounded-full flex items-center justify-center">
+                        <div className="w-8 h-8 bg-[#5DAD8C] rounded-full flex items-center justify-center">
                           <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
                           </svg>
@@ -263,7 +263,7 @@ export default function TestimonialsSection() {
                     scrollToIndex(index);
                   }}
                   className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                    isActive ? "bg-[#7B6BA8]" : "bg-[#7B6BA8]/30"
+                    isActive ? "bg-white" : "bg-white/50"
                   }`}
                   aria-label={`Idi na recenziju ${index + 1}`}
                 />
@@ -291,7 +291,7 @@ export default function TestimonialsSection() {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal Header */}
-              <div className="bg-[#7B6BA8] px-6 py-4 flex items-center justify-between">
+              <div className="bg-[#1F7A5C] px-6 py-4 flex items-center justify-between">
                 <span className="text-white font-medium">Recenzija - {modalReview.initials}</span>
                 <button
                   onClick={() => setModalReview(null)}
@@ -303,7 +303,7 @@ export default function TestimonialsSection() {
               
               {/* Modal Content - Phone Style */}
               <div className="bg-white p-4 overflow-y-auto max-h-[60vh]">
-                <div className="bg-[#EFEBF5] rounded-2xl rounded-br-sm p-5 shadow-sm">
+                <div className="bg-[#E8F5F0] rounded-2xl rounded-br-sm p-5 shadow-sm">
                   <p className="text-[#1A1A1A] leading-relaxed whitespace-pre-wrap" style={{ fontSize: '16px' }}>
                     {modalReview.content}
                   </p>
@@ -314,7 +314,7 @@ export default function TestimonialsSection() {
               <div className="px-6 py-4 border-t border-gray-200 flex justify-end">
                 <button
                   onClick={() => setModalReview(null)}
-                  className="bg-[#7B6BA8] text-white px-6 py-2 rounded-full font-medium hover:bg-[#6A5A97] transition-colors"
+                  className="bg-[#1F7A5C] text-white px-6 py-2 rounded-full font-medium hover:bg-[#145042] transition-colors"
                 >
                   Zatvori
                 </button>

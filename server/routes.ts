@@ -78,6 +78,7 @@ ${blogUrls}
   app.get("/api/blog-posts", async (req, res) => {
     try {
       const result = await getBlogPosts();
+      res.set("Cache-Control", "public, max-age=300");
       res.json(result);
     } catch (error) {
       console.error("Error fetching blog posts from Notion:", error);
@@ -87,7 +88,36 @@ ${blogUrls}
     }
   });
 
-  // Get single blog post with full content
+  // Get single blog post by slug (must be before :id route)
+  app.get("/api/blog-posts/by-slug/:slug", async (req, res) => {
+    try {
+      const slug = decodeURIComponent(req.params.slug).trim();
+      if (!slug) {
+        res.status(404).json({ message: "Blog post not found" });
+        return;
+      }
+      const result = await getBlogPosts();
+      const posts = result.posts || [];
+      const foundPost = posts.find(
+        (p: { slug: string }) => p.slug === slug
+      );
+      if (!foundPost) {
+        res.status(404).json({ message: "Blog post not found" });
+        return;
+      }
+      const post = await getBlogPostById(foundPost.id);
+      if (!post) {
+        res.status(404).json({ message: "Blog post not found" });
+        return;
+      }
+      res.json(post);
+    } catch (error) {
+      console.error("Error fetching blog post by slug:", error);
+      res.status(500).json({ message: "Error fetching blog post" });
+    }
+  });
+
+  // Get single blog post with full content by ID
   app.get("/api/blog-posts/:id", async (req, res) => {
     try {
       const post = await getBlogPostById(req.params.id);
@@ -117,6 +147,7 @@ ${blogUrls}
 
   // Get announcements from Notion
   app.get("/api/announcements", async (req, res) => {
+    res.set("Cache-Control", "public, max-age=300");
     try {
       const announcements = await getAnnouncements();
       res.json(announcements);
