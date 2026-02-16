@@ -1,267 +1,351 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
-import { useToast } from "@/hooks/use-toast"; // Ensure to import the toast hook
+import { useState } from "react"
+import { motion } from "framer-motion"
+import {
+	Mail,
+	Phone,
+	MapPin,
+	Send,
+	ClipboardList,
+	TrendingDown,
+	Dumbbell,
+	Wheat,
+	HeartPulse,
+} from "lucide-react"
+import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll"
+import { useToast } from "@/hooks/use-toast"
 
 interface ContactFormData {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-  privacyAgreed: boolean;
+	name: string
+	email: string
+	subject: string
+	message: string
+	privacyAgreed: boolean
 }
 
+const contactInfo = [
+	{ icon: Mail, label: "Email", value: "info@nutricionista.ba" },
+	{ icon: Phone, label: "Telefon", value: "+387 65 123 456" },
+	{ icon: MapPin, label: "Lokacija", value: "Banja Luka, BiH" },
+]
+
+const benefits = [
+	{
+		icon: ClipboardList,
+		title: "Personalizovan plan ishrane",
+		description:
+			"prilagođen vašim ciljevima, zdravstvenom stanju i načinu života",
+	},
+	{
+		icon: TrendingDown,
+		title: "Održivo mršavljenje",
+		description: "bez gladovanja, jojo efekta i striktnih dijeta",
+	},
+	{
+		icon: Dumbbell,
+		title: "Zdravo debljanje",
+		description:
+			"povećanje tjelesne mase pravilnom ishranom i treningom",
+	},
+	{
+		icon: Wheat,
+		title: "Bezglutenska ishrana",
+		description: "planovi za celijakiju i intoleranciju na gluten",
+	},
+	{
+		icon: HeartPulse,
+		title: "Kontinuirana podrška",
+		description:
+			"praćenje napretka i prilagođavanje plana vašim potrebama",
+	},
+]
+
 export default function ContactSection() {
-  const [formData, setFormData] = useState<ContactFormData>({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-    privacyAgreed: false,
-  });
+	const [formData, setFormData] = useState<ContactFormData>({
+		name: "",
+		email: "",
+		subject: "",
+		message: "",
+		privacyAgreed: false,
+	})
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { toast } = useToast();
+	const [isSubmitting, setIsSubmitting] = useState(false)
+	const { toast } = useToast()
 
-  const { ref: headerRef, inView: headerInView } = useAnimateOnScroll();
-  const { ref: contentRef, inView: contentInView } = useAnimateOnScroll(0.3);
+	const { ref: headerRef, inView: headerInView } = useAnimateOnScroll()
+	const { ref: contentRef, inView: contentInView } = useAnimateOnScroll(0.3)
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value, type } = e.target;
+	const handleChange = (
+		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+	) => {
+		const { name, value, type } = e.target
 
-    if (type === "checkbox") {
-      const checkbox = e.target as HTMLInputElement;
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: checkbox.checked,
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
-  };
+		if (type === "checkbox") {
+			const checkbox = e.target as HTMLInputElement
+			setFormData((prev) => ({
+				...prev,
+				[name]: checkbox.checked,
+			}))
+		} else {
+			setFormData((prev) => ({
+				...prev,
+				[name]: value,
+			}))
+		}
+	}
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault()
+		setIsSubmitting(true)
+		try {
+			const response = await fetch("/api/contact", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(formData),
+			})
 
-      if (!response.ok) {
-        throw new Error("Failed to send message");
-      }
+			if (!response.ok) throw new Error("Failed to send message")
 
-      toast({
-        title: "Uspešno!",
-        description: "Poruka je uspešno poslana!",
-      });
+			toast({
+				title: "Uspešno!",
+				description: "Poruka je uspešno poslana!",
+			})
 
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-        privacyAgreed: false,
-      });
-    } catch (error) {
-      console.error("Error sending message:", error);
-      toast({
-        title: "Greška",
-        description: "Došlo je do greške prilikom slanja poruke.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+			setFormData({
+				name: "",
+				email: "",
+				subject: "",
+				message: "",
+				privacyAgreed: false,
+			})
+		} catch (err) {
+			console.error("Error sending message:", err)
+			toast({
+				title: "Greška",
+				description: "Došlo je do greške prilikom slanja poruke.",
+				variant: "destructive",
+			})
+		} finally {
+			setIsSubmitting(false)
+		}
+	}
 
-  return (
-    <section id="contact" aria-label="Kontakt forma" className="py-16 md:py-24 bg-[#5DAD8C]">
-      <div className="container mx-auto px-4">
-        <motion.div
-          ref={headerRef}
-          initial={{ opacity: 0, y: 20 }}
-          animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-16"
-        >
-          <p className="text-white/80 font-medium tracking-wide uppercase mb-2">
-            KONTAKT
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold font-poppins mb-6 text-white">
-            Pošalji poruku
-          </h2>
-          <p className="text-white/80">
-            Za sve informacije o proizvodima i uslugama ispuni kontakt formu ili
-            mi se javi direktno putem e-maila.
-          </p>
-        </motion.div>
+	const inputClasses =
+		"rounded-lg border border-input bg-card px-4 py-3 text-sm text-card-foreground placeholder:text-muted-foreground transition-all duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
 
-        <motion.div
-          ref={contentRef}
-          initial={{ opacity: 0, y: 20 }}
-          animate={contentInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-col lg:flex-row gap-10"
-        >
-          <div className="w-full lg:w-1/2 bg-white rounded-xl p-8 shadow-lg">
-            <form
-              id="contact-form"
-              className="space-y-6"
-              onSubmit={handleSubmit}
-            >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-gray-700 font-medium mb-2"
-                  >
-                    Ime
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                    placeholder="Unesite svoje ime"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-gray-700 font-medium mb-2"
-                  >
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                    placeholder="Unesite svoj email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-              </div>
-              <div>
-                <label
-                  htmlFor="subject"
-                  className="block text-gray-700 font-medium mb-2"
-                >
-                  Tema
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                  placeholder="Tema poruke"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="message"
-                  className="block text-gray-700 font-medium mb-2"
-                >
-                  Poruka
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={5}
-                  className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                  placeholder="Vaša poruka"
-                  required
-                ></textarea>
-              </div>
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  id="privacy"
-                  name="privacyAgreed"
-                  checked={formData.privacyAgreed}
-                  onChange={handleChange}
-                  className="mr-2 text-primary focus:ring-primary"
-                  required
-                />
-                <label htmlFor="privacy" className="text-gray-600 text-sm">
-                  Slažem se sa{" "}
-                  <a href="/privacy" className="text-primary hover:underline">
-                    Politikom Privatnosti
-                  </a>{" "}
-                  i pristajem na kontaktiranje.
-                </label>
-              </div>
-              <button
-                type="submit"
-                className="w-full py-3 bg-primary hover:bg-primary-dark text-white rounded-md font-medium transition duration-300 ease-in-out shadow-md hover:shadow-lg disabled:opacity-70"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? "Šaljem..." : "Pošaljite Poruku"}
-              </button>
-            </form>
-          </div>
+	return (
+		<section
+			id="contact"
+			aria-label="Kontakt forma"
+			className="relative w-full overflow-hidden bg-[hsl(157,34%,45%)]"
+		>
+			{/* Decorative background shapes */}
+			<div className="pointer-events-none absolute inset-0">
+				<div className="absolute -left-20 -top-20 h-72 w-72 rounded-full bg-[hsl(157,34%,35%)] opacity-35" />
+				<div className="absolute -bottom-32 -right-20 h-96 w-96 rounded-full bg-[hsl(157,34%,35%)] opacity-35" />
+			</div>
 
-          {/* Zašto Nutricionista - SEO optimized section */}
-          <div className="w-full lg:w-1/2">
-            <div className="bg-white rounded-xl p-8 shadow-lg h-full">
-              <h3 className="text-xl font-bold font-poppins mb-4 text-gray-800">
-                Zašto Nutricionista?
-              </h3>
-              <ul className="space-y-3">
-                <li className="text-gray-700">
-                  <strong>Personalizovan plan ishrane</strong> - prilagođen
-                  vašim ciljevima, zdravstvenom stanju i načinu života
-                </li>
-                <li className="text-gray-700">
-                  <strong>Stručno savjetovanje</strong> - magistar nutricionizma
-                  sa višegodišnjim iskustvom u BiH
-                </li>
-                <li className="text-gray-700">
-                  <strong>Održivo mršavljenje</strong> - bez gladovanja, jojo
-                  efekta i striktnih dijeta
-                </li>
-                <li className="text-gray-700">
-                  <strong>Zdravo debljanje</strong> - povećanje tjelesne mase
-                  pravilnom ishranom i treningom
-                </li>
-                <li className="text-gray-700">
-                  <strong>Bezglutenska ishrana</strong> - planovi za celijakiju
-                  i intoleranciju na gluten
-                </li>
-                <li className="text-gray-700">
-                  <strong>Online konsultacije</strong> - dostupne širom Bosne i
-                  Hercegovine iz udobnosti vašeg doma
-                </li>
-                <li className="text-gray-700">
-                  <strong>Kontinuirana podrška</strong> - praćenje napretka i
-                  prilagođavanje plana vašim potrebama
-                </li>
-              </ul>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
+			<div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-24">
+				{/* Header */}
+				<motion.div
+					ref={headerRef}
+					initial={{ opacity: 0, y: 20 }}
+					animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+					transition={{ duration: 0.6 }}
+					className="mb-12 text-center"
+				>
+					<span className="mb-3 inline-block text-xs font-bold uppercase tracking-[0.2em] text-white/80">
+						KONTAKT
+					</span>
+					<h2 className="text-balance text-3xl font-bold text-white font-poppins sm:text-4xl">
+						Pošalji poruku
+					</h2>
+					<p className="mx-auto mt-4 max-w-xl text-pretty text-base leading-relaxed text-white/80">
+						Za sve informacije o proizvodima i uslugama ispuni kontakt formu ili
+						mi se javi direktno putem e-maila.
+					</p>
+				</motion.div>
+
+				{/* Contact info pills */}
+				<motion.div
+					initial={{ opacity: 0, y: 20 }}
+					animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+					transition={{ duration: 0.6, delay: 0.1 }}
+					className="mb-10 flex flex-wrap items-center justify-center gap-3"
+				>
+					{contactInfo.map((info) => (
+						<div
+							key={info.label}
+							className="flex items-center gap-2.5 rounded-full bg-white/15 px-5 py-2.5 backdrop-blur-sm"
+						>
+							<info.icon className="h-4 w-4 text-white" />
+							<span className="text-sm font-medium text-white">
+								{info.value}
+							</span>
+						</div>
+					))}
+				</motion.div>
+
+				{/* Main content */}
+				<motion.div
+					ref={contentRef}
+					initial={{ opacity: 0, y: 20 }}
+					animate={contentInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+					transition={{ duration: 0.6, delay: 0.3 }}
+					className="grid grid-cols-1 gap-6 lg:grid-cols-5"
+				>
+					{/* Form card */}
+					<div className="rounded-2xl bg-card p-6 shadow-xl shadow-black/5 sm:p-8 lg:col-span-3">
+						<div className="mb-6">
+							<h3 className="text-lg font-bold text-card-foreground">
+								Pošaljite nam poruku
+							</h3>
+							<p className="mt-1 text-sm text-muted-foreground">
+								Odgovaramo u roku od 24 sata
+							</p>
+						</div>
+						<form
+							id="contact-form"
+							className="flex flex-col gap-5"
+							onSubmit={handleSubmit}
+						>
+							<div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+								<div className="flex flex-col gap-2">
+									<label
+										htmlFor="name"
+										className="text-sm font-medium text-card-foreground"
+									>
+										Ime
+									</label>
+									<input
+										id="name"
+										name="name"
+										type="text"
+										placeholder="Unesite svoje ime"
+										value={formData.name}
+										onChange={handleChange}
+										required
+										className={inputClasses}
+									/>
+								</div>
+								<div className="flex flex-col gap-2">
+									<label
+										htmlFor="email"
+										className="text-sm font-medium text-card-foreground"
+									>
+										Email
+									</label>
+									<input
+										id="email"
+										name="email"
+										type="email"
+										placeholder="Unesite svoj email"
+										value={formData.email}
+										onChange={handleChange}
+										required
+										className={inputClasses}
+									/>
+								</div>
+							</div>
+
+							<div className="flex flex-col gap-2">
+								<label
+									htmlFor="subject"
+									className="text-sm font-medium text-card-foreground"
+								>
+									Tema
+								</label>
+								<input
+									id="subject"
+									name="subject"
+									type="text"
+									placeholder="Tema poruke"
+									value={formData.subject}
+									onChange={handleChange}
+									required
+									className={inputClasses}
+								/>
+							</div>
+
+							<div className="flex flex-col gap-2">
+								<label
+									htmlFor="message"
+									className="text-sm font-medium text-card-foreground"
+								>
+									Poruka
+								</label>
+								<textarea
+									id="message"
+									name="message"
+									rows={5}
+									placeholder="Vaša poruka"
+									value={formData.message}
+									onChange={handleChange}
+									required
+									className={`resize-none ${inputClasses}`}
+								/>
+							</div>
+
+							<label className="group flex cursor-pointer items-start gap-3">
+								<input
+									type="checkbox"
+									id="privacy"
+									name="privacyAgreed"
+									checked={formData.privacyAgreed}
+									onChange={handleChange}
+									required
+									className="mt-0.5 h-4 w-4 rounded border-input accent-primary"
+								/>
+								<span className="text-sm leading-relaxed text-muted-foreground">
+									Slažem se sa{" "}
+									<a
+										href="/privacy"
+										className="text-primary underline underline-offset-2 hover:text-accent"
+									>
+										Politikom Privatnosti
+									</a>{" "}
+									i pristajem na kontaktiranje.
+								</span>
+							</label>
+
+							<button
+								type="submit"
+								disabled={isSubmitting}
+								className="flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-all duration-200 hover:bg-primary-dark hover:shadow-lg active:scale-[0.98] disabled:opacity-70"
+							>
+								<Send className="h-4 w-4" />
+								{isSubmitting ? "Šaljem..." : "Pošaljite Poruku"}
+							</button>
+						</form>
+					</div>
+
+					{/* Benefits card */}
+					<div className="rounded-2xl bg-card p-6 shadow-xl shadow-black/5 sm:p-8 lg:col-span-2">
+						<h3 className="mb-4 text-xl font-bold text-card-foreground">
+							Zašto Nutricionista?
+						</h3>
+						<div className="flex flex-col gap-4">
+							{benefits.map((benefit) => (
+								<div
+									key={benefit.title}
+									className="group flex items-start gap-3.5 rounded-lg p-2.5 transition-colors duration-200 hover:bg-muted"
+								>
+									<div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+										<benefit.icon className="h-[18px] w-[18px] text-primary" />
+									</div>
+									<div className="flex flex-col gap-0.5">
+										<span className="text-sm font-semibold leading-snug text-card-foreground">
+											{benefit.title}
+										</span>
+										<span className="text-sm leading-relaxed text-muted-foreground">
+											{benefit.description}
+										</span>
+									</div>
+								</div>
+							))}
+						</div>
+					</div>
+				</motion.div>
+			</div>
+		</section>
+	)
 }
