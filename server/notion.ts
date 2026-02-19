@@ -618,6 +618,51 @@ async function getPageImage(page: any): Promise<string> {
     return "https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400";
 }
 
+function toDashedNotionId(id: string): string {
+    const compactId = id.replace(/-/g, "");
+    if (compactId.length !== 32) {
+        return id;
+    }
+    return `${compactId.slice(0, 8)}-${compactId.slice(8, 12)}-${compactId.slice(12, 16)}-${compactId.slice(16, 20)}-${compactId.slice(20)}`;
+}
+
+function isSameNotionId(left: string, right: string): boolean {
+    return left.replace(/-/g, "").toLowerCase() === right.replace(/-/g, "").toLowerCase();
+}
+
+function mapBlogPageToPost(page: any, content: any[]) {
+    const properties = page.properties || {};
+
+    let categories: string[] = [];
+    if (properties.Category?.multi_select && properties.Category.multi_select.length > 0) {
+        categories = properties.Category.multi_select.map((cat: any) => cat.name);
+    } else if (properties.Category?.select?.name) {
+        categories = [properties.Category.select.name];
+    }
+
+    const title = properties.Title?.title?.[0]?.plain_text || "Untitled Post";
+    const slugValue =
+        properties.Slug?.rich_text?.[0]?.plain_text ||
+        properties.Slug?.title?.[0]?.plain_text ||
+        title;
+
+    return {
+        id: String(page.id || "").replace(/-/g, ""),
+        title,
+        excerpt: properties.Excerpt?.rich_text?.[0]?.plain_text || "",
+        categories,
+        category: categories[0] || "Savjeti",
+        image: getImageFromNotionProperty(properties),
+        date: properties.Date?.date?.start || new Date().toISOString().split('T')[0],
+        slug: toUrlSlug(slugValue),
+        author: {
+            name: properties.Author?.rich_text?.[0]?.plain_text || "NutriHub Team",
+            avatar: "https://images.unsplash.com/photo-1607453998774-d533f65dac99?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150",
+        },
+        content,
+    };
+}
+
 // Get a single blog post by ID with full content
 export async function getBlogPostById(postId: string) {
     const cacheKey = `blog-post-${postId}`;
@@ -630,9 +675,7 @@ export async function getBlogPostById(postId: string) {
     try {
         console.log(`[Notion] Fetching blog post: ${postId}`);
         const compactId = postId.replace(/-/g, "");
-        const dashedId = compactId.length === 32
-            ? `${compactId.slice(0, 8)}-${compactId.slice(8, 12)}-${compactId.slice(12, 16)}-${compactId.slice(16, 20)}-${compactId.slice(20)}`
-            : postId;
+        const dashedId = toDashedNotionId(postId);
         const candidateIds = Array.from(new Set([postId, compactId, dashedId]));
 
         let page: any | null = null;
@@ -650,41 +693,41 @@ export async function getBlogPostById(postId: string) {
             }
         }
         if (!page || !usedPageId) {
-            console.error(`[Notion] Could not retrieve page for post id: ${postId}`);
-            return null;
+            console.warn(`[Notion] pages.retrieve failed for ${postId}, trying database query fallback`);
+
+            const blogDb = await findDatabaseByTitle("Blog Posts");
+            if (!blogDb) {
+                console.error("[Notion] Blog Posts database not found");
+                return null;
+            }
+
+            const response = await notion.databases.query({
+                database_id: blogDb.id,
+                filter: {
+                    property: "Published",
+                    checkbox: { equals: true },
+                },
+                page_size: 100,
+            });
+
+            const pageFromQuery = (response.results as any[]).find((item) => {
+                return isSameNotionId(item.id, postId);
+            });
+
+            if (!pageFromQuery) {
+                console.error(`[Notion] Could not find page in database query for id: ${postId}`);
+                return null;
+            }
+
+            const content = await getPageContent(pageFromQuery.id);
+            const result = mapBlogPageToPost(pageFromQuery, content);
+            setCache(cacheKey, result);
+            console.log(`[Cache] Blog post cached from query fallback: ${postId}`);
+            return result;
         }
 
-        const properties = page.properties;
         const content = await getPageContent(usedPageId);
-
-        // Handle multi-select or single select categories
-        let categories: string[] = [];
-        if (properties.Category?.multi_select && properties.Category.multi_select.length > 0) {
-            categories = properties.Category.multi_select.map((cat: any) => cat.name);
-        } else if (properties.Category?.select?.name) {
-            categories = [properties.Category.select.name];
-        }
-
-        const title = properties.Title?.title?.[0]?.plain_text || "Untitled Post";
-        const slugValue =
-            properties.Slug?.rich_text?.[0]?.plain_text ||
-            properties.Slug?.title?.[0]?.plain_text ||
-            title;
-        const result = {
-            id: page.id.replace(/-/g, ''),
-            title,
-            excerpt: properties.Excerpt?.rich_text?.[0]?.plain_text || "",
-            categories: categories,
-            category: categories[0] || "Savjeti",
-            image: getImageFromNotionProperty(properties),
-            date: properties.Date?.date?.start || new Date().toISOString().split('T')[0],
-            slug: toUrlSlug(slugValue),
-            author: {
-                name: properties.Author?.rich_text?.[0]?.plain_text || "NutriHub Team",
-                avatar: "https://images.unsplash.com/photo-1607453998774-d533f65dac99?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150"
-            },
-            content: content
-        };
+        const result = mapBlogPageToPost(page, content);
         
         setCache(cacheKey, result);
         console.log(`[Cache] Blog post cached: ${postId}`);
