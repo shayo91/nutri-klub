@@ -87,7 +87,7 @@ export default function Purchase() {
         <meta name="description" content={`${ebook.description} Kupite e-knjigu nutricioniste Jelene Matijaš.`} />
         <meta property="og:title" content={`${ebook.title} | Nutricionista Jelena Matijaš`} />
         <meta property="og:description" content={ebook.description} />
-        <link rel="canonical" href="https://nutriputovanje.com/purchase" />
+        <link rel="canonical" href="https://nutricionistajelena.ba/purchase" />
       </Helmet>
       <div className="min-h-screen bg-gray-50 py-16">
         <div className="container mx-auto px-4">

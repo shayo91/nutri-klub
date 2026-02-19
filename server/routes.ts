@@ -11,7 +11,7 @@ Allow: /
 Disallow: /api/
 Disallow: /purchase
 
-Sitemap: https://nutriputovanje.com/sitemap.xml
+Sitemap: https://nutricionistajelena.ba/sitemap.xml
 `);
   });
 
@@ -21,7 +21,7 @@ Sitemap: https://nutriputovanje.com/sitemap.xml
       const result = await getBlogPosts();
       if (result.posts) {
         blogUrls = result.posts.map((post: any) => `  <url>
-    <loc>https://nutriputovanje.com/blog/${post.slug}</loc>${post.date ? `\n    <lastmod>${post.date}</lastmod>` : ''}
+    <loc>https://nutricionistajelena.ba/blog/${post.slug}</loc>${post.date ? `\n    <lastmod>${post.date}</lastmod>` : ''}
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>`).join("\n");
@@ -32,37 +32,31 @@ Sitemap: https://nutriputovanje.com/sitemap.xml
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://nutriputovanje.com/</loc>
+    <loc>https://nutricionistajelena.ba/</loc>
     <lastmod>${today}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://nutriputovanje.com/about</loc>
+    <loc>https://nutricionistajelena.ba/about</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nutriputovanje.com/testimonials</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://nutriputovanje.com/privacy</loc>
+    <loc>https://nutricionistajelena.ba/privacy</loc>
     <lastmod>${today}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://nutriputovanje.com/terms</loc>
+    <loc>https://nutricionistajelena.ba/terms</loc>
     <lastmod>${today}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://nutriputovanje.com/cookies</loc>
+    <loc>https://nutricionistajelena.ba/cookies</loc>
     <lastmod>${today}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>

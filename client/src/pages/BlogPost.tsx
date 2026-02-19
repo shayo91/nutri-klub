@@ -253,7 +253,7 @@ export default function BlogPost() {
         <meta property="og:type" content="article" />
         {post.image && <meta property="og:image" content={post.image} />}
         <meta property="og:locale" content="bs_BA" />
-        <link rel="canonical" href={`https://nutriputovanje.com/blog/${post.slug}`} />
+        <link rel="canonical" href={`https://nutricionistajelena.ba/blog/${post.slug}`} />
         <meta property="article:author" content={post.author.name} />
         <meta property="article:section" content={post.category} />
         {post.date && (() => {
@@ -276,21 +276,21 @@ export default function BlogPost() {
             "@type": "Person",
             "name": post.author.name,
             "jobTitle": "Magistar nutricionizma",
-            "url": "https://nutriputovanje.com/about"
+            "url": "https://nutricionistajelena.ba/about"
           },
           "publisher": {
             "@type": "Organization",
             "name": "NutriKlub",
-            "url": "https://nutriputovanje.com",
+            "url": "https://nutricionistajelena.ba",
             "logo": {
               "@type": "ImageObject",
-              "url": "https://nutriputovanje.com/attached_assets/jelena-hero.png"
+              "url": "https://nutricionistajelena.ba/attached_assets/jelena-hero.png"
             }
           },
           "datePublished": post.date ? new Date(post.date).toISOString() : undefined,
           "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": `https://nutriputovanje.com/blog/${post.slug}`
+            "@id": `https://nutricionistajelena.ba/blog/${post.slug}`
           },
           "articleSection": post.category,
           "inLanguage": "bs"

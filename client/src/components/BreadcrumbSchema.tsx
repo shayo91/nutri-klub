@@ -1,7 +1,7 @@
 import { useLocation, useRoute } from "wouter";
 import { Helmet } from "react-helmet";
 
-const BASE_URL = "https://nutriputovanje.com";
+const BASE_URL = "https://nutricionistajelena.ba";
 
 const routeBreadcrumbs: Record<string, { name: string; path: string }[]> = {
 	"/": [{ name: "Početna", path: "/" }],

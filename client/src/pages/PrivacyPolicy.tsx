@@ -12,7 +12,7 @@ export default function PrivacyPolicy() {
       <Helmet>
         <title>Pravila Privatnosti | Nutricionista Jelena Matijaš</title>
         <meta name="description" content="Pravila privatnosti nutricioniste Jelene Matijaš. Saznajte kako prikupljamo, koristimo i štitimo vaše podatke." />
-        <link rel="canonical" href="https://nutriputovanje.com/privacy" />
+        <link rel="canonical" href="https://nutricionistajelena.ba/privacy" />
         <meta name="robots" content="noindex, follow" />
       </Helmet>
       <div className="container mx-auto px-4">
@@ -67,7 +67,7 @@ export default function PrivacyPolicy() {
             <p className="mb-6">
               Za sva pitanja u vezi sa ovim Pravilima privatnosti, možete nas kontaktirati na:
               <br />
-              Email: jelena@nutriklub.ba
+              Email: jelena@jelenamatijas.ba
               <br />
               Telefon: +387 65 123 456
               <br />

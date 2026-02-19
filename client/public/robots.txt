@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://nutriputovanje.com/sitemap.xml
+Sitemap: https://nutricionistajelena.ba/sitemap.xml
 
 Disallow: /api/
 Disallow: /purchase

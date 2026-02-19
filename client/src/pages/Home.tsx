@@ -40,13 +40,13 @@ export default function Home() {
         <meta name="description" content="Nutricionista Banja Luka i online nutricionist za cijelu BiH. Personalizovani planovi ishrane za mršavljenje, debljanje i zdrav život. Dijeta savjeti, zdravlje ishrana i besplatne konsultacije." />
         <meta property="og:title" content="Nutricionista Jelena Matijaš | Planovi Ishrane BiH" />
         <meta property="og:description" content="Online nutricionist i nutricionista Banja Luka. Personalizovani planovi ishrane za mršavljenje i debljanje. Dijeta savjeti i zdravlje ishrana." />
-        <meta property="og:image" content="https://nutriputovanje.com/attached_assets/jelena-hero.png" />
+        <meta property="og:image" content="https://nutricionistajelena.ba/attached_assets/jelena-hero.png" />
         <meta property="og:locale" content="bs_BA" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Nutricionista Jelena Matijaš | Planovi Ishrane BiH" />
         <meta name="twitter:description" content="Online nutricionist i nutricionista Banja Luka. Personalizovani planovi ishrane za mršavljenje i debljanje." />
-        <meta name="twitter:image" content="https://nutriputovanje.com/attached_assets/jelena-hero.png" />
-        <link rel="canonical" href="https://nutriputovanje.com" />
+        <meta name="twitter:image" content="https://nutricionistajelena.ba/attached_assets/jelena-hero.png" />
+        <link rel="canonical" href="https://nutricionistajelena.ba" />
       </Helmet>
       <HeroSection />
       <BMICalculator />

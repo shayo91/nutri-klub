@@ -12,7 +12,7 @@ export default function TermsOfService() {
       <Helmet>
         <title>Uslovi Poslovanja | Nutricionista Jelena Matijaš</title>
         <meta name="description" content="Uslovi poslovanja nutricioniste Jelene Matijaš. Pravila i obaveze za korisnike web stranice i online usluga." />
-        <link rel="canonical" href="https://nutriputovanje.com/terms" />
+        <link rel="canonical" href="https://nutricionistajelena.ba/terms" />
         <meta name="robots" content="noindex, follow" />
       </Helmet>
       <div className="container mx-auto px-4">
@@ -68,7 +68,7 @@ export default function TermsOfService() {
             <p className="mb-6">
               Za sva pitanja u vezi sa ovim Uslovima poslovanja, kontaktirajte nas:
               <br />
-              Email: jelena@nutriklub.ba
+              Email: jelena@jelenamatijas.ba
               <br />
               Telefon: +387 65 123 456
               <br />

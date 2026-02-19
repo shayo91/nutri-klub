@@ -12,7 +12,7 @@ export default function CookiePolicy() {
       <Helmet>
         <title>Pravila o Kolačićima | Nutricionista Jelena Matijaš</title>
         <meta name="description" content="Pravila o kolačićima nutricioniste Jelene Matijaš. Saznajte kako koristimo kolačiće za poboljšanje vašeg iskustva na sajtu." />
-        <link rel="canonical" href="https://nutriputovanje.com/cookies" />
+        <link rel="canonical" href="https://nutricionistajelena.ba/cookies" />
         <meta name="robots" content="noindex, follow" />
       </Helmet>
       <div className="container mx-auto px-4">
@@ -55,7 +55,7 @@ export default function CookiePolicy() {
             <p className="mb-6">
               Za sva pitanja o našoj upotrebi kolačića, kontaktirajte nas:
               <br />
-              Email: jelena@nutriklub.ba
+              Email: jelena@jelenamatijas.ba
               <br />
               Telefon: +387 65 123 456
               <br />

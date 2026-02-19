@@ -23,7 +23,7 @@ interface ContactFormData {
 }
 
 const contactInfo = [
-	{ icon: Mail, label: "Email", value: "jelena@nutriklub.ba" },
+	{ icon: Mail, label: "Email", value: "jelena@jelenamatijas.ba" },
 	{ icon: Phone, label: "Telefon", value: "Po dogovoru" },
 	{ icon: MapPin, label: "Lokacija", value: "Banja Luka, BiH" },
 ]
@@ -101,7 +101,7 @@ export default function ContactSection() {
 			const body = encodeURIComponent(
 				`Ime: ${formData.name}\nEmail: ${formData.email}\n\nPoruka:\n${formData.message}`,
 			)
-			const mailtoUrl = `mailto:info@nutriklub.ba?subject=${subject}&body=${body}`
+			const mailtoUrl = `mailto:info@jelenamatijas.ba?subject=${subject}&body=${body}`
 			window.location.href = mailtoUrl
 			toast({
 				title: "Uspešno!",
@@ -118,7 +118,7 @@ export default function ContactSection() {
 			console.error("Error preparing message:", err)
 			toast({
 				title: "Greška",
-				description: "Došlo je do greške. Pokušajte direktno na info@nutriklub.ba",
+				description: "Došlo je do greške. Pokušajte direktno na info@jelenamatijas.ba",
 				variant: "destructive",
 			})
 		} finally {

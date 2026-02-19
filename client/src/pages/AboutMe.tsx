@@ -20,13 +20,13 @@ export default function AboutMe() {
         <meta name="description" content="Upoznajte Jelenu Matijaš, magistricu nutricionizma sa bogatim iskustvom u personalizovanoj ishrani. Specijalizirana za bezglutensku ishranu i autoimune izazove." />
         <meta property="og:title" content="O meni - Nutricionista Jelena Matijaš" />
         <meta property="og:description" content="Magistrica nutricionizma posvećena zdravoj i praktičnoj ishrani. Specijalizirana za bezglutenske recepte i autoimune izazove." />
-        <meta property="og:image" content="https://nutriputovanje.com/attached_assets/jelena-hero.png" />
+        <meta property="og:image" content="https://nutricionistajelena.ba/attached_assets/jelena-hero.png" />
         <meta property="og:locale" content="bs_BA" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="O meni - Nutricionista Jelena Matijaš" />
         <meta name="twitter:description" content="Magistrica nutricionizma posvećena zdravoj i praktičnoj ishrani. Specijalizirana za bezglutenske recepte i autoimune izazove." />
-        <meta name="twitter:image" content="https://nutriputovanje.com/attached_assets/jelena-hero.png" />
-        <link rel="canonical" href="https://nutriputovanje.com/about" />
+        <meta name="twitter:image" content="https://nutricionistajelena.ba/attached_assets/jelena-hero.png" />
+        <link rel="canonical" href="https://nutricionistajelena.ba/about" />
       </Helmet>
       
       <main className="min-h-screen bg-white font-sans">
