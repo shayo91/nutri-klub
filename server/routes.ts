@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { getBlogPosts, getBlogPostById, getTestimonials, getAnnouncements, getVideos, getPodcasts, getSocialMedia } from "./notion";
+import { getBlogPosts, getBlogPostById, getTestimonials, getAnnouncements, getVideos, getPodcasts, getSocialMedia, toUrlSlug } from "./notion";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -88,6 +88,47 @@ ${blogUrls}
     }
   });
 
+  // Fallback blog posts (must match BlogSection fallbackPosts slugs exactly)
+  const FALLBACK_BLOG_POSTS: Record<string, { id: string; title: string; excerpt: string; category: string; image: string; date: string; slug: string; author: { name: string }; content: any[] }> = {
+    "supermoc-napraviti-od-nicega-rucak": {
+      id: "fallback-1",
+      title: "Supermoć: napraviti od ničega ručak",
+      excerpt: "Kažu da nisu svi heroji u plaštovima. Neki nose kecelju, u jednoj ruci drže varjaču.",
+      category: "Recepti",
+      image: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80",
+      date: "2025-05-27",
+      slug: "supermoc-napraviti-od-nicega-rucak",
+      author: { name: "NutriHub Team" },
+      content: [{ id: "1", type: "paragraph", content: [{ text: "Sadržaj članka će uskoro biti dostupan." }] }],
+    },
+    "razumijevanje-makronutrijenata": {
+      id: "fallback-2",
+      title: "Razumijevanje makronutrijenata",
+      excerpt: "Saznajte o proteinima, ugljenim hidratima i mastima - šta rade u vašem tijelu i kako ih balansirati za optimalno zdravlje.",
+      category: "Savjeti",
+      image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80",
+      date: "2023-06-08",
+      slug: "razumijevanje-makronutrijenata",
+      author: { name: "NutriHub Team" },
+      content: [{ id: "1", type: "paragraph", content: [{ text: "Sadržaj članka će uskoro biti dostupan." }] }],
+    },
+    "stres-i-ishrana": {
+      id: "fallback-3",
+      title: "Kako stres utiče na vašu ishranu",
+      excerpt: "Otkrijte složenu vezu između stresa i obrazaca ishrane, i naučite strategije za održavanje zdravih navika tokom stresnih trenutaka.",
+      category: "Zdravlje",
+      image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80",
+      date: "2023-06-01",
+      slug: "stres-i-ishrana",
+      author: { name: "NutriHub Team" },
+      content: [{ id: "1", type: "paragraph", content: [{ text: "Sadržaj članka će uskoro biti dostupan." }] }],
+    },
+  };
+
+  function textToContentBlocks(text: string) {
+    return [{ id: "main", type: "paragraph", content: [{ text }] }];
+  }
+
   // Get single blog post by slug (must be before :id route)
   app.get("/api/blog-posts/by-slug/:slug", async (req, res) => {
     try {
@@ -96,21 +137,57 @@ ${blogUrls}
         res.status(404).json({ message: "Blog post not found" });
         return;
       }
+      const normalizedSlug = toUrlSlug(slug);
+
+      // 1. Try Notion
       const result = await getBlogPosts();
       const posts = result.posts || [];
       const foundPost = posts.find(
-        (p: { slug: string }) => p.slug === slug
+        (p: { slug: string }) => toUrlSlug(p.slug) === normalizedSlug
       );
-      if (!foundPost) {
-        res.status(404).json({ message: "Blog post not found" });
+      if (foundPost) {
+        const post = await getBlogPostById(foundPost.id);
+        if (post) {
+          res.json(post);
+          return;
+        }
+      }
+
+      // 2. Try storage fallback (when Notion fails or returns empty)
+      const storagePosts = await storage.getBlogPosts();
+      const storagePost = storagePosts.find(
+        (p: { slug: string }) => toUrlSlug(p.slug) === normalizedSlug
+      );
+      if (storagePost) {
+        const content = typeof storagePost.content === "string"
+          ? textToContentBlocks(storagePost.content)
+          : [];
+        const rawDate = storagePost.date as string | Date;
+        const dateStr = typeof rawDate === "string"
+          ? (rawDate.includes("T") ? rawDate.split("T")[0] : rawDate)
+          : new Date(rawDate).toISOString().split("T")[0];
+        res.json({
+          id: String(storagePost.id),
+          title: storagePost.title,
+          excerpt: storagePost.excerpt || "",
+          category: storagePost.category || "Savjeti",
+          image: storagePost.image || "",
+          date: dateStr,
+          slug: storagePost.slug,
+          author: { name: "NutriHub Team" },
+          content,
+        });
         return;
       }
-      const post = await getBlogPostById(foundPost.id);
-      if (!post) {
-        res.status(404).json({ message: "Blog post not found" });
+
+      // 3. Try fallback posts (from BlogSection when API is loading)
+      const fallbackPost = FALLBACK_BLOG_POSTS[normalizedSlug];
+      if (fallbackPost) {
+        res.json(fallbackPost);
         return;
       }
-      res.json(post);
+
+      res.status(404).json({ message: "Blog post not found" });
     } catch (error) {
       console.error("Error fetching blog post by slug:", error);
       res.status(500).json({ message: "Error fetching blog post" });

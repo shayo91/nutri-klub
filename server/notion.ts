@@ -38,6 +38,28 @@ function extractPageIdFromUrl(pageUrl: string): string {
     throw Error("Failed to extract page ID");
 }
 
+/**
+ * Normalize text to URL-safe slug (ASCII, no diacritics).
+ * Handles BCS characters: č, ć, š, ž, đ and their uppercase variants.
+ */
+export function toUrlSlug(text: string): string {
+	if (!text || typeof text !== "string") return "untitled";
+	const diacriticsMap: Record<string, string> = {
+		č: "c", ć: "c", š: "s", ž: "z", đ: "d",
+		Č: "c", Ć: "c", Š: "s", Ž: "z", Đ: "d",
+	};
+	const normalized = text
+		.split("")
+		.map((c) => diacriticsMap[c] ?? c)
+		.join("");
+	return normalized
+		.toLowerCase()
+		.replace(/[^a-z0-9\s-]/g, "")
+		.replace(/\s+/g, "-")
+		.replace(/-+/g, "-")
+		.replace(/(^-|-$)/g, "");
+}
+
 const pageUrl = process.env.NOTION_PAGE_URL;
 if (!pageUrl) {
     throw new Error(
@@ -258,19 +280,21 @@ export async function getBlogPosts() {
             }
             categories.forEach((cat: string) => categoriesSet.add(cat));
 
+            const title = properties.Title?.title?.[0]?.plain_text || "Untitled Post";
+            const slugValue =
+                properties.Slug?.rich_text?.[0]?.plain_text ||
+                properties.Slug?.title?.[0]?.plain_text ||
+                toUrlSlug(title);
             return {
                 id: page.id.replace(/-/g, ''),
-                title: properties.Title?.title?.[0]?.plain_text || "Untitled Post",
+                title,
                 excerpt: properties.Excerpt?.rich_text?.[0]?.plain_text || "",
                 content: properties.Content?.rich_text?.[0]?.plain_text || "",
                 categories: categories,
                 category: categories[0] || "Savjeti",
                 image: getImageFromNotionProperty(properties),
                 date: properties.Date?.date?.start || new Date().toISOString().split('T')[0],
-                slug: (properties.Title?.title?.[0]?.plain_text || "untitled")
-                    .toLowerCase()
-                    .replace(/[^a-z0-9\u0400-\u04FF\u0100-\u017F]+/g, '-')
-                    .replace(/(^-|-$)/g, ''),
+                slug: toUrlSlug(slugValue),
                 author: {
                     name: properties.Author?.rich_text?.[0]?.plain_text || "NutriHub Team",
                     avatar: "https://images.unsplash.com/photo-1607453998774-d533f65dac99?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150"
@@ -622,18 +646,20 @@ export async function getBlogPostById(postId: string) {
             categories = [properties.Category.select.name];
         }
 
+        const title = properties.Title?.title?.[0]?.plain_text || "Untitled Post";
+        const slugValue =
+            properties.Slug?.rich_text?.[0]?.plain_text ||
+            properties.Slug?.title?.[0]?.plain_text ||
+            title;
         const result = {
             id: page.id.replace(/-/g, ''),
-            title: properties.Title?.title?.[0]?.plain_text || "Untitled Post",
+            title,
             excerpt: properties.Excerpt?.rich_text?.[0]?.plain_text || "",
             categories: categories,
             category: categories[0] || "Savjeti",
             image: getImageFromNotionProperty(properties),
             date: properties.Date?.date?.start || new Date().toISOString().split('T')[0],
-            slug: (properties.Title?.title?.[0]?.plain_text || "untitled")
-                .toLowerCase()
-                .replace(/[^a-z0-9\u0400-\u04FF\u0100-\u017F]+/g, '-')
-                .replace(/(^-|-$)/g, ''),
+            slug: toUrlSlug(slugValue),
             author: {
                 name: properties.Author?.rich_text?.[0]?.plain_text || "NutriHub Team",
                 avatar: "https://images.unsplash.com/photo-1607453998774-d533f65dac99?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150"
