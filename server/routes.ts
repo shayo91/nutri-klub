@@ -5,17 +5,16 @@ import { getBlogPosts, getBlogPostById, getTestimonials, getAnnouncements, getVi
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  app.get("/robots.txt", (_req, res) => {
+  app.get(["/robots.txt", "/api/robots.txt"], (_req, res) => {
     res.type("text/plain").send(`User-agent: *
 Allow: /
 Disallow: /api/
-Disallow: /purchase
 
 Sitemap: https://nutricionistajelena.ba/sitemap.xml
 `);
   });
 
-  app.get("/sitemap.xml", async (_req, res) => {
+  const sitemapHandler = async (_req: any, res: any) => {
     let blogUrls = "";
     try {
       const result = await getBlogPosts();
@@ -44,6 +43,12 @@ Sitemap: https://nutricionistajelena.ba/sitemap.xml
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://nutricionistajelena.ba/purchase</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://nutricionistajelena.ba/privacy</loc>
     <lastmod>${today}</lastmod>
     <changefreq>yearly</changefreq>
@@ -64,7 +69,8 @@ Sitemap: https://nutricionistajelena.ba/sitemap.xml
 ${blogUrls}
 </urlset>`;
     res.type("application/xml").send(sitemap);
-  });
+  };
+  app.get(["/sitemap.xml", "/api/sitemap.xml"], sitemapHandler);
 
   // API Routes
   

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { motion } from "framer-motion"
 import {
 	Mail,
@@ -20,6 +20,8 @@ interface ContactFormData {
 	subject: string
 	message: string
 	privacyAgreed: boolean
+	/** Honeypot: bots fill this, humans don't see it */
+	website?: string
 }
 
 const contactInfo = [
@@ -66,10 +68,12 @@ export default function ContactSection() {
 		subject: "",
 		message: "",
 		privacyAgreed: false,
+		website: "",
 	})
 
 	const [isSubmitting, setIsSubmitting] = useState(false)
 	const { toast } = useToast()
+	const formMountedAtRef = useRef<number>(Date.now())
 
 	const { ref: headerRef, inView: headerInView } = useAnimateOnScroll()
 	const { ref: contentRef, inView: contentInView } = useAnimateOnScroll(0.3)
@@ -93,8 +97,21 @@ export default function ContactSection() {
 		}
 	}
 
+	// Honeypot: visually hidden, aria-hidden, tabIndex -1 - bots fill it, humans never see it
+	const honeypotStyles =
+		"absolute -left-[9999px] w-px h-px opacity-0 pointer-events-none"
+
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault()
+		// Honeypot: if filled, it's a bot - silently abort
+		if (formData.website?.trim()) {
+			return
+		}
+		// Time-based: reject if submitted within 3s of page load (bots submit instantly)
+		const minTimeMs = 3000
+		if (Date.now() - formMountedAtRef.current < minTimeMs) {
+			return
+		}
 		setIsSubmitting(true)
 		try {
 			const subject = encodeURIComponent(formData.subject)
@@ -113,6 +130,7 @@ export default function ContactSection() {
 				subject: "",
 				message: "",
 				privacyAgreed: false,
+				website: "",
 			})
 		} catch (err) {
 			console.error("Error preparing message:", err)
@@ -205,6 +223,19 @@ export default function ContactSection() {
 							className="flex flex-col gap-5"
 							onSubmit={handleSubmit}
 						>
+							{/* Honeypot - invisible to humans, bots fill it */}
+							<div className={honeypotStyles} aria-hidden>
+								<label htmlFor="website">Web stranica (ostavite prazno)</label>
+								<input
+									id="website"
+									name="website"
+									type="text"
+									tabIndex={-1}
+									autoComplete="off"
+									value={formData.website ?? ""}
+									onChange={handleChange}
+								/>
+							</div>
 							<div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
 								<div className="flex flex-col gap-2">
 									<label
