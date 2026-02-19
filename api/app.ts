@@ -1,6 +1,6 @@
 /**
  * Shared Express app for Vercel serverless functions.
- * Used by api/index.ts and api/[[...path]].ts
+ * Used by api/index.ts and api/[...path].ts
  */
 import "dotenv/config"
 import express, { type Request, Response, NextFunction } from "express"
