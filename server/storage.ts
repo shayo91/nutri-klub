@@ -101,7 +101,7 @@ export class MemStorage implements IStorage {
         content: "Full recipe and nutrition information here...",
         category: "recipes",
         image: "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
-        date: new Date("2023-06-15").toISOString(),
+        date: new Date("2023-06-15"),
         slug: "protein-packed-breakfast-bowl",
         authorId: 1
       },
@@ -112,7 +112,7 @@ export class MemStorage implements IStorage {
         content: "Detailed information about macronutrients...",
         category: "nutrition",
         image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
-        date: new Date("2023-06-08").toISOString(),
+        date: new Date("2023-06-08"),
         slug: "understanding-macronutrients",
         authorId: 1
       },
@@ -123,7 +123,7 @@ export class MemStorage implements IStorage {
         content: "Detailed article about stress and nutrition...",
         category: "wellness",
         image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
-        date: new Date("2023-06-01").toISOString(),
+        date: new Date("2023-06-01"),
         slug: "stress-and-nutrition",
         authorId: 1
       }
@@ -174,13 +174,13 @@ export class MemStorage implements IStorage {
 
   async saveSubscription(subscription: { email: string }): Promise<void> {
     const id = this.subscriptions.size + 1;
-    const newSubscription = {
+    const newSubscription: Subscription = {
       id,
       email: subscription.email,
-      date: new Date().toISOString(),
+      date: new Date(),
       active: true
     };
-    this.subscriptions.set(subscription.email, newSubscription as Subscription);
+    this.subscriptions.set(subscription.email, newSubscription);
   }
 }
 
