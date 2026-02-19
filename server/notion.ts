@@ -629,14 +629,33 @@ export async function getBlogPostById(postId: string) {
 
     try {
         console.log(`[Notion] Fetching blog post: ${postId}`);
-        // Format the page ID with dashes if needed
-        const formattedId = postId.length === 32 
-            ? `${postId.slice(0, 8)}-${postId.slice(8, 12)}-${postId.slice(12, 16)}-${postId.slice(16, 20)}-${postId.slice(20)}`
+        const compactId = postId.replace(/-/g, "");
+        const dashedId = compactId.length === 32
+            ? `${compactId.slice(0, 8)}-${compactId.slice(8, 12)}-${compactId.slice(12, 16)}-${compactId.slice(16, 20)}-${compactId.slice(20)}`
             : postId;
+        const candidateIds = Array.from(new Set([postId, compactId, dashedId]));
 
-        const page = await notion.pages.retrieve({ page_id: formattedId }) as any;
+        let page: any | null = null;
+        let usedPageId = "";
+        for (const candidateId of candidateIds) {
+            try {
+                page = await notion.pages.retrieve({ page_id: candidateId }) as any;
+                usedPageId = candidateId;
+                break;
+            } catch (error) {
+                const err = error as { code?: string; message?: string };
+                console.warn(
+                    `[Notion] Failed pages.retrieve for ${candidateId}: ${err.code || "unknown"} ${err.message || ""}`,
+                );
+            }
+        }
+        if (!page || !usedPageId) {
+            console.error(`[Notion] Could not retrieve page for post id: ${postId}`);
+            return null;
+        }
+
         const properties = page.properties;
-        const content = await getPageContent(formattedId);
+        const content = await getPageContent(usedPageId);
 
         // Handle multi-select or single select categories
         let categories: string[] = [];
@@ -671,7 +690,10 @@ export async function getBlogPostById(postId: string) {
         console.log(`[Cache] Blog post cached: ${postId}`);
         return result;
     } catch (error) {
-        console.error("Error fetching blog post:", error);
+        const err = error as { code?: string; message?: string };
+        console.error(
+            `[Notion] Error fetching blog post ${postId}: ${err.code || "unknown"} ${err.message || ""}`,
+        );
         return null;
     }
 }
