@@ -740,3 +740,67 @@ export async function getBlogPostById(postId: string) {
         return null;
     }
 }
+
+export async function getBlogPostBySlug(slug: string) {
+    const normalizedSlug = toUrlSlug(slug);
+    const cacheKey = `blog-post-slug-${normalizedSlug}`;
+    const cached = getCached<any>(cacheKey);
+    if (cached) {
+        console.log(`[Cache] Returning cached blog post by slug: ${normalizedSlug}`);
+        return cached;
+    }
+
+    try {
+        const blogDb = await findDatabaseByTitle("Blog Posts");
+        if (!blogDb) {
+            console.error("[Notion] Blog Posts database not found");
+            return null;
+        }
+
+        let hasMore = true;
+        let startCursor: string | undefined = undefined;
+
+        while (hasMore) {
+            const response = await notion.databases.query({
+                database_id: blogDb.id,
+                filter: {
+                    property: "Published",
+                    checkbox: { equals: true },
+                },
+                start_cursor: startCursor,
+                page_size: 100,
+            });
+
+            for (const page of response.results as any[]) {
+                const properties = page.properties || {};
+                const title = properties.Title?.title?.[0]?.plain_text || "Untitled Post";
+                const slugValue =
+                    properties.Slug?.rich_text?.[0]?.plain_text ||
+                    properties.Slug?.title?.[0]?.plain_text ||
+                    title;
+                const pageSlug = toUrlSlug(slugValue);
+
+                if (pageSlug === normalizedSlug) {
+                    const content = await getPageContent(page.id);
+                    const result = mapBlogPageToPost(page, content);
+                    setCache(cacheKey, result);
+                    setCache(`blog-post-${result.id}`, result);
+                    console.log(`[Cache] Blog post cached by slug: ${normalizedSlug}`);
+                    return result;
+                }
+            }
+
+            hasMore = response.has_more;
+            startCursor = response.next_cursor || undefined;
+        }
+
+        console.warn(`[Notion] Blog post not found by slug: ${normalizedSlug}`);
+        return null;
+    } catch (error) {
+        const err = error as { code?: string; message?: string };
+        console.error(
+            `[Notion] Error fetching blog post by slug ${normalizedSlug}: ${err.code || "unknown"} ${err.message || ""}`,
+        );
+        return null;
+    }
+}

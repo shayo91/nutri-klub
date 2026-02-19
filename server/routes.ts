@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage.js";
-import { getBlogPosts, getBlogPostById, getTestimonials, getAnnouncements, getVideos, getPodcasts, getSocialMedia, toUrlSlug } from "./notion.js";
+import { getBlogPosts, getBlogPostById, getBlogPostBySlug, getTestimonials, getAnnouncements, getVideos, getPodcasts, getSocialMedia, toUrlSlug } from "./notion.js";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -140,17 +140,10 @@ ${blogUrls}
       const normalizedSlug = toUrlSlug(slug);
 
       // 1. Try Notion
-      const result = await getBlogPosts();
-      const posts = result.posts || [];
-      const foundPost = posts.find(
-        (p: { slug: string }) => toUrlSlug(p.slug) === normalizedSlug
-      );
-      if (foundPost) {
-        const post = await getBlogPostById(foundPost.id);
-        if (post) {
-          res.json(post);
-          return;
-        }
+      const notionPost = await getBlogPostBySlug(normalizedSlug);
+      if (notionPost) {
+        res.json(notionPost);
+        return;
       }
 
       // 2. Try storage fallback (when Notion fails or returns empty)
