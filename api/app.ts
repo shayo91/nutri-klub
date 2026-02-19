@@ -5,7 +5,7 @@
 import "dotenv/config"
 import express, { type Request, Response, NextFunction } from "express"
 import { registerRoutes } from "../server/routes.js"
-import { log } from "../server/vite.js"
+import { log } from "../server/log.js"
 
 const app = express()
 app.use(express.json())
