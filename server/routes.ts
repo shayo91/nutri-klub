@@ -44,12 +44,6 @@ Sitemap: https://nutricionistajelena.ba/sitemap.xml
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nutricionistajelena.ba/purchase</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://nutricionistajelena.ba/privacy</loc>
     <lastmod>${today}</lastmod>
     <changefreq>yearly</changefreq>

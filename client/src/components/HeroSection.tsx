@@ -154,7 +154,7 @@ export default function HeroSection() {
                   width={420}
                   height={525}
                   loading="eager"
-                  fetchPriority="high"
+                  fetchpriority="high"
                 />
               </picture>
             </div>

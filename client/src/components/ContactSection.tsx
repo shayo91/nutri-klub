@@ -287,6 +287,7 @@ export default function ContactSection() {
 										id="name"
 										name="name"
 										type="text"
+										autoComplete="name"
 										placeholder="Unesite svoje ime"
 										value={formData.name}
 										onChange={handleChange}
@@ -305,6 +306,7 @@ export default function ContactSection() {
 										id="email"
 										name="email"
 										type="email"
+										autoComplete="email"
 										placeholder="Unesite svoj email"
 										value={formData.email}
 										onChange={handleChange}
@@ -325,6 +327,7 @@ export default function ContactSection() {
 									id="subject"
 									name="subject"
 									type="text"
+									autoComplete="off"
 									placeholder="Tema poruke"
 									value={formData.subject}
 									onChange={handleChange}
@@ -344,6 +347,7 @@ export default function ContactSection() {
 									id="message"
 									name="message"
 									rows={5}
+									autoComplete="off"
 									placeholder="Vaša poruka"
 									value={formData.message}
 									onChange={handleChange}

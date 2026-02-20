@@ -208,13 +208,14 @@ export default function BMICalculator() {
                 </div>
 
                 <div className="min-w-0">
-                  <label className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
+                  <span className="block text-gray-700 font-medium mb-2 text-sm sm:text-base" id="gender-label">
                     Pol
-                  </label>
-                  <div className="flex space-x-3 sm:space-x-4 h-[42px] items-center">
-                    <label className="flex items-center">
+                  </span>
+                  <div className="flex space-x-3 sm:space-x-4 h-[42px] items-center" role="radiogroup" aria-labelledby="gender-label">
+                    <label htmlFor="gender-male" className="flex items-center cursor-pointer">
                       <input
                         type="radio"
+                        id="gender-male"
                         name="gender"
                         value="male"
                         className="mr-2 text-primary focus:ring-primary"
@@ -223,9 +224,10 @@ export default function BMICalculator() {
                       />
                       Muški
                     </label>
-                    <label className="flex items-center">
+                    <label className="flex items-center cursor-pointer" htmlFor="gender-female">
                       <input
                         type="radio"
+                        id="gender-female"
                         name="gender"
                         value="female"
                         className="mr-2 text-primary focus:ring-primary"

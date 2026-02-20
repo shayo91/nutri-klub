@@ -2,37 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://nutricionistajelena.ba/</loc>
-    <lastmod>2026-02-05</lastmod>
+    <lastmod>2026-02-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://nutricionistajelena.ba/about</loc>
-    <lastmod>2026-02-05</lastmod>
+    <lastmod>2026-02-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nutricionistajelena.ba/purchase</loc>
-    <lastmod>2026-02-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://nutricionistajelena.ba/privacy</loc>
-    <lastmod>2026-02-05</lastmod>
+    <lastmod>2026-02-20</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://nutricionistajelena.ba/terms</loc>
-    <lastmod>2026-02-05</lastmod>
+    <lastmod>2026-02-20</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://nutricionistajelena.ba/cookies</loc>
-    <lastmod>2026-02-05</lastmod>
+    <lastmod>2026-02-20</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

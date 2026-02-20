@@ -79,6 +79,8 @@ export default function Header() {
             <img
               src="/logo-jelena-matijas2.svg"
               alt="Nutricionista Jelena Matijaš - logo"
+              width={120}
+              height={48}
               className="h-8 md:h-10 lg:h-12 w-auto"
             />
           </Link>
@@ -132,6 +134,7 @@ export default function Header() {
               rel="noopener noreferrer"
               className="flex items-center text-gray-600 hover:text-[#E4405F] transition-colors duration-300"
               data-testid="link-instagram"
+              aria-label="Instagram"
             >
               <SiInstagram className="w-5 h-5" />
             </a>
@@ -141,6 +144,7 @@ export default function Header() {
               rel="noopener noreferrer"
               className="flex items-center text-gray-600 hover:text-[#1877F2] transition-colors duration-300"
               data-testid="link-facebook"
+              aria-label="Facebook"
             >
               <SiFacebook className="w-5 h-5" />
             </a>
@@ -155,6 +159,7 @@ export default function Header() {
             rel="noopener noreferrer"
             className="text-gray-600 hover:text-[#E4405F] transition-colors duration-300"
             data-testid="link-instagram-mobile"
+            aria-label="Instagram"
           >
             <SiInstagram className="w-5 h-5" />
           </a>
@@ -164,13 +169,15 @@ export default function Header() {
             rel="noopener noreferrer"
             className="text-gray-600 hover:text-[#1877F2] transition-colors duration-300"
             data-testid="link-facebook-mobile"
+            aria-label="Facebook"
           >
             <SiFacebook className="w-5 h-5" />
           </a>
           <button
             onClick={toggleMobileMenu}
-            className="text-gray-700 focus:outline-none p-2"
+            className="text-gray-700 focus:outline-none p-3 min-w-[44px] min-h-[44px] flex items-center justify-center"
             data-testid="button-mobile-menu"
+            aria-label={mobileMenuOpen ? "Zatvori meni" : "Otvori meni"}
           >
             {mobileMenuOpen ? (
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

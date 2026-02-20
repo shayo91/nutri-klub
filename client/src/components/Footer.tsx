@@ -128,8 +128,14 @@ export default function Footer() {
               Newsletter
             </h3>
             <form onSubmit={handleSubscribe} className="space-y-2">
+              <label htmlFor="newsletter-email" className="sr-only">
+                E-mail adresa za newsletter
+              </label>
               <input
+                id="newsletter-email"
+                name="newsletter-email"
                 type="email"
+                autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Dolazi uskoro"

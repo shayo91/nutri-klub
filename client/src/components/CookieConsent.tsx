@@ -52,7 +52,7 @@ export default function CookieConsent() {
             </button>
             <button
               onClick={declineCookies}
-              className="p-1 text-gray-400 hover:text-gray-600 transition"
+              className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2.5 text-gray-400 hover:text-gray-600 transition"
               aria-label="Zatvori"
             >
               <X className="w-4 h-4" />

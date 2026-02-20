@@ -30,6 +30,7 @@ export default function EmailButton() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         data-testid="button-contact"
+        aria-label="Pošalji poruku ili idi na kontakt"
       >
         <div className="p-4">
           <Mail className="w-6 h-6" />

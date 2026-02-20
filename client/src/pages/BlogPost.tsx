@@ -299,9 +299,11 @@ export default function BlogPost() {
       {/* Hero sekcija */}
       <div className="relative h-96 bg-gray-900 overflow-hidden">
         {post.image && (
-          <img 
-            src={post.image} 
+          <img
+            src={post.image}
             alt={`${post.title} - blog nutricionista Jelena Matijaš`}
+            width={1200}
+            height={630}
             className="absolute inset-0 w-full h-full object-cover opacity-60"
           />
         )}

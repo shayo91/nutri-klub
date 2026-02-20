@@ -158,8 +158,14 @@ export default function ProgramsSection() {
           {/* Email Signup Form */}
           {!isSubmitted ? (
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
+              <label htmlFor="programs-email" className="sr-only">
+                E-mail adresa za obavijesti
+              </label>
               <input
+                id="programs-email"
+                name="programs-email"
                 type="email"
+                autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Tvoja email adresa"

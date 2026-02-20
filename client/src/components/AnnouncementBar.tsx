@@ -81,10 +81,14 @@ export default function AnnouncementBar() {
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`w-2 h-2 rounded-full transition-all ${
-                  index === currentIndex ? 'bg-white' : 'bg-white/50'
-                }`}
-              />
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center transition-all"
+                aria-label={`Objava ${index + 1}`}
+              >
+                <span
+                  className={`w-2 h-2 rounded-full block transition-all ${index === currentIndex ? 'bg-white' : 'bg-white/50'}`}
+                  aria-hidden
+                />
+              </button>
             ))}
           </div>
         )}

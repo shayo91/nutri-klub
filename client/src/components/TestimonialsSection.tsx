@@ -262,11 +262,14 @@ export default function TestimonialsSection() {
                     setCurrentIndex(index);
                     scrollToIndex(index);
                   }}
-                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                    isActive ? "bg-white" : "bg-white/50"
-                  }`}
+                  className="min-w-[44px] min-h-[44px] flex items-center justify-center transition-all duration-300"
                   aria-label={`Idi na recenziju ${index + 1}`}
-                />
+                >
+                  <span
+                    className={`w-2.5 h-2.5 rounded-full block transition-all duration-300 ${isActive ? "bg-white" : "bg-white/50"}`}
+                    aria-hidden
+                  />
+                </button>
               );
             })}
           </div>
@@ -295,7 +298,8 @@ export default function TestimonialsSection() {
                 <span className="text-white font-medium">Recenzija - {modalReview.initials}</span>
                 <button
                   onClick={() => setModalReview(null)}
-                  className="text-white hover:bg-white/20 rounded-full p-1 transition-colors"
+                  className="text-white hover:bg-white/20 rounded-full min-w-[44px] min-h-[44px] flex items-center justify-center p-2 transition-colors"
+                  aria-label="Zatvori"
                 >
                   <X className="w-5 h-5" />
                 </button>
