@@ -1,4 +1,5 @@
 import { Switch, Route } from "wouter";
+import { Analytics } from "@vercel/analytics/react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toaster";
 import { LanguageProvider } from "./hooks/useLanguage";
@@ -37,6 +38,7 @@ function App() {
         </Layout>
         <Toaster />
         <CookieConsent />
+        <Analytics />
       </TooltipProvider>
     </LanguageProvider>
   );
