@@ -13,6 +13,7 @@ import {
 } from "lucide-react"
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll"
 import { useToast } from "@/hooks/use-toast"
+import { apiRequest } from "@/lib/queryClient"
 
 interface ContactFormData {
 	name: string
@@ -25,7 +26,7 @@ interface ContactFormData {
 }
 
 const contactInfo = [
-	{ icon: Mail, label: "Email", value: "jelena@jelenamatijas.ba" },
+	{ icon: Mail, label: "Email", value: "konsultacije@nutricionistajelena.ba" },
 	{ icon: Phone, label: "Telefon", value: "Po dogovoru" },
 	{ icon: MapPin, label: "Lokacija", value: "Banja Luka, BiH" },
 ]
@@ -101,28 +102,23 @@ export default function ContactSection() {
 	const honeypotStyles =
 		"absolute -left-[9999px] w-px h-px opacity-0 pointer-events-none"
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
-		// Honeypot: if filled, it's a bot - silently abort
-		if (formData.website?.trim()) {
-			return
-		}
-		// Time-based: reject if submitted within 3s of page load (bots submit instantly)
+		if (formData.website?.trim()) return
 		const minTimeMs = 3000
-		if (Date.now() - formMountedAtRef.current < minTimeMs) {
-			return
-		}
+		if (Date.now() - formMountedAtRef.current < minTimeMs) return
 		setIsSubmitting(true)
 		try {
-			const subject = encodeURIComponent(formData.subject)
-			const body = encodeURIComponent(
-				`Ime: ${formData.name}\nEmail: ${formData.email}\n\nPoruka:\n${formData.message}`,
-			)
-			const mailtoUrl = `mailto:info@jelenamatijas.ba?subject=${subject}&body=${body}`
-			window.location.href = mailtoUrl
+			await apiRequest("POST", "/api/contact", {
+				name: formData.name,
+				email: formData.email,
+				subject: formData.subject,
+				message: formData.message,
+				privacyAgreed: formData.privacyAgreed,
+			})
 			toast({
 				title: "Uspešno!",
-				description: "Vaš email klijent će se otvoriti sa porukom. Pošaljite poruku da završite.",
+				description: "Poruka je poslata. Javićemo vam se uskoro.",
 			})
 			setFormData({
 				name: "",
@@ -133,10 +129,11 @@ export default function ContactSection() {
 				website: "",
 			})
 		} catch (err) {
-			console.error("Error preparing message:", err)
+			const message =
+				err instanceof Error ? err.message : "Došlo je do greške. Pokušajte ponovo."
 			toast({
 				title: "Greška",
-				description: "Došlo je do greške. Pokušajte direktno na info@jelenamatijas.ba",
+				description: message,
 				variant: "destructive",
 			})
 		} finally {

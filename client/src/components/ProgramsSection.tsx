@@ -2,6 +2,8 @@ import type { ReactNode } from "react";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
 import { Leaf, BookOpen, ClipboardList, MessageCircleQuestion, Calendar } from "lucide-react";
 
 interface FeatureCard {
@@ -14,6 +16,8 @@ export default function ProgramsSection() {
   const { ref, inView } = useAnimateOnScroll(0.1);
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
 
   const features: FeatureCard[] = [
     {
@@ -38,11 +42,28 @@ export default function ProgramsSection() {
     }
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
+    if (!email.trim()) return;
+    setIsSubmitting(true);
+    try {
+      await apiRequest("POST", "/api/coming-soon", { email: email.trim() });
       setIsSubmitted(true);
       setEmail("");
+      toast({
+        title: "Hvala!",
+        description: "Obavijestit ćemo te kada platforma bude dostupna.",
+      });
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Došlo je do greške. Pokušajte ponovo.";
+      toast({
+        title: "Greška",
+        description: message,
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -128,9 +149,10 @@ export default function ProgramsSection() {
               />
               <button
                 type="submit"
-                className="px-8 py-3 bg-white text-[#5DAD8C] font-semibold rounded-full hover:bg-gray-100 transition-all duration-300 shadow-md hover:shadow-lg"
+                disabled={isSubmitting}
+                className="px-8 py-3 bg-white text-[#5DAD8C] font-semibold rounded-full hover:bg-gray-100 transition-all duration-300 shadow-md hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                Obavijesti me
+                {isSubmitting ? "Šaljem..." : "Obavijesti me"}
               </button>
             </form>
           ) : (

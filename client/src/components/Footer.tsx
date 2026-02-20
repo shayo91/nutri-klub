@@ -1,37 +1,14 @@
 import { Link } from "wouter";
 import { useState } from "react";
-import { apiRequest } from "@/lib/queryClient";
-import { useToast } from "@/hooks/use-toast";
 import { SiInstagram, SiFacebook } from "react-icons/si";
 import { MapPin, Mail } from "lucide-react";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
-  const [isSubscribing, setIsSubscribing] = useState(false);
-  const { toast } = useToast();
 
-  const handleSubscribe = async (e: React.FormEvent) => {
+  const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
-
-    setIsSubscribing(true);
-    try {
-      await apiRequest("POST", "/api/subscribe", { email });
-      toast({
-        title: "Pretplata uspešna",
-        description: "Hvala što ste se pretplatili na naš newsletter!",
-      });
-      setEmail("");
-    } catch (error) {
-      toast({
-        title: "Pretplata neuspešna",
-        description:
-          "Došlo je do greške prilikom pretplate na newsletter. Pokušajte ponovo.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubscribing(false);
-    }
+    // Newsletter disabled – "Dolazi uskoro"
   };
 
   return (
@@ -155,16 +132,16 @@ export default function Footer() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Vaša e-mail adresa"
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1F7A5C]/20 focus:border-[#1F7A5C]"
-                required
+                placeholder="Dolazi uskoro"
+                disabled
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1F7A5C]/20 focus:border-[#1F7A5C] disabled:opacity-60 disabled:cursor-not-allowed"
               />
               <button
                 type="submit"
-                className="w-full py-2 bg-[#5EBA9A] hover:bg-[#4DA88A] text-white rounded-full font-medium transition duration-300 ease-in-out disabled:opacity-70 shadow-md"
-                disabled={isSubscribing}
+                disabled
+                className="w-full py-2 bg-[#5EBA9A] text-white rounded-full font-medium transition duration-300 ease-in-out disabled:opacity-70 shadow-md cursor-not-allowed"
               >
-                {isSubscribing ? "Pretplaćujem se..." : "Pretplatite se"}
+                Pretplatite se
               </button>
             </form>
           </div>

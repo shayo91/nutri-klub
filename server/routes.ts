@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage.js";
+import { sendContactEmail, sendComingSoonNotification } from "./email.js";
 import { getBlogPosts, getBlogPostById, getBlogPostBySlug, getTestimonials, getAnnouncements, getVideos, getPodcasts, getSocialMedia, toUrlSlug } from "./notion.js";
 import { z } from "zod";
 
@@ -271,22 +272,33 @@ ${blogUrls}
     }),
   });
 
+  const contactTo = process.env.CONTACT_TO ?? "konsultacije@nutricionistajelena.ba";
+  const comingSoonTo = process.env.COMING_SOON_TO ?? "info@nutricionistajelena.ba";
+
   app.post("/api/contact", async (req, res) => {
     try {
       const validatedData = contactSchema.parse(req.body);
+      await sendContactEmail({
+        to: contactTo,
+        name: validatedData.name,
+        email: validatedData.email,
+        subject: validatedData.subject,
+        message: validatedData.message,
+      });
       await storage.saveContactMessage(validatedData);
       res.json({ success: true, message: "Message sent successfully" });
     } catch (error) {
       if (error instanceof z.ZodError) {
-        res.status(400).json({ 
-          success: false, 
-          message: "Validation failed", 
-          errors: error.errors 
+        res.status(400).json({
+          success: false,
+          message: "Validation failed",
+          errors: error.errors,
         });
       } else {
-        res.status(500).json({ 
-          success: false, 
-          message: "Error sending message" 
+        console.error("Contact form email error:", error);
+        res.status(500).json({
+          success: false,
+          message: "Error sending message",
         });
       }
     }
@@ -304,15 +316,43 @@ ${blogUrls}
       res.json({ success: true, message: "Subscription successful" });
     } catch (error) {
       if (error instanceof z.ZodError) {
-        res.status(400).json({ 
-          success: false, 
-          message: "Validation failed", 
-          errors: error.errors 
+        res.status(400).json({
+          success: false,
+          message: "Validation failed",
+          errors: error.errors,
         });
       } else {
-        res.status(500).json({ 
-          success: false, 
-          message: "Error processing subscription" 
+        res.status(500).json({
+          success: false,
+          message: "Error processing subscription",
+        });
+      }
+    }
+  });
+
+  // Coming soon signup (storage + email to info@)
+  const comingSoonSchema = z.object({
+    email: z.string().email("Invalid email address"),
+  });
+
+  app.post("/api/coming-soon", async (req, res) => {
+    try {
+      const { email } = comingSoonSchema.parse(req.body);
+      await storage.saveComingSoonSignup(email);
+      await sendComingSoonNotification({ to: comingSoonTo, email });
+      res.json({ success: true, message: "Subscription successful" });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({
+          success: false,
+          message: "Validation failed",
+          errors: error.errors,
+        });
+      } else {
+        console.error("Coming soon signup error:", error);
+        res.status(500).json({
+          success: false,
+          message: "Error processing signup",
         });
       }
     }

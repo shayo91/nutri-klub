@@ -15,6 +15,7 @@ export interface IStorage {
   getBlogPosts(): Promise<BlogPost[]>;
   saveContactMessage(message: any): Promise<void>;
   saveSubscription(subscription: { email: string }): Promise<void>;
+  saveComingSoonSignup(email: string): Promise<void>;
 }
 
 export class MemStorage implements IStorage {
@@ -23,6 +24,7 @@ export class MemStorage implements IStorage {
   private blogPosts: BlogPost[];
   private contactMessages: ContactMessage[];
   private subscriptions: Map<string, Subscription>;
+  private comingSoonSignups: Array<{ email: string; date: Date }>;
   currentId: number;
 
   constructor() {
@@ -130,6 +132,7 @@ export class MemStorage implements IStorage {
     ];
     this.contactMessages = [];
     this.subscriptions = new Map();
+    this.comingSoonSignups = [];
     this.currentId = 1;
   }
 
@@ -181,6 +184,10 @@ export class MemStorage implements IStorage {
       active: true
     };
     this.subscriptions.set(subscription.email, newSubscription);
+  }
+
+  async saveComingSoonSignup(email: string): Promise<void> {
+    this.comingSoonSignups.push({ email, date: new Date() });
   }
 }
 

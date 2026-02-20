@@ -159,8 +159,8 @@ export default function BlogSection({ posts, categories }: BlogSectionProps) {
         {hasMorePosts && (
           <motion.div
             ref={loadMoreRef}
-            initial={{ opacity: 0, y: 20 }}
-            animate={loadMoreInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            initial={{ opacity: 1, y: 20 }}
+            animate={loadMoreInView ? { opacity: 1, y: 0 } : { opacity: 1, y: 20 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             className="text-center mt-12"
           >
