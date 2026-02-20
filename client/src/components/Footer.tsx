@@ -60,7 +60,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/about"
+                  href="/o-meni"
                   className="text-gray-600 hover:text-[#1F7A5C] transition"
                 >
                   O Meni
@@ -160,21 +160,21 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-4 text-sm">
               <Link
-                href="/privacy"
+                href="/pravila-privatnosti"
                 className="text-gray-500 hover:text-[#1F7A5C] transition"
               >
                 Pravila Privatnosti
               </Link>
               <span className="text-gray-300">|</span>
               <Link
-                href="/terms"
+                href="/uslovi-poslovanja"
                 className="text-gray-500 hover:text-[#1F7A5C] transition"
               >
                 Uslovi Poslovanja
               </Link>
               <span className="text-gray-300">|</span>
               <Link
-                href="/cookies"
+                href="/kolacici"
                 className="text-gray-500 hover:text-[#1F7A5C] transition"
               >
                 Kolačići

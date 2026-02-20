@@ -5,35 +5,35 @@ const BASE_URL = "https://nutricionistajelena.ba";
 
 const routeBreadcrumbs: Record<string, { name: string; path: string }[]> = {
 	"/": [{ name: "Početna", path: "/" }],
-	"/about": [
+	"/o-meni": [
 		{ name: "Početna", path: "/" },
-		{ name: "O Meni", path: "/about" },
+		{ name: "O Meni", path: "/o-meni" },
 	],
-	"/privacy": [
+	"/pravila-privatnosti": [
 		{ name: "Početna", path: "/" },
-		{ name: "Pravila Privatnosti", path: "/privacy" },
+		{ name: "Pravila Privatnosti", path: "/pravila-privatnosti" },
 	],
-	"/terms": [
+	"/uslovi-poslovanja": [
 		{ name: "Početna", path: "/" },
-		{ name: "Uslovi Poslovanja", path: "/terms" },
+		{ name: "Uslovi Poslovanja", path: "/uslovi-poslovanja" },
 	],
-	"/cookies": [
+	"/kolacici": [
 		{ name: "Početna", path: "/" },
-		{ name: "Pravila o Kolačićima", path: "/cookies" },
+		{ name: "Pravila o Kolačićima", path: "/kolacici" },
 	],
 };
 
 export default function BreadcrumbSchema() {
 	const [location] = useLocation();
-	const [, params] = useRoute("/blog/:slug");
+	const [, params] = useRoute("/clanci/:slug");
 
 	let items: { name: string; path: string }[];
 
 	if (params?.slug) {
 		items = [
 			{ name: "Početna", path: "/" },
-			{ name: "Blog", path: "/#blog" },
-			{ name: params.slug.replace(/-/g, " "), path: `/blog/${params.slug}` },
+			{ name: "Članci", path: "/#blog" },
+			{ name: params.slug.replace(/-/g, " "), path: `/clanci/${params.slug}` },
 		];
 	} else {
 		items = routeBreadcrumbs[location] || [{ name: "Početna", path: "/" }];

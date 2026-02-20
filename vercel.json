@@ -1,10 +1,17 @@
 {
-	"buildCommand": "npm run build",
-	"outputDirectory": "dist/public",
-	"rewrites": [
-		{ "source": "/robots.txt", "destination": "/api/robots.txt" },
-		{ "source": "/sitemap.xml", "destination": "/api/sitemap.xml" },
-		{ "source": "/api/:path*", "destination": "/api" },
-		{ "source": "/((?!api).*)", "destination": "/index.html" }
-	]
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/public",
+  "redirects": [
+    { "source": "/about", "destination": "/o-meni", "permanent": true },
+    { "source": "/terms", "destination": "/uslovi-poslovanja", "permanent": true },
+    { "source": "/privacy", "destination": "/pravila-privatnosti", "permanent": true },
+    { "source": "/cookies", "destination": "/kolacici", "permanent": true },
+    { "source": "/blog/:slug", "destination": "/clanci/:slug", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/robots.txt", "destination": "/api/robots.txt" },
+    { "source": "/sitemap.xml", "destination": "/api/sitemap.xml" },
+    { "source": "/api/:path*", "destination": "/api" },
+    { "source": "/((?!api).*)", "destination": "/index.html" }
+  ]
 }

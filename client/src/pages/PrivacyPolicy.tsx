@@ -12,7 +12,7 @@ export default function PrivacyPolicy() {
       <Helmet>
         <title>Pravila Privatnosti | Nutricionista Jelena Matijaš</title>
         <meta name="description" content="Pravila privatnosti nutricioniste Jelene Matijaš. Saznajte kako prikupljamo, koristimo i štitimo vaše podatke." />
-        <link rel="canonical" href="https://nutricionistajelena.ba/privacy" />
+        <link rel="canonical" href="https://nutricionistajelena.ba/pravila-privatnosti" />
         <meta name="robots" content="noindex, follow" />
       </Helmet>
       <div className="container mx-auto px-4">

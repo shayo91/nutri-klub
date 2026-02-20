@@ -26,7 +26,7 @@ export default function AboutMe() {
         <meta name="twitter:title" content="O meni - Nutricionista Jelena Matijaš" />
         <meta name="twitter:description" content="Magistrica nutricionizma posvećena zdravoj i praktičnoj ishrani. Specijalizirana za bezglutenske recepte i autoimune izazove." />
         <meta name="twitter:image" content="https://nutricionistajelena.ba/attached_assets/jelena-hero.png" />
-        <link rel="canonical" href="https://nutricionistajelena.ba/about" />
+        <link rel="canonical" href="https://nutricionistajelena.ba/o-meni" />
       </Helmet>
       
       <main className="min-h-screen bg-white font-sans">

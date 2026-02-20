@@ -21,7 +21,7 @@ Sitemap: https://nutricionistajelena.ba/sitemap.xml
       const result = await getBlogPosts();
       if (result.posts) {
         blogUrls = result.posts.map((post: any) => `  <url>
-    <loc>https://nutricionistajelena.ba/blog/${post.slug}</loc>${post.date ? `\n    <lastmod>${post.date}</lastmod>` : ''}
+    <loc>https://nutricionistajelena.ba/clanci/${post.slug}</loc>${post.date ? `\n    <lastmod>${post.date}</lastmod>` : ''}
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>`).join("\n");
@@ -38,25 +38,25 @@ Sitemap: https://nutricionistajelena.ba/sitemap.xml
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://nutricionistajelena.ba/about</loc>
+    <loc>https://nutricionistajelena.ba/o-meni</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nutricionistajelena.ba/privacy</loc>
+    <loc>https://nutricionistajelena.ba/pravila-privatnosti</loc>
     <lastmod>${today}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://nutricionistajelena.ba/terms</loc>
+    <loc>https://nutricionistajelena.ba/uslovi-poslovanja</loc>
     <lastmod>${today}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://nutricionistajelena.ba/cookies</loc>
+    <loc>https://nutricionistajelena.ba/kolacici</loc>
     <lastmod>${today}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>

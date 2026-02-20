@@ -58,7 +58,7 @@ export default function Header() {
     { label: "Usluge", target: "pricing", type: "scroll" },
     { label: "Recepti", target: "blog", type: "scroll" },
     { label: "Kontakt", target: "contact", type: "scroll" },
-    { label: "O meni", href: "/about", type: "link" },
+    { label: "O meni", href: "/o-meni", type: "link" },
   ];
 
   const isActive = (item: typeof navLinks[0]) => {

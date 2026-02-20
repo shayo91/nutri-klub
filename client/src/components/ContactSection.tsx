@@ -369,7 +369,7 @@ export default function ContactSection() {
 								<span className="text-sm leading-relaxed text-gray-700">
 									Slažem se sa{" "}
 									<a
-										href="/privacy"
+										href="/pravila-privatnosti"
 										className="text-[#1F7A5C] font-medium underline underline-offset-2 hover:text-[#1a5f4a]"
 									>
 										Pravilima Privatnosti

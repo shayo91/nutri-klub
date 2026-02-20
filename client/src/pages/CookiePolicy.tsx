@@ -12,7 +12,7 @@ export default function CookiePolicy() {
       <Helmet>
         <title>Pravila o Kolačićima | Nutricionista Jelena Matijaš</title>
         <meta name="description" content="Pravila o kolačićima nutricioniste Jelene Matijaš. Saznajte kako koristimo kolačiće za poboljšanje vašeg iskustva na sajtu." />
-        <link rel="canonical" href="https://nutricionistajelena.ba/cookies" />
+        <link rel="canonical" href="https://nutricionistajelena.ba/kolacici" />
         <meta name="robots" content="noindex, follow" />
       </Helmet>
       <div className="container mx-auto px-4">

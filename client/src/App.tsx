@@ -17,11 +17,11 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
-      <Route path="/about" component={AboutMe} />
-      <Route path="/blog/:slug" component={BlogPost} />
-      <Route path="/terms" component={TermsOfService} />
-      <Route path="/privacy" component={PrivacyPolicy} />
-      <Route path="/cookies" component={CookiePolicy} />
+      <Route path="/o-meni" component={AboutMe} />
+      <Route path="/clanci/:slug" component={BlogPost} />
+      <Route path="/uslovi-poslovanja" component={TermsOfService} />
+      <Route path="/pravila-privatnosti" component={PrivacyPolicy} />
+      <Route path="/kolacici" component={CookiePolicy} />
       <Route component={NotFound} />
     </Switch>
   );

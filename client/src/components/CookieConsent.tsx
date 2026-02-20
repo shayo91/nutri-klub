@@ -32,7 +32,7 @@ export default function CookieConsent() {
           <div className="flex-1">
             <p className="text-gray-700 text-sm">
               Koristimo kolačiće kako bismo poboljšali vaše iskustvo na našoj web stranici. Nastavkom korištenja sajta pristajete na upotrebu kolačića.{" "}
-              <Link href="/cookies" className="text-[#5DAD8C] hover:underline font-medium">
+              <Link href="/kolacici" className="text-[#5DAD8C] hover:underline font-medium">
                 Saznajte više
               </Link>
             </p>

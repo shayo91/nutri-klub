@@ -7,25 +7,25 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://nutricionistajelena.ba/about</loc>
+    <loc>https://nutricionistajelena.ba/o-meni</loc>
     <lastmod>2026-02-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nutricionistajelena.ba/privacy</loc>
+    <loc>https://nutricionistajelena.ba/pravila-privatnosti</loc>
     <lastmod>2026-02-20</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://nutricionistajelena.ba/terms</loc>
+    <loc>https://nutricionistajelena.ba/uslovi-poslovanja</loc>
     <lastmod>2026-02-20</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://nutricionistajelena.ba/cookies</loc>
+    <loc>https://nutricionistajelena.ba/kolacici</loc>
     <lastmod>2026-02-20</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>

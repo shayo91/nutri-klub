@@ -174,7 +174,7 @@ function RenderContent({ blocks }: { blocks: ContentBlock[] }) {
 }
 
 export default function BlogPost() {
-  const [, params] = useRoute("/blog/:slug");
+  const [, params] = useRoute("/clanci/:slug");
   const [post, setPost] = useState<BlogPostData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -253,7 +253,7 @@ export default function BlogPost() {
         <meta property="og:type" content="article" />
         {post.image && <meta property="og:image" content={post.image} />}
         <meta property="og:locale" content="bs_BA" />
-        <link rel="canonical" href={`https://nutricionistajelena.ba/blog/${post.slug}`} />
+        <link rel="canonical" href={`https://nutricionistajelena.ba/clanci/${post.slug}`} />
         <meta property="article:author" content={post.author.name} />
         <meta property="article:section" content={post.category} />
         {post.date && (() => {
@@ -276,7 +276,7 @@ export default function BlogPost() {
             "@type": "Person",
             "name": post.author.name,
             "jobTitle": "Magistar nutricionizma",
-            "url": "https://nutricionistajelena.ba/about"
+            "url": "https://nutricionistajelena.ba/o-meni"
           },
           "publisher": {
             "@type": "Organization",
@@ -290,7 +290,7 @@ export default function BlogPost() {
           "datePublished": post.date ? new Date(post.date).toISOString() : undefined,
           "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": `https://nutricionistajelena.ba/blog/${post.slug}`
+            "@id": `https://nutricionistajelena.ba/clanci/${post.slug}`
           },
           "articleSection": post.category,
           "inLanguage": "bs"
