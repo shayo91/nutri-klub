@@ -1,7 +1,7 @@
 import { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
-import { getBMICategory } from "@/lib/utils";
+import { getBMICategory, type BMIColorType } from "@/lib/utils";
 
 type WeightUnit = "kg";
 type HeightUnit = "cm";
@@ -21,6 +21,7 @@ interface BMIResult {
   category: string;
   indicatorPosition: number;
   message: string;
+  colorType: BMIColorType;
 }
 
 export default function BMICalculator() {
@@ -75,14 +76,30 @@ export default function BMICalculator() {
 
     const bmi = weightKg / (heightM * heightM);
 
-    const { category, message, indicatorPosition } = getBMICategory(bmi);
+    const { category, message, indicatorPosition, colorType } = getBMICategory(bmi);
 
     setResult({
       bmi,
       category,
       indicatorPosition,
       message,
+      colorType,
     });
+  };
+
+  const resultColorClasses: Record<BMIColorType, string> = {
+    blue: "text-blue-600",
+    green: "text-green-600",
+    yellow: "text-yellow-600",
+    orange: "text-orange-600",
+    red: "text-red-600",
+  };
+  const barColorClasses: Record<BMIColorType, string> = {
+    blue: "bg-blue-500",
+    green: "bg-green-500",
+    yellow: "bg-yellow-500",
+    orange: "bg-orange-500",
+    red: "bg-red-500",
   };
 
   return (
@@ -239,15 +256,17 @@ export default function BMICalculator() {
               >
                 <div className="flex justify-between items-center mb-4">
                   <h4 className="text-xl font-bold">Vaš BMI Rezultat</h4>
-                  <span className="text-2xl font-bold text-primary">
+                  <span
+                    className={`text-2xl font-bold ${resultColorClasses[result.colorType]}`}
+                  >
                     {result.bmi.toFixed(1)}
                   </span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4">
                   <div
-                    className="bg-primary h-2.5 rounded-full"
-                    style={{ width: `${result.indicatorPosition}%` }}
-                  ></div>
+                    className={`h-2.5 rounded-full ${barColorClasses[result.colorType]}`}
+                    style={{ width: `${Math.min(result.indicatorPosition, 100)}%` }}
+                  />
                 </div>
                 <div className="flex justify-between text-sm text-gray-600">
                   <span>Pothranjenost</span>
@@ -258,6 +277,14 @@ export default function BMICalculator() {
                 <div className="mt-4">
                   <p className="font-medium">Kategorija: {result.category}</p>
                   <p className="text-gray-600 mt-2">{result.message}</p>
+                  <p className="text-gray-600 mt-3">
+                    <a
+                      href="#contact"
+                      className="text-[#5DAD8C] font-medium hover:underline"
+                    >
+                      Kontaktirajte nas za konsultacije i plan ishrane →
+                    </a>
+                  </p>
                 </div>
               </motion.div>
             )}

@@ -263,12 +263,12 @@ ${blogUrls}
 
   // Contact form submission
   const contactSchema = z.object({
-    name: z.string().min(1, "Name is required"),
-    email: z.string().email("Invalid email address"),
-    subject: z.string().min(1, "Subject is required"),
-    message: z.string().min(10, "Message must be at least 10 characters"),
+    name: z.string().min(1, "Ime je obavezno."),
+    email: z.string().email("Unesite ispravnu email adresu."),
+    subject: z.string().min(1, "Naslov je obavezan."),
+    message: z.string().min(10, "Poruka je prekratka, molimo unesite 10 ili više karaktera."),
     privacyAgreed: z.boolean().refine(val => val === true, {
-      message: "You must agree to the privacy policy",
+      message: "Morate prihvatiti politiku privatnosti.",
     }),
   });
 
@@ -289,16 +289,18 @@ ${blogUrls}
       res.json({ success: true, message: "Message sent successfully" });
     } catch (error) {
       if (error instanceof z.ZodError) {
+        const firstMessage =
+          error.errors[0]?.message ?? "Podaci nisu ispravni. Provjerite formu.";
         res.status(400).json({
           success: false,
-          message: "Validation failed",
+          message: firstMessage,
           errors: error.errors,
         });
       } else {
         console.error("Contact form email error:", error);
         res.status(500).json({
           success: false,
-          message: "Error sending message",
+          message: "Poruka nije poslata. Pokušajte ponovo.",
         });
       }
     }
@@ -306,7 +308,7 @@ ${blogUrls}
 
   // Newsletter subscription
   const subscribeSchema = z.object({
-    email: z.string().email("Invalid email address"),
+    email: z.string().email("Unesite ispravnu email adresu."),
   });
 
   app.post("/api/subscribe", async (req, res) => {
@@ -316,15 +318,17 @@ ${blogUrls}
       res.json({ success: true, message: "Subscription successful" });
     } catch (error) {
       if (error instanceof z.ZodError) {
+        const firstMessage =
+          error.errors[0]?.message ?? "Podaci nisu ispravni.";
         res.status(400).json({
           success: false,
-          message: "Validation failed",
+          message: firstMessage,
           errors: error.errors,
         });
       } else {
         res.status(500).json({
           success: false,
-          message: "Error processing subscription",
+          message: "Pretplata nije uspjela. Pokušajte ponovo.",
         });
       }
     }
@@ -332,7 +336,7 @@ ${blogUrls}
 
   // Coming soon signup (storage + email to info@)
   const comingSoonSchema = z.object({
-    email: z.string().email("Invalid email address"),
+    email: z.string().email("Unesite ispravnu email adresu."),
   });
 
   app.post("/api/coming-soon", async (req, res) => {
@@ -343,16 +347,18 @@ ${blogUrls}
       res.json({ success: true, message: "Subscription successful" });
     } catch (error) {
       if (error instanceof z.ZodError) {
+        const firstMessage =
+          error.errors[0]?.message ?? "Podaci nisu ispravni.";
         res.status(400).json({
           success: false,
-          message: "Validation failed",
+          message: firstMessage,
           errors: error.errors,
         });
       } else {
         console.error("Coming soon signup error:", error);
         res.status(500).json({
           success: false,
-          message: "Error processing signup",
+          message: "Prijava nije uspjela. Pokušajte ponovo.",
         });
       }
     }

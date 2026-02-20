@@ -55,11 +55,30 @@ export default function ProgramsSection() {
         description: "Obavijestit ćemo te kada platforma bude dostupna.",
       });
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "Došlo je do greške. Pokušajte ponovo.";
+      const fallback = "Došlo je do greške. Pokušajte ponovo.";
+      const enToBcs: Record<string, string> = {
+        "Invalid email address": "Unesite ispravnu email adresu.",
+        "Validation failed": "Podaci nisu ispravni.",
+        "Error processing signup": "Prijava nije uspjela. Pokušajte ponovo.",
+      };
+      let description = fallback;
+      if (err instanceof Error && err.message) {
+        const match = err.message.match(/^\d+\s*:\s*(\{[\s\S]*\})\s*$/);
+        if (match) {
+          try {
+            const body = JSON.parse(match[1]);
+            const raw = body.message ?? body.errors?.[0]?.message ?? "";
+            description = enToBcs[raw] ?? (typeof raw === "string" && raw ? raw : fallback);
+          } catch {
+            description = enToBcs[err.message] ?? fallback;
+          }
+        } else {
+          description = enToBcs[err.message] ?? (err.message || fallback);
+        }
+      }
       toast({
         title: "Greška",
-        description: message,
+        description,
         variant: "destructive",
       });
     } finally {

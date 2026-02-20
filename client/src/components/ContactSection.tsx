@@ -25,8 +25,18 @@ interface ContactFormData {
 	website?: string
 }
 
-const contactInfo = [
-	{ icon: Mail, label: "Email", value: "konsultacije@nutricionistajelena.ba" },
+const contactInfo: Array<{
+	icon: typeof Mail
+	label: string
+	value: string
+	href?: string
+}> = [
+	{
+		icon: Mail,
+		label: "Email",
+		value: "konsultacije@nutricionistajelena.ba",
+		href: "mailto:konsultacije@nutricionistajelena.ba",
+	},
 	{ icon: Phone, label: "Telefon", value: "Po dogovoru" },
 	{ icon: MapPin, label: "Lokacija", value: "Banja Luka, BiH" },
 ]
@@ -129,11 +139,34 @@ export default function ContactSection() {
 				website: "",
 			})
 		} catch (err) {
-			const message =
-				err instanceof Error ? err.message : "Došlo je do greške. Pokušajte ponovo."
+			const fallback = "Došlo je do greške. Pokušajte ponovo."
+			const enToBcs: Record<string, string> = {
+				"Name is required": "Ime je obavezno.",
+				"Invalid email address": "Unesite ispravnu email adresu.",
+				"Subject is required": "Naslov je obavezan.",
+				"Message must be at least 10 characters": "Poruka je prekratka, molimo unesite 10 ili više karaktera.",
+				"You must agree to the privacy policy": "Morate prihvatiti politiku privatnosti.",
+				"Validation failed": "Podaci nisu ispravni. Provjerite formu.",
+				"Error sending message": "Poruka nije poslata. Pokušajte ponovo.",
+			}
+			let description = fallback
+			if (err instanceof Error && err.message) {
+				const match = err.message.match(/^\d+\s*:\s*(\{[\s\S]*\})\s*$/)
+				if (match) {
+					try {
+						const body = JSON.parse(match[1])
+						const raw = body.message ?? body.errors?.[0]?.message ?? ""
+						description = enToBcs[raw] ?? (typeof raw === "string" && raw ? raw : fallback)
+					} catch {
+						description = enToBcs[err.message] ?? fallback
+					}
+				} else {
+					description = enToBcs[err.message] ?? (err.message || fallback)
+				}
+			}
 			toast({
 				title: "Greška",
-				description: message,
+				description,
 				variant: "destructive",
 			})
 		} finally {
@@ -190,9 +223,18 @@ export default function ContactSection() {
 							className="flex items-center gap-2.5 rounded-full bg-white px-5 py-2.5 shadow-md border border-white/50"
 						>
 							<info.icon className="h-4 w-4 text-[#1a5f4a]" />
-							<span className="text-sm font-medium text-[#1a5f4a]">
-								{info.value}
-							</span>
+							{info.href ? (
+								<a
+									href={info.href}
+									className="text-sm font-medium text-[#1a5f4a] hover:underline"
+								>
+									{info.value}
+								</a>
+							) : (
+								<span className="text-sm font-medium text-[#1a5f4a]">
+									{info.value}
+								</span>
+							)}
 						</div>
 					))}
 				</motion.div>
