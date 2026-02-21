@@ -67,7 +67,7 @@ export default function PrivacyPolicy() {
             <p className="mb-6">
               Za sva pitanja u vezi sa ovim Pravilima privatnosti, možete nas kontaktirati na:
               <br />
-              Email: jelena@jelenamatijas.ba
+              Email: planishrane@nutricionistajelena.ba
               <br />
               Telefon: +387 65 123 456
               <br />

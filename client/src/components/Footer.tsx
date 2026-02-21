@@ -2,13 +2,57 @@ import { Link } from "wouter";
 import { useState } from "react";
 import { SiInstagram, SiFacebook } from "react-icons/si";
 import { MapPin, Mail } from "lucide-react";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { toast } = useToast();
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Newsletter disabled – "Dolazi uskoro"
+    if (!email.trim()) return;
+    setIsSubmitting(true);
+    try {
+      await apiRequest("POST", "/api/newsletter", { email: email.trim() });
+      setIsSubmitted(true);
+      setEmail("");
+      toast({
+        title: "Hvala!",
+        description: "Uspješno ste se pretplatili na newsletter.",
+      });
+    } catch (err) {
+      const fallback = "Došlo je do greške. Pokušajte ponovo.";
+      const enToBcs: Record<string, string> = {
+        "Invalid email address": "Unesite ispravnu email adresu.",
+        "Validation failed": "Podaci nisu ispravni.",
+        "Error processing signup": "Pretplata nije uspjela. Pokušajte ponovo.",
+      };
+      let description = fallback;
+      if (err instanceof Error && err.message) {
+        const match = err.message.match(/^\d+\s*:\s*(\{[\s\S]*\})\s*$/);
+        if (match) {
+          try {
+            const body = JSON.parse(match[1]);
+            const raw = body.message ?? body.errors?.[0]?.message ?? "";
+            description = enToBcs[raw] ?? (typeof raw === "string" && raw ? raw : fallback);
+          } catch {
+            description = enToBcs[err.message] ?? fallback;
+          }
+        } else {
+          description = enToBcs[err.message] ?? (err.message || fallback);
+        }
+      }
+      toast({
+        title: "Greška",
+        description,
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -18,7 +62,7 @@ export default function Footer() {
           <div>
             <Link href="/" className="flex items-center mb-6">
               <span className="text-[#1F7A5C] text-xl font-bold italic">
-                NutriKlub
+                Nutricionista Jelena Matijaš
               </span>
             </Link>
             <p className="text-gray-600 mb-6">
@@ -116,10 +160,10 @@ export default function Footer() {
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-[#5DAD8C] flex-shrink-0" />
                 <a
-                  href="mailto:jelena@jelenamatijas.ba"
+                  href="mailto:planishrane@nutricionistajelena.ba"
                   className="text-gray-600 hover:text-[#1F7A5C] transition"
                 >
-                  jelena@jelenamatijas.ba
+                  planishrane@nutricionistajelena.ba
                 </a>
               </li>
             </ul>
@@ -138,16 +182,16 @@ export default function Footer() {
                 autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Dolazi uskoro"
-                disabled
+                placeholder="Vaša e-mail adresa"
+                disabled={isSubmitting}
                 className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1F7A5C]/20 focus:border-[#1F7A5C] disabled:opacity-60 disabled:cursor-not-allowed"
               />
               <button
                 type="submit"
-                disabled
-                className="w-full py-2 bg-[#5EBA9A] text-white rounded-full font-medium transition duration-300 ease-in-out disabled:opacity-70 shadow-md cursor-not-allowed"
+                disabled={isSubmitting || isSubmitted}
+                className="w-full py-2 bg-[#5EBA9A] text-white rounded-full font-medium transition duration-300 ease-in-out hover:bg-[#4da88a] disabled:opacity-70 shadow-md disabled:cursor-not-allowed"
               >
-                Pretplatite se
+                {isSubmitting ? "Šaljem..." : isSubmitted ? "Pretplata uspješna" : "Pretplatite se"}
               </button>
             </form>
           </div>

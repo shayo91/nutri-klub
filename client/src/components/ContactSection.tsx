@@ -34,8 +34,8 @@ const contactInfo: Array<{
 	{
 		icon: Mail,
 		label: "Email",
-		value: "konsultacije@nutricionistajelena.ba",
-		href: "mailto:konsultacije@nutricionistajelena.ba",
+		value: "planishrane@nutricionistajelena.ba",
+		href: "mailto:planishrane@nutricionistajelena.ba",
 	},
 	{ icon: Phone, label: "Telefon", value: "Po dogovoru" },
 	{ icon: MapPin, label: "Lokacija", value: "Banja Luka, BiH" },

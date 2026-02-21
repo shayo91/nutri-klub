@@ -68,7 +68,7 @@ export default function TermsOfService() {
             <p className="mb-6">
               Za sva pitanja u vezi sa ovim Uslovima poslovanja, kontaktirajte nas:
               <br />
-              Email: jelena@jelenamatijas.ba
+              Email: planishrane@nutricionistajelena.ba
               <br />
               Telefon: +387 65 123 456
               <br />

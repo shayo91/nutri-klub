@@ -175,7 +175,7 @@ export default function PricingSection() {
 
                 {/* Button */}
                 <a
-                  href={`mailto:konsultacije@jelenamatijas.ba?subject=${encodeURIComponent(`Zakazivanje - ${plan.name}${plan.nameSecondLine ? ` ${plan.nameSecondLine}` : ''}`)}`}
+                  href={`mailto:planishrane@nutricionistajelena.ba?subject=${encodeURIComponent(`Zakazivanje - ${plan.name}${plan.nameSecondLine ? ` ${plan.nameSecondLine}` : ''}`)}`}
                   className={`block w-full py-4 px-6 rounded-full font-semibold text-center transition-all duration-300 ${
                     plan.featured 
                       ? "bg-white text-[#5DAD8C] hover:bg-gray-100 shadow-md hover:shadow-lg" 

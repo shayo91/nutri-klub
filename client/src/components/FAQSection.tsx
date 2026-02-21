@@ -138,7 +138,7 @@ export default function FAQSection() {
           className="text-center mt-12"
         >
           <p className="text-gray-600 mb-6">
-            Imate još pitanja? Kontaktirajte nutricionista direktno!
+            Imate još pitanja? Kontaktirajte me!
           </p>
           <a
             href="#contact"

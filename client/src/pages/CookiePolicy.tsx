@@ -55,7 +55,7 @@ export default function CookiePolicy() {
             <p className="mb-6">
               Za sva pitanja o našoj upotrebi kolačića, kontaktirajte nas:
               <br />
-              Email: jelena@jelenamatijas.ba
+              Email: planishrane@nutricionistajelena.ba
               <br />
               Telefon: +387 65 123 456
               <br />

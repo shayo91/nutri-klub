@@ -280,7 +280,7 @@ export default function BlogPost() {
           },
           "publisher": {
             "@type": "Organization",
-            "name": "NutriKlub",
+            "name": "Nutricionista Jelena Matijaš - Nutricionista Jelena Matijaš",
             "url": "https://nutricionistajelena.ba",
             "logo": {
               "@type": "ImageObject",

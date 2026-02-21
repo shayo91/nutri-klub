@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage.js";
-import { sendContactEmail, sendComingSoonNotification } from "./email.js";
+import { sendContactEmail, sendComingSoonNotification, sendNewsletterNotification } from "./email.js";
 import { getBlogPosts, getBlogPostById, getBlogPostBySlug, getTestimonials, getAnnouncements, getVideos, getPodcasts, getSocialMedia, toUrlSlug } from "./notion.js";
 import { z } from "zod";
 
@@ -266,8 +266,9 @@ ${blogUrls}
     }),
   });
 
-  const contactTo = process.env.CONTACT_TO ?? "konsultacije@nutricionistajelena.ba";
+  const contactTo = process.env.CONTACT_TO ?? "planishrane@nutricionistajelena.ba";
   const comingSoonTo = process.env.COMING_SOON_TO ?? "info@nutricionistajelena.ba";
+  const newsletterTo = process.env.NEWSLETTER_TO ?? "info@nutricionistajelena.ba";
 
   app.post("/api/contact", async (req, res) => {
     try {
@@ -353,6 +354,36 @@ ${blogUrls}
         res.status(500).json({
           success: false,
           message: "Prijava nije uspjela. Pokušajte ponovo.",
+        });
+      }
+    }
+  });
+
+  // Newsletter signup (storage + email to info@)
+  const newsletterSchema = z.object({
+    email: z.string().email("Unesite ispravnu email adresu."),
+  });
+
+  app.post("/api/newsletter", async (req, res) => {
+    try {
+      const { email } = newsletterSchema.parse(req.body);
+      await storage.saveNewsletterSignup(email);
+      await sendNewsletterNotification({ to: newsletterTo, email });
+      res.json({ success: true, message: "Pretplata uspješna." });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const firstMessage =
+          error.errors[0]?.message ?? "Podaci nisu ispravni.";
+        res.status(400).json({
+          success: false,
+          message: firstMessage,
+          errors: error.errors,
+        });
+      } else {
+        console.error("Newsletter signup error:", error);
+        res.status(500).json({
+          success: false,
+          message: "Pretplata nije uspjela. Pokušajte ponovo.",
         });
       }
     }

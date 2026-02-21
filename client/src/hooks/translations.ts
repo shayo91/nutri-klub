@@ -8,7 +8,7 @@ export const translations = {
     'nav.contact': 'Contact',
     
     // Hero Section
-    'hero.brand': 'NutriKlub',
+    'hero.brand': 'Nutricionista Jelena Matijaš',
     'hero.title': 'Transform Your Health With Expert Nutrition',
     'hero.subtitle': 'Personalized nutrition plans designed to help you achieve optimal health, increased energy, and lasting wellness through science-backed dietary strategies.',
     'hero.cta': 'Start Here',
@@ -109,7 +109,7 @@ export const translations = {
     'nav.contact': 'Kontakt',
     
     // Hero Section
-    'hero.brand': 'NutriKlub',
+    'hero.brand': 'Nutricionista Jelena Matijaš',
     'hero.title': 'Vaše Zdravlje Je Naša Misija',
     'hero.subtitle': 'Stručni nutricionista sa preko 10 godina iskustva u kreiranju personalizovanih planova ishrane za optimalno zdravlje i dugotrajan wellness.',
     'hero.cta': 'Kreni ovdje.',
