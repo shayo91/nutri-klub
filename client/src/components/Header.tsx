@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { SiInstagram, SiFacebook } from "react-icons/si";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [location, setLocation] = useLocation();
   const [activeSection, setActiveSection] = useState("home");
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -126,6 +128,14 @@ export default function Header() {
             ))}
           </nav>
 
+          {/* Dashboard / Prijava - Desktop */}
+          <Link
+            href={isAuthenticated ? "/dashboard" : "/login"}
+            className="font-medium text-[#1F7A5C] hover:text-[#196B4D] transition-colors"
+          >
+            {isAuthenticated ? "Moj dashboard" : "Prijava"}
+          </Link>
+
           {/* Social Links - Desktop */}
           <div className="flex items-center gap-3">
             <a
@@ -195,6 +205,13 @@ export default function Header() {
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
         <nav className="lg:hidden absolute top-full left-0 right-0 bg-white shadow-lg py-4 px-6 space-y-2 border-t border-gray-100">
+          <Link
+            href={isAuthenticated ? "/dashboard" : "/login"}
+            className="block py-3 px-4 rounded-lg font-medium text-[#1F7A5C] hover:bg-[#ECF8F2]"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            {isAuthenticated ? "Moj dashboard" : "Prijava"}
+          </Link>
           {navLinks.map((item, index) => (
             item.type === "link" ? (
               <Link

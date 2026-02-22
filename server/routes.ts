@@ -4,8 +4,28 @@ import { storage } from "./storage.js";
 import { sendContactEmail, sendComingSoonNotification, sendNewsletterNotification } from "./email.js";
 import { getBlogPosts, getBlogPostById, getBlogPostBySlug, getTestimonials, getAnnouncements, getVideos, getPodcasts, getSocialMedia, toUrlSlug } from "./notion.js";
 import { z } from "zod";
+import authRoutes from "./routes/auth.js";
+import subscriptionRoutes from "./routes/subscription.js";
+import onboardingRoutes from "./routes/onboarding.js";
+import recipesRoutes from "./routes/recipes.js";
+import recipesExternalRoutes from "./routes/recipes-external.js";
+import aiRoutes from "./routes/ai.js";
+import ebooksRoutes from "./routes/ebooks.js";
+import trackingRoutes from "./routes/tracking.js";
+import paymentsRoutes from "./routes/payments.js";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Dashboard / auth API routes (must be before other API routes)
+  app.use("/api/auth", authRoutes);
+  app.use("/api/subscription", subscriptionRoutes);
+  app.use("/api/onboarding", onboardingRoutes);
+  app.use("/api/recipes", recipesRoutes);
+  app.use("/api/recipes-external", recipesExternalRoutes);
+  app.use("/api/ai", aiRoutes);
+  app.use("/api/ebooks", ebooksRoutes);
+  app.use("/api/tracking", trackingRoutes);
+  app.use("/api/payments", paymentsRoutes);
+
   app.get(["/robots.txt", "/api/robots.txt"], (_req, res) => {
     res.type("text/plain").send(`User-agent: *
 Allow: /

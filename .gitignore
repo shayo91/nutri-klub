@@ -7,7 +7,7 @@ vite.config.ts.*
 
 # Environment and secrets
 .env
-.env.local
+.env.example
 .env.*.local
 
 # Local database
