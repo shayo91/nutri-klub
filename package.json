@@ -13,7 +13,9 @@
     "db:push-sqlite": "drizzle-kit push --config=drizzle.sqlite.config.ts",
     "seed": "tsx server/seed.ts",
     "seed:recipes": "tsx server/seed-recipes.ts",
-    "seed:ebooks": "tsx server/seed-ebooks.ts"
+    "seed:ebooks": "tsx server/seed-ebooks.ts",
+    "import:recipes": "tsx server/scripts/import-themealdb.ts",
+    "create:admin": "tsx server/scripts/create-admin-user.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

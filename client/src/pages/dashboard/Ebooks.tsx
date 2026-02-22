@@ -129,15 +129,19 @@ export default function Ebooks() {
 
       const data = await response.json();
 
-      // Open PDF in new tab
-      window.open(data.downloadUrl, "_blank");
+      if (data.placeholder) {
+        toast({
+          title: "PDF dostupan uskoro",
+          description: data.message || "Za pristup kontaktirajte planishrane@nutricionistajelena.ba",
+        });
+      } else if (data.downloadUrl) {
+        window.open(data.downloadUrl, "_blank");
+        toast({
+          title: "Uspešno preuzeto!",
+          description: `E-book "${data.ebook?.title}" je preuzet.`,
+        });
+      }
 
-      toast({
-        title: "Uspešno preuzeto!",
-        description: `E-book "${data.ebook.title}" je preuzet.`,
-      });
-
-      // Refresh usage stats
       await fetchUsageStats();
     } catch (error: any) {
       console.error("Download error:", error);

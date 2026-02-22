@@ -125,7 +125,7 @@ router.post("/cancel", authenticate, async (req, res) => {
       })
       .where(eq(subscriptions.id, subscription.id));
 
-    // TODO: Cancel Stripe subscription
+    // Stripe isključen za BiH – otkaz se evidentira samo u bazi
 
     res.json({
       message: "Subscription will be cancelled at the end of the billing period",

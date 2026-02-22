@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { DashboardNav } from "@/components/dashboard/DashboardNav";
 import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -5,20 +6,50 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { FeatureLock } from "@/components/dashboard/FeatureLock";
 import { useAuth } from "@/contexts/AuthContext";
-import { 
-  Calendar, 
-  Target, 
-  TrendingUp, 
+import {
+  Calendar,
+  Target,
+  TrendingUp,
   CheckCircle2,
   Clock,
   Utensils,
   Dumbbell,
-  Heart
+  Heart,
+  FileText,
 } from "lucide-react";
+import {
+  parsePlanContent,
+  dayTotalCalories,
+  MEAL_LABELS,
+} from "@/lib/plan-types";
+
+interface AssignedPlan {
+  id: number;
+  title: string;
+  content: string;
+  weekLabel: string | null;
+  createdAt: string;
+}
 
 export default function MyPlan() {
   const { user } = useAuth();
   const isPremium = user?.role === "premium" || user?.role === "admin";
+  const [assignedPlan, setAssignedPlan] = useState<AssignedPlan | null>(null);
+  const [loadingPlan, setLoadingPlan] = useState(true);
+
+  useEffect(() => {
+    if (!isPremium) {
+      setLoadingPlan(false);
+      return;
+    }
+    fetch("/api/me/assigned-plan", { credentials: "include" })
+      .then((res) => (res.ok ? res.json() : { plan: null }))
+      .then((data) => {
+        setAssignedPlan(data.plan ?? null);
+      })
+      .catch(() => setAssignedPlan(null))
+      .finally(() => setLoadingPlan(false));
+  }, [isPremium]);
 
   return (
     <div className="flex min-h-screen bg-gray-50">
@@ -63,6 +94,72 @@ export default function MyPlan() {
               </FeatureLock>
             ) : (
               <>
+            {loadingPlan && (
+              <p className="text-gray-500">Učitavanje plana...</p>
+            )}
+            {assignedPlan && (() => {
+              const structured = parsePlanContent(assignedPlan.content);
+              const mealCount = structured?.days[0]?.meals?.length ?? 3;
+              const mealLabels = MEAL_LABELS.slice(0, mealCount);
+              return (
+                <Card className="border-[#1F7A5C]/30">
+                  <CardHeader>
+                    <div className="flex items-center gap-2">
+                      <FileText className="w-6 h-6 text-[#1F7A5C]" />
+                      <div>
+                        <CardTitle>{assignedPlan.title}</CardTitle>
+                        <CardDescription>
+                          {assignedPlan.weekLabel || structured?.weekLabel}
+                          {structured?.dailyCalorieTarget != null &&
+                            ` · Cilj: ${structured.dailyCalorieTarget} kcal/dan`}
+                        </CardDescription>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    {structured ? (
+                      <div className="overflow-x-auto rounded-lg border border-[#1F7A5C]/20">
+                        <table className="w-full text-sm">
+                          <thead>
+                            <tr className="bg-[#1F7A5C]/10">
+                              <th className="text-left p-3 font-medium">Dan</th>
+                              {mealLabels.map((_, i) => (
+                                <th key={i} className="text-left p-3 font-medium">
+                                  Obrok {i + 1}
+                                </th>
+                              ))}
+                              <th className="text-right p-3 font-medium">Ukupno kcal</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {structured.days.map((day) => (
+                              <tr key={day.dayName} className="border-t border-[#1F7A5C]/10">
+                                <td className="p-3 font-medium">{day.dayName}</td>
+                                {day.meals.map((m, i) => (
+                                  <td key={i} className="p-3">
+                                    <div className="text-gray-900">{m.name || "–"}</div>
+                                    {m.calories != null && m.calories > 0 && (
+                                      <div className="text-xs text-muted-foreground">{m.calories} kcal</div>
+                                    )}
+                                  </td>
+                                ))}
+                                <td className="p-3 text-right font-medium text-[#1F7A5C]">
+                                  {dayTotalCalories(day)} kcal
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    ) : (
+                      <div className="prose prose-sm max-w-none text-gray-700 whitespace-pre-wrap">
+                        {assignedPlan.content}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              );
+            })()}
 
             {/* Current Week Overview */}
             <Card className="bg-gradient-to-r from-[#1F7A5C] to-[#185A44] text-white">

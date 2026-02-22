@@ -28,10 +28,12 @@ import Settings from "@/pages/dashboard/Settings";
 import Upgrade from "@/pages/dashboard/Upgrade";
 import Progress from "@/pages/dashboard/Progress";
 import AdminRecipes from "@/pages/dashboard/AdminRecipes";
+import AdminPlans from "@/pages/dashboard/AdminPlans";
 import MyPlan from "@/pages/dashboard/MyPlan";
 import SearchResults from "@/pages/dashboard/SearchResults";
 import CheckoutMock from "@/pages/dashboard/CheckoutMock";
 import PaymentSuccess from "@/pages/dashboard/PaymentSuccess";
+import Billing from "@/pages/dashboard/Billing";
 
 function Router() {
   return (
@@ -144,6 +146,13 @@ function Router() {
           </ProtectedRoute>
         )}
       </Route>
+      <Route path="/dashboard/billing">
+        {() => (
+          <ProtectedRoute>
+            <Billing />
+          </ProtectedRoute>
+        )}
+      </Route>
       <Route path="/dashboard/upgrade">
         {() => (
           <ProtectedRoute>
@@ -162,6 +171,13 @@ function Router() {
         {() => (
           <ProtectedRoute>
             <AdminRecipes />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/dashboard/admin-plans">
+        {() => (
+          <ProtectedRoute requireAdmin>
+            <AdminPlans />
           </ProtectedRoute>
         )}
       </Route>

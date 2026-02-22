@@ -6,8 +6,8 @@ import { setupVite, serveStatic } from "./vite.js";
 import { log } from "./log.js";
 
 const app = express();
-// Stripe webhook needs raw body for signature verification (must be before express.json())
-app.use("/api/payments/webhook", express.raw({ type: "application/json" }));
+// Stripe isključen za BiH – raw body više nije potreban za webhook
+// app.use("/api/payments/webhook", express.raw({ type: "application/json" }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

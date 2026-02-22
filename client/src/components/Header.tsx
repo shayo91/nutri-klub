@@ -133,7 +133,7 @@ export default function Header() {
             href={isAuthenticated ? "/dashboard" : "/login"}
             className="font-medium text-[#1F7A5C] hover:text-[#196B4D] transition-colors"
           >
-            {isAuthenticated ? "Moj dashboard" : "Prijava"}
+            {isAuthenticated ? "Nutri Hub" : "Prijava"}
           </Link>
 
           {/* Social Links - Desktop */}
@@ -210,7 +210,7 @@ export default function Header() {
             className="block py-3 px-4 rounded-lg font-medium text-[#1F7A5C] hover:bg-[#ECF8F2]"
             onClick={() => setMobileMenuOpen(false)}
           >
-            {isAuthenticated ? "Moj dashboard" : "Prijava"}
+            {isAuthenticated ? "Nutri Hub" : "Prijava"}
           </Link>
           {navLinks.map((item, index) => (
             item.type === "link" ? (

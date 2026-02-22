@@ -8,55 +8,48 @@ import Stripe from "stripe";
 
 const router = Router();
 
-// Initialize Stripe only if API key is provided
-const stripe = process.env.STRIPE_SECRET_KEY 
-  ? new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: "2025-05-28.basil",
-    })
-  : null;
+// Stripe isključen za BiH – korisnici plaćaju mobilnim bankarstvom ili uplatnicom
+// const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(...) : null;
+const stripe = null;
 
-// Pricing configuration
-const PRICING = {
-  premium_monthly: { 
-    amount: "4.00", 
-    currency: "EUR", 
-    name: "Premium Mesečno",
-    stripePriceId: process.env.STRIPE_PRICE_PREMIUM_MONTHLY,
-    mode: "subscription" as const,
-  },
-  premium_yearly: { 
-    amount: "35.00", 
-    currency: "EUR", 
-    name: "Premium Godišnje",
-    stripePriceId: process.env.STRIPE_PRICE_PREMIUM_YEARLY,
-    mode: "subscription" as const,
-  },
-  plan_start: { 
-    amount: "46.00", 
-    currency: "EUR", 
-    name: "Start Plan", 
-    consultations: 1, 
+// Cijene u KM – usklađeno sa web sekcijom (PricingSection)
+const PRICING: Record<string, { amount: string; currency: string; name: string; mode: "subscription" | "payment"; consultations?: number; months?: number }> = {
+  plan_konsultacije: {
+    amount: "80",
+    currency: "KM",
+    name: "Konsultacije",
+    mode: "payment",
+    consultations: 1,
     months: 1,
-    stripePriceId: process.env.STRIPE_PRICE_PLAN_START,
-    mode: "payment" as const,
   },
-  plan_balans: { 
-    amount: "97.00", 
-    currency: "EUR", 
-    name: "Balans Plan", 
-    consultations: 3, 
+  plan_mjesecni: {
+    amount: "200",
+    currency: "KM",
+    name: "Mjesečni mentorski program",
+    mode: "payment",
+    consultations: 2,
+    months: 1,
+  },
+  plan_visemjesecni: {
+    amount: "400",
+    currency: "KM",
+    name: "Višemjesečni mentorski program",
+    mode: "payment",
+    consultations: 6,
     months: 3,
-    stripePriceId: process.env.STRIPE_PRICE_PLAN_BALANS,
-    mode: "payment" as const,
   },
-  plan_transformacija: { 
-    amount: "199.00", 
-    currency: "EUR", 
-    name: "Transformacija Plan", 
-    consultations: 6, 
-    months: 6,
-    stripePriceId: process.env.STRIPE_PRICE_PLAN_TRANSFORMACIJA,
-    mode: "payment" as const,
+  // Premium pristup aplikaciji (opciono) – aktivacija putem emaila
+  premium_monthly: {
+    amount: "15",
+    currency: "KM",
+    name: "Premium mjesečno",
+    mode: "subscription",
+  },
+  premium_yearly: {
+    amount: "150",
+    currency: "KM",
+    name: "Premium godišnje",
+    mode: "subscription",
   },
 };
 
@@ -76,66 +69,9 @@ router.post("/create-checkout-session", authenticate, async (req, res) => {
       return res.status(400).json({ error: "Invalid order type" });
     }
 
-    const pricing = PRICING[orderType as keyof typeof PRICING];
+    const pricing = PRICING[orderType];
 
-    // Check if Stripe is configured
-    if (!stripe || !pricing.stripePriceId) {
-      console.warn(`Stripe not configured or Price ID missing for ${orderType}, using mock mode`);
-      
-      // Fallback to mock mode
-      const [order] = await db
-        .insert(subscriptionOrders)
-        .values({
-          userId: req.user.userId,
-          orderType,
-          amount: pricing.amount,
-          currency: pricing.currency,
-          status: "pending",
-          stripeSessionId: `mock_session_${Date.now()}`,
-          metadata: JSON.stringify({ pricing }),
-        })
-        .returning();
-
-      const checkoutUrl = `/dashboard/checkout-mock?orderId=${order.id}&orderType=${orderType}`;
-
-      return res.json({
-        sessionId: order.stripeSessionId,
-        checkoutUrl,
-        order,
-        mockMode: true,
-      });
-    }
-
-    // Get user email
-    const [user] = await db
-      .select()
-      .from(users)
-      .where(eq(users.id, req.user.userId))
-      .limit(1);
-
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    // Create Stripe Checkout Session
-    const session = await stripe.checkout.sessions.create({
-      customer_email: user.email,
-      line_items: [
-        {
-          price: pricing.stripePriceId,
-          quantity: 1,
-        },
-      ],
-      mode: pricing.mode,
-      success_url: `${process.env.APP_URL || "http://localhost:5000"}/dashboard/payment-success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.APP_URL || "http://localhost:5000"}/dashboard/upgrade`,
-      metadata: {
-        userId: req.user.userId.toString(),
-        orderType,
-      },
-    });
-
-    // Create pending order
+    // BiH: Stripe isključen – uvijek mock / kontakt za uplatu
     const [order] = await db
       .insert(subscriptionOrders)
       .values({
@@ -144,17 +80,22 @@ router.post("/create-checkout-session", authenticate, async (req, res) => {
         amount: pricing.amount,
         currency: pricing.currency,
         status: "pending",
-        stripeSessionId: session.id,
+        stripeSessionId: `mock_session_${Date.now()}`,
         metadata: JSON.stringify({ pricing }),
       })
       .returning();
 
-    res.json({
-      sessionId: session.id,
-      checkoutUrl: session.url,
+    const checkoutUrl = `/dashboard/checkout?orderId=${order.id}&orderType=${orderType}`;
+
+    return res.json({
+      sessionId: order.stripeSessionId,
+      checkoutUrl,
       order,
-      mockMode: false,
+      mockMode: true,
     });
+
+    // Stripe isključen za BiH – plaćanje mobilnim bankarstvom/uplatnicom
+    // Get user email ... stripe.checkout.sessions.create(...) ...
   } catch (error) {
     console.error("Create checkout session error:", error);
     res.status(500).json({ error: "Failed to create checkout session" });
@@ -166,74 +107,17 @@ router.post("/create-checkout-session", authenticate, async (req, res) => {
  * Stripe webhook handler (processes payment events)
  * NOTE: This route must be registered BEFORE any JSON body parsing middleware
  */
-router.post("/webhook", async (req: Request, res: Response) => {
-  // Check if Stripe is configured
-  if (!stripe) {
-    console.error("Stripe webhook called but Stripe is not configured");
-    return res.status(400).send("Stripe not configured");
-  }
-
+router.post("/webhook", async (_req: Request, res: Response) => {
+  // Stripe isključen za BiH – plaćanje mobilnim bankarstvom/uplatnicom
+  res.status(200).send("Stripe disabled for BiH");
+  return;
+  /*
+  if (!stripe) return res.status(400).send("Stripe not configured");
   const sig = req.headers["stripe-signature"];
-
-  if (!sig) {
-    console.error("No Stripe signature found");
-    return res.status(400).send("No signature");
-  }
-
-  let event: Stripe.Event;
-
-  try {
-    // Verify webhook signature
-    event = stripe.webhooks.constructEvent(
-      req.body,
-      sig,
-      process.env.STRIPE_WEBHOOK_SECRET || ""
-    );
-  } catch (err: any) {
-    console.error("Webhook signature verification failed:", err.message);
-    return res.status(400).send(`Webhook Error: ${err.message}`);
-  }
-
-  console.log(`Received Stripe event: ${event.type}`);
-
-  try {
-    // Handle different event types
-    switch (event.type) {
-      case "checkout.session.completed": {
-        const session = event.data.object as Stripe.Checkout.Session;
-        await handleCheckoutCompleted(session);
-        break;
-      }
-
-      case "customer.subscription.updated":
-      case "customer.subscription.deleted": {
-        const subscription = event.data.object as Stripe.Subscription;
-        await handleSubscriptionChange(subscription);
-        break;
-      }
-
-      case "payment_intent.succeeded": {
-        const paymentIntent = event.data.object as Stripe.PaymentIntent;
-        console.log("PaymentIntent succeeded:", paymentIntent.id);
-        break;
-      }
-
-      case "payment_intent.payment_failed": {
-        const paymentIntent = event.data.object as Stripe.PaymentIntent;
-        console.log("PaymentIntent failed:", paymentIntent.id);
-        await handlePaymentFailed(paymentIntent);
-        break;
-      }
-
-      default:
-        console.log(`Unhandled event type: ${event.type}`);
-    }
-
-    res.json({ received: true });
-  } catch (error) {
-    console.error("Webhook handler error:", error);
-    res.status(500).json({ error: "Webhook handler failed" });
-  }
+  if (!sig) return res.status(400).send("No signature");
+  let event = stripe.webhooks.constructEvent(...);
+  switch (event.type) { ... }
+  */
 });
 
 // Helper function to handle checkout completion

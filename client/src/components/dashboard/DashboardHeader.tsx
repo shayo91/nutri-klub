@@ -175,14 +175,12 @@ export function DashboardHeader() {
                   <span>Postavke</span>
                 </Link>
               </DropdownMenuItem>
-              {isPremium && (
-                <DropdownMenuItem asChild>
-                  <Link href="/dashboard/billing" className="flex items-center cursor-pointer">
-                    <CreditCard className="w-4 h-4 mr-2" />
-                    <span>Naplata</span>
-                  </Link>
-                </DropdownMenuItem>
-              )}
+              <DropdownMenuItem asChild>
+                <Link href="/dashboard/billing" className="flex items-center cursor-pointer">
+                  <CreditCard className="w-4 h-4 mr-2" />
+                  <span>Naplata</span>
+                </Link>
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 className="text-red-600 focus:text-red-600 cursor-pointer"

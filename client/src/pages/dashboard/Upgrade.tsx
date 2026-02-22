@@ -3,67 +3,81 @@ import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Check, Crown, Sparkles, Zap } from "lucide-react";
-import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
+import { Check, Crown, Mail, CreditCard } from "lucide-react";
+
+const CardIcon = CreditCard;
+
+const CONTACT_EMAIL = "planishrane@nutricionistajelena.ba";
+const CONTACT_SUBJECT = "Plaćanje paketa – Nutri Klub";
+
+const PLANS = [
+  {
+    id: "plan_konsultacije",
+    name: "Konsultacije",
+    subtitle: "Za one koji žele početne smjernice",
+    price: "80",
+    currency: "KM",
+    features: [
+      "Online konsultacije (60 minuta)",
+      "Analiza dnevnika ishrane",
+      "Pisane smjernice za poboljšanje ishrane",
+      "Podrška putem poruka tokom 30 dana",
+    ],
+    featured: false,
+  },
+  {
+    id: "plan_mjesecni",
+    name: "Mjesečni mentorski program",
+    subtitle: "Za one koji žele promjenu i jasnu strukturu",
+    price: "200",
+    currency: "KM",
+    features: [
+      "Online uvodne konsultacije",
+      "Analiza dnevnika ishrane",
+      "Dva individualna sedmična jelovnika",
+      "Podrška putem poruka tokom 30 dana",
+      "Kontrolni poziv nakon mjesec dana",
+    ],
+    featured: true,
+  },
+  {
+    id: "plan_visemjesecni",
+    name: "Višemjesečni mentorski program",
+    subtitle: "Za one koji žele dugoročnu podršku",
+    price: "400",
+    currency: "KM",
+    features: [
+      "3 mjeseca saradnje",
+      "Šest individualnih sedmičnih jelovnika",
+      "Podrška putem poruka tokom 90 dana",
+      "Kontrolni poziv (x3)",
+    ],
+    featured: false,
+  },
+];
+
+function ContactButton({ planName }: { planName: string }) {
+  const subject = encodeURIComponent(`${CONTACT_SUBJECT} – ${planName}`);
+  const body = encodeURIComponent(
+    "Poštovani,\n\nŽelim da zatražim podatke za uplatu za paket: " +
+      planName +
+      ".\n\nNakon uplate mobilnim bankarstvom ili uplatnicom poslaću vam dokaz o uplati na ovaj email.\n\nHvala!"
+  );
+  return (
+    <Button
+      size="lg"
+      className="w-full bg-[#1F7A5C] hover:bg-[#185A44]"
+      asChild
+    >
+      <a href={`mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`}>
+        <Mail className="w-4 h-4 mr-2" />
+        Kontaktiraj za uplatu
+      </a>
+    </Button>
+  );
+}
 
 export default function Upgrade() {
-  const [loading, setLoading] = useState<string | null>(null);
-  const { toast } = useToast();
-
-  const handleCheckout = async (orderType: string) => {
-    setLoading(orderType);
-
-    try {
-      const response = await fetch("/api/payments/create-checkout-session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ orderType }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to create checkout session");
-      }
-
-      const data = await response.json();
-
-      if (data.mockMode) {
-        // Mock mode - redirect to mock checkout
-        window.location.href = data.checkoutUrl;
-      } else {
-        // Real Stripe - redirect to Stripe Checkout
-        window.location.href = data.checkoutUrl;
-      }
-    } catch (error) {
-      console.error("Checkout error:", error);
-      toast({
-        title: "Greška",
-        description: "Došlo je do greške pri kreiranju plaćanja. Pokušajte ponovo.",
-        variant: "destructive",
-      });
-      setLoading(null);
-    }
-  };
-  const premiumFeatures = [
-    "500+ zdravih recepata sa detaljnim instrukcijama",
-    "15+ premium e-bookova (meal prep, keto, vodici)",
-    "Neograničen AI nutritionist asistent",
-    "7-dnevni meal planner sa drag & drop",
-    "Auto-generisana shopping lista",
-    "Tracking napretka (težina, merenja, photos)",
-    "Habit trackers (voda, san, energija)",
-    "Achievement sistem i streaks",
-    "Pristup zajednici i weekly challenges",
-    "Personalizovane preporuke recepata",
-    "Weekly progress report",
-    "Prioritetna email podrška",
-    "Referral program (1 mesec FREE po referralu)",
-    "Bez reklama",
-  ];
-
   return (
     <div className="flex min-h-screen bg-gray-50">
       <DashboardNav />
@@ -71,163 +85,106 @@ export default function Upgrade() {
         <DashboardHeader />
         <main className="flex-1 overflow-y-auto p-6 lg:p-8">
           <div className="max-w-5xl mx-auto space-y-8">
-            {/* Hero Section */}
+            {/* Hero */}
             <div className="text-center mb-12">
               <div className="flex items-center justify-center gap-2 mb-4">
                 <Crown className="w-10 h-10 text-[#FFD700]" />
                 <h1 className="text-4xl font-bold text-gray-900">
-                  Upgrade na Premium
+                  Paketi i cijene
                 </h1>
               </div>
               <p className="text-xl text-gray-600 mb-4">
-                Otkljucaj sve funkcionalnosti i ostvari svoje ciljeve brže
+                Plaćanje u Bosni i Hercegovini – mobilno bankarstvo ili uplatnica
               </p>
-              <Badge className="bg-[#FFD700] text-gray-900 hover:bg-[#FFD700] text-lg px-4 py-2">
-                🎁 7 dana besplatno • Otkazi bilo kada
+              <Badge className="bg-[#1F7A5C] text-white hover:bg-[#185A44] text-base px-4 py-2">
+                Free nivo dostupan svakome – registruj se bez plaćanja
               </Badge>
             </div>
 
-            {/* Pricing Cards */}
-            <div className="grid md:grid-cols-2 gap-8 mb-12">
-              {/* Monthly Plan */}
-              <Card className="relative overflow-hidden">
-                <CardHeader>
-                  <div className="flex items-center justify-between mb-2">
-                    <CardTitle className="text-2xl">Mesečna Pretplata</CardTitle>
-                    <Zap className="w-6 h-6 text-blue-500" />
-                  </div>
-                  <CardDescription>Fleksibilnost bez obaveze</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div>
-                    <div className="flex items-baseline gap-2 mb-2">
-                      <span className="text-4xl font-bold text-gray-900">4€</span>
-                      <span className="text-gray-600">/mesec</span>
-                    </div>
-                    <p className="text-sm text-gray-600">
-                      Naplaćuje se mesečno • Otkazi bilo kada
-                    </p>
-                  </div>
-
-                  <Button 
-                    size="lg" 
-                    className="w-full bg-gray-900 hover:bg-gray-800"
-                    onClick={() => handleCheckout("premium_monthly")}
-                    disabled={loading !== null}
-                  >
-                    {loading === "premium_monthly" ? "Učitavanje..." : "Započni 7-dnevni trial"}
-                  </Button>
-
-                  <div className="pt-4 space-y-3">
-                    {premiumFeatures.slice(0, 5).map((feature, index) => (
-                      <div key={index} className="flex items-start gap-2">
-                        <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                        <span className="text-sm text-gray-700">{feature}</span>
-                      </div>
-                    ))}
-                    <p className="text-xs text-gray-500 pt-2">+ sve ostale funkcionalnosti</p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Yearly Plan - RECOMMENDED */}
-              <Card className="relative overflow-hidden border-[#1F7A5C] border-2 shadow-xl">
-                <div className="absolute top-0 right-0 bg-[#FFD700] text-gray-900 px-4 py-1 text-sm font-semibold rounded-bl-lg">
-                  UŠTEDIŠ 48€
-                </div>
-                <CardHeader>
-                  <div className="flex items-center justify-between mb-2">
-                    <CardTitle className="text-2xl">Godišnja Pretplata</CardTitle>
-                    <Crown className="w-6 h-6 text-[#FFD700]" />
-                  </div>
-                  <CardDescription>Najbolja vrednost - uštedi 58%!</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div>
-                    <div className="flex items-baseline gap-2 mb-2">
-                      <span className="text-4xl font-bold text-[#1F7A5C]">35€</span>
-                      <span className="text-gray-600">/godišnje</span>
-                    </div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="text-lg line-through text-gray-400">83€</span>
-                      <Badge className="bg-green-500 hover:bg-green-600">-58%</Badge>
-                    </div>
-                    <p className="text-sm text-gray-600">
-                      Samo 2.92€/mesec • 12 meseci pristupa
-                    </p>
-                  </div>
-
-                  <Button
-                    size="lg"
-                    className="w-full bg-gradient-to-r from-[#1F7A5C] to-[#185A44] hover:opacity-90"
-                    onClick={() => handleCheckout("premium_yearly")}
-                    disabled={loading !== null}
-                  >
-                    <Sparkles className="w-4 h-4 mr-2" />
-                    {loading === "premium_yearly" ? "Učitavanje..." : "Započni 7-dnevni trial"}
-                  </Button>
-
-                  <div className="pt-4 space-y-3">
-                    {premiumFeatures.slice(0, 5).map((feature, index) => (
-                      <div key={index} className="flex items-start gap-2">
-                        <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                        <span className="text-sm text-gray-700">{feature}</span>
-                      </div>
-                    ))}
-                    <div className="flex items-start gap-2 pt-2 border-t">
-                      <Sparkles className="w-5 h-5 text-[#FFD700] flex-shrink-0 mt-0.5" />
-                      <span className="text-sm font-semibold text-[#1F7A5C]">
-                        + Ekskluzivni godišnji bonusi
-                      </span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* All Features List */}
-            <Card>
+            {/* Kako platiti */}
+            <Card className="bg-gradient-to-br from-[#ECF8F2] to-[#E8F5F0] border-[#1F7A5C]/30">
               <CardHeader>
-                <CardTitle className="text-2xl">Sve što dobijate sa Premium</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <CreditCard className="w-5 h-5" />
+                  Kako platiti u BiH
+                </CardTitle>
                 <CardDescription>
-                  Kompletna lista funkcionalnosti i benefita
+                  Podatke za uplatu dobijate putem emaila. Nakon uplate šaljete dokaz, a pristupni podatke dobijate također putem emaila.
                 </CardDescription>
               </CardHeader>
-              <CardContent>
-                <div className="grid md:grid-cols-2 gap-x-8 gap-y-4">
-                  {premiumFeatures.map((feature, index) => (
-                    <div key={index} className="flex items-start gap-3">
-                      <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Check className="w-4 h-4 text-green-600" />
-                      </div>
-                      <span className="text-gray-700">{feature}</span>
-                    </div>
-                  ))}
-                </div>
+              <CardContent className="space-y-2 text-sm text-gray-700">
+                <p className="flex gap-2">
+                  <span className="font-semibold min-w-[1.5rem]">1.</span>
+                  Kontaktirajte nas (mail ili poruka) – navedite koji paket želite.
+                </p>
+                <p className="flex gap-2">
+                  <span className="font-semibold min-w-[1.5rem]">2.</span>
+                  Dobijate podatke za uplatu (žiro-račun, svrha, iznos).
+                </p>
+                <p className="flex gap-2">
+                  <span className="font-semibold min-w-[1.5rem]">3.</span>
+                  Platite mobilnim bankarstvom ili uplatnicom.
+                </p>
+                <p className="flex gap-2">
+                  <span className="font-semibold min-w-[1.5rem]">4.</span>
+                  Pošaljite dokaz o uplati na{" "}
+                  <a href={`mailto:${CONTACT_EMAIL}`} className="text-[#1F7A5C] underline">
+                    {CONTACT_EMAIL}
+                  </a>
+                  . Pristupni podaci stižu vam putem emaila.
+                </p>
               </CardContent>
             </Card>
 
-            {/* FAQ / Guarantee */}
-            <div className="bg-gradient-to-br from-[#ECF8F2] to-[#E8F5F0] rounded-xl p-8 text-center">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">
-                Bez Rizika - 7 Dana Besplatno
-              </h3>
-              <p className="text-gray-700 max-w-2xl mx-auto mb-6">
-                Isprobaj Premium kompletno besplatno 7 dana. Ako nisi zadovoljan, 
-                jednostavno otkaži pre kraja trial perioda i neće te biti naplaćeno. 
-                Bez skrivenih troškova, bez obaveza.
+            {/* Pricing Cards */}
+            <div className="grid md:grid-cols-3 gap-6">
+              {PLANS.map((plan) => (
+                <Card
+                  key={plan.id}
+                  className={`relative overflow-hidden flex flex-col ${
+                    plan.featured ? "border-[#1F7A5C] border-2 shadow-xl md:scale-105" : ""
+                  }`}
+                >
+                  {plan.featured && (
+                    <div className="absolute top-0 right-0 bg-[#1F7A5C] text-white px-3 py-1 text-xs font-semibold rounded-bl-lg">
+                      Najpopularnije
+                    </div>
+                  )}
+                  <CardHeader>
+                    <CardTitle className="text-xl flex items-center gap-2">
+                      <CardIcon className="w-5 h-5 text-[#1F7A5C]" />
+                      {plan.name}
+                    </CardTitle>
+                    <CardDescription>{plan.subtitle}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4 flex-1 flex flex-col">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-3xl font-bold text-[#1F7A5C]">{plan.price}</span>
+                      <span className="text-gray-600">{plan.currency}</span>
+                    </div>
+                    <ul className="space-y-2 flex-1">
+                      {plan.features.map((f, i) => (
+                        <li key={i} className="flex items-start gap-2 text-sm">
+                          <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                    <ContactButton planName={plan.name} />
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            {/* CTA */}
+            <div className="text-center text-gray-600">
+              <p>
+                Niste sigurni koji paket odgovara? Pišite nam na{" "}
+                <a href={`mailto:${CONTACT_EMAIL}`} className="text-[#1F7A5C] font-medium underline">
+                  {CONTACT_EMAIL}
+                </a>
+                .
               </p>
-              <div className="flex flex-wrap justify-center gap-4">
-                <Badge variant="secondary" className="text-sm">
-                  ✓ Bez kreditne kartice za trial
-                </Badge>
-                <Badge variant="secondary" className="text-sm">
-                  ✓ Otkazi bilo kada jednim klikom
-                </Badge>
-                <Badge variant="secondary" className="text-sm">
-                  ✓ Instant aktivacija
-                </Badge>
-              </div>
             </div>
           </div>
         </main>

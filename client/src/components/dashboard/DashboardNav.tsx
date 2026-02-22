@@ -5,13 +5,13 @@ import {
   BookMarked,
   UtensilsCrossed,
   Bot,
-  Users,
   TrendingUp,
   Target,
   Settings,
   CreditCard,
   Crown,
   ShieldCheck,
+  FileText,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
@@ -70,6 +70,11 @@ export function DashboardNav() {
       requirePlan: true,
     },
     {
+      label: "Naplata",
+      href: "/dashboard/billing",
+      icon: <CreditCard className="w-5 h-5" />,
+    },
+    {
       label: "Postavke",
       href: "/dashboard/settings",
       icon: <Settings className="w-5 h-5" />,
@@ -78,11 +83,18 @@ export function DashboardNav() {
 
   // Add admin-only items
   if (user?.role === "admin") {
-    navItems.push({
-      label: "Admin - Recepti",
-      href: "/dashboard/admin/recipes",
-      icon: <ShieldCheck className="w-5 h-5" />,
-    });
+    navItems.push(
+      {
+        label: "Admin - Recepti",
+        href: "/dashboard/admin-recipes",
+        icon: <ShieldCheck className="w-5 h-5" />,
+      },
+      {
+        label: "Admin - Planovi",
+        href: "/dashboard/admin-plans",
+        icon: <FileText className="w-5 h-5" />,
+      }
+    );
   }
 
   const hasPlan = user?.subscriptionStatus === "active" && user?.role !== "free";

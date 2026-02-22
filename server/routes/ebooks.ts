@@ -187,9 +187,14 @@ router.post("/:id/download", authenticate, async (req, res) => {
       }
     }
 
+    // PDF fajlovi mogu biti placeholder dok se ne dodaju stvarni fajlovi
+    const placeholder = true; // postaviti na false kad budu dostupni pravi PDF-ovi
     res.json({
-      message: "Download tracked successfully",
-      downloadUrl: ebook.pdfUrl,
+      message: placeholder
+        ? "PDF će biti dostupan uskoro. Za pristup kontaktirajte planishrane@nutricionistajelena.ba"
+        : "Download tracked successfully",
+      downloadUrl: placeholder ? null : ebook.pdfUrl,
+      placeholder: placeholder,
       ebook: {
         id: ebook.id,
         title: ebook.title,

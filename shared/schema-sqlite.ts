@@ -749,3 +749,24 @@ export const insertConsultationsSchema = createInsertSchema(consultations).omit(
 
 export type InsertConsultations = z.infer<typeof insertConsultationsSchema>;
 export type Consultations = typeof consultations.$inferSelect;
+
+// Personalizovani plan ishrane – nutricionista kreira i dodjeljuje korisniku (vidi u Moj plan)
+export const userAssignedPlans = sqliteTable("user_assigned_plans", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  createdBy: integer("created_by").references(() => users.id).notNull(),
+  title: text("title").notNull(),
+  content: text("content").notNull(),
+  weekLabel: text("week_label"),
+  createdAt: text("created_at").notNull().$defaultFn(() => new Date().toISOString()),
+  updatedAt: text("updated_at").notNull().$defaultFn(() => new Date().toISOString()),
+});
+
+export const insertUserAssignedPlanSchema = createInsertSchema(userAssignedPlans).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export type InsertUserAssignedPlan = z.infer<typeof insertUserAssignedPlanSchema>;
+export type UserAssignedPlan = typeof userAssignedPlans.$inferSelect;

@@ -1,8 +1,10 @@
 import { Link } from "wouter";
+import { useEffect, useState, useMemo } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { DashboardNav } from "@/components/dashboard/DashboardNav";
 import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 import { UpgradeBanner } from "@/components/dashboard/UpgradeBanner";
+import { QuickStats } from "@/components/dashboard/QuickStats";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -14,10 +16,81 @@ import {
   TrendingUp,
   Target,
   Sparkles,
+  Heart,
+  Flame,
 } from "lucide-react";
+import { RecipeAPI } from "@/lib/api";
+
+interface TrackingStats {
+  latestWeight: string | null;
+  weightChange: number | null;
+  streaks: { streakType: string; currentStreak: number | null }[];
+}
 
 export default function Dashboard() {
   const { user, isPremium } = useAuth();
+  const [trackingStats, setTrackingStats] = useState<TrackingStats | null>(null);
+  const [favoritesCount, setFavoritesCount] = useState<number>(0);
+
+  useEffect(() => {
+    fetch("/api/tracking/stats", { credentials: "include" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => data && setTrackingStats(data))
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    if (!isPremium) {
+      setFavoritesCount(0);
+      return;
+    }
+    RecipeAPI.getFavorites()
+      .then((list) => setFavoritesCount(list?.length ?? 0))
+      .catch(() => setFavoritesCount(0));
+  }, [isPremium]);
+
+  const quickStatsData = useMemo(() => {
+    const streakDays =
+      trackingStats?.streaks?.find((s) => s.streakType === "weight_log")
+        ?.currentStreak ?? 0;
+    const weightChange = trackingStats?.weightChange ?? null;
+    const progressValue =
+      weightChange != null
+        ? `${weightChange >= 0 ? "+" : ""}${weightChange} kg`
+        : "–";
+    return [
+      {
+        label: "Sačuvani recepti",
+        value: favoritesCount,
+        icon: <Heart className="w-5 h-5" />,
+        color: "text-red-500",
+        link: "/dashboard/recipes?filter=favorites",
+        isPremium: true,
+      },
+      {
+        label: "Pregledan recepti",
+        value: "–",
+        icon: <BookOpen className="w-5 h-5" />,
+        color: "text-blue-500",
+        link: "/dashboard/recipes",
+      },
+      {
+        label: "Dani streak-a",
+        value: streakDays,
+        icon: <Flame className="w-5 h-5" />,
+        color: "text-orange-500",
+        isPremium: true,
+      },
+      {
+        label: "Napredak",
+        value: progressValue,
+        icon: <TrendingUp className="w-5 h-5" />,
+        color: "text-green-500",
+        link: "/dashboard/progress",
+        isPremium: true,
+      },
+    ];
+  }, [trackingStats, favoritesCount]);
 
   const featureCards = [
     {
@@ -83,7 +156,9 @@ export default function Dashboard() {
               </p>
             </div>
 
-            
+            {/* QuickStats - stvarni podaci iz /api/tracking/stats i recepti */}
+            <QuickStats stats={quickStatsData} />
+
             {/* Moj Plan - Full Width (odmah ispod welcome) */}
             <div className="relative">
               <Link href="/dashboard/my-plan">

@@ -13,6 +13,7 @@ import aiRoutes from "./routes/ai.js";
 import ebooksRoutes from "./routes/ebooks.js";
 import trackingRoutes from "./routes/tracking.js";
 import paymentsRoutes from "./routes/payments.js";
+import assignedPlansRoutes from "./routes/assigned-plans.js";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Dashboard / auth API routes (must be before other API routes)
@@ -25,6 +26,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.use("/api/ebooks", ebooksRoutes);
   app.use("/api/tracking", trackingRoutes);
   app.use("/api/payments", paymentsRoutes);
+  app.use("/api", assignedPlansRoutes);
 
   app.get(["/robots.txt", "/api/robots.txt"], (_req, res) => {
     res.type("text/plain").send(`User-agent: *
