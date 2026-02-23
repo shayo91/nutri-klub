@@ -1,5 +1,6 @@
-import 'dotenv/config';
+import "dotenv/config";
 import express, { type Request, Response, NextFunction } from "express";
+import { createServer, type Server } from "http";
 import { registerRoutes } from "./routes.js";
 import { setupVite, serveStatic } from "./vite.js";
 import { log } from "./log.js";
@@ -39,8 +40,6 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  const server = await registerRoutes(app);
-
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
@@ -48,25 +47,25 @@ app.use((req, res, next) => {
     res.status(status).json({ message });
   });
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
+  let server: Server;
   if (app.get("env") === "development") {
-    await setupVite(app, server);
+    server = createServer(app);
+    const serveSpa = await setupVite(app, server);
+    await registerRoutes(app, { serveSpa, server });
   } else {
+    server = await registerRoutes(app);
     serveStatic(app);
   }
 
-  // ALWAYS serve the app on port 5000
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
   const port = 3000;
   const host = app.get("env") === "development" ? "127.0.0.1" : "0.0.0.0";
-  server.listen({
-    port,
-    host,
-    //reusePort: true,
-  }, () => {
-    log(`serving at http://${host}:${port}`);
-  });
+  server.listen(
+    {
+      port,
+      host,
+    },
+    () => {
+      log(`serving at http://${host}:${port}`);
+    }
+  );
 })();

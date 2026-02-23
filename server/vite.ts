@@ -1,4 +1,4 @@
-import express, { type Express } from "express";
+import express, { type Express, type Request, type Response } from "express";
 import fs from "fs";
 import path from "path";
 import { createServer as createViteServer, createLogger } from "vite";
@@ -8,7 +8,12 @@ import { nanoid } from "nanoid";
 
 const viteLogger = createLogger();
 
-export async function setupVite(app: Express, server: Server) {
+export type ServeSpa = (req: Request, res: Response) => void;
+
+export async function setupVite(
+  app: Express,
+  server: Server
+): Promise<ServeSpa> {
   const serverOptions = {
     middlewareMode: true,
     hmr: { server },
@@ -29,31 +34,30 @@ export async function setupVite(app: Express, server: Server) {
     appType: "custom",
   });
 
-  app.use(vite.middlewares);
-  app.use("*", async (req, res, next) => {
-    const url = req.originalUrl;
+  const clientTemplate = path.resolve(
+    import.meta.dirname,
+    "..",
+    "client",
+    "index.html",
+  );
 
+  const serveSpa: ServeSpa = async (req, res) => {
     try {
-      const clientTemplate = path.resolve(
-        import.meta.dirname,
-        "..",
-        "client",
-        "index.html",
-      );
-
-      // always reload the index.html file from disk incase it changes
       let template = await fs.promises.readFile(clientTemplate, "utf-8");
       template = template.replace(
         `src="/src/main.tsx"`,
         `src="/src/main.tsx?v=${nanoid()}"`,
       );
-      const page = await vite.transformIndexHtml(url, template);
+      const page = await vite.transformIndexHtml(req.originalUrl, template);
       res.status(200).set({ "Content-Type": "text/html" }).end(page);
     } catch (e) {
       vite.ssrFixStacktrace(e as Error);
-      next(e);
+      res.status(500).send("Internal Server Error");
     }
-  });
+  };
+
+  app.use(vite.middlewares);
+  return serveSpa;
 }
 
 export function serveStatic(app: Express) {

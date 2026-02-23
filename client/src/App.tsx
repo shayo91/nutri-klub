@@ -10,8 +10,10 @@ import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import TermsOfService from "@/pages/TermsOfService";
 import CookiePolicy from "@/pages/CookiePolicy";
 import AboutMe from "@/pages/AboutMe";
+import NutricionistaLocation from "@/pages/NutricionistaLocation";
 import NotFound from "@/pages/not-found";
 import CookieConsent from "@/components/CookieConsent";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 function Router() {
   return (
@@ -22,6 +24,7 @@ function Router() {
       <Route path="/uslovi-poslovanja" component={TermsOfService} />
       <Route path="/pravila-privatnosti" component={PrivacyPolicy} />
       <Route path="/kolacici" component={CookiePolicy} />
+      <Route path="/nutricionista-:location" component={NutricionistaLocation} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -36,6 +39,7 @@ function App() {
         </Layout>
         <Toaster />
         <CookieConsent />
+        <GoogleAnalytics />
         <Analytics />
       </TooltipProvider>
     </LanguageProvider>

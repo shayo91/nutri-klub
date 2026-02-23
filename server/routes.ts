@@ -1,11 +1,15 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
+import type { ServeSpa } from "./vite.js";
 import { storage } from "./storage.js";
 import { sendContactEmail, sendComingSoonNotification, sendNewsletterNotification } from "./email.js";
 import { getBlogPosts, getBlogPostById, getBlogPostBySlug, getTestimonials, getAnnouncements, getVideos, getPodcasts, getSocialMedia, toUrlSlug } from "./notion.js";
 import { z } from "zod";
 
-export async function registerRoutes(app: Express): Promise<Server> {
+export async function registerRoutes(
+  app: Express,
+  options?: { serveSpa?: ServeSpa; server?: Server }
+): Promise<Server> {
   app.get(["/robots.txt", "/api/robots.txt"], (_req, res) => {
     res.type("text/plain").send(`User-agent: *
 Allow: /
@@ -14,6 +18,16 @@ Disallow: /api/
 Sitemap: https://nutricionistajelena.ba/sitemap.xml
 `);
   });
+
+  const LOCATION_SLUGS_SITEMAP = [
+    "sarajevo",
+    "banja-luka",
+    "tuzla",
+    "zenica",
+    "mostar",
+    "prijedor",
+    "bih",
+  ];
 
   const sitemapHandler = async (_req: any, res: any) => {
     let blogUrls = "";
@@ -28,7 +42,16 @@ Sitemap: https://nutricionistajelena.ba/sitemap.xml
       }
     } catch (e) {}
 
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date().toISOString().split("T")[0];
+    const locationUrls = LOCATION_SLUGS_SITEMAP.map(
+      (slug) => `  <url>
+    <loc>https://nutricionistajelena.ba/nutricionista-${slug}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>`
+    ).join("\n");
+
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
@@ -61,6 +84,7 @@ Sitemap: https://nutricionistajelena.ba/sitemap.xml
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+${locationUrls}
 ${blogUrls}
 </urlset>`;
     res.type("application/xml").send(sitemap);
@@ -389,7 +413,10 @@ ${blogUrls}
     }
   });
 
-  const httpServer = createServer(app);
+  if (options?.serveSpa) {
+    app.get("*", options.serveSpa);
+  }
 
+  const httpServer = options?.server ?? createServer(app);
   return httpServer;
 }

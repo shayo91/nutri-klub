@@ -1,5 +1,6 @@
 import { useLocation, useRoute } from "wouter";
 import { Helmet } from "react-helmet";
+import { getLocationBySlug } from "@/data/locations";
 
 const BASE_URL = "https://nutricionistajelena.ba";
 
@@ -25,16 +26,25 @@ const routeBreadcrumbs: Record<string, { name: string; path: string }[]> = {
 
 export default function BreadcrumbSchema() {
 	const [location] = useLocation();
-	const [, params] = useRoute("/clanci/:slug");
+	const [, blogParams] = useRoute("/clanci/:slug");
+	const [, locationParams] = useRoute("/nutricionista-:location");
 
 	let items: { name: string; path: string }[];
 
-	if (params?.slug) {
+	if (blogParams?.slug) {
 		items = [
 			{ name: "Početna", path: "/" },
 			{ name: "Članci", path: "/#blog" },
-			{ name: params.slug.replace(/-/g, " "), path: `/clanci/${params.slug}` },
+			{ name: blogParams.slug.replace(/-/g, " "), path: `/clanci/${blogParams.slug}` },
 		];
+	} else if (locationParams?.location) {
+		const loc = getLocationBySlug(locationParams.location);
+		items = loc
+			? [
+					{ name: "Početna", path: "/" },
+					{ name: `Nutricionista ${loc.name}`, path: `/nutricionista-${loc.slug}` },
+				]
+			: routeBreadcrumbs[location] || [{ name: "Početna", path: "/" }];
 	} else {
 		items = routeBreadcrumbs[location] || [{ name: "Početna", path: "/" }];
 	}
