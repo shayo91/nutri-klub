@@ -40,13 +40,6 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-    const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
-
-    res.status(status).json({ message });
-  });
-
   let server: Server;
   if (app.get("env") === "development") {
     server = createServer(app);
@@ -56,6 +49,14 @@ app.use((req, res, next) => {
     server = await registerRoutes(app);
     serveStatic(app);
   }
+
+  // Error handler middleware (must be last)
+  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+    const status = err.status || err.statusCode || 500;
+    const message = err.message || "Internal Server Error";
+
+    res.status(status).json({ message });
+  });
 
   const port = 3000;
   const host = app.get("env") === "development" ? "127.0.0.1" : "0.0.0.0";

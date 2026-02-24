@@ -24,7 +24,13 @@ function Router() {
       <Route path="/uslovi-poslovanja" component={TermsOfService} />
       <Route path="/pravila-privatnosti" component={PrivacyPolicy} />
       <Route path="/kolacici" component={CookiePolicy} />
-      <Route path="/nutricionista-:location" component={NutricionistaLocation} />
+      <Route path="/nutricionista-prijedor" component={NutricionistaLocation} />
+      <Route path="/nutricionista-sarajevo" component={NutricionistaLocation} />
+      <Route path="/nutricionista-banja-luka" component={NutricionistaLocation} />
+      <Route path="/nutricionista-tuzla" component={NutricionistaLocation} />
+      <Route path="/nutricionista-zenica" component={NutricionistaLocation} />
+      <Route path="/nutricionista-mostar" component={NutricionistaLocation} />
+      <Route path="/nutricionista-bih" component={NutricionistaLocation} />
       <Route component={NotFound} />
     </Switch>
   );

@@ -413,6 +413,20 @@ ${blogUrls}
     }
   });
 
+  // Redirect old /nutricionista/:location format to new hyphen format
+  app.get("/nutricionista/:location", (req, res) => {
+    res.redirect(301, `/nutricionista-${req.params.location}`);
+  });
+
+  // Handle /nutricionista-:location* as SPA (explicit route for SEO)
+  app.get("/nutricionista-:location*", async (req, res) => {
+    const loc = (req.params as any)["location*"] || (req.params as any).location;
+    if (options?.serveSpa) {
+      return options.serveSpa(req, res);
+    }
+    res.status(404).send("Not found");
+  });
+
   if (options?.serveSpa) {
     app.get("*", options.serveSpa);
   }

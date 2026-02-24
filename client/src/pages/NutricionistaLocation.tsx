@@ -1,22 +1,59 @@
 import { useEffect } from "react";
-import { useRoute, Link } from "wouter";
+import { useLocation } from "wouter";
 import { Helmet } from "react-helmet";
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
 import { getLocationBySlug } from "@/data/locations";
 import NotFound from "@/pages/not-found";
-import ProcessSection from "@/components/ProcessSection";
+import PricingSection from "@/components/PricingSection";
 import ProgramsSection from "@/components/ProgramsSection";
 import CTABanner from "@/components/CTABanner";
 import ContactSection from "@/components/ContactSection";
-import WhatsAppButton from "@/components/WhatsAppButton";
 
 const BASE_URL = "https://nutricionistajelena.ba";
 const OG_IMAGE = "https://nutricionistajelena.ba/attached_assets/jelena-hero.png";
 
+// Helper function to get location name in correct grammatical case ("za" + location)
+function getLocationNameForCase(name: string): string {
+	switch (name) {
+		case 'Banja Luka':
+			return 'Banju Luku';
+		case 'Bosna i Hercegovina':
+			return 'Bosnu i Hercegovinu';
+		default:
+			return name;
+	}
+}
+
+// Helper function for genitive case ("iz" + location)
+function getLocationNameGenitive(name: string): string {
+	switch (name) {
+		case 'Banja Luka':
+			return 'Banja Luke';
+		case 'Bosna i Hercegovina':
+			return 'Bosne i Hercegovine';
+		case 'Tuzla':
+			return 'Tuzle';
+		case 'Zenica':
+			return 'Zenice';
+		default:
+			// For masculine nouns ending in consonant or -o: add "a" (Sarajevo → Sarajeva, Prijedor → Prijedora, Mostar → Mostara)
+			return name + 'a';
+	}
+}
+
 export default function NutricionistaLocation() {
-	const [, params] = useRoute("/nutricionista-:location");
-	const location = params?.location ? getLocationBySlug(params.location) : undefined;
+	const [location_path] = useLocation();
+	
+	// Extract location slug from URL - direct parsing
+	let locationSlug: string | null = null;
+	const urlMatch = location_path.match(/\/nutricionista-([^/]+)$/);
+	if (urlMatch && urlMatch[1]) {
+		locationSlug = urlMatch[1];
+	}
+	
+	const location = locationSlug ? getLocationBySlug(locationSlug) : undefined;
 	const { ref, inView } = useAnimateOnScroll(0.1);
 
 	useEffect(() => {
@@ -29,11 +66,35 @@ export default function NutricionistaLocation() {
 
 	const canonical = `${BASE_URL}/nutricionista-${location.slug}`;
 
+	// JSON-LD Schema for local business and SEO
+	const localBusinessSchema = {
+		"@context": "https://schema.org",
+		"@type": "LocalBusiness",
+		"@id": canonical,
+		"name": `Nutricionista ${location.name} - Jelena Matijaš`,
+		"description": location.metaDescription,
+		"url": canonical,
+		"telephone": "po dogovoru",
+		"areaServed": location.name,
+		"serviceType": ["Nutritional Consultation", "Diet Planning", "Weight Management"],
+		"image": OG_IMAGE,
+		"priceRange": "80-400",
+		"ratingValue": "5",
+		"ratingCount": "50+",
+		"openingHoursSpecification": {
+			"@type": "OpeningHoursSpecification",
+			"dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+			"opens": "09:00",
+			"closes": "17:00"
+		}
+	};
+
 	return (
 		<>
 			<Helmet>
 				<title>{location.title}</title>
 				<meta name="description" content={location.metaDescription} />
+				<meta name="keywords" content={`nutricionista ${location.name}, online nutritionist, meal plans, weight management, healthy diet`} />
 				<meta property="og:title" content={location.title} />
 				<meta property="og:description" content={location.metaDescription} />
 				<meta property="og:image" content={OG_IMAGE} />
@@ -44,6 +105,9 @@ export default function NutricionistaLocation() {
 				<meta name="twitter:description" content={location.metaDescription} />
 				<meta name="twitter:image" content={OG_IMAGE} />
 				<link rel="canonical" href={canonical} />
+				<script type="application/ld+json">
+					{JSON.stringify(localBusinessSchema)}
+				</script>
 			</Helmet>
 
 			<main className="min-h-screen bg-white font-sans">
@@ -60,42 +124,76 @@ export default function NutricionistaLocation() {
 							transition={{ duration: 0.6 }}
 						>
 							<h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight">
-								Nutricionista za {location.name} – online savjetovanje
+								Nutricionista za {getLocationNameForCase(location.name)} – online savjetovanje
 							</h1>
-							<p className="text-base md:text-lg text-gray-800 leading-relaxed mb-6">
+							<p className="text-base md:text-lg text-gray-800 leading-relaxed mb-8">
 								{location.introParagraph}
 							</p>
-							<p className="text-base text-gray-700">
-								<Link href="/">
-									<a className="text-[#5DAD8C] hover:text-[#4A9A79] font-medium underline">
-										Na početnu
-									</a>
-								</Link>
-							</p>
+							<Button 
+								onClick={() => {
+									const contactSection = document.getElementById('contact');
+									if (contactSection) {
+										contactSection.scrollIntoView({ behavior: 'smooth' });
+									}
+								}}
+								className="bg-[#5DAD8C] hover:bg-[#4A9A79] text-white px-8 py-3 text-lg font-semibold rounded-lg transition-colors"
+							>
+								📅 Zakaži besplatnu konsultaciju
+							</Button>
 						</motion.div>
 					</div>
 				</section>
 
 				<section
-					className="py-12 md:py-16"
+					className="py-16 md:py-20"
 					style={{ backgroundColor: "#ECF8F2" }}
 					aria-label="Klijenti iz vaše regije"
 				>
-					<div className="container mx-auto px-4 max-w-6xl">
-						<h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-							Zašto klijenti iz {location.name} biraju online savjetovanje
+					<div className="container mx-auto px-4 max-w-4xl text-center">
+						<div className="inline-flex items-center justify-center w-16 h-16 rounded-full mb-6" style={{ backgroundColor: "#9FE2BF" }}>
+							<svg className="w-8 h-8 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+							</svg>
+						</div>
+						<h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+							Zašto naši klijenti iz {getLocationNameGenitive(location.name)} biraju online savjetovanje?
 						</h2>
-						<p className="text-base md:text-lg text-gray-700 leading-relaxed max-w-3xl">
+						<p className="text-base md:text-lg text-gray-700 leading-relaxed">
 							{location.clientsParagraph}
 						</p>
 					</div>
 				</section>
 
-				<ProcessSection />
+				<PricingSection />
 				<ProgramsSection />
+
+				{/* FAQ Section */}
+				<section className="py-16 md:py-20 bg-white" aria-label="Često postavljana pitanja">
+					<div className="container mx-auto px-4 max-w-4xl">
+						<h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-10 text-center">
+							Često postavljana pitanja – Nutricionista {location.name}
+						</h2>
+						<div className="space-y-6">
+							{location.faq.map((item, index) => (
+								<div 
+									key={index} 
+									className="bg-gray-50 rounded-lg p-6 border-l-4" 
+									style={{ borderColor: "#5DAD8C" }}
+								>
+									<h3 className="text-lg font-semibold text-gray-900 mb-3">
+										{item.question}
+									</h3>
+									<p className="text-gray-700 leading-relaxed">
+										{item.answer}
+									</p>
+								</div>
+							))}
+							</div>
+					</div>
+				</section>
+
 				<CTABanner />
 				<ContactSection />
-				<WhatsAppButton />
 			</main>
 		</>
 	);
