@@ -296,12 +296,9 @@ export default function BlogPost() {
 								<div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
 									<User className="w-8 h-8 text-primary" />
 								</div>
-								<div>
-									<h3 className="font-semibold text-lg text-gray-800">
-										{post.author.name}
-									</h3>
-									<p className="text-gray-600">Sertifikovani nutricionista</p>
-								</div>
+								<h3 className="font-semibold text-lg text-gray-800">
+									Nutricionista
+								</h3>
 							</div>
 						</div>
 					</motion.article>
