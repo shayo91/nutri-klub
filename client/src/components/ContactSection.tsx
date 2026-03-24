@@ -193,9 +193,9 @@ export default function ContactSection() {
 				{/* Header */}
 				<motion.div
 					ref={headerRef}
-					initial={{ opacity: 0, y: 20 }}
-					animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-					transition={{ duration: 0.6 }}
+					initial={{ opacity: 0, y: 12 }}
+					animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+					transition={{ duration: 0.45 }}
 					className="mb-12 text-center"
 				>
 					<span className="mb-3 inline-block text-xs font-bold uppercase tracking-[0.2em] text-white">
@@ -212,9 +212,9 @@ export default function ContactSection() {
 
 				{/* Contact info pills */}
 				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-					transition={{ duration: 0.6, delay: 0.1 }}
+					initial={{ opacity: 0, y: 12 }}
+					animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+					transition={{ duration: 0.45, delay: 0.1 }}
 					className="mb-10 flex flex-wrap items-center justify-center gap-3"
 				>
 					{contactInfo.map((info) => (
@@ -242,9 +242,9 @@ export default function ContactSection() {
 				{/* Main content */}
 				<motion.div
 					ref={contentRef}
-					initial={{ opacity: 0, y: 20 }}
-					animate={contentInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-					transition={{ duration: 0.6, delay: 0.3 }}
+					initial={{ opacity: 0, y: 12 }}
+					animate={contentInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+					transition={{ duration: 0.45, delay: 0.3 }}
 					className="grid grid-cols-1 gap-6 lg:grid-cols-5"
 				>
 					{/* Form card */}

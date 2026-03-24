@@ -112,6 +112,22 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  href="/blog"
+                  className="text-gray-600 hover:text-[#1F7A5C] transition"
+                >
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/nutricionista-banja-luka"
+                  className="text-gray-600 hover:text-[#1F7A5C] transition"
+                >
+                  Nutricionista Banja Luka
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/#pricing"
                   className="text-gray-600 hover:text-[#1F7A5C] transition"
                 >

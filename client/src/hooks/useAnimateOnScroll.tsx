@@ -5,6 +5,21 @@ export function useAnimateOnScroll(delay: number = 0) {
   const [inView, setInView] = useState(false);
 
   useEffect(() => {
+    const isClient = typeof window !== "undefined";
+    if (!isClient) return;
+
+    const isSmallScreen = window.matchMedia("(max-width: 768px)").matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    // On small screens, keep UI stable and avoid jumpy entrance motion.
+    if (isSmallScreen || prefersReducedMotion) {
+      setInView(true);
+      return;
+    }
+
+    const threshold = Math.min(Math.max(delay || 0.08, 0.02), 0.3);
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -19,8 +34,9 @@ export function useAnimateOnScroll(delay: number = 0) {
       },
       {
         root: null,
-        rootMargin: "0px",
-        threshold: 0.1, // Trigger when at least 10% of the element is visible
+        // Trigger slightly before full visibility for smoother scroll reveal.
+        rootMargin: "0px 0px -6% 0px",
+        threshold,
       }
     );
 

@@ -45,7 +45,7 @@ export const LOCATIONS: LocationConfig[] = [
 		name: 'Banja Luka',
 		title: 'Nutricionista Banja Luka | Online Savjetovanje – Jelena Matijaš',
 		metaDescription:
-			'Nutricionista za Banju Luku: online savjetovanje i planovi ishrane. Video konsultacije za grad i regiju. Mršavljenje, debljanje i zdrava ishrana.',
+			'Nutricionista Banja Luka – Jelena Matijaš. Online savjetovanje, video konsultacije i personalizovani planovi ishrane za Banju Luku i regiju. Mršavljenje, debljanje, zdrava ishrana.',
 		introParagraph:
 			'Za sve koji traže nutricionistu u Banjoj Luci, nudim profesionalno online savjetovanje putem video poziva. Specijalizovana sam za personalizovane planove ishrane za mršavljenje, debljanje i održavanje zdravlja bez potrebe za putovanjem do ordinacije. Svaka konsultacija uključuje detaljnu analizu vaših prehrambenih navika, zdravstvenog stanja i ciljeva, nakon čega kreiram plan prilagođen vašim potrebama i životnom stilu.',
 		clientsParagraph:

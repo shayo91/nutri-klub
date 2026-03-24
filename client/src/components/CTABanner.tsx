@@ -14,9 +14,9 @@ export default function CTABanner() {
 
       <motion.div
         ref={ref}
-        initial={{ opacity: 0, y: 20 }}
-        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-        transition={{ duration: 0.6 }}
+        initial={{ opacity: 0, y: 12 }}
+        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+        transition={{ duration: 0.45 }}
         className="container mx-auto px-4 relative z-10"
       >
         <div className="text-center max-w-3xl mx-auto">

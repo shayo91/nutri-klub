@@ -35,6 +35,7 @@ export interface BlogPost {
   category: string;
   categories?: string[];
   image: string;
+  thumbnail?: string;
   date: string;
   slug: string;
   author?: {

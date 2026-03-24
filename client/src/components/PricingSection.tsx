@@ -4,6 +4,10 @@ import { Check } from "lucide-react";
 
 export default function PricingSection() {
   const { ref: pricingRef, inView: pricingInView } = useAnimateOnScroll(0.1);
+  const isDesktopStagger =
+    typeof window !== "undefined" &&
+    window.matchMedia("(min-width: 769px)").matches &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const plans = [
     {
@@ -66,9 +70,9 @@ export default function PricingSection() {
       <div className="container mx-auto px-4">
         <motion.div
           ref={pricingRef}
-          initial={{ opacity: 0, y: 30 }}
-          animate={pricingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 16 }}
+          animate={pricingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+          transition={{ duration: 0.45 }}
           className="text-center max-w-3xl mx-auto mb-12 md:mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#333333]">
@@ -83,13 +87,16 @@ export default function PricingSection() {
           {plans.map((plan, planIndex) => (
             <motion.div
               key={planIndex}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={
                 pricingInView
                   ? { opacity: 1, y: 0 }
-                  : { opacity: 0, y: 30 }
+                  : { opacity: 0, y: 16 }
               }
-              transition={{ duration: 0.6, delay: planIndex * 0.15 }}
+              transition={{
+                duration: 0.45,
+                delay: isDesktopStagger ? planIndex * 0.15 : 0,
+              }}
               whileHover={{ 
                 y: -8,
                 boxShadow: "0 20px 40px -12px rgba(0,0,0,0.15)"

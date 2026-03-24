@@ -14,6 +14,10 @@ interface FeatureCard {
 
 export default function ProgramsSection() {
   const { ref, inView } = useAnimateOnScroll(0.1);
+  const isDesktopStagger =
+    typeof window !== "undefined" &&
+    window.matchMedia("(min-width: 769px)").matches &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -91,9 +95,9 @@ export default function ProgramsSection() {
       <div className="container mx-auto px-4">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 12 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+          transition={{ duration: 0.45 }}
           className="text-center mb-12"
         >
           <div className="flex items-center justify-center gap-3 mb-4">
@@ -109,9 +113,9 @@ export default function ProgramsSection() {
 
         {/* Feature Cards Header */}
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          initial={{ opacity: 0, y: 12 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+          transition={{ duration: 0.45, delay: 0.1 }}
           className="text-white text-xl font-semibold text-center mb-8"
         >
           Šta te očekuje?
@@ -122,9 +126,12 @@ export default function ProgramsSection() {
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+              initial={{ opacity: 0, y: 16 }}
+              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+              transition={{
+                duration: 0.4,
+                delay: isDesktopStagger ? 0.2 + index * 0.1 : 0,
+              }}
               whileHover={{ y: -6, boxShadow: "0 12px 30px -8px rgba(0,0,0,0.2)" }}
               className="bg-white rounded-xl p-6 shadow-lg transition-all duration-300 text-center"
             >
@@ -143,9 +150,9 @@ export default function ProgramsSection() {
 
         {/* CTA Section */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
+          initial={{ opacity: 0, y: 12 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+          transition={{ duration: 0.45, delay: 0.6 }}
           className="text-center"
         >
           <p className="text-white italic text-lg mb-2">

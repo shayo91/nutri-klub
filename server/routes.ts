@@ -3,7 +3,9 @@ import { createServer, type Server } from "http";
 import type { ServeSpa } from "./vite.js";
 import { storage } from "./storage.js";
 import { sendContactEmail, sendComingSoonNotification, sendNewsletterNotification } from "./email.js";
-import { getBlogPosts, getBlogPostById, getBlogPostBySlug, getTestimonials, getAnnouncements, getVideos, getPodcasts, getSocialMedia, toUrlSlug } from "./notion.js";
+import { getMarkdownBlogList, getMarkdownBlogPostBySlug } from "./blog.js";
+import { getTestimonials, getAnnouncements, getVideos, getPodcasts, getSocialMedia } from "./notion.js";
+import { toUrlSlug } from "../shared/url-slug.js";
 import { z } from "zod";
 
 export async function registerRoutes(
@@ -13,28 +15,31 @@ export async function registerRoutes(
   app.get(["/robots.txt", "/api/robots.txt"], (_req, res) => {
     res.type("text/plain").send(`User-agent: *
 Allow: /
+
+# API nije javni HTML sadržaj
 Disallow: /api/
 
 Sitemap: https://nutricionistajelena.ba/sitemap.xml
 `);
   });
 
+  /** Banja Luka prva + viši priority u sitemap-u (lokalni SEO). */
   const LOCATION_SLUGS_SITEMAP = [
-    "sarajevo",
     "banja-luka",
+    "sarajevo",
     "tuzla",
     "zenica",
     "mostar",
     "prijedor",
     "bih",
-  ];
+  ] as const;
 
   const sitemapHandler = async (_req: any, res: any) => {
     let blogUrls = "";
     try {
-      const result = await getBlogPosts();
-      if (result.posts) {
-        blogUrls = result.posts.map((post: any) => `  <url>
+      const result = getMarkdownBlogList();
+      if (result.posts?.length) {
+        blogUrls = result.posts.map((post: { slug: string; date: string }) => `  <url>
     <loc>https://nutricionistajelena.ba/clanci/${post.slug}</loc>${post.date ? `\n    <lastmod>${post.date}</lastmod>` : ''}
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -43,14 +48,15 @@ Sitemap: https://nutricionistajelena.ba/sitemap.xml
     } catch (e) {}
 
     const today = new Date().toISOString().split("T")[0];
-    const locationUrls = LOCATION_SLUGS_SITEMAP.map(
-      (slug) => `  <url>
+    const locationUrls = LOCATION_SLUGS_SITEMAP.map((slug) => {
+      const priority = slug === "banja-luka" ? "0.9" : "0.8";
+      return `  <url>
     <loc>https://nutricionistajelena.ba/nutricionista-${slug}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>`
-    ).join("\n");
+    <priority>${priority}</priority>
+  </url>`;
+    }).join("\n");
 
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -65,6 +71,12 @@ Sitemap: https://nutricionistajelena.ba/sitemap.xml
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nutricionistajelena.ba/blog</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://nutricionistajelena.ba/pravila-privatnosti</loc>
@@ -92,64 +104,21 @@ ${blogUrls}
   app.get(["/sitemap.xml", "/api/sitemap.xml"], sitemapHandler);
 
   // API Routes
-  
-  // Get blog posts from Notion
-  app.get("/api/blog-posts", async (req, res) => {
+
+  // Markdown files in content/blog/ (see content/blog/README.md)
+  app.get("/api/blog-posts", (_req, res) => {
     try {
-      const result = await getBlogPosts();
+      const result = getMarkdownBlogList();
       res.set("Cache-Control", "public, max-age=300");
       res.json(result);
     } catch (error) {
-      console.error("Error fetching blog posts from Notion:", error);
-      // Fallback to storage if Notion fails
-      const posts = await storage.getBlogPosts();
-      res.json({ posts, categories: [] });
+      console.error("Error loading markdown blog posts:", error);
+      res.json({ posts: [], categories: [] });
     }
   });
 
-  // Fallback blog posts (must match BlogSection fallbackPosts slugs exactly)
-  const FALLBACK_BLOG_POSTS: Record<string, { id: string; title: string; excerpt: string; category: string; image: string; date: string; slug: string; author: { name: string }; content: any[] }> = {
-    "supermoc-napraviti-od-nicega-rucak": {
-      id: "fallback-1",
-      title: "Supermoć: napraviti od ničega ručak",
-      excerpt: "Kažu da nisu svi heroji u plaštovima. Neki nose kecelju, u jednoj ruci drže varjaču.",
-      category: "Recepti",
-      image: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80",
-      date: "2025-05-27",
-      slug: "supermoc-napraviti-od-nicega-rucak",
-      author: { name: "NutriHub Team" },
-      content: [{ id: "1", type: "paragraph", content: [{ text: "Sadržaj članka će uskoro biti dostupan." }] }],
-    },
-    "razumijevanje-makronutrijenata": {
-      id: "fallback-2",
-      title: "Razumijevanje makronutrijenata",
-      excerpt: "Saznajte o proteinima, ugljenim hidratima i mastima - šta rade u vašem tijelu i kako ih balansirati za optimalno zdravlje.",
-      category: "Savjeti",
-      image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80",
-      date: "2023-06-08",
-      slug: "razumijevanje-makronutrijenata",
-      author: { name: "NutriHub Team" },
-      content: [{ id: "1", type: "paragraph", content: [{ text: "Sadržaj članka će uskoro biti dostupan." }] }],
-    },
-    "stres-i-ishrana": {
-      id: "fallback-3",
-      title: "Kako stres utiče na vašu ishranu",
-      excerpt: "Otkrijte složenu vezu između stresa i obrazaca ishrane, i naučite strategije za održavanje zdravih navika tokom stresnih trenutaka.",
-      category: "Zdravlje",
-      image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80",
-      date: "2023-06-01",
-      slug: "stres-i-ishrana",
-      author: { name: "NutriHub Team" },
-      content: [{ id: "1", type: "paragraph", content: [{ text: "Sadržaj članka će uskoro biti dostupan." }] }],
-    },
-  };
-
-  function textToContentBlocks(text: string) {
-    return [{ id: "main", type: "paragraph", content: [{ text }] }];
-  }
-
   // Get single blog post by slug (must be before :id route)
-  app.get("/api/blog-posts/by-slug/:slug", async (req, res) => {
+  app.get("/api/blog-posts/by-slug/:slug", (req, res) => {
     try {
       const slug = decodeURIComponent(req.params.slug).trim();
       if (!slug) {
@@ -157,48 +126,11 @@ ${blogUrls}
         return;
       }
       const normalizedSlug = toUrlSlug(slug);
-
-      // 1. Try Notion
-      const notionPost = await getBlogPostBySlug(normalizedSlug);
-      if (notionPost) {
-        res.json(notionPost);
+      const post = getMarkdownBlogPostBySlug(normalizedSlug);
+      if (post) {
+        res.json(post);
         return;
       }
-
-      // 2. Try storage fallback (when Notion fails or returns empty)
-      const storagePosts = await storage.getBlogPosts();
-      const storagePost = storagePosts.find(
-        (p: { slug: string }) => toUrlSlug(p.slug) === normalizedSlug
-      );
-      if (storagePost) {
-        const content = typeof storagePost.content === "string"
-          ? textToContentBlocks(storagePost.content)
-          : [];
-        const rawDate = storagePost.date as string | Date;
-        const dateStr = typeof rawDate === "string"
-          ? (rawDate.includes("T") ? rawDate.split("T")[0] : rawDate)
-          : new Date(rawDate).toISOString().split("T")[0];
-        res.json({
-          id: String(storagePost.id),
-          title: storagePost.title,
-          excerpt: storagePost.excerpt || "",
-          category: storagePost.category || "Savjeti",
-          image: storagePost.image || "",
-          date: dateStr,
-          slug: storagePost.slug,
-          author: { name: "NutriHub Team" },
-          content,
-        });
-        return;
-      }
-
-      // 3. Try fallback posts (from BlogSection when API is loading)
-      const fallbackPost = FALLBACK_BLOG_POSTS[normalizedSlug];
-      if (fallbackPost) {
-        res.json(fallbackPost);
-        return;
-      }
-
       res.status(404).json({ message: "Blog post not found" });
     } catch (error) {
       console.error("Error fetching blog post by slug:", error);
@@ -206,10 +138,10 @@ ${blogUrls}
     }
   });
 
-  // Get single blog post with full content by ID
-  app.get("/api/blog-posts/:id", async (req, res) => {
+  // Legacy :id route (Notion UUIDs no longer used; slug works)
+  app.get("/api/blog-posts/:id", (req, res) => {
     try {
-      const post = await getBlogPostById(req.params.id);
+      const post = getMarkdownBlogPostBySlug(req.params.id);
       if (!post) {
         res.status(404).json({ message: "Blog post not found" });
         return;

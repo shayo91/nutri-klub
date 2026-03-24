@@ -64,6 +64,10 @@ const reviews: Review[] = [
 
 export default function TestimonialsSection() {
   const { ref: headerRef, inView: headerInView } = useAnimateOnScroll(0.1);
+  const isDesktopStagger =
+    typeof window !== "undefined" &&
+    window.matchMedia("(min-width: 769px)").matches &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const carouselRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [modalReview, setModalReview] = useState<Review | null>(null);
@@ -139,9 +143,9 @@ export default function TestimonialsSection() {
       <div className="container mx-auto px-4 max-w-7xl">
         <motion.div
           ref={headerRef}
-          initial={{ opacity: 0, y: 20 }}
-          animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 12 }}
+          animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+          transition={{ duration: 0.45 }}
           className="text-center max-w-3xl mx-auto mb-12"
         >
           <p className="text-white font-medium tracking-wide uppercase mb-2">
@@ -190,9 +194,12 @@ export default function TestimonialsSection() {
               return (
                 <motion.div
                   key={review.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                  transition={{ duration: 0.5, delay: index * 0.05 }}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+                  transition={{
+                    duration: 0.4,
+                    delay: isDesktopStagger ? index * 0.05 : 0,
+                  }}
                   whileHover={{ y: -4 }}
                   className="flex-shrink-0 w-[270px] md:w-[280px] select-none"
                   style={{ userSelect: "none" }}

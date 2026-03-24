@@ -64,25 +64,27 @@ export default function HeroSection() {
             animate={
               contentInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }
             }
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.45 }}
             className="order-2 lg:order-1 text-center lg:text-left py-8 lg:py-0"
           >
             {/* Small tagline */}
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.45, delay: 0.2 }}
               className="text-[#1F7A5C] font-medium text-sm md:text-base tracking-wide mb-4"
             >
               Magistar nutricionizma
             </motion.p>
 
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-[#1F2937] leading-tight mb-6">
-              Tvoja početna
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-[#1F2937] leading-tight mb-4">
+              Nutricionista
               <br />
-              <span className="text-[#5DAD8C]">tačka za promjenu.</span>
+              <span className="text-[#5DAD8C]">Jelena Matijaš</span>
             </h1>
+            <p className="text-lg md:text-xl text-[#1F7A5C] font-medium mb-6 max-w-lg mx-auto lg:mx-0 leading-snug">
+              Banja Luka · online savjetovanje i planovi ishrane
+            </p>
 
             {/* Subtitle */}
             <p className="text-base md:text-lg text-gray-600 mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed">
@@ -91,9 +93,9 @@ export default function HeroSection() {
 
             {/* CTA Button */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              transition={{ duration: 0.45, delay: 0.4 }}
               className="mb-10"
             >
               <a
@@ -107,9 +109,9 @@ export default function HeroSection() {
 
             {/* Trust Badges */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
+              transition={{ duration: 0.45, delay: 0.6 }}
               className="flex flex-wrap justify-center lg:justify-start gap-6 md:gap-8"
             >
               {trustBadges.map((badge, index) => (
@@ -148,13 +150,13 @@ export default function HeroSection() {
                 <source srcSet={HERO_IMAGE_WEBP} type="image/webp" />
                 <img
                   src={HERO_IMAGE_PNG}
-                  alt="Jelena Matijaš - Nutricionista BiH - Magistar nutricionizma - planovi ishrane"
+                  alt="Jelena Matijaš, nutricionista Banja Luka – magistar nutricionizma, planovi ishrane BiH"
                   className="relative w-full max-w-[280px] sm:max-w-[320px] md:max-w-[380px] lg:max-w-[420px] h-auto rounded-2xl shadow-xl group-hover:shadow-2xl group-hover:scale-[1.02] transition-all duration-300"
                   data-testid="img-jelena-hero"
                   width={420}
                   height={525}
                   loading="eager"
-                  fetchpriority="high"
+                  fetchPriority="high"
                 />
               </picture>
             </div>

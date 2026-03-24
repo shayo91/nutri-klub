@@ -56,7 +56,7 @@ export default function Header() {
     { label: "Početna", target: "home", type: "scroll" },
     { label: "Recenzije", target: "testimonials", type: "scroll" },
     { label: "Usluge", target: "pricing", type: "scroll" },
-    { label: "Recepti", target: "blog", type: "scroll" },
+    { label: "Blog", href: "/blog", type: "link" },
     { label: "Kontakt", target: "contact", type: "scroll" },
     { label: "O meni", href: "/o-meni", type: "link" },
   ];

@@ -107,9 +107,9 @@ export default function BMICalculator() {
       <div className="container mx-auto px-4">
         <motion.div
           ref={headerRef}
-          initial={{ opacity: 0, y: 20 }}
-          animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 12 }}
+          animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+          transition={{ duration: 0.45 }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
           <p className="text-primary font-medium tracking-wide uppercase mb-2">
@@ -127,9 +127,9 @@ export default function BMICalculator() {
           {/* BMI Calculator Form */}
           <motion.div
             ref={formRef}
-            initial={{ opacity: 0, y: 20 }}
-            animate={formInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={{ opacity: 0, y: 12 }}
+            animate={formInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+            transition={{ duration: 0.45, delay: 0.2 }}
             className="w-full lg:w-1/2 bg-secondary rounded-xl p-4 sm:p-6 md:p-8 shadow-lg flex flex-col min-w-0"
           >
             <h3 className="text-2xl font-bold font-poppins mb-6">
@@ -295,9 +295,9 @@ export default function BMICalculator() {
           {/* BMI Chart - No subtitle, same height as left */}
           <motion.div
             ref={chartRef}
-            initial={{ opacity: 0, y: 20 }}
-            animate={chartInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            initial={{ opacity: 0, y: 12 }}
+            animate={chartInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+            transition={{ duration: 0.45, delay: 0.3 }}
             className="w-full lg:w-1/2 flex flex-col"
           >
             <div className="overflow-hidden rounded-xl shadow-lg flex-grow">

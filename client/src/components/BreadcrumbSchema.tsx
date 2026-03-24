@@ -22,6 +22,10 @@ const routeBreadcrumbs: Record<string, { name: string; path: string }[]> = {
 		{ name: "Početna", path: "/" },
 		{ name: "Pravila o Kolačićima", path: "/kolacici" },
 	],
+	"/blog": [
+		{ name: "Početna", path: "/" },
+		{ name: "Blog", path: "/blog" },
+	],
 };
 
 export default function BreadcrumbSchema() {
@@ -34,7 +38,7 @@ export default function BreadcrumbSchema() {
 	if (blogParams?.slug) {
 		items = [
 			{ name: "Početna", path: "/" },
-			{ name: "Članci", path: "/#blog" },
+			{ name: "Blog", path: "/blog" },
 			{ name: blogParams.slug.replace(/-/g, " "), path: `/clanci/${blogParams.slug}` },
 		];
 	} else if (locationParams?.location) {

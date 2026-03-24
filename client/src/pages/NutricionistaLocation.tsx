@@ -66,35 +66,53 @@ export default function NutricionistaLocation() {
 
 	const canonical = `${BASE_URL}/nutricionista-${location.slug}`;
 
-	// JSON-LD Schema for local business and SEO
+	// JSON-LD: LocalBusiness (bez lažnih ocjena — u skladu sa Google smjernicama)
 	const localBusinessSchema = {
 		"@context": "https://schema.org",
-		"@type": "LocalBusiness",
-		"@id": canonical,
-		"name": `Nutricionista ${location.name} - Jelena Matijaš`,
-		"description": location.metaDescription,
-		"url": canonical,
-		"telephone": "po dogovoru",
-		"areaServed": location.name,
-		"serviceType": ["Nutritional Consultation", "Diet Planning", "Weight Management"],
-		"image": OG_IMAGE,
-		"priceRange": "80-400",
-		"ratingValue": "5",
-		"ratingCount": "50+",
-		"openingHoursSpecification": {
-			"@type": "OpeningHoursSpecification",
-			"dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-			"opens": "09:00",
-			"closes": "17:00"
-		}
-	};
+		"@type": "ProfessionalService",
+		"@id": `${canonical}#business`,
+		name: `Nutricionista ${location.name} – Jelena Matijaš`,
+		description: location.metaDescription,
+		url: canonical,
+		image: OG_IMAGE,
+		areaServed: {
+			"@type": "City",
+			name: location.name,
+		},
+		priceRange: "KM 80–300",
+		address: {
+			"@type": "PostalAddress",
+			addressCountry: "BA",
+			addressLocality: location.name,
+		},
+		sameAs: [
+			"https://www.instagram.com/nutriputovanje/",
+			"https://www.facebook.com/nutricionistajelena/",
+		],
+	}
+
+	const faqSchema = {
+		"@context": "https://schema.org",
+		"@type": "FAQPage",
+		mainEntity: location.faq.map((item) => ({
+			"@type": "Question",
+			name: item.question,
+			acceptedAnswer: {
+				"@type": "Answer",
+				text: item.answer,
+			},
+		})),
+	}
 
 	return (
 		<>
 			<Helmet>
 				<title>{location.title}</title>
 				<meta name="description" content={location.metaDescription} />
-				<meta name="keywords" content={`nutricionista ${location.name}, online nutritionist, meal plans, weight management, healthy diet`} />
+				<meta
+					name="keywords"
+					content={`nutricionista ${location.name}, nutricionista ${location.slug.replace(/-/g, " ")}, online nutricionista, plan ishrane, mršavljenje, savjetovanje ishrana`}
+				/>
 				<meta property="og:title" content={location.title} />
 				<meta property="og:description" content={location.metaDescription} />
 				<meta property="og:image" content={OG_IMAGE} />
@@ -107,6 +125,9 @@ export default function NutricionistaLocation() {
 				<link rel="canonical" href={canonical} />
 				<script type="application/ld+json">
 					{JSON.stringify(localBusinessSchema)}
+				</script>
+				<script type="application/ld+json">
+					{JSON.stringify(faqSchema)}
 				</script>
 			</Helmet>
 

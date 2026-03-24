@@ -68,9 +68,9 @@ export default function FAQSection() {
       <div className="container mx-auto px-4">
         <motion.div
           ref={headerRef}
-          initial={{ opacity: 0, y: 20 }}
-          animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 12 }}
+          animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+          transition={{ duration: 0.45 }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
           <p className="text-primary font-medium tracking-wide uppercase mb-2">
@@ -88,9 +88,9 @@ export default function FAQSection() {
           {visibleFaqs.map((faq, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
               className="mb-4"
             >
               <button
@@ -132,9 +132,9 @@ export default function FAQSection() {
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
+          transition={{ duration: 0.45, delay: 0.8 }}
           className="text-center mt-12"
         >
           <p className="text-gray-600 mb-6">
