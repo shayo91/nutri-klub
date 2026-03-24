@@ -297,7 +297,7 @@ export default function BlogPost() {
 									<User className="w-8 h-8 text-primary" />
 								</div>
 								<h3 className="font-semibold text-lg text-gray-800">
-									Nutricionista
+									Nutricionista Jelena Matijaš
 								</h3>
 							</div>
 						</div>
