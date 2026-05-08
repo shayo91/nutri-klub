@@ -3,8 +3,9 @@
  * Run: npx tsx server/seed-users.ts
  */
 
+import { eq } from "drizzle-orm";
+import { users } from "@shared/schema-sqlite";
 import { db } from "./db";
-import { users } from "@shared/schema";
 import { hashPassword } from "./utils/password";
 
 const testUsers = [
@@ -13,7 +14,7 @@ const testUsers = [
     password: "password123",
     firstName: "Test",
     lastName: "User",
-    role: "user",
+    role: "free",
     subscriptionStatus: "trial",
     subscriptionTier: null,
     onboardingCompleted: false,
@@ -45,19 +46,40 @@ async function seedUsers() {
   console.log("👤 Seeding test users...\n");
 
   try {
+    const now = new Date().toISOString();
+
     for (const userData of testUsers) {
       const hashedPassword = await hashPassword(userData.password);
-      const { password, ...userDataWithoutPassword } = userData;
-      
-      const [user] = await db
-        .insert(users)
-        .values({
-          ...userDataWithoutPassword,
-          passwordHash: hashedPassword,
-        })
-        .returning();
+      const { password, ...profile } = userData;
 
-      console.log(`✅ Created user: ${userData.email} (${userData.role})`);
+      const [existing] = await db
+        .select()
+        .from(users)
+        .where(eq(users.email, userData.email))
+        .limit(1);
+
+      const patch = {
+        ...profile,
+        passwordHash: hashedPassword,
+        updatedAt: now,
+      };
+
+      if (existing) {
+        await db
+          .update(users)
+          .set(patch)
+          .where(eq(users.id, existing.id));
+        console.log(
+          `ℹ️ Updated existing user: ${userData.email} (${userData.role})`,
+        );
+      } else {
+        await db.insert(users).values({
+          ...patch,
+          createdAt: now,
+        });
+        console.log(`✅ Created user: ${userData.email} (${userData.role})`);
+      }
+
       console.log(`   Password: ${password}`);
       console.log(`   Name: ${userData.firstName} ${userData.lastName}\n`);
     }

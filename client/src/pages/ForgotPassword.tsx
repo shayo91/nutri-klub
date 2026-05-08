@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "wouter";
+import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,6 +14,8 @@ export default function ForgotPassword() {
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const { dashboardEnabled, configLoaded } = useAuth();
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
@@ -20,6 +23,11 @@ export default function ForgotPassword() {
     setIsLoading(true);
 
     try {
+      if (!configLoaded || !dashboardEnabled) {
+        setError("Reset lozinke trenutno nije dostupan jer je panel isključen.");
+        return;
+      }
+
       const response = await fetch("/api/auth/forgot-password", {
         method: "POST",
         headers: {
@@ -70,6 +78,13 @@ export default function ForgotPassword() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
+              {configLoaded && !dashboardEnabled && (
+                <Alert>
+                  <AlertDescription>
+                    Panel je privremeno isključen (ENABLE_DASHBOARD).
+                  </AlertDescription>
+                </Alert>
+              )}
               {error && (
                 <Alert variant="destructive">
                   <AlertDescription>{error}</AlertDescription>
@@ -85,14 +100,14 @@ export default function ForgotPassword() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  disabled={isLoading}
+                  disabled={isLoading || !configLoaded || !dashboardEnabled}
                 />
               </div>
 
               <Button
                 type="submit"
                 className="w-full bg-[#8B4513] hover:bg-[#6D3710]"
-                disabled={isLoading}
+                disabled={isLoading || !configLoaded || !dashboardEnabled}
               >
                 {isLoading ? "Slanje..." : "Pošalji link za resetovanje"}
               </Button>

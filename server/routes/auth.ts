@@ -366,7 +366,6 @@ router.patch("/profile", authenticate, async (req, res) => {
         email: updatedUser.email,
         firstName: updatedUser.firstName,
         lastName: updatedUser.lastName,
-        name: updatedUser.name,
         role: updatedUser.role,
       },
     });

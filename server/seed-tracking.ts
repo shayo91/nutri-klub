@@ -4,7 +4,7 @@
  */
 
 import { db } from "./db";
-import { weightTracking, waterIntake, mealLogs, goals, streaks, users } from "@shared/schema";
+import { weightTracking, waterIntake, mealLogs, goals, streaks, users } from "@shared/schema-sqlite";
 import { eq } from "drizzle-orm";
 
 async function seedTracking() {

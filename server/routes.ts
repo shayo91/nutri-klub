@@ -4,9 +4,21 @@ import type { ServeSpa } from "./vite.js";
 import { storage } from "./storage.js";
 import { sendContactEmail, sendComingSoonNotification, sendNewsletterNotification } from "./email.js";
 import { getMarkdownBlogList, getMarkdownBlogPostBySlug } from "./blog.js";
-import { getTestimonials, getAnnouncements, getVideos, getPodcasts, getSocialMedia } from "./notion.js";
 import { toUrlSlug } from "../shared/url-slug.js";
 import { z } from "zod";
+import { isDashboardEnabled } from "./feature-flags.js";
+
+const DASHBOARD_API_PREFIXES = [
+	"/api/auth",
+	"/api/subscription",
+	"/api/onboarding",
+	"/api/recipes",
+	"/api/recipes-external",
+	"/api/ai",
+	"/api/ebooks",
+	"/api/tracking",
+	"/api/payments",
+] as const;
 
 export async function registerRoutes(
   app: Express,
@@ -103,7 +115,10 @@ ${blogUrls}
   };
   app.get(["/sitemap.xml", "/api/sitemap.xml"], sitemapHandler);
 
-  // API Routes
+  app.get("/api/public-config", (_req, res) => {
+    res.set("Cache-Control", "no-store");
+    res.json({ dashboardEnabled: isDashboardEnabled() });
+  });
 
   // Markdown files in content/blog/ (see content/blog/README.md)
   app.get("/api/blog-posts", (_req, res) => {
@@ -153,61 +168,13 @@ ${blogUrls}
     }
   });
 
-  // Get testimonials from Notion
   app.get("/api/testimonials", async (req, res) => {
     try {
-      const testimonials = await getTestimonials();
-      res.json(testimonials);
-    } catch (error) {
-      console.error("Error fetching testimonials from Notion:", error);
-      // Fallback to storage if Notion fails
       const testimonials = await storage.getTestimonials();
       res.json(testimonials);
-    }
-  });
-
-  // Get announcements from Notion
-  app.get("/api/announcements", async (req, res) => {
-    res.set("Cache-Control", "public, max-age=300");
-    try {
-      const announcements = await getAnnouncements();
-      res.json(announcements);
     } catch (error) {
-      console.error("Error fetching announcements from Notion:", error);
-      res.status(500).json({ message: "Error fetching announcements" });
-    }
-  });
-
-  // Get videos from Notion
-  app.get("/api/videos", async (req, res) => {
-    try {
-      const videos = await getVideos();
-      res.json(videos);
-    } catch (error) {
-      console.error("Error fetching videos from Notion:", error);
-      res.status(500).json({ message: "Error fetching videos" });
-    }
-  });
-
-  // Get podcasts from Notion
-  app.get("/api/podcasts", async (req, res) => {
-    try {
-      const podcasts = await getPodcasts();
-      res.json(podcasts);
-    } catch (error) {
-      console.error("Error fetching podcasts from Notion:", error);
-      res.status(500).json({ message: "Error fetching podcasts" });
-    }
-  });
-
-  // Get social media from Notion
-  app.get("/api/social-media", async (req, res) => {
-    try {
-      const socialPosts = await getSocialMedia();
-      res.json(socialPosts);
-    } catch (error) {
-      console.error("Error fetching social media from Notion:", error);
-      res.status(500).json({ message: "Error fetching social media" });
+      console.error("Error fetching testimonials:", error);
+      res.status(500).json({ message: "Error fetching testimonials" });
     }
   });
 
@@ -257,35 +224,7 @@ ${blogUrls}
     }
   });
 
-  // Newsletter subscription
-  const subscribeSchema = z.object({
-    email: z.string().email("Unesite ispravnu email adresu."),
-  });
-
-  app.post("/api/subscribe", async (req, res) => {
-    try {
-      const validatedData = subscribeSchema.parse(req.body);
-      await storage.saveSubscription(validatedData);
-      res.json({ success: true, message: "Subscription successful" });
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        const firstMessage =
-          error.errors[0]?.message ?? "Podaci nisu ispravni.";
-        res.status(400).json({
-          success: false,
-          message: firstMessage,
-          errors: error.errors,
-        });
-      } else {
-        res.status(500).json({
-          success: false,
-          message: "Pretplata nije uspjela. Pokušajte ponovo.",
-        });
-      }
-    }
-  });
-
-  // Coming soon signup (storage + email to info@)
+  // Coming soon (Programs section → /api/coming-soon)
   const comingSoonSchema = z.object({
     email: z.string().email("Unesite ispravnu email adresu."),
   });
@@ -344,6 +283,50 @@ ${blogUrls}
       }
     }
   });
+
+  if (!isDashboardEnabled()) {
+    app.use((req, res, next) => {
+      if (!req.path.startsWith("/api")) return next();
+      const blocked = DASHBOARD_API_PREFIXES.some(
+        (p) => req.path === p || req.path.startsWith(`${p}/`),
+      );
+      if (!blocked) return next();
+      return res.status(503).json({
+        ok: false,
+        code: "DASHBOARD_DISABLED",
+        message: "Korisnički panel trenutno nije dostupan.",
+      });
+    });
+  }
+
+  if (isDashboardEnabled()) {
+    await import("./db.js");
+    const cookieParser = (await import("cookie-parser")).default;
+    app.use(cookieParser());
+
+    const authRoutes = (await import("./routes/auth.js")).default;
+    const subscriptionRoutes = (await import("./routes/subscription.js"))
+      .default;
+    const onboardingRoutes = (await import("./routes/onboarding.js")).default;
+    const recipesRoutes = (await import("./routes/recipes.js")).default;
+    const recipesExternalRoutes = (await import(
+      "./routes/recipes-external.js"
+    )).default;
+    const aiRoutes = (await import("./routes/ai.js")).default;
+    const ebooksRoutes = (await import("./routes/ebooks.js")).default;
+    const trackingRoutes = (await import("./routes/tracking.js")).default;
+    const paymentsRoutes = (await import("./routes/payments.js")).default;
+
+    app.use("/api/auth", authRoutes);
+    app.use("/api/subscription", subscriptionRoutes);
+    app.use("/api/onboarding", onboardingRoutes);
+    app.use("/api/recipes", recipesRoutes);
+    app.use("/api/recipes-external", recipesExternalRoutes);
+    app.use("/api/ai", aiRoutes);
+    app.use("/api/ebooks", ebooksRoutes);
+    app.use("/api/tracking", trackingRoutes);
+    app.use("/api/payments", paymentsRoutes);
+  }
 
   // Redirect old /nutricionista/:location format to new hyphen format
   app.get("/nutricionista/:location", (req, res) => {

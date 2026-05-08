@@ -4,7 +4,7 @@
  */
 
 import { db } from "../db";
-import { recipes } from "@shared/schema";
+import { recipes } from "@shared/schema-sqlite";
 import { SpoonacularService } from "./spoonacularService";
 import { TheMealDBService } from "./themealdbService";
 import { eq, sql, or } from "drizzle-orm";
@@ -82,7 +82,7 @@ export class RecipeAggregatorService {
         const [randomRecipe] = await db
           .select()
           .from(recipes)
-          .orderBy(db.raw("RANDOM()"))
+          .orderBy(sql`RANDOM()`)
           .limit(1);
 
         return randomRecipe || null;

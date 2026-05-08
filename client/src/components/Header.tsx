@@ -1,12 +1,30 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link, useLocation } from "wouter";
 import { SiInstagram, SiFacebook } from "react-icons/si";
+import { useAuth } from "@/contexts/AuthContext";
+
+type NavScrollItem = {
+  label: string;
+  type: "scroll";
+  target: string;
+};
+
+type NavLinkItem = {
+  label: string;
+  type: "link";
+  href: string;
+  /** How to highlight current page (default: exact href match) */
+  activeMatch?: "exact" | "dashboard" | "auth";
+};
+
+type NavItem = NavScrollItem | NavLinkItem;
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [location, setLocation] = useLocation();
   const [activeSection, setActiveSection] = useState("home");
+  const { isAuthenticated, configLoaded } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,20 +70,43 @@ export default function Header() {
     setMobileMenuOpen(false);
   };
 
-  const navLinks = [
-    { label: "Početna", target: "home", type: "scroll" },
-    { label: "Recenzije", target: "testimonials", type: "scroll" },
-    { label: "Usluge", target: "pricing", type: "scroll" },
-    { label: "Blog", href: "/blog", type: "link" },
-    { label: "Kontakt", target: "contact", type: "scroll" },
-    { label: "O meni", href: "/o-meni", type: "link" },
-  ];
+  const navLinks = useMemo((): NavItem[] => {
+    const platformHref =
+      configLoaded && isAuthenticated ? "/dashboard" : "/login";
+    const platformActiveMatch: "dashboard" | "auth" =
+      configLoaded && isAuthenticated ? "dashboard" : "auth";
 
-  const isActive = (item: typeof navLinks[0]) => {
-    if (item.type === "link") {
-      return location === item.href;
+    return [
+      { label: "Početna", target: "home", type: "scroll" },
+      { label: "Recenzije", target: "testimonials", type: "scroll" },
+      { label: "Usluge", target: "pricing", type: "scroll" },
+      { label: "Blog", href: "/blog", type: "link" },
+      {
+        label: "Platforma",
+        href: platformHref,
+        type: "link",
+        activeMatch: platformActiveMatch,
+      },
+      { label: "Kontakt", target: "contact", type: "scroll" },
+      { label: "O meni", href: "/o-meni", type: "link" },
+    ];
+  }, [configLoaded, isAuthenticated]);
+
+  const isNavActive = (item: NavItem) => {
+    if (item.type === "scroll") {
+      return location === "/" && activeSection === item.target;
     }
-    return location === "/" && activeSection === item.target;
+    const match = item.activeMatch ?? "exact";
+    if (match === "dashboard") return location.startsWith("/dashboard");
+    if (match === "auth") {
+      return (
+        location === "/login" ||
+        location === "/register" ||
+        location === "/forgot-password" ||
+        location.startsWith("/onboarding")
+      );
+    }
+    return location === item.href;
   };
 
   return (
@@ -93,32 +134,32 @@ export default function Header() {
               item.type === "link" ? (
                 <Link
                   key={index}
-                  href={item.href!}
+                  href={item.href}
                   className={`relative font-medium transition py-2 ${
-                    isActive(item) 
+                    isNavActive(item) 
                       ? "text-[#1F7A5C]" 
                       : "text-gray-700 hover:text-[#1F7A5C]"
                   }`}
                   data-testid={`nav-link-${item.label.toLowerCase().replace(' ', '-')}`}
                 >
                   {item.label}
-                  {isActive(item) && (
+                  {isNavActive(item) && (
                     <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#1F7A5C] rounded-full" />
                   )}
                 </Link>
               ) : (
                 <button
                   key={index}
-                  onClick={() => handleNavigation(item.target!)}
+                  onClick={() => handleNavigation(item.target)}
                   className={`relative font-medium transition py-2 ${
-                    isActive(item)
+                    isNavActive(item)
                       ? "text-[#1F7A5C]"
                       : "text-gray-700 hover:text-[#1F7A5C]"
                   }`}
                   data-testid={`nav-link-${item.label.toLowerCase().replace(' ', '-')}`}
                 >
                   {item.label}
-                  {isActive(item) && (
+                  {isNavActive(item) && (
                     <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#1F7A5C] rounded-full" />
                   )}
                 </button>
@@ -199,9 +240,9 @@ export default function Header() {
             item.type === "link" ? (
               <Link
                 key={index}
-                href={item.href!}
+                href={item.href}
                 className={`block py-3 px-4 rounded-lg font-medium transition ${
-                  isActive(item)
+                  isNavActive(item)
                     ? "text-[#1F7A5C] bg-[#ECF8F2] border-l-4 border-[#1F7A5C]"
                     : "text-gray-700 hover:text-[#1F7A5C] hover:bg-gray-50"
                 }`}
@@ -213,9 +254,9 @@ export default function Header() {
             ) : (
               <button
                 key={index}
-                onClick={() => handleNavigation(item.target!)}
+                onClick={() => handleNavigation(item.target)}
                 className={`block w-full text-left py-3 px-4 rounded-lg font-medium transition ${
-                  isActive(item)
+                  isNavActive(item)
                     ? "text-[#1F7A5C] bg-[#ECF8F2] border-l-4 border-[#1F7A5C]"
                     : "text-gray-700 hover:text-[#1F7A5C] hover:bg-gray-50"
                 }`}

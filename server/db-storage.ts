@@ -1,6 +1,5 @@
-import { db } from "./db";
+import { db } from "./db.js";
 import { eq, and } from "drizzle-orm";
-import { getBlogPosts, getTestimonials, getAnnouncements } from "./notion";
 import * as schema from "@shared/schema-sqlite";
 
 const {
@@ -122,7 +121,7 @@ export class DatabaseStorage {
     return result[0];
   }
 
-  async removeFavorite(userId: number, recipeId: string): Promise<void> {
+  async removeFavorite(userId: number, recipeId: number): Promise<void> {
     await db.delete(userFavorites)
       .where(
         and(
@@ -148,32 +147,17 @@ export class DatabaseStorage {
     return result[0];
   }
 
-  // Notion CMS methods - these fetch from Notion
-  async getBlogPosts() {
-    try {
-      return await getBlogPosts();
-    } catch (error) {
-      console.error("Error fetching blog posts from Notion:", error);
-      return [];
-    }
+  /** Legacy stubs — public blog uses Markdown; dashboard does not rely on these. */
+  async getBlogPosts () {
+    return []
   }
 
-  async getTestimonials() {
-    try {
-      return await getTestimonials();
-    } catch (error) {
-      console.error("Error fetching testimonials from Notion:", error);
-      return [];
-    }
+  async getTestimonials () {
+    return []
   }
 
-  async getAnnouncements() {
-    try {
-      return await getAnnouncements();
-    } catch (error) {
-      console.error("Error fetching announcements from Notion:", error);
-      return [];
-    }
+  async getAnnouncements () {
+    return []
   }
 }
 

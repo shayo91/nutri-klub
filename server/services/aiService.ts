@@ -11,10 +11,10 @@ interface ChatMessage {
 interface UserContext {
   firstName?: string;
   goal?: string;
-  currentWeight?: number;
-  targetWeight?: number;
-  height?: number;
-  age?: number;
+  currentWeight?: number | string;
+  targetWeight?: number | string;
+  height?: number | string;
+  age?: number | string;
   gender?: string;
   activityLevel?: string;
   allergies?: string[];

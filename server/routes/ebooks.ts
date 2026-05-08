@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { db } from "../db";
-import { ebooks, ebookDownloads, usageTracking } from "@shared/schema";
+import { ebooks, ebookDownloads, usageTracking } from "@shared/schema-sqlite";
 import { eq, and, desc, sql, or } from "drizzle-orm";
 import { authenticate } from "../middleware/auth";
 

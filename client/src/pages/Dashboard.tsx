@@ -3,6 +3,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { DashboardNav } from "@/components/dashboard/DashboardNav";
 import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 import { UpgradeBanner } from "@/components/dashboard/UpgradeBanner";
+import { QuickStats } from '@/components/dashboard/QuickStats';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -14,7 +15,10 @@ import {
   TrendingUp,
   Target,
   Sparkles,
-} from "lucide-react";
+  Calendar,
+  Search,
+  Settings as SettingsIcon,
+} from 'lucide-react';
 
 export default function Dashboard() {
   const { user, isPremium } = useAuth();
@@ -74,14 +78,43 @@ export default function Dashboard() {
             {/* Welcome Header */}
             <div>
               <h1 className="text-3xl font-bold text-gray-900">
-                Dobro došli, {user?.firstName || user?.firstName || 'Korisniče'}! 👋
+                Dobro došli,{' '}
+                {[user?.firstName, user?.lastName].filter(Boolean).join(' ')
+                  || user?.email?.split('@')[0]
+                  || 'korisniče'}
+                !
               </h1>
               <p className="text-gray-600 mt-2">
-                {isPremium 
-                  ? "Dobrodošli na vaš premium dashboard za zdravu ishranu." 
-                  : "Počnite svoju transformaciju sa našim besplatnim funkcijama."}
+                {isPremium
+                  ? 'Evo pregleda vašeg nutritivnog okruženja — recepti, plan i praćenje na jednom mjestu.'
+                  : 'Počnite sa besplatnim sadržajem; premium otvara sve alate bez ograničenja.'}
               </p>
             </div>
+
+            <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm flex flex-wrap items-center gap-4 justify-between">
+              <div className="flex items-center gap-2 text-sm text-gray-700">
+                <Calendar className="w-5 h-5 shrink-0 text-[#1F7A5C]" />
+                <span>
+                  Nedeljni fokus: prijavite obroke u Napretku ili pronađite recept za večeras.
+                </span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Link href="/dashboard/search">
+                  <Button variant="outline" size="sm" className="gap-2">
+                    <Search className="w-4 h-4" />
+                    Pretraži recepte
+                  </Button>
+                </Link>
+                <Link href="/dashboard/settings">
+                  <Button variant="outline" size="sm" className="gap-2">
+                    <SettingsIcon className="w-4 h-4" />
+                    Postavke
+                  </Button>
+                </Link>
+              </div>
+            </div>
+
+            <QuickStats />
 
             
             {/* Moj Plan - Full Width (odmah ispod welcome) */}
@@ -198,8 +231,6 @@ export default function Dashboard() {
               </CardContent>
             </Card>
 
-            {/* Premium Unlock Banner (Free Users Only - Bottom of page) */}
-            {/* Upgrade Banner (Free Users Only) */}
             {!isPremium && (
               <UpgradeBanner variant="full" />
             )}            

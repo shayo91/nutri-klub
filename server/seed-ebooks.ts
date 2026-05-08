@@ -4,7 +4,7 @@
  */
 
 import { db } from "./db";
-import { ebooks } from "@shared/schema";
+import { ebooks } from "@shared/schema-sqlite";
 
 const sampleEbooks = [
   {

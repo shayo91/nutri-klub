@@ -5,7 +5,7 @@
  */
 
 import { db } from "../db";
-import { recipes } from "@shared/schema";
+import { recipes } from "@shared/schema-sqlite";
 import { TheMealDBService } from "../services/themealdbService";
 import { eq } from "drizzle-orm";
 

@@ -20,7 +20,7 @@ export default function Register() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const { register } = useAuth();
+  const { register, dashboardEnabled, configLoaded } = useAuth();
   const [, setLocation] = useLocation();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -53,6 +53,13 @@ export default function Register() {
     setIsLoading(true);
 
     try {
+      if (!configLoaded || !dashboardEnabled) {
+        setError(
+          "Registracija trenutno nije dostupna jer je panel isključen.",
+        );
+        return;
+      }
+
       await register(
         formData.email,
         formData.password,
@@ -83,6 +90,13 @@ export default function Register() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
+            {configLoaded && !dashboardEnabled && (
+              <Alert>
+                <AlertDescription>
+                  Novi nalozi prihvataju se kada administrator uključi korisnički panel (ENABLE_DASHBOARD).
+                </AlertDescription>
+              </Alert>
+            )}
             {error && (
               <Alert variant="destructive">
                 <AlertDescription>{error}</AlertDescription>
@@ -99,7 +113,7 @@ export default function Register() {
                   placeholder="Ana"
                   value={formData.firstName}
                   onChange={handleChange}
-                  disabled={isLoading}
+                  disabled={isLoading || !configLoaded || !dashboardEnabled}
                 />
               </div>
               <div className="space-y-2">
@@ -111,7 +125,7 @@ export default function Register() {
                   placeholder="Marković"
                   value={formData.lastName}
                   onChange={handleChange}
-                  disabled={isLoading}
+                  disabled={isLoading || !configLoaded || !dashboardEnabled}
                 />
               </div>
             </div>
@@ -126,7 +140,7 @@ export default function Register() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                disabled={isLoading}
+                disabled={isLoading || !configLoaded || !dashboardEnabled}
               />
             </div>
 
@@ -140,7 +154,7 @@ export default function Register() {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                disabled={isLoading}
+                disabled={isLoading || !configLoaded || !dashboardEnabled}
               />
             </div>
 
@@ -154,7 +168,7 @@ export default function Register() {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 required
-                disabled={isLoading}
+                disabled={isLoading || !configLoaded || !dashboardEnabled}
               />
             </div>
 
@@ -163,18 +177,18 @@ export default function Register() {
                 id="terms"
                 checked={agreedToTerms}
                 onCheckedChange={(checked) => setAgreedToTerms(checked as boolean)}
-                disabled={isLoading}
+                disabled={isLoading || !configLoaded || !dashboardEnabled}
               />
               <label
                 htmlFor="terms"
                 className="text-sm text-muted-foreground leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
                 Slažem se sa{" "}
-                <Link to="/terms" className="text-[#8B4513] hover:underline">
+                <Link to="/uslovi-poslovanja" className="text-[#8B4513] hover:underline">
                   uslovima korišćenja
                 </Link>{" "}
                 i{" "}
-                <Link to="/privacy" className="text-[#8B4513] hover:underline">
+                <Link to="/pravila-privatnosti" className="text-[#8B4513] hover:underline">
                   politikom privatnosti
                 </Link>
               </label>
@@ -183,7 +197,7 @@ export default function Register() {
             <Button
               type="submit"
               className="w-full bg-[#8B4513] hover:bg-[#6D3710]"
-              disabled={isLoading}
+              disabled={isLoading || !configLoaded || !dashboardEnabled}
             >
               {isLoading ? "Registracija..." : "Registrujte se"}
             </Button>

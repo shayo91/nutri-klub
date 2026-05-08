@@ -8,7 +8,7 @@ import {
   goals,
   progressPhotos,
   streaks,
-} from "@shared/schema";
+} from "@shared/schema-sqlite";
 import { eq, and, gte, lte, desc, sql, asc } from "drizzle-orm";
 import { authenticate } from "../middleware/auth";
 import { z } from "zod";
@@ -76,30 +76,14 @@ router.get("/weight", authenticate, async (req, res) => {
     const endDate = req.query.endDate as string | undefined;
     const limit = parseInt(req.query.limit as string) || 30;
 
-    let query = db
+    const conditions = [eq(weightTracking.userId, req.user.userId)];
+    if (startDate) conditions.push(gte(weightTracking.date, startDate));
+    if (endDate) conditions.push(lte(weightTracking.date, endDate));
+
+    const weights = await db
       .select()
       .from(weightTracking)
-      .where(eq(weightTracking.userId, req.user.userId));
-
-    if (startDate) {
-      query = query.where(
-        and(
-          eq(weightTracking.userId, req.user.userId),
-          gte(weightTracking.date, startDate)
-        )
-      ) as any;
-    }
-
-    if (endDate) {
-      query = query.where(
-        and(
-          eq(weightTracking.userId, req.user.userId),
-          lte(weightTracking.date, endDate)
-        )
-      ) as any;
-    }
-
-    const weights = await query
+      .where(and(...conditions))
       .orderBy(desc(weightTracking.date))
       .limit(limit);
 
@@ -356,21 +340,14 @@ router.get("/goals", authenticate, async (req, res) => {
 
     const status = req.query.status as string | undefined;
 
-    let query = db
+    const conditions = [eq(goals.userId, req.user.userId)];
+    if (status) conditions.push(eq(goals.status, status));
+
+    const userGoals = await db
       .select()
       .from(goals)
-      .where(eq(goals.userId, req.user.userId));
-
-    if (status) {
-      query = query.where(
-        and(
-          eq(goals.userId, req.user.userId),
-          eq(goals.status, status)
-        )
-      ) as any;
-    }
-
-    const userGoals = await query.orderBy(desc(goals.createdAt));
+      .where(and(...conditions))
+      .orderBy(desc(goals.createdAt));
 
     res.json({ goals: userGoals });
   } catch (error) {

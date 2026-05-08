@@ -6,6 +6,13 @@ import { setupVite, serveStatic } from "./vite.js";
 import { log } from "./log.js";
 
 const app = express();
+
+// Stripe webhook verifies raw body — must run before JSON parser
+app.use(
+  "/api/payments/webhook",
+  express.raw({ type: "application/json", limit: "2mb" }),
+);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

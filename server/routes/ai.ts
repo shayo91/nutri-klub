@@ -2,7 +2,7 @@ import { Router } from "express";
 import { AIService } from "../services/aiService";
 import { authenticate } from "../middleware/auth";
 import { db } from "../db";
-import { aiChatHistory, usageTracking, users, userPreferences } from "@shared/schema";
+import { aiChatHistory, usageTracking, users, userPreferences } from "@shared/schema-sqlite";
 import { eq, and, desc, sql } from "drizzle-orm";
 import { z } from "zod";
 

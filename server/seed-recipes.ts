@@ -1,6 +1,6 @@
 // Seed script for recipes
 import { db } from "./db";
-import { recipes, recipeOfTheDay } from "@shared/schema";
+import { recipes, recipeOfTheDay } from "@shared/schema-sqlite";
 
 const sampleRecipes = [
   {

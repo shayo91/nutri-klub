@@ -115,18 +115,22 @@ export interface UsageStats {
   ebook_download: number;
 }
 
-// Blog Types
+// Blog (marketing site — aligns with BlogSection props / API Markdown shape)
 export interface BlogPost {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  image: string;
-  author: string;
-  publishedAt: string;
-  readTime: string;
-  content?: string;
-  tags?: string[];
+  id: number | string
+  title: string
+  excerpt: string
+  description?: string
+  category: string
+  categories?: string[]
+  image: string
+  author?: string
+  date: string
+  slug: string
+  publishedAt?: string
+  readTime?: string
+  content?: string
+  tags?: string[]
 }
 
 // Other Types

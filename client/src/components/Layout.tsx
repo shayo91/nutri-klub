@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import AnnouncementBar from "./AnnouncementBar";
 import BreadcrumbSchema from "./BreadcrumbSchema";
 
 interface LayoutProps {
@@ -15,7 +14,6 @@ export default function Layout({ children }: LayoutProps) {
 				Preskoči na sadržaj
 			</a>
 			<BreadcrumbSchema />
-			<AnnouncementBar />
 			<Header />
 			<main id="main-content" className="flex-grow" tabIndex={-1}>
 				{children}

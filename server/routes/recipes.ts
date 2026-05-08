@@ -135,7 +135,7 @@ router.delete("/:id", authenticate, async (req, res) => {
 // Helper function to track recipe views for free users
 async function trackRecipeView(userId: number) {
   const { db } = await import("../db");
-  const { usageTracking } = await import("@shared/schema");
+  const { usageTracking } = await import("@shared/schema-sqlite");
   const { eq, and } = await import("drizzle-orm");
 
   const today = new Date().toISOString().split("T")[0];
@@ -183,7 +183,7 @@ async function trackRecipeView(userId: number) {
 // Helper function to check user's usage stats
 async function checkUserUsage(userId: number) {
   const { db } = await import("../db");
-  const { usageTracking } = await import("@shared/schema");
+  const { usageTracking } = await import("@shared/schema-sqlite");
   const { eq, and } = await import("drizzle-orm");
 
   const today = new Date().toISOString().split("T")[0];
@@ -324,7 +324,7 @@ router.delete("/usage/reset", authenticate, async (req, res) => {
     }
 
     const { db } = await import("../db");
-    const { usageTracking } = await import("@shared/schema");
+    const { usageTracking } = await import("@shared/schema-sqlite");
     const { eq } = await import("drizzle-orm");
 
     // Delete all recipe_view tracking

@@ -1,48 +1,69 @@
-import { Redirect, useLocation } from "wouter";
-import { useAuth } from "@/contexts/AuthContext";
+import { Redirect, useLocation } from 'wouter';
+import { useAuth } from '@/contexts/AuthContext';
+import { DashboardClosedPlaceholder } from '@/pages/DashboardClosed';
 
 interface ProtectedRouteProps {
-  children: React.ReactNode;
-  requirePremium?: boolean;
-  requireAdmin?: boolean;
+	children: React.ReactNode;
+	requirePremium?: boolean;
+	requireAdmin?: boolean;
 }
 
-export function ProtectedRoute({
-  children,
-  requirePremium = false,
-  requireAdmin = false,
+export function ProtectedRoute ({
+	children,
+	requirePremium = false,
+	requireAdmin = false,
 }: ProtectedRouteProps) {
-  const { isAuthenticated, isPremium, isAdmin, isLoading, user } = useAuth();
-  const [location] = useLocation();
+	const {
+		isAuthenticated,
+		isPremium,
+		isAdmin,
+		isLoading,
+		user,
+		dashboardEnabled,
+		configLoaded,
+	} = useAuth();
+	const [location] = useLocation();
 
-  if (isLoading) {
-    // Show loading spinner while checking auth
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#8B4513]"></div>
-      </div>
-    );
-  }
+	if (!configLoaded) {
+		return (
+			<div className="flex items-center justify-center min-h-screen">
+				<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#1F7A5C]" />
+			</div>
+		);
+	}
 
-  if (!isAuthenticated) {
-    // Redirect to login
-    return <Redirect to="/login" />;
-  }
+	if (!dashboardEnabled) {
+		return <DashboardClosedPlaceholder />;
+	}
 
-  // Proveri da li je onboarding završen (osim ako je trenutna ruta /onboarding)
-  if (isAuthenticated && user && !user.onboardingCompleted && location !== "/onboarding") {
-    return <Redirect to="/onboarding" />;
-  }
+	if (isLoading) {
+		return (
+			<div className="flex items-center justify-center min-h-screen">
+				<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#8B4513]" />
+			</div>
+		);
+	}
 
-  if (requireAdmin && !isAdmin) {
-    // Redirect to dashboard if trying to access admin route without admin role
-    return <Redirect to="/dashboard" />;
-  }
+	if (!isAuthenticated) {
+		return <Redirect to="/login" />;
+	}
 
-  if (requirePremium && !isPremium && !isAdmin) {
-    // Redirect to upgrade page if trying to access premium route without premium
-    return <Redirect to="/dashboard?upgrade=true" />;
-  }
+	if (
+		isAuthenticated &&
+		user &&
+		!user.onboardingCompleted &&
+		location !== '/onboarding'
+	) {
+		return <Redirect to="/onboarding" />;
+	}
 
-  return <>{children}</>;
+	if (requireAdmin && !isAdmin) {
+		return <Redirect to="/dashboard" />;
+	}
+
+	if (requirePremium && !isPremium && !isAdmin) {
+		return <Redirect to="/dashboard?upgrade=true" />;
+	}
+
+	return <>{children}</>;
 }

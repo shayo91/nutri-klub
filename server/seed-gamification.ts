@@ -4,7 +4,7 @@
  */
 
 import { db } from "./db";
-import { badgeDefinitions } from "@shared/schema";
+import { badgeDefinitions } from "@shared/schema-sqlite";
 
 const badges = [
   {

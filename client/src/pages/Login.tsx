@@ -13,7 +13,7 @@ export default function Login() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const { login } = useAuth();
+  const { login, dashboardEnabled, configLoaded } = useAuth();
   const [, setLocation] = useLocation();
 
   async function handleSubmit(e: React.FormEvent) {
@@ -22,23 +22,18 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      await login(email, password);
-      
-      // Proveri da li je onboarding završen
-      const response = await fetch("/api/onboarding/status", {
-        credentials: "include"
-      });
-      
-      if (response.ok) {
-        const { onboardingCompleted } = await response.json();
-        
-        if (!onboardingCompleted) {
-          setLocation("/onboarding");
-        } else {
-          setLocation("/dashboard");
-        }
+      if (!configLoaded || !dashboardEnabled) {
+        setError(
+          "Korisnički panel trenutno nije aktivan. Kontaktirajte podršku ili pokušajte kasnije."
+        );
+        return;
+      }
+
+      const loggedIn = await login(email, password);
+
+      if (!loggedIn.onboardingCompleted) {
+        setLocation("/onboarding");
       } else {
-        // Ako nema odgovora, idi na dashboard (fail-safe)
         setLocation("/dashboard");
       }
     } catch (err: any) {
@@ -64,6 +59,14 @@ export default function Login() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
+            {configLoaded && !dashboardEnabled && (
+              <Alert>
+                <AlertDescription>
+                  Panel za korisnike je privremeno isključen (ENABLE_DASHBOARD).
+                  Javni sadržaj sajta i dalje radi.
+                </AlertDescription>
+              </Alert>
+            )}
             {error && (
               <Alert variant="destructive">
                 <AlertDescription>{error}</AlertDescription>
@@ -79,7 +82,7 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                disabled={isLoading}
+                disabled={isLoading || !configLoaded || !dashboardEnabled}
               />
             </div>
 
@@ -99,14 +102,14 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                disabled={isLoading}
+                disabled={isLoading || !configLoaded || !dashboardEnabled}
               />
             </div>
 
             <Button
               type="submit"
               className="w-full bg-[#8B4513] hover:bg-[#6D3710]"
-              disabled={isLoading}
+              disabled={isLoading || !configLoaded || !dashboardEnabled}
             >
               {isLoading ? "Prijavljivanje..." : "Prijavite se"}
             </Button>

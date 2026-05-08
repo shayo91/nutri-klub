@@ -1,5 +1,5 @@
 import { db } from "../db";
-import { recipes, userFavorites, recipeCollections, collectionRecipes, mealPlans, recipeOfTheDay } from "@shared/schema";
+import { recipes, userFavorites, recipeCollections, collectionRecipes, mealPlans, recipeOfTheDay } from "@shared/schema-sqlite";
 import { eq, and, sql, desc, or, inArray } from "drizzle-orm";
 
 interface RecipeFilters {
@@ -130,8 +130,8 @@ export class RecipeService {
       .from(recipes)
       .where(
         or(
-          ilike(recipes.title, `%${query}%`),
-          ilike(recipes.description, `%${query}%`)
+          sql`LOWER(${recipes.title}) LIKE ${`%${query.toLowerCase()}%`}`,
+          sql`LOWER(COALESCE(${recipes.description}, '')) LIKE ${`%${query.toLowerCase()}%`}`
         )
       )
       .limit(limit);

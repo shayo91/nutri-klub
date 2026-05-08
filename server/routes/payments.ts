@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import { db } from "../db";
-import { subscriptionOrders, planPurchases, users } from "@shared/schema";
+import { subscriptionOrders, planPurchases, users } from "@shared/schema-sqlite";
 import { eq } from "drizzle-orm";
 import { authenticate } from "../middleware/auth";
 import { z } from "zod";
@@ -9,9 +9,9 @@ import Stripe from "stripe";
 const router = Router();
 
 // Initialize Stripe only if API key is provided
-const stripe = process.env.STRIPE_SECRET_KEY 
+const stripe = process.env.STRIPE_SECRET_KEY
   ? new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: "2025-05-28.basil",
+      apiVersion: "2025-08-27.basil",
     })
   : null;
 
@@ -410,8 +410,8 @@ router.post("/complete-order", authenticate, async (req, res) => {
       message: "Payment successful!",
       order,
       redirectUrl: order.orderType.startsWith("plan_")
-        ? `/dashboard/plan-success?orderId=${order.id}`
-        : "/dashboard/success",
+        ? "/dashboard/my-plan"
+        : "/dashboard/payment-success",
     });
   } catch (error) {
     console.error("Complete order error:", error);
