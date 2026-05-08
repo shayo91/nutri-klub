@@ -2,9 +2,8 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import type { ServeSpa } from "./vite.js";
 import { storage } from "./storage.js";
-import { sendContactEmail, sendComingSoonNotification, sendNewsletterNotification } from "./email.js";
+import { canSendEmail, sendContactEmail, sendComingSoonNotification, sendNewsletterNotification } from "./email.js";
 import { getMarkdownBlogList, getMarkdownBlogPostBySlug } from "./blog.js";
-import { getTestimonials, getAnnouncements, getVideos, getPodcasts, getSocialMedia } from "./notion.js";
 import { toUrlSlug } from "../shared/url-slug.js";
 import { z } from "zod";
 
@@ -153,62 +152,26 @@ ${blogUrls}
     }
   });
 
-  // Get testimonials from Notion
+  // Get testimonials from local storage
   app.get("/api/testimonials", async (req, res) => {
     try {
-      const testimonials = await getTestimonials();
-      res.json(testimonials);
-    } catch (error) {
-      console.error("Error fetching testimonials from Notion:", error);
-      // Fallback to storage if Notion fails
       const testimonials = await storage.getTestimonials();
       res.json(testimonials);
+    } catch (error) {
+      console.error("Error fetching testimonials:", error);
+      res.status(500).json({ message: "Error fetching testimonials" });
     }
   });
 
-  // Get announcements from Notion
+  // Notion removed: keep endpoints stable with empty data
   app.get("/api/announcements", async (req, res) => {
     res.set("Cache-Control", "public, max-age=300");
-    try {
-      const announcements = await getAnnouncements();
-      res.json(announcements);
-    } catch (error) {
-      console.error("Error fetching announcements from Notion:", error);
-      res.status(500).json({ message: "Error fetching announcements" });
-    }
+    res.json([]);
   });
 
-  // Get videos from Notion
-  app.get("/api/videos", async (req, res) => {
-    try {
-      const videos = await getVideos();
-      res.json(videos);
-    } catch (error) {
-      console.error("Error fetching videos from Notion:", error);
-      res.status(500).json({ message: "Error fetching videos" });
-    }
-  });
-
-  // Get podcasts from Notion
-  app.get("/api/podcasts", async (req, res) => {
-    try {
-      const podcasts = await getPodcasts();
-      res.json(podcasts);
-    } catch (error) {
-      console.error("Error fetching podcasts from Notion:", error);
-      res.status(500).json({ message: "Error fetching podcasts" });
-    }
-  });
-
-  // Get social media from Notion
+  // Notion removed: keep endpoints stable with empty data
   app.get("/api/social-media", async (req, res) => {
-    try {
-      const socialPosts = await getSocialMedia();
-      res.json(socialPosts);
-    } catch (error) {
-      console.error("Error fetching social media from Notion:", error);
-      res.status(500).json({ message: "Error fetching social media" });
-    }
+    res.json([]);
   });
 
   // Contact form submission
@@ -236,6 +199,9 @@ ${blogUrls}
         subject: validatedData.subject,
         message: validatedData.message,
       });
+      if (!canSendEmail()) {
+        console.warn("SMTP credentials missing, email delivery skipped for /api/contact");
+      }
       await storage.saveContactMessage(validatedData);
       res.json({ success: true, message: "Message sent successfully" });
     } catch (error) {
@@ -343,6 +309,10 @@ ${blogUrls}
         });
       }
     }
+  });
+
+  app.use("/api/*", (_req, res) => {
+    res.status(404).json({ message: "API route not found" });
   });
 
   // Redirect old /nutricionista/:location format to new hyphen format

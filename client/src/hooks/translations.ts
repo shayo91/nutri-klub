@@ -56,16 +56,6 @@ export const translations = {
     'bmi.male': 'Male',
     'bmi.female': 'Female',
     
-    // Videos Section
-    'videos.subtitle': 'NUTRITION VIDEOS',
-    'videos.title': 'Watch Valuable Nutrition Content',
-    'videos.description': 'Explore our video library filled with practical advice, cooking demonstrations, and nutritional insights to help you on your health journey.',
-    
-    // Podcasts Section
-    'podcasts.subtitle': 'NUTRITION PODCASTS',
-    'podcasts.title': 'Listen to Expert Nutrition Advice',
-    'podcasts.description': 'Tune into our podcasts for the latest nutrition insights, expert interviews, and practical tips to enhance your health journey.',
-    
     // Testimonials Section
     'testimonials.subtitle': 'TESTIMONIALS',
     'testimonials.title': 'What My Clients Say',
@@ -169,11 +159,6 @@ export const translations = {
     'programs.more.points': '• lični pristup\n• strukturu prilagođenu baš tebi\n• individualan rad na tvojim navikama\n• personalizovan jelovnik\n• kontinuiranu podršku',
     'programs.more.footer': 'Čekam te u 1:1 programima BALANS ili TRANSFORMACIJA.',
 
-    // Podcasts Section
-    'podcasts.subtitle': 'NUTRITIVNI PODKASTI',
-    'podcasts.title': 'Slušajte Stručne Savete o Ishrani',
-    'podcasts.description': 'Uključite se u naše podkaste za najnovije uvide u ishranu, intervjue sa stručnjacima i praktične savete za poboljšanje vašeg zdravstvenog putovanja.',
-    
     // Testimonials Section
     'testimonials.subtitle': 'ISKUSTVA',
     'testimonials.title': 'Šta Kažu Moji Klijenti',

@@ -2,6 +2,19 @@ import { motion } from "framer-motion";
 import { useAnimateOnScroll } from "@/hooks/useAnimateOnScroll";
 import { Check } from "lucide-react";
 
+interface PricingPlan {
+  name: string;
+  nameSecondLine?: string;
+  subtitle: string;
+  price: string;
+  currency: string;
+  originalPrice?: string;
+  features: string[];
+  badge: string | null;
+  buttonText: string;
+  featured: boolean;
+}
+
 export default function PricingSection() {
   const { ref: pricingRef, inView: pricingInView } = useAnimateOnScroll(0.1);
   const isDesktopStagger =
@@ -9,17 +22,18 @@ export default function PricingSection() {
     window.matchMedia("(min-width: 769px)").matches &&
     !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  const plans = [
+  const plans: PricingPlan[] = [
     {
-      name: "Konsultacije",
+      name: "1 mjesec",
       subtitle: "Za one koji žele početne smjernice",
-      price: "80",
+      price: "150",
       currency: "KM",
-      originalPrice: "120",
       features: [
         "Online konsultacije (60 minuta)",
         "Analiza dnevnika ishrane",
         "Pisane smjernice za poboljšanje ishrane",
+        "Individualni jelovnik za 7 dana",
+        "Check-in poziv svake sedmice",
         "Podrška putem poruka tokom 30 dana"
       ],
       badge: null,
@@ -27,37 +41,34 @@ export default function PricingSection() {
       featured: false
     },
     {
-      name: "Mjesečni",
-      nameSecondLine: "mentorski program",
+      name: "2 mjeseca",
       subtitle: "Za one koji žele promjenu i jasnu strukturu",
-      price: "200",
+      price: "250",
       currency: "KM",
-      originalPrice: "250",
       features: [
         "Online uvodne konsultacije (upoznavanje, anamneza i postavljanje ciljeva)",
-        "Analiza dnevnika ishrane i prijedlozi za izmjene",
+        "Analiza dnevnika ishrane",
         "Pisane smjernice za poboljšanje ishrane",
-        "Dva individualna sedmična jelovnika",
-        "Podrška putem poruka tokom 30 dana",
-        "Kontrolni poziv nakon mjesec dana"
+        "Tri individualna sedmična jelovnika",
+        "Check-in poziv svake sedmice",
+        "Podrška putem poruka tokom 60 dana"
       ],
       badge: "Najpopularnije",
       buttonText: "Prijavi se",
       featured: true
     },
     {
-      name: "Višemjesečni",
-      nameSecondLine: "mentorski program",
+      name: "3 mjeseca",
       subtitle: "Za one koji žele dugoročnu podršku i trajne rezultate",
       price: "400",
       currency: "KM",
       originalPrice: "500",
       features: [
-        "3 mjeseca saradnje",
-        "Uvodne konsultacije, analiza dnevnika ishrane, pisane smjernice",
+        "Uvodne konsultacije",
+        "Analiza dnevnika ishrane i pisane smjernice",
         "Šest individualnih sedmičnih jelovnika",
-        "Podrška putem poruka tokom 90 dana",
-        "Kontrolni poziv (x3)"
+        "Check-in poziv svake sedmice",
+        "Podrška putem poruka tokom 90 dana"
       ],
       badge: null,
       buttonText: "Prijavi se",
@@ -151,11 +162,13 @@ export default function PricingSection() {
                       {plan.currency}
                     </span>
                   </div>
-                  <span className={`text-base line-through ${
-                    plan.featured ? "text-white/70" : "text-[#999999]"
-                  }`}>
-                    {plan.originalPrice} {plan.currency}
-                  </span>
+                  {plan.originalPrice && (
+                    <span className={`text-base line-through ${
+                      plan.featured ? "text-white/70" : "text-[#999999]"
+                    }`}>
+                      {plan.originalPrice} {plan.currency}
+                    </span>
+                  )}
                 </div>
 
                 {/* Features */}

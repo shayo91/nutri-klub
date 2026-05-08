@@ -51,16 +51,6 @@ const translations = {
   'quiz.description': 'Pройдите naš interaktivni kviz i saznajte koliko znate o zdravoj ishrani. Dobićete personalizovane preporuke na osnovu odgovora.',
   'quiz.start': 'Započni Kviz',
 
-  // Video sekcija
-  'videos.subtitle': 'EDUKATIVNI SADRŽAJ',
-  'videos.title': 'Naučite Kroz Video Materijale',
-  'videos.description': 'Pristupite mojoj kolekciji edukativnih video materijala koji pokrivaju sve aspekte zdrave ishrane.',
-
-  // Podcast sekcija
-  'podcasts.subtitle': 'AUDIO SADRŽAJ',
-  'podcasts.title': 'Slušajte Ekspertske Savete o Ishrani',
-  'podcasts.description': 'Poslušajte moje podkaste gde delim najnovija saznanja iz oblasti ishrane.',
-
   // Iskustva sekcija
   'testimonials.subtitle': 'USPEŠNE PRIČE',
   'testimonials.title': 'Šta Kažu Moji Klijenti',

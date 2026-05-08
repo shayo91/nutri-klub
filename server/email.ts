@@ -1,5 +1,7 @@
 import nodemailer from "nodemailer";
 
+const hasSmtpCredentials = Boolean(process.env.SMTP_USER && process.env.SMTP_PASS);
+
 const transporter = nodemailer.createTransport({
 	host: process.env.SMTP_HOST ?? "mail.nutricionistajelena.ba",
 	port: Number(process.env.SMTP_PORT) || 465,
@@ -12,6 +14,10 @@ const transporter = nodemailer.createTransport({
 
 const from = process.env.SMTP_USER ?? "planishrane@nutricionistajelena.ba";
 
+export function canSendEmail(): boolean {
+	return hasSmtpCredentials;
+}
+
 export async function sendContactEmail(params: {
 	to: string;
 	name: string;
@@ -19,6 +25,8 @@ export async function sendContactEmail(params: {
 	subject: string;
 	message: string;
 }): Promise<void> {
+	if (!hasSmtpCredentials) return;
+
 	await transporter.sendMail({
 		from,
 		to: params.to,
@@ -37,6 +45,8 @@ export async function sendComingSoonNotification(params: {
 	to: string;
 	email: string;
 }): Promise<void> {
+	if (!hasSmtpCredentials) return;
+
 	const date = new Date().toLocaleString("bs-BA");
 	await transporter.sendMail({
 		from,
@@ -50,6 +60,8 @@ export async function sendNewsletterNotification(params: {
 	to: string;
 	email: string;
 }): Promise<void> {
+	if (!hasSmtpCredentials) return;
+
 	const date = new Date().toLocaleString("bs-BA");
 	await transporter.sendMail({
 		from,
