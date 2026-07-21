@@ -26,8 +26,8 @@ export default function PricingSection() {
     {
       name: "1 mjesec",
       subtitle: "Za one koji žele početne smjernice",
-      price: "150",
-      currency: "KM",
+      price: "",
+      currency: "",
       features: [
         "Online konsultacije (60 minuta)",
         "Analiza dnevnika ishrane",
@@ -43,8 +43,8 @@ export default function PricingSection() {
     {
       name: "2 mjeseca",
       subtitle: "Za one koji žele promjenu i jasnu strukturu",
-      price: "250",
-      currency: "KM",
+      price: "",
+      currency: "",
       features: [
         "Online uvodne konsultacije (upoznavanje, anamneza i postavljanje ciljeva)",
         "Analiza dnevnika ishrane",
@@ -60,9 +60,8 @@ export default function PricingSection() {
     {
       name: "3 mjeseca",
       subtitle: "Za one koji žele dugoročnu podršku i trajne rezultate",
-      price: "400",
-      currency: "KM",
-      originalPrice: "500",
+      price: "",
+      currency: "",
       features: [
         "Uvodne konsultacije",
         "Analiza dnevnika ishrane i pisane smjernice",
@@ -149,6 +148,7 @@ export default function PricingSection() {
                 </div>
 
                 {/* Price */}
+                {plan.price && (
                 <div className="text-center mb-8">
                   <div className="flex items-baseline justify-center gap-1 mb-2">
                     <span className={`text-4xl md:text-5xl font-bold ${
@@ -170,6 +170,7 @@ export default function PricingSection() {
                     </span>
                   )}
                 </div>
+                )}
 
                 {/* Features */}
                 <div className="flex-1">
@@ -183,7 +184,7 @@ export default function PricingSection() {
                             plan.featured ? "text-white" : "text-[#5DAD8C]"
                           }`} />
                         </div>
-                        <span className={`text-sm leading-relaxed ${
+                        <span className={`text-base leading-relaxed ${
                           plan.featured ? "text-white/95" : "text-[#333333]"
                         }`}>
                           {feature}
